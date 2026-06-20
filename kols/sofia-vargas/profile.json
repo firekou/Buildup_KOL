@@ -18,7 +18,7 @@
     "soul_v3": {
       "higgsfield_soul_id": "7d52c0cb-8737-4ef7-a706-9196da2fc1b3",
       "soul_model": "soul_2",
-      "soul_status": "training",
+      "soul_status": "ready",
       "training_image_count": 15,
       "training_images_path": "kols/sofia-vargas/images/soul_v3_training/"
     }

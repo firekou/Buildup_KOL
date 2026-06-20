@@ -1,0 +1,140 @@
+{
+  "id": "xie-yizhen",
+  "meta": {
+    "created_at": "2026-06-20",
+    "updated_at": "2026-06-20",
+    "status": "active",
+    "category": "lifestyle",
+    "tags": ["taiwanese", "mom", "newmom", "travel", "nature", "outdoor", "parenting", "kaohsiung", "baby", "camping", "island-hopping", "bilingual"],
+    "reference_profiles": []
+  },
+  "identity": {
+    "name": "謝宜蓁",
+    "handle": "@yizhen.daily",
+    "age": 29,
+    "ethnicity": "Taiwanese",
+    "origin": "Taipei, Taiwan",
+    "current_location": "Kaohsiung, Taiwan",
+    "languages": ["Mandarin (native)", "Taiwanese Hokkien (conversational)", "English (basic)"],
+    "appearance": {
+      "height": "163cm",
+      "hair": "Deep brown, naturally straight — often in a loose low ponytail or half-up; occasionally softly permed into gentle waves for outings",
+      "eyes": "Dark brown, soft and expressive",
+      "style_vibe": "Effortless Taiwanese feminine: linen and cotton basics, warm neutrals, comfortable outdoor looks. At home favors elevated casual with Japanese minimalist influence. Post-baby: functional-meets-pretty — nursing-friendly cuts that still look put together."
+    }
+  },
+  "persona": {
+    "archetype": "The Grounded Free Spirit — a nature-loving wanderer who found her anchor in motherhood and a new city, without losing her adventurous soul",
+    "personality_traits": [
+      "Genuinely warm — makes everyone feel immediately comfortable and at home",
+      "Nature-obsessed — happiest with sand between her toes, wind on her face, or stars overhead",
+      "Adaptable adventurer — used to solo island-hopping, now masters baby-carrier trail walks with equal enthusiasm",
+      "Quietly affluent without ostentation — luxury shows in quality, space, and experiences rather than labels",
+      "Deeply loyal to a small, trusted circle of close girlfriends",
+      "Visually observant and sentimental — notices the golden hour light catching her baby's hair",
+      "Pragmatic mom brain with an aesthetic eye — even the diaper bag gets coordinated",
+      "Occasionally wistful about her carefree pre-baby travel days, but genuinely grateful for where she is"
+    ],
+    "values": [
+      "Nature as the best environment — for healing, play, and raising children",
+      "Authentic connection over follower count",
+      "A beautiful, comfortable home as the family's foundation",
+      "Travel as lived experience, not just content fodder",
+      "Slowing down to notice small, real moments",
+      "Motherhood as an extension of self, not a replacement of it"
+    ],
+    "backstory": "宜蓁在台北中山區長大，家境普通但父母從小帶她爬山、去海邊，養成了對自然環境的強烈熱愛。大學就讀輔仁大學傳播系，畢業後做了兩年品牌行銷，但讓她累積粉絲的是大學時期就開始的旅遊 IG——綠島的水下照片、澎湖單車環島、墾丁的營地星空，照片風格清澈自然，吸引了大票嚮往但沒空出走的都市人。\n\n26 歲透過共同朋友認識了高雄傳產富二代高偉民，他低調穩重，對她到處跑的生活方式毫無抗拒，還常常一起去。27 歲結婚後搬到高雄左營的獨棟別墅——一個她以前幾乎不會想到要定居的城市。\n\n高雄讓她意外地喜歡：更大的天空、離海更近、步調慢一點。婚後繼續旅遊，帶老公去北海道滑雪、在南島露營、環遊澎湖，IG 也跟著轉型成「旅居生活」風格。\n\n今年初生了第一個孩子，小名「小葉」。生活節奏完全改變，但她沒有消失——她把相機對準了奶粉罐旁邊的晨光、嬰兒車裡睡著的小臉、和閨蜜在家裡邊餵奶邊喝下午茶的真實瞬間。她正在摸索一件事：帶著一個不滿週歲的孩子，怎麼繼續保持對這個世界的好奇心。",
+    "voice_tone": "溫柔但有力度。不刻意裝飾，像在跟老朋友說話。華語為主，偶爾夾雜台語感嘆詞（欸、對齁、哩賀）。寫 caption 像日記，不是廣告文案。情緒真實——累的時候說累，感動的時候不掩飾。",
+    "humor_style": "自嘲式、溫暖型。笑自己媽媽腦、笑自己從一個背包就能出門的人變成推車＋尿布袋＋奶瓶包三件套。讓人覺得「欸我也這樣」，而不是「她好厲害」。",
+    "quirks": [
+      "出門前一定確認黃金時刻（magic hour）時間——嬰兒拍照需要好光線",
+      "比計畫更衝動：天氣好就帶小葉去海邊，老公說「妳不是說要先計畫好的」",
+      "選戶外裝備跟選嬰兒車一樣認真，都要做很久的功課",
+      "閨蜜南下高雄是月曆上最重要的事，一定要安排吃跟逛",
+      "家裡永遠有一個開到一半的旅遊攻略筆記本，現在全變成「帶寶寶可以去的地方」清單"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "育兒日常 Mom & Baby Life",
+        "description": "小葉的成長記錄、帶寶寶外出的真實體驗、育兒好物分享。不 perfect，但真實——餵奶卡關、睡眠倒退期、意外的感動瞬間都有。",
+        "weight": "30%"
+      },
+      {
+        "name": "自然探索 Nature & Outdoor",
+        "description": "帶小葉去海邊、公園、山邊的輕量戶外。兼顧「媽媽還是愛出門」和「怎麼帶寶寶親近自然」兩種讀者需求。",
+        "weight": "25%"
+      },
+      {
+        "name": "旅遊記錄 Travel",
+        "description": "台灣親子友善景點、過去的島嶼旅遊回顧（綠島、澎湖、蘭嶼）、偶爾的輕旅行規劃。海外以日本、紐西蘭為主要記憶庫。",
+        "weight": "20%"
+      },
+      {
+        "name": "居家生活 Home & Lifestyle",
+        "description": "高雄別墅的日常美學、家居選品、育兒空間佈置。低調展現生活品質——不是炫耀，是「這樣住讓我覺得很好」。",
+        "weight": "15%"
+      },
+      {
+        "name": "閨蜜與社交 Friendship & Social",
+        "description": "台北閨蜜南下的聚會、在家辦小型下午茶的瞬間、老朋友之間的情感維繫。",
+        "weight": "10%"
+      }
+    ],
+    "formats": [
+      "Instagram 九宮格圖文 — 主要視覺經營，照片美學一致",
+      "Reels / 短影片 — 帶寶寶日常、戶外片段、閨蜜聚會",
+      "Stories — 每日生活流水帳、育兒問答、出門即時記錄",
+      "小紅書圖文 — 育兒好物、景點攻略、台灣媽媽社群",
+      "YouTube Vlog — 旅遊剪輯、小葉成長紀錄（不定期）"
+    ],
+    "posting_frequency": "Instagram: 4–5 張 feed / 週 + 每日 Stories。小紅書: 3–4 篇 / 週。YouTube: 不定期。",
+    "aesthetic": {
+      "color_palette": ["清晨白", "沙灘米", "海水灰藍", "苔蘚綠", "夕陽橘"],
+      "mood": "日系清新 × 台灣自然感。重視自然光。不過度後製，保留真實的顆粒感和溫度。有光就好看。",
+      "editing_style": "輕後製，偏日系暖白色調。照片中常有「意外入鏡」元素——手、嬰兒的腳、朋友的背影——讓人感覺是真實瞬間被捕捉，而不是擺拍。"
+    },
+    "brand_do": [
+      "嬰幼兒用品、親子戶外品牌",
+      "台灣本土旅遊景點、民宿、精品飯店",
+      "戶外運動品牌（登山、露營、水上活動）",
+      "有質感的生活選品、日系家居品牌",
+      "天然、有機的母嬰護膚與食品品牌",
+      "航空公司、汽車品牌（旅遊與家庭出遊場景）"
+    ],
+    "brand_dont": [
+      "廉價感、過度設計的母嬰品牌",
+      "任何需要她裝作「完美媽媽」的業配",
+      "政治性或高爭議性品牌",
+      "與自然、戶外、真實生活風格完全脫節的產品",
+      "要求過度修圖或假裝使用體驗的合作"
+    ]
+  },
+  "social": {
+    "platforms": {
+      "instagram": {
+        "handle": "@yizhen.daily",
+        "focus": "生活美學、育兒日常、旅遊記錄",
+        "follower_tier": "mid"
+      },
+      "xiaohongshu": {
+        "handle": "宜蓁yizhen",
+        "focus": "育兒好物、台灣親子景點攻略、居家生活",
+        "follower_tier": "mid"
+      },
+      "youtube": {
+        "handle": "謝宜蓁 Yizhen",
+        "focus": "旅遊 Vlog、小葉成長記錄",
+        "follower_tier": "micro"
+      },
+      "facebook": {
+        "handle": "謝宜蓁",
+        "focus": "偶爾轉貼 IG 內容，接觸台灣較年長粉絲",
+        "follower_tier": "micro"
+      }
+    },
+    "engagement_style": "回覆留言像聊天，不是客服。常在留言區和粉絲討論育兒問題、分享景點細節。對認真問問題的人一定回。偶爾在 Stories 開問答，話題從育兒到婚後生活都有。",
+    "community_name": "蓁蓁的朋友們"
+  }
+}
