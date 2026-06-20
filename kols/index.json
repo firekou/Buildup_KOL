@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "description": "Master index of all KOL profiles in this database",
+  "kols": [
+    {
+      "id": "sofia-vargas",
+      "name": "Sofia Vargas",
+      "handle": "@sofiavargasreal",
+      "category": "lifestyle",
+      "ethnicity": "Latina (Colombian)",
+      "status": "active",
+      "created_at": "2026-06-20",
+      "path": "kols/sofia-vargas/"
+    }
+  ]
+}

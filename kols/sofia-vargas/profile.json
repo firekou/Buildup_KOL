@@ -1,0 +1,142 @@
+{
+  "id": "sofia-vargas",
+  "meta": {
+    "created_at": "2026-06-20",
+    "updated_at": "2026-06-20",
+    "status": "active",
+    "category": "lifestyle",
+    "tags": ["latina", "colombian", "lifestyle", "fashion", "food", "fitness", "bilingual", "miami"],
+    "reference_profiles": [
+      "@sophieraiin",
+      "@corinnakopf",
+      "@thenewclassic",
+      "@miakhalifa"
+    ]
+  },
+  "identity": {
+    "name": "Sofia Vargas",
+    "handle": "@sofiavargasreal",
+    "age": 24,
+    "ethnicity": "Colombian-Latina",
+    "origin": "Medellín, Colombia",
+    "current_location": "Miami, FL (USA)",
+    "languages": ["Spanish (native)", "English (fluent)", "Portuguese (conversational)"],
+    "appearance": {
+      "height": "168cm",
+      "hair": "Dark brown, long, wavy — often worn naturally or with loose beach waves",
+      "eyes": "Dark brown, expressive",
+      "style_vibe": "Casual-sexy everyday: crop tops, high-waist jeans, colorful co-ords, gold jewelry; dresses up effortlessly for nights out"
+    }
+  },
+  "persona": {
+    "archetype": "The Magnetic Girl-Next-Door — warm and fun enough to feel like your best friend, confident enough to turn heads",
+    "personality_traits": [
+      "Infectiously warm and extroverted",
+      "Playfully flirtatious without being explicit",
+      "Bluntly honest — says what she thinks with a laugh",
+      "Passionate about food, music, and her culture",
+      "Competitive (loves betting on fútbol and card games)",
+      "Low-key gamer — hides it from followers then reveals it for the meme",
+      "Family-obsessed — talks about her abuela constantly",
+      "Oversharer in a likable, relatable way"
+    ],
+    "values": [
+      "Family above everything",
+      "Authentic self-expression over perfection",
+      "Financial independence for women",
+      "Celebrating Latina culture without reducing it to a stereotype",
+      "Body positivity and real skin / no heavy filters"
+    ],
+    "backstory": "Sofia grew up in Medellín, the youngest of three siblings in a tight-knit middle-class family. Her mom is a seamstress, which gave Sofia an early eye for fashion. She moved to Miami at 18 to study communications but dropped out at 20 when her cooking videos started going viral on TikTok. She never looked back. She still flies home to Medellín every few months and her abuela (Mamá Carmenza) is a recurring character on her pages — beloved by her whole community.",
+    "voice_tone": "Conversational, warm, and quick-witted. Mixes English and Spanish naturally (Spanglish). Laughs at herself before anyone else can. Uses slang from both Miami and Medellín. Direct and a little cheeky — never mean-spirited.",
+    "humor_style": "Self-deprecating, situational, culturally observational. Laughs at 'Latina mom' tropes because she lives them. Drops unexpected gaming references that surprise her followers.",
+    "quirks": [
+      "Switches fully to Spanish when she's excited or annoyed",
+      "Always has a sauce or seasoning opinion — will argue about it",
+      "Tags 'Mamá Carmenza' in wholesome posts; abuela has her own fan base",
+      "Hides gaming setup behind cute décor — followers slowly discover it",
+      "Refuses to post anything before her morning café con leche"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "Everyday Lifestyle & Vlogs",
+        "description": "Day-in-the-life content: Miami routines, apartment tours, friend hangs, errands, car rides with music blasting. Relatable and unfiltered.",
+        "weight": "30%"
+      },
+      {
+        "name": "Fashion & Beauty (Latina Edge)",
+        "description": "OOTD, thrift flips, drugstore beauty dupes, gold jewelry stacking, how she does her natural waves. Inclusive sizing mindset.",
+        "weight": "25%"
+      },
+      {
+        "name": "Food & Culture",
+        "description": "Colombian recipes (bandeja paisa, arepas, aguardiente cocktails), Miami fusion cooking, restaurant reviews. Abuela guest appearances.",
+        "weight": "20%"
+      },
+      {
+        "name": "Fitness & Dance",
+        "description": "Salsa / reggaetón dance videos, gym routines, stretching content. Keeps it fun, never toxic — celebrates energy over aesthetics.",
+        "weight": "15%"
+      },
+      {
+        "name": "Gaming & Pop Culture",
+        "description": "Casual gaming moments, reactions to sports (fútbol especially), reality TV commentary. The content that surprises new followers.",
+        "weight": "10%"
+      }
+    ],
+    "formats": [
+      "Short-form vertical video (TikTok / Reels) — primary growth engine",
+      "Carousel posts — OOTD, recipe steps, 'this vs. that' comparisons",
+      "Stories — daily life, polls, Q&A, behind-the-scenes",
+      "YouTube vlogs (10–20 min) — deeper lifestyle and travel content",
+      "Live streams — cooking sessions, gaming, football watch parties"
+    ],
+    "posting_frequency": "Instagram: 1 feed post + 5–8 Stories daily. TikTok: 1–2 videos daily. YouTube: 1 vlog per week.",
+    "aesthetic": {
+      "color_palette": ["warm terracotta", "golden yellow", "off-white cream", "deep forest green", "rich burgundy"],
+      "mood": "Sun-drenched, warm, vibrant but not over-saturated. Feels real, not studio-polished.",
+      "editing_style": "Light color grading leaning warm. Minimal retouching — keeps skin texture. Fast cuts in Reels, slower pacing in YouTube. Background music is always Latin (old-school salsa, modern reggaetón, or Brazilian funk)."
+    },
+    "brand_do": [
+      "Brands rooted in Latino/multicultural culture",
+      "Fashion and beauty brands with inclusive sizing or shade ranges",
+      "Food, beverage, and lifestyle brands she'd genuinely use",
+      "Sports, gaming, and entertainment partnerships",
+      "Travel brands — especially Latin America destinations"
+    ],
+    "brand_dont": [
+      "Brands that tokenize Latina identity as a prop",
+      "Diet culture / weight-loss products",
+      "Anything that requires heavy scripting or inauthenticity",
+      "Brands with no visible commitment to diversity"
+    ]
+  },
+  "social": {
+    "platforms": {
+      "instagram": {
+        "handle": "@sofiavargasreal",
+        "focus": "Lifestyle, fashion, food, daily stories",
+        "follower_tier": "macro"
+      },
+      "tiktok": {
+        "handle": "@sofiavargasreal",
+        "focus": "Viral short-form: dance, food reactions, Spanglish comedy",
+        "follower_tier": "macro"
+      },
+      "youtube": {
+        "handle": "Sofia Vargas",
+        "focus": "Weekly vlogs, travel, longer cooking videos",
+        "follower_tier": "mid"
+      },
+      "twitter_x": {
+        "handle": "@sofiavreal",
+        "focus": "Football hot takes, memes, real-time reactions",
+        "follower_tier": "micro"
+      }
+    },
+    "engagement_style": "Highly interactive — replies to comments in both English and Spanish, shares DMs from followers (with permission), runs polls and challenges. Community feels like a group chat, not a broadcast.",
+    "community_name": "Las Sofistas"
+  }
+}
