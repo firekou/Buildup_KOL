@@ -20,7 +20,9 @@
       "soul_model": "soul_2",
       "soul_status": "ready",
       "training_image_count": 15,
-      "training_images_path": "kols/sofia-vargas/images/soul_v3_training/"
+      "training_images_path": "kols/sofia-vargas/images/soul_v3_training/",
+      "verification_image_count": 5,
+      "verification_images_path": "kols/sofia-vargas/images/soul_v3_verification/"
     }
   },
   "meta": {
