@@ -1,5 +1,13 @@
 {
   "id": "xie-yizhen",
+  "ai_assets": {
+    "concept_v1": {
+      "soul_status": "none",
+      "note": "Text-to-image concept references — no Soul trained yet. Use these to confirm character direction before Soul training.",
+      "image_count": 5,
+      "images_path": "kols/xie-yizhen/images/concept_v1/"
+    }
+  },
   "meta": {
     "created_at": "2026-06-20",
     "updated_at": "2026-06-20",
