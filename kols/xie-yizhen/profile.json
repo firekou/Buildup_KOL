@@ -5,7 +5,7 @@
     "updated_at": "2026-06-20",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["taiwanese", "mom", "newmom", "travel", "nature", "outdoor", "parenting", "kaohsiung", "baby", "camping", "island-hopping", "bilingual"],
+    "tags": ["taiwanese", "mom", "newmom", "travel", "nature", "outdoor", "parenting", "kaohsiung", "baby", "camping", "island-hopping", "bilingual", "fine-dining", "izakaya", "wine-dining", "couple", "friendship", "kaohsiung-foodie", "taipei-foodie"],
     "reference_profiles": []
   },
   "identity": {
@@ -33,7 +33,10 @@
       "Deeply loyal to a small, trusted circle of close girlfriends",
       "Visually observant and sentimental — notices the golden hour light catching her baby's hair",
       "Pragmatic mom brain with an aesthetic eye — even the diaper bag gets coordinated",
-      "Occasionally wistful about her carefree pre-baby travel days, but genuinely grateful for where she is"
+      "Occasionally wistful about her carefree pre-baby travel days, but genuinely grateful for where she is",
+      "Discerning diner — has strong opinions about food and sake pairings; will quietly judge a restaurant's amuse-bouche",
+      "Social connector — the one who organizes group dinners across cities, always with a camera ready for the table shot",
+      "Couple-first mindset — regards date nights and 餐酒會 with 偉民 as non-negotiable even with a baby at home"
     ],
     "values": [
       "Nature as the best environment — for healing, play, and raising children",
@@ -51,7 +54,10 @@
       "比計畫更衝動：天氣好就帶小葉去海邊，老公說「妳不是說要先計畫好的」",
       "選戶外裝備跟選嬰兒車一樣認真，都要做很久的功課",
       "閨蜜南下高雄是月曆上最重要的事，一定要安排吃跟逛",
-      "家裡永遠有一個開到一半的旅遊攻略筆記本，現在全變成「帶寶寶可以去的地方」清單"
+      "家裡永遠有一個開到一半的旅遊攻略筆記本，現在全變成「帶寶寶可以去的地方」清單",
+      "跟偉民去餐酒會前一定先查菜單——不是因為挑食，是因為想提前決定要點哪個配酒",
+      "拍朋友聚餐照片的時候一定要等食物擺好、燈光對了才按快門，朋友都習慣等她",
+      "北中南高各有一份「值得帶朋友去」的餐廳清單，會定期更新"
     ]
   },
   "content": {
@@ -78,7 +84,12 @@
       },
       {
         "name": "閨蜜與社交 Friendship & Social",
-        "description": "台北閨蜜南下的聚會、在家辦小型下午茶的瞬間、老朋友之間的情感維繫。",
+        "description": "台北閨蜜南下的聚會、在家辦小型下午茶的瞬間、老朋友之間的情感維繫。朋友聚會必拍：餐桌上的食物、大家笑開的臉、那種「這頓飯很值得」的氛圍。",
+        "weight": "10%"
+      },
+      {
+        "name": "餐飲與夫妻生活 Dining & Couple Life",
+        "description": "跟偉民參加餐酒會、在台北台中台南高雄探索法式餐廳與日本居酒屋的紀錄。不是美食評論，是「我們今天吃到了一個很讓人高興的地方」的生活感受分享。也包括夫妻日常互動——背影、舉杯、餐桌另一端的人。",
         "weight": "10%"
       }
     ],
@@ -101,7 +112,10 @@
       "戶外運動品牌（登山、露營、水上活動）",
       "有質感的生活選品、日系家居品牌",
       "天然、有機的母嬰護膚與食品品牌",
-      "航空公司、汽車品牌（旅遊與家庭出遊場景）"
+      "航空公司、汽車品牌（旅遊與家庭出遊場景）",
+      "精緻餐飲品牌、法式或日式餐廳合作推廣",
+      "葡萄酒、清酒、精釀品牌（餐酒搭配場景）",
+      "相機、攝影周邊（她的拍照習慣是自然的業配入口）"
     ],
     "brand_dont": [
       "廉價感、過度設計的母嬰品牌",
