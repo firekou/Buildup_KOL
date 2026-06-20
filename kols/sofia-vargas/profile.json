@@ -1,16 +1,20 @@
 {
   "id": "sofia-vargas",
   "ai_assets": {
-    "higgsfield_soul_id": "30764c47-cc62-4b1c-8a5c-1a91df3117e0",
-    "soul_model": "soul_2",
-    "soul_status": "training",
-    "soul_training_images": [
-      "kols/sofia-vargas/images/sofia_morning_cafe.png",
-      "kols/sofia-vargas/images/sofia_street_ootd.png",
-      "kols/sofia-vargas/images/sofia_cooking_arepas.png",
-      "kols/sofia-vargas/images/sofia_portrait.png",
-      "kols/sofia-vargas/images/sofia_cafe_laughing.png"
-    ]
+    "soul_v1": {
+      "higgsfield_soul_id": "30764c47-cc62-4b1c-8a5c-1a91df3117e0",
+      "soul_model": "soul_2",
+      "soul_status": "ready",
+      "training_image_count": 5,
+      "training_images_path": "kols/sofia-vargas/images/"
+    },
+    "soul_v2": {
+      "higgsfield_soul_id": "d2acc1b3-da85-49e5-8d1e-129886d76c89",
+      "soul_model": "soul_2",
+      "soul_status": "training",
+      "training_image_count": 10,
+      "training_images_path": "kols/sofia-vargas/images/soul_v2_training/"
+    }
   },
   "meta": {
     "created_at": "2026-06-20",
