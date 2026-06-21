@@ -1,5 +1,48 @@
 {
   "id": "sofia-vargas",
+  "ai_assets": {
+    "soul_v1": {
+      "higgsfield_soul_id": "30764c47-cc62-4b1c-8a5c-1a91df3117e0",
+      "soul_model": "soul_2",
+      "soul_status": "ready",
+      "training_image_count": 5,
+      "training_images_path": "kols/sofia-vargas/images/"
+    },
+    "soul_v2": {
+      "higgsfield_soul_id": "d2acc1b3-da85-49e5-8d1e-129886d76c89",
+      "soul_model": "soul_2",
+      "soul_status": "ready",
+      "training_image_count": 10,
+      "training_images_path": "kols/sofia-vargas/images/soul_v2_training/"
+    },
+    "soul_v3": {
+      "higgsfield_soul_id": "7d52c0cb-8737-4ef7-a706-9196da2fc1b3",
+      "soul_model": "soul_2",
+      "soul_status": "ready",
+      "training_image_count": 15,
+      "training_images_path": "kols/sofia-vargas/images/soul_v3_training/",
+      "verification_image_count": 5,
+      "verification_images_path": "kols/sofia-vargas/images/soul_v3_verification/"
+    },
+    "generated_videos": [
+      {
+        "id": "self_intro_v1",
+        "title": "Sofia Vargas — Self Introduction (Kitchen)",
+        "description": "Short-form self-intro Reels/TikTok video. Soul v3 kitchen scene + ElevenLabs Elena voice voiceover. Based on script_self_intro.md.",
+        "higgsfield_video_job_id": "48affdda-ca81-498c-941b-0cf4c8ed715d",
+        "higgsfield_image_job_id": "ed9915f2-afd6-462a-ae17-18532fc8cba6",
+        "higgsfield_audio_job_id": "5aaee130-5a8c-4971-a0ad-250249ac9aea",
+        "model": "seedance_2_0",
+        "soul_version": "soul_v3",
+        "voice": "ElevenLabs Elena (preset)",
+        "aspect_ratio": "9:16",
+        "duration_sec": 5,
+        "status": "pending",
+        "generated_at": "2026-06-21",
+        "local_path": "kols/sofia-vargas/videos/self_intro_v1.mp4"
+      }
+    ]
+  },
   "meta": {
     "created_at": "2026-06-20",
     "updated_at": "2026-06-20",
