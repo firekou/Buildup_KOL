@@ -36,6 +36,27 @@
       "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/",
       "reference_source": "soul_v1_training img 15 (primary face reference)"
     },
+    "lifestyle_v1": {
+      "source_soul": "soul_v2",
+      "soul_id_used": "7d51ca4c-54fc-44ac-bc87-7d195a1c5d4d",
+      "status": "pending",
+      "generated_at": "2026-06-21",
+      "images_path": "kols/xie-yizhen/images/lifestyle_v1/",
+      "note": "10 lifestyle scenes generated with Soul V2, covering all content pillars. Used as training source for soul_v3.",
+      "image_count": 10,
+      "jobs": [
+        {"scene": "育兒｜早晨庭院抱小葉", "pillar": "育兒日常", "job_id": "a7b56ba6-aab6-45d8-97ca-6f7c07a232d1"},
+        {"scene": "育兒｜公園推嬰兒車", "pillar": "育兒日常", "job_id": "14f62cb3-5654-4970-a30a-2c20f79133c5"},
+        {"scene": "自然｜海邊白洋裝", "pillar": "自然探索", "job_id": "638a57e8-f206-4e2b-bf7a-f5c09594bf70"},
+        {"scene": "自然｜森林登山步道", "pillar": "自然探索", "job_id": "648e22ff-a29a-4bf4-a9b8-0b032e65bd4f"},
+        {"scene": "旅遊｜日式居酒屋", "pillar": "旅遊記錄", "job_id": "8498056e-3d2a-4799-9322-3270f26e08e3"},
+        {"scene": "旅遊｜澎湖礁石海景", "pillar": "旅遊記錄", "job_id": "27f7ec2e-8532-4498-abaa-1df47dbce419"},
+        {"scene": "居家｜廚房晨間咖啡", "pillar": "居家生活", "job_id": "6c96f467-cfd4-48a1-9b09-6dab871cdc95"},
+        {"scene": "居家｜客廳看書", "pillar": "居家生活", "job_id": "1f233ad0-61c3-477e-9545-8bb2b1cf9779"},
+        {"scene": "閨蜜｜餐桌舉杯歡笑", "pillar": "閨蜜與社交", "job_id": "b8cd3b9c-ca4a-469e-bdf9-ef7308ddf44d"},
+        {"scene": "餐飲｜法式餐廳精緻料理", "pillar": "餐飲與夫妻生活", "job_id": "0dca856b-750e-4577-a005-c88ace5a09c7"}
+      ]
+    },
     "soul_v3_kling": {
       "higgsfield_soul_id": "d4685ed0-5511-4b45-a4a2-190797931346",
       "soul_model": "soul_2",
