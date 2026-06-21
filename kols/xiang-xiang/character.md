@@ -1,6 +1,6 @@
 # 香香 — Character Bible
 
-**Handle:** TBD（待本人確認）  
+**Handle:** @daphne428  
 **Tagline:** *「好酒不說廢話，好人也不用。」*
 
 ---
