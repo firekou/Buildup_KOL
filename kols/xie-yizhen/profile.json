@@ -7,6 +7,14 @@
       "image_count": 5,
       "images_path": "kols/xie-yizhen/images/concept_v1/"
     },
+    "aitokenking_kling": {
+      "platform": "AITokenking",
+      "model": "kling-v3-omni-image",
+      "status": "pending",
+      "note": "Character reference training using Kling face-reference mode — for comparison with Higgsfield Soul pipeline.",
+      "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/",
+      "reference_source": "soul_v1_training imgs 07, 08, 15"
+    },
     "soul_v1": {
       "higgsfield_soul_id": "79a51e95-e9ca-467e-8c1a-a891a5c964f3",
       "soul_model": "soul_2",
