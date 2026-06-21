@@ -13,7 +13,13 @@
       "soul_status": "ready",
       "note": "15 training images generated from concept_v1 references (img 1, 4, 5 direction). Soul training completed 2026-06-21.",
       "training_image_count": 15,
-      "training_images_path": "kols/xie-yizhen/images/soul_v1_training/"
+      "training_images_path": "kols/xie-yizhen/images/soul_v1_training/",
+      "showcase": {
+        "image_count": 8,
+        "images_path": "kols/xie-yizhen/images/soul_v1_showcase/",
+        "generated_at": "2026-06-21",
+        "note": "8 lifestyle scenes generated with soul_2 model covering all content pillars: 育兒日常, 自然探索, 旅遊記錄, 居家生活, 閨蜜社交, 餐飲夫妻."
+      }
     }
   },
   "meta": {
