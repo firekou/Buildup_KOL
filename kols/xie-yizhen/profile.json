@@ -79,7 +79,9 @@
           {"scene": "公園推嬰兒車", "job_id": "fc122309-d25a-4c47-85c0-d483235b518c", "file": "07_stroller.png"},
           {"scene": "澎湖礁石海景", "job_id": "32b0bc9d-7f67-44bf-a1b3-1fcf61a648ed", "file": "08_penghu.png"},
           {"scene": "日式居酒屋", "job_id": "8fc7d133-583e-402a-b199-a42c356485c1", "file": "09_izakaya.png"},
-          {"scene": "閨蜜餐桌歡笑", "job_id": "1db206f8-b2ae-47ef-ad3b-02018b5c47f6", "file": "10_friends.png", "note": "Redone: 謝宜蓁 (long dark brown wavy hair, warm skin) vs 閨蜜 (short black bob, fair skin, glasses)"}
+          {"scene": "閨蜜餐桌歡笑", "job_id": "1db206f8-b2ae-47ef-ad3b-02018b5c47f6", "file": "10_friends.png", "note": "Redone: 謝宜蓁 (long dark brown wavy hair, warm skin) vs 閨蜜 (short black bob, fair skin, glasses)"},
+          {"scene": "閨蜜喝酒餐廳 Reference A", "job_id": "9ada662c-727b-492b-a1b0-4b54d65a6ede", "file": "10_friends_ref_a.png", "model": "nano_banana_flash", "method": "reference_elements", "elements": ["謝宜蓁 v2", "guimi-wine-cellar"]},
+          {"scene": "閨蜜喝酒餐廳 Reference B", "job_id": "7d17b02d-1be2-42b9-bfbe-8e1ed372fbc1", "file": "10_friends_ref_b.png", "model": "nano_banana_flash", "method": "reference_elements", "elements": ["謝宜蓁 v2", "guimi-wine-cellar"]}
         ]
       }
     },
