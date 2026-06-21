@@ -10,8 +10,8 @@
     "soul_v2": {
       "higgsfield_soul_id": "7d51ca4c-54fc-44ac-bc87-7d195a1c5d4d",
       "soul_model": "soul_2",
-      "soul_status": "training",
-      "note": "14 training images (soul_v1_training imgs 01-10, 12-15, excluding 11_holding_baby). Key refs: 07, 08, 15 (primary), 04, 05, 09 (supporting). Training started 2026-06-21.",
+      "soul_status": "ready",
+      "note": "14 training images (soul_v1_training imgs 01-10, 12-15, excluding 11_holding_baby). Key refs: 07, 08, 15 (primary), 04, 05, 09 (supporting). Training completed 2026-06-21.",
       "training_image_count": 14,
       "training_images_path": "kols/xie-yizhen/images/soul_v1_training/"
     },
