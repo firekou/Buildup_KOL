@@ -13,7 +13,19 @@
       "soul_status": "ready",
       "note": "14 training images (soul_v1_training imgs 01-10, 12-15, excluding 11_holding_baby). Key refs: 07, 08, 15 (primary), 04, 05, 09 (supporting). Training completed 2026-06-21.",
       "training_image_count": 14,
-      "training_images_path": "kols/xie-yizhen/images/soul_v1_training/"
+      "training_images_path": "kols/xie-yizhen/images/soul_v1_training/",
+      "verification": {
+        "status": "pending",
+        "generated_at": "2026-06-21",
+        "images_path": "kols/xie-yizhen/images/soul_v2_verification/",
+        "jobs": [
+          {"scene": "正面半身肖像", "job_id": "fb923c54-8317-42ce-894e-e52d1b4d41d3"},
+          {"scene": "森林步道 3/4", "job_id": "68ec499b-8b0e-4180-bbb9-8d5009a7b27b"},
+          {"scene": "咖啡廳窗邊", "job_id": "a1a4d91a-59c4-47bb-b58e-2779fce031f1"},
+          {"scene": "海邊夕陽", "job_id": "a11241a3-dda1-4195-b3f2-efece108dba5"},
+          {"scene": "居家抱嬰兒", "job_id": "9ff0e94a-cd09-40a3-a4b9-6316577cc242"}
+        ]
+      }
     },
     "aitokenking_kling": {
       "platform": "AITokenking",
@@ -29,7 +41,19 @@
       "soul_status": "ready",
       "note": "Trained on 14 Kling-generated images from aitokenking_kling_training/ (excluded 11_baby_indoor — Higgsfield NSFW filter). Comparison pipeline: Kling-generated inputs → Higgsfield Soul. Training completed 2026-06-21.",
       "training_image_count": 14,
-      "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/"
+      "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/",
+      "verification": {
+        "status": "pending",
+        "generated_at": "2026-06-21",
+        "images_path": "kols/xie-yizhen/images/soul_v3_kling_verification/",
+        "jobs": [
+          {"scene": "正面半身肖像", "job_id": "267143ca-83bf-4532-afdd-29fa1aa1bc0f"},
+          {"scene": "森林步道 3/4", "job_id": "6dcf3f1e-30a8-4d3b-9244-1491b697e64a"},
+          {"scene": "咖啡廳窗邊", "job_id": "44985b45-252d-4e9a-a8cb-1d20c773575d"},
+          {"scene": "海邊夕陽", "job_id": "c7d07693-49fc-4ed5-aa56-1fecb910b27e"},
+          {"scene": "居家抱嬰兒", "job_id": "3d2f68d3-ab13-4463-9251-b45bc71610f6"}
+        ]
+      }
     },
     "soul_v1": {
       "higgsfield_soul_id": "79a51e95-e9ca-467e-8c1a-a891a5c964f3",
