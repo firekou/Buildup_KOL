@@ -18,10 +18,18 @@
     "aitokenking_kling": {
       "platform": "AITokenking",
       "model": "kling-v3-omni-image",
-      "status": "pending",
-      "note": "Character reference training using Kling face-reference mode — for comparison with Higgsfield Soul pipeline.",
+      "status": "completed",
+      "note": "15 Kling O1 Image generated scenes using face-reference mode (ref: soul_v1_training img 15). Used as training source for soul_v3_kling.",
       "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/",
-      "reference_source": "soul_v1_training imgs 07, 08, 15"
+      "reference_source": "soul_v1_training img 15 (primary face reference)"
+    },
+    "soul_v3_kling": {
+      "higgsfield_soul_id": "d4685ed0-5511-4b45-a4a2-190797931346",
+      "soul_model": "soul_2",
+      "soul_status": "training",
+      "note": "Trained on 14 Kling-generated images from aitokenking_kling_training/ (excluded 11_baby_indoor — Higgsfield NSFW filter). Comparison pipeline: Kling-generated inputs → Higgsfield Soul. Training started 2026-06-21.",
+      "training_image_count": 14,
+      "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/"
     },
     "soul_v1": {
       "higgsfield_soul_id": "79a51e95-e9ca-467e-8c1a-a891a5c964f3",
