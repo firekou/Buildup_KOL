@@ -26,8 +26,8 @@
     "soul_v3_kling": {
       "higgsfield_soul_id": "d4685ed0-5511-4b45-a4a2-190797931346",
       "soul_model": "soul_2",
-      "soul_status": "training",
-      "note": "Trained on 14 Kling-generated images from aitokenking_kling_training/ (excluded 11_baby_indoor — Higgsfield NSFW filter). Comparison pipeline: Kling-generated inputs → Higgsfield Soul. Training started 2026-06-21.",
+      "soul_status": "ready",
+      "note": "Trained on 14 Kling-generated images from aitokenking_kling_training/ (excluded 11_baby_indoor — Higgsfield NSFW filter). Comparison pipeline: Kling-generated inputs → Higgsfield Soul. Training completed 2026-06-21.",
       "training_image_count": 14,
       "training_images_path": "kols/xie-yizhen/images/aitokenking_kling_training/"
     },
