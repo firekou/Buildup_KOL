@@ -27,8 +27,12 @@
       }
     },
     "soul_training": {
-      "status": "pending",
-      "note": "等待進行 Higgsfield Soul 訓練，使用 source_photos 中的 primary + supporting refs（共 7 張）。"
+      "status": "training",
+      "soul_id": "3b34f068-bc35-4452-90c5-9ee103570965",
+      "model_type": "soul_2",
+      "started_at": "2026-06-21",
+      "image_count": 7,
+      "note": "使用 7 張照片進行 Higgsfield Soul V2 訓練（3 張 primary + 4 張 supporting refs）。訓練中，約需 10 分鐘。"
     }
   },
   "meta": {
