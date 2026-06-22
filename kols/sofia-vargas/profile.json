@@ -168,7 +168,7 @@
     "self_intro": {
       "script": "kols/sofia-vargas/script_self_intro.md",
       "format": "TikTok/Reels 9:16, 55–65s",
-      "status": "in_progress",
+      "status": "complete",
       "voiceover": {
         "selected": "roxie",
         "model": "text2speech_v2_elevenlabs",
@@ -181,18 +181,18 @@
       "shots": [
         {"shot": "01", "scene": "hook_kitchen",    "image_job": "1d6302b6", "video_job": "25f626cb", "model": "seedance_2_0", "file": "shot01_hook_kitchen.mp4",    "status": "done"},
         {"shot": "02", "scene": "street_walk",     "image_job": "94c46122", "video_job": "b4695cb1", "model": "seedance_2_0", "file": "shot02_street_walk.mp4",     "status": "done"},
-        {"shot": "03", "scene": "shrug_smile",     "image_job": "59050ef8", "video_job": "0269fe21", "model": "seedance_2_0", "file": "shot03_shrug_smile.mp4",     "status": "pending_download"},
+        {"shot": "03", "scene": "shrug_smile",     "image_job": "59050ef8", "video_job": "0269fe21", "model": "seedance_2_0", "file": "shot03_shrug_smile.mp4",     "status": "done"},
         {"shot": "04", "scene": "kitchen_cooking", "image_job": "c04a5042", "video_job": "77e0cd80", "model": "seedance_2_0", "file": "shot04_kitchen_cooking.mp4", "status": "done"},
         {"shot": "05", "scene": "mirror_selfie",   "image_job": "1ce13e4e", "video_job": "533c93d6", "model": "seedance_2_0", "file": "shot05_mirror_selfie.mp4",   "status": "done"},
-        {"shot": "06", "scene": "salsa_dance",     "image_job": "897b8d7f", "video_job": "180d8b93", "model": "seedance_2_0", "file": "shot06_salsa_dance.mp4",     "status": "pending_download"},
+        {"shot": "06", "scene": "salsa_dance",     "image_job": "897b8d7f", "video_job": "180d8b93", "model": "seedance_2_0", "file": "shot06_salsa_dance.mp4",     "status": "done"},
         {"shot": "07", "scene": "couch_phone",     "image_job": "51ba8b9f", "video_job": "6afb2b89", "model": "seedance_2_0", "file": "shot07_couch_phone.mp4",     "status": "done"},
         {"shot": "08", "scene": "direct_smile",    "image_job": "8a4e2411", "video_job": "73f14248", "model": "seedance_2_0", "file": "shot08_direct_smile.mp4",    "status": "done"},
-        {"shot": "09", "scene": "corner_walk",     "image_job": "58fe8f0d", "video_job": "f4754874", "model": "seedance_2_0", "file": "shot09_corner_walk.mp4",     "status": "pending_download"},
-        {"shot": "10", "scene": "deadpan_gaming",  "image_job": "180ac52a", "video_job": "ff6f95fe", "model": "seedance_2_0", "file": "shot10_deadpan_gaming.mp4",  "status": "pending_download"},
-        {"shot": "11", "scene": "laughing",        "image_job": "65a7a726", "video_job": "f5b80e36", "model": "seedance_2_0", "file": "shot11_laughing.mp4",        "status": "pending_download"},
-        {"shot": "12", "scene": "kitchen_cta",     "image_job": "223637b2", "video_job": "a4ad9a34", "model": "seedance_2_0", "file": "shot12_kitchen_cta.mp4",     "status": "pending_download"},
-        {"shot": "13", "scene": "heart_farewell",  "image_job": "93b7a786", "video_job": "df09d267", "model": "seedance_2_0", "file": "shot13_heart_farewell.mp4",  "status": "pending_download"},
-        {"shot": "14", "scene": "gaming_reveal",   "image_job": "fdcc3c8d", "video_job": "4565ba49", "model": "seedance_2_0", "file": "shot14_gaming_reveal.mp4",   "status": "pending_download"}
+        {"shot": "09", "scene": "corner_walk",     "image_job": "58fe8f0d", "video_job": "f4754874", "model": "seedance_2_0", "file": "shot09_corner_walk.mp4",     "status": "done"},
+        {"shot": "10", "scene": "deadpan_gaming",  "image_job": "180ac52a", "video_job": "ff6f95fe", "model": "seedance_2_0", "file": "shot10_deadpan_gaming.mp4",  "status": "done"},
+        {"shot": "11", "scene": "laughing",        "image_job": "65a7a726", "video_job": "f5b80e36", "model": "seedance_2_0", "file": "shot11_laughing.mp4",        "status": "done"},
+        {"shot": "12", "scene": "kitchen_cta",     "image_job": "223637b2", "video_job": "a4ad9a34", "model": "seedance_2_0", "file": "shot12_kitchen_cta.mp4",     "status": "done"},
+        {"shot": "13", "scene": "heart_farewell",  "image_job": "93b7a786", "video_job": "df09d267", "model": "seedance_2_0", "file": "shot13_heart_farewell.mp4",  "status": "done"},
+        {"shot": "14", "scene": "gaming_reveal",   "image_job": "fdcc3c8d", "video_job": "4565ba49", "model": "seedance_2_0", "file": "shot14_gaming_reveal.mp4",   "status": "done"}
       ]
     }
   }
