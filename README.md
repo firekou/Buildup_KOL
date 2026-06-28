@@ -27,6 +27,7 @@ Buildup_KOL/
 | [xie-yizhen](kols/xie-yizhen/) | 謝宜蓁 | 生活風格 | 台灣人 | active |
 | [xiang-xiang](kols/xiang-xiang/) | 香香 | 餐飲 / 生活風格 | 台灣人 | photos_collected |
 | [chloe-lin](kols/chloe-lin/) | Chloe Lin（林可昕） | 生活風格（純欲風） | 歐亞混血（英台） | draft |
+| [sienna-lai](kols/sienna-lai/) | Sienna Lai（賴思妍） | 生活風格（健康生活系 / Cute×Elegant） | 台裔加拿大人 | draft |
 
 ---
 

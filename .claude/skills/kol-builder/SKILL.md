@@ -23,7 +23,8 @@ kols/{kol-id}/
 └── images/             # generated/seed images (keep a .gitkeep)
 ```
 
-The strongest worked example to mirror is **`kols/chloe-lin/`** (and `kols/sofia-vargas/`).
+The strongest worked examples to mirror are **`kols/chloe-lin/`** (純欲風 flavor) and
+**`kols/sienna-lai/`** (Cute×Elegant×Confident×Approachable flavor); also `kols/sofia-vargas/`.
 
 ## When to use
 
@@ -35,7 +36,9 @@ The strongest worked example to mirror is **`kols/chloe-lin/`** (and `kols/sofia
 ## Workflow — adding a new KOL
 
 1. **Pick an id**: kebab-case `{firstname}-{lastname}` (e.g. `chloe-lin`).
-2. **Read the guideline**: load `references/style-guideline.md` for the visual + persona rules.
+2. **Pick a flavor**: load `references/flavors.md` and choose the persona flavor
+   (e.g. 純欲風 → `chloe-lin`; Cute×Elegant×Confident×Approachable → `sienna-lai`),
+   then load `references/style-guideline.md` for the shared visual + persona rules.
 3. **Fill the profile**: copy `assets/profile.template.json` → `kols/{id}/profile.json`,
    complete every field, conform to `kols/schema.json`. Keep `status: "draft"` until assets exist.
 4. **Write the docs**: `character.md`, `content_style.md`, `visual_prompts.md` — match the depth,
@@ -46,8 +49,10 @@ The strongest worked example to mirror is **`kols/chloe-lin/`** (and `kols/sofia
 
 ## Core principles (summary — full detail in references/style-guideline.md)
 
-- **反差萌 (Contrast):** face reads clean / innocent / girl-next-door; figure & styling carry the
-  allure. Innocence + confidence in one person — that contrast is the hook.
+These are shared defaults; flavor-specific nuance lives in `references/flavors.md`.
+
+- **反差 (Contrast):** the hook is a contrast — innocent face + confident figure (純欲風),
+  or polished/successful + honest/relatable (wholesome-aspirational). Pick per flavor.
 - **Grounded Reality:** selfies / POV / candid / real locations over sterile studio shots.
 - **High-end color:** soft palettes (morandi, white, blush, sky blue) — never gaudy.
 - **Voice:** talks like voice-noting a best friend; short sentences, emoji, always ends on an
@@ -57,6 +62,9 @@ The strongest worked example to mirror is **`kols/chloe-lin/`** (and `kols/sofia
 
 ## Reference files
 
+- `references/flavors.md` — the house persona flavors (純欲風 / innocent-alluring →
+  `chloe-lin`; Cute×Elegant×Confident×Approachable wholesome-aspirational → `sienna-lai`),
+  each with its own master prompt, color/scene/camera notes, and boundary. Pick one first.
 - `references/style-guideline.md` — full visual rules, persona archetypes, voice, content pillars,
   the four reference-profile archetypes and how to blend them.
 - `references/prompt-templates.md` — base character prompt, scene prompt library, SD negative
