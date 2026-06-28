@@ -4,13 +4,12 @@
     "soul_v1": {
       "higgsfield_soul_id": null,
       "soul_model": "soul_2",
-      "soul_status": "training_images_in_progress",
-      "training_image_count": 0,
-      "training_image_target": 8,
+      "soul_status": "images_ready",
+      "training_image_count": 8,
       "training_images_path": "kols/brooke-sinclair/images/soul_v1_training/",
       "training_manifest": "kols/brooke-sinclair/images/soul_v1_training.md",
       "hero_anchor_job_id": "30c5ffa0-0b07-4cfb-8cab-44165e58e892",
-      "note": "First training batch defined in soul_v1_training.md (8 shots, soul_2, 3:4/2k). Hero portrait (01) submitted; shots 02-08 pending — Higgsfield generation calls were blocked by an unresolved MCP approval in this session. Resume from the manifest once generation is unblocked, then train the Soul model and fill higgsfield_soul_id."
+      "note": "First training batch complete: 8 text-only soul_2 shots (3:4, 1536x2048) downloaded to soul_v1_training/, varied angles/scenes (frontal, two 3/4, full-body street, mirror selfie, pilates, gaming, night glam). Identity is approximately consistent (text-only varies face slightly across shots). Next: curate, train the Soul model, and fill higgsfield_soul_id. Job IDs and seeds in the manifest."
     }
   },
   "meta": {

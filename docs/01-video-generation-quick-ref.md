@@ -32,6 +32,7 @@
 | Sofia Vargas | sofia-vargas | ✅ | 待建 | — | 待定 | 待建 | 待建 | 第一優先 |
 | 香香 | xiang-xiang | ✅ | 待建 | — | 待定 | 待建 | 待建 | |
 | 謝奕甄 | xie-yizhen | ✅ | 待建 | — | 待定 | 待建 | 待建 | |
+| Brooke Sinclair | brooke-sinclair | ✅ | 待建 | — | 待定 | 待建 | 待建 | Soul v1 訓練圖 8 張已備（待訓練 Soul） |
 
 > 資產建立後更新此表，並在 `profile.json` 的 `generation` 欄位記錄對應值。
 
