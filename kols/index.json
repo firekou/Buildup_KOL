@@ -21,6 +21,16 @@
       "status": "active",
       "created_at": "2026-06-20",
       "path": "kols/xie-yizhen/"
+    },
+    {
+      "id": "brooke-sinclair",
+      "name": "Brooke Sinclair",
+      "handle": "@brookesinclair",
+      "category": "lifestyle",
+      "ethnicity": "White American",
+      "status": "draft",
+      "created_at": "2026-06-28",
+      "path": "kols/brooke-sinclair/"
     }
   ]
 }

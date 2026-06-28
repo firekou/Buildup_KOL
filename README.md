@@ -24,6 +24,8 @@ Buildup_KOL/
 | ID | 姓名 | 類型 | 族裔 | 狀態 |
 |----|------|------|------|------|
 | [sofia-vargas](kols/sofia-vargas/) | Sofia Vargas | 生活風格 | 哥倫比亞裔拉丁美洲人 | active |
+| [xie-yizhen](kols/xie-yizhen/) | 謝宜蓁 | 生活風格 | 台灣人 | active |
+| [brooke-sinclair](kols/brooke-sinclair/) | Brooke Sinclair | 生活風格 × 遊戲（性感） | 美國白人 | draft |
 
 ---
 
