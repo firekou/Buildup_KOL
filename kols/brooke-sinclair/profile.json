@@ -8,8 +8,9 @@
       "training_image_count": 8,
       "training_images_path": "kols/brooke-sinclair/images/soul_v1_training/",
       "training_manifest": "kols/brooke-sinclair/images/soul_v1_training.md",
-      "hero_anchor_job_id": "30c5ffa0-0b07-4cfb-8cab-44165e58e892",
-      "note": "First training batch complete: 8 text-only soul_2 shots (3:4, 1536x2048) downloaded to soul_v1_training/, varied angles/scenes (frontal, two 3/4, full-body street, mirror selfie, pilates, gaming, night glam). Identity is approximately consistent (text-only varies face slightly across shots). Next: curate, train the Soul model, and fill higgsfield_soul_id. Job IDs and seeds in the manifest."
+      "hero_anchor_job_id": "14a97563-5d43-45e6-bdae-4b6f5758300f",
+      "canonical_face_shot": "06_pilates_activewear.png",
+      "note": "Training set v2 complete: 8 soul_2 shots (3:4, 1536x2048) in soul_v1_training/. Shots 06-08 (pilates, gaming, night glam) confirmed as correct style by user — younger, sexier, male-appealing. Shots 01-05 re-generated with revised base prompt (platinum blonde, fair light golden skin, youthful fresh-faced) to converge toward shot 06 canonical face. All text-only (no reference image — soul_2 + ref triggers enhance_prompt, destroys scene diversity). Next: train Soul, fill higgsfield_soul_id. Job IDs and seeds in the manifest."
     }
   },
   "meta": {
