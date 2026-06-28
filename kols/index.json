@@ -21,6 +21,26 @@
       "status": "active",
       "created_at": "2026-06-20",
       "path": "kols/xie-yizhen/"
+    },
+    {
+      "id": "xiang-xiang",
+      "name": "香香",
+      "handle": null,
+      "category": "food_beverage_lifestyle",
+      "ethnicity": "Taiwanese",
+      "status": "photos_collected",
+      "created_at": "2026-06-21",
+      "path": "kols/xiang-xiang/"
+    },
+    {
+      "id": "chloe-lin",
+      "name": "Chloe Lin (林可昕)",
+      "handle": "@chloe.linnn",
+      "category": "lifestyle",
+      "ethnicity": "Eurasian (British-Taiwanese)",
+      "status": "draft",
+      "created_at": "2026-06-28",
+      "path": "kols/chloe-lin/"
     }
   ]
 }

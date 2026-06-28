@@ -24,6 +24,9 @@ Buildup_KOL/
 | ID | 姓名 | 類型 | 族裔 | 狀態 |
 |----|------|------|------|------|
 | [sofia-vargas](kols/sofia-vargas/) | Sofia Vargas | 生活風格 | 哥倫比亞裔拉丁美洲人 | active |
+| [xie-yizhen](kols/xie-yizhen/) | 謝宜蓁 | 生活風格 | 台灣人 | active |
+| [xiang-xiang](kols/xiang-xiang/) | 香香 | 餐飲 / 生活風格 | 台灣人 | photos_collected |
+| [chloe-lin](kols/chloe-lin/) | Chloe Lin（林可昕） | 生活風格（純欲風） | 歐亞混血（英台） | draft |
 
 ---
 
