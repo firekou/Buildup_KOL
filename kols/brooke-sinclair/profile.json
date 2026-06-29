@@ -1,6 +1,14 @@
 {
   "id": "brooke-sinclair",
   "ai_assets": {
+    "soul_v2": {
+      "higgsfield_soul_id": "ffb9187c-91db-48ec-9064-3fe34eb9850f",
+      "soul_model": "soul_2",
+      "soul_status": "training",
+      "training_image_count": 7,
+      "training_source": "3 verification images (portrait/street/cafe) + 4 new soul-generated shots (beach, GRWM, laughing brunch, evening dinner)",
+      "note": "Retrain using soul_v1-generated content images to reinforce identity consistency. All 7 images generated with soul_v1 soul_id."
+    },
     "soul_v1": {
       "higgsfield_soul_id": "be016235-f430-4afa-a879-40715f7f4cb5",
       "soul_model": "soul_2",
