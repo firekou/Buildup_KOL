@@ -1,6 +1,8 @@
 {
   "id": "brooke-sinclair",
   "ai_assets": {
+    "primary_soul_id": "a88ed2a4-a62f-454e-9829-216f505fc560",
+    "primary_soul_version": "soul_v3",
     "soul_v3": {
       "higgsfield_soul_id": "a88ed2a4-a62f-454e-9829-216f505fc560",
       "soul_model": "soul_2",
