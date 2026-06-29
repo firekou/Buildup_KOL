@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "mcp__higgsfield__generate_image|mcp__higgsfield__generate_video|mcp__higgsfield__generate_audio|mcp__higgsfield__show_characters|mcp__higgsfield__media_confirm",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/user/Buildup_KOL && BRANCH=$(git rev-parse --abbrev-ref HEAD) && TOOL=$(echo \"$CLAUDE_TOOL_NAME\" | sed 's/mcp__higgsfield__//') && (git diff --quiet && git diff --cached --quiet) && echo 'No changes to commit' || (git add -u && git commit -m \"auto: sync after higgsfield/${TOOL}\" && git pull origin \"$BRANCH\" --rebase 2>/dev/null && git push -u origin \"$BRANCH\" 2>/dev/null) || true",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

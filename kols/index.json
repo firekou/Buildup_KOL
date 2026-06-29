@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "description": "Master index of all KOL profiles in this database",
+  "kols": [
+    {
+      "id": "sofia-vargas",
+      "name": "Sofia Vargas",
+      "handle": "@sofiavargasreal",
+      "category": "lifestyle",
+      "ethnicity": "Latina (Colombian)",
+      "status": "active",
+      "created_at": "2026-06-20",
+      "path": "kols/sofia-vargas/"
+    },
+    {
+      "id": "xie-yizhen",
+      "name": "謝宜蓁",
+      "handle": "@yizhen.daily",
+      "category": "lifestyle",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-06-20",
+      "path": "kols/xie-yizhen/"
+    },
+    {
+      "id": "brooke-sinclair",
+      "name": "Brooke Sinclair",
+      "handle": "@brookesinclair",
+      "category": "lifestyle",
+      "ethnicity": "White American",
+      "status": "draft",
+      "created_at": "2026-06-28",
+      "path": "kols/brooke-sinclair/"
+    }
+  ]
+}
