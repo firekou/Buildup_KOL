@@ -4,7 +4,7 @@
     "soul_v3": {
       "higgsfield_soul_id": "a88ed2a4-a62f-454e-9829-216f505fc560",
       "soul_model": "soul_2",
-      "soul_status": "training",
+      "soul_status": "ready",
       "training_image_count": 8,
       "training_source": "8 v2 verification images (portrait/3/4/street/gaming/pilates/night/pool/dogs)",
       "note": "Third-generation bootstrap: trained entirely on v2 outputs to further converge identity."
