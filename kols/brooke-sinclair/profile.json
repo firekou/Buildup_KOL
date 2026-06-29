@@ -4,7 +4,7 @@
     "soul_v1": {
       "higgsfield_soul_id": "be016235-f430-4afa-a879-40715f7f4cb5",
       "soul_model": "soul_2",
-      "soul_status": "training",
+      "soul_status": "ready",
       "training_image_count": 8,
       "training_images_path": "kols/brooke-sinclair/images/soul_v1_training/",
       "training_manifest": "kols/brooke-sinclair/images/soul_v1_training.md",
