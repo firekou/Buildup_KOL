@@ -1,4 +1,18 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__higgs__generate_image",
+      "mcp__higgs__models_explore",
+      "mcp__higgs__show_reference_elements",
+      "mcp__higgs__show_generations",
+      "mcp__higgs__job_display",
+      "mcp__higgs__show_characters",
+      "mcp__higgs__balance",
+      "mcp__higgs__media_import_url",
+      "mcp__higgs__media_confirm",
+      "mcp__higgs__upscale_image"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
