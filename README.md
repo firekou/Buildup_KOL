@@ -29,6 +29,7 @@ Buildup_KOL/
 | [chloe-lin](kols/chloe-lin/) | Chloe Lin（林可昕） | 生活風格（純欲風） | 歐亞混血（英台） | draft |
 | [sienna-lai](kols/sienna-lai/) | Sienna Lai（賴思妍） | 生活風格（健康生活系 / Cute×Elegant） | 台裔加拿大人 | draft |
 | [brooke-sinclair](kols/brooke-sinclair/) | Brooke Sinclair | 生活風格 × 遊戲（性感） | 美國白人 | draft |
+| [mika-tran](kols/mika-tran/) | Mika Tran | 生活風格（真實 IP 風格 / Real-IP Sexy） | 越南裔美國人 | draft |
 
 ---
 

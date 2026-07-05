@@ -58,7 +58,7 @@ skin, realistic proportions, genuine emotion, confident but approachable. --ar 4
 
 ## Flavor 3 — Real-IP Sexy / Authentic-Bold
 
-**Worked example:** _(none yet — build one when briefed)_
+**Worked example:** `kols/mika-tran/`
 **Style inspiration handle:** `@11.mzzz` (referenced as inspiration only — see note below)
 
 - **Core:** a confident, sexy adult creator whose signature is feeling like a **real person**
