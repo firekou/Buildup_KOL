@@ -88,17 +88,21 @@ lifestyle photography, authentic candid moment. --ar 3:4
 
 ---
 
-## 3. 種子鏈工作流 (Seed Chain — Higgsfield Soul)
+## 3. 種子鏈工作流 (Seed Chain — Seedream + Reference Element)
 
-遵循本 repo 的 Soul bootstrap 流程（見 `kols/brooke-sinclair` 為範例）：
+> **模型指定：Seedream**（使用者指示：建立 KOL IP 用 Seedream）。
+> Higgsfield 的 **Soul** 只支援 `soul_2` / `soul_cinema`，不能用 Seedream，因此一致性改用
+> **Reference Element**。
 
-1. **v1 種子生成：** 用「基礎設定 prompt」以 **text-only**（`soul_cast`，**不帶 medias**——soul_2+ref 會觸發
-   enhance_prompt、破壞場景多樣性）生成一批（6–8 張），收斂出一致的基準臉。
-2. **訓練 Soul v1：** 用 5–20 張最一致的種子圖 `show_characters(action='train')`，約 10 分鐘。
-   拿到 `soul_id` 後填回 `profile.json` → `ai_assets.soul_v1.higgsfield_soul_id` 與 `primary_soul_id`。
-3. **收斂 v2 / v3（可選）：** 用 soul_v1 生成的內容圖再訓練，進一步鎖定身分一致性。
-4. **內容生成：** `generate_image(model='soul_2', soul_id=..., aspect_ratio='3:4', prompt=場景+Film Candid 後綴)`。
-5. **存檔：** 圖放 `kols/mika-tran/images/soul_v{n}_{batch}/`，job_id / soul_id 記回 `profile.json`，commit + push。
+1. **基準臉：** 用「基礎設定 prompt」以 **Seedream** text-to-image 生成 4 張，挑一張最符合人設的當基準臉。
+   （確切 Seedream 模型 id 以 `models_explore` 查詢確認。）
+2. **建立 Element：** `show_reference_elements(action='create')`，用基準臉那張 job → 取得 `element_id`。
+3. **內容種子：** 用 **Seedream + 該 Element** 生成 5–6 張 film-candid 場景圖，維持同一人臉。
+4. **存檔：** 圖放 `kols/mika-tran/images/seedream_v1/`，`element_id` / job_id 記回
+   `profile.json` → `ai_assets`，commit + push。
+
+（若要改走 Soul 路線：改用 soul_2 生成 + `show_characters(action='train')` 訓練 Soul，
+但內容模型即為 soul_2 而非 Seedream。）
 
 ---
 

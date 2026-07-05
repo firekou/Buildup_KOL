@@ -78,6 +78,10 @@ skin, realistic proportions, genuine emotion, confident but approachable. --ar 4
 - **Scenes:** bedroom/bathroom mirror selfies, car selfies, getting-ready, night-out, gym,
   casual home lounging, everyday candids.
 - **Aspect ratio default:** `--ar 4:5` (feed) / `9:16` (stories & reels).
+- **Generation stack (house default for this flavor):** **Seedream** text-to-image +
+  a Higgsfield **Reference Element** for identity consistency (generate canonical face →
+  `show_reference_elements(create)` → Seedream content shots). Note: Higgsfield **Souls** are
+  `soul_2`-only, so they are NOT used with Seedream — use an Element instead.
 - **Boundary (non-negotiable):** adult persona, confident/sexy but still **mainstream IG level —
   never explicit / NSFW**. Realness must never become non-consensual-looking, private, or explicit.
 

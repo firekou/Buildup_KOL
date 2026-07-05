@@ -104,18 +104,20 @@
     "community_name": "the gc (the group chat)"
   },
   "ai_assets": {
-    "primary_soul_id": null,
-    "primary_soul_version": null,
-    "soul_v1": {
-      "higgsfield_soul_id": null,
-      "soul_model": "soul_2",
-      "soul_status": "pending",
-      "training_images_path": "kols/mika-tran/images/soul_v1_training/",
-      "note": "Real-IP seed chain. Bootstrap v1 from text-only film-candid soul_cast generations (no reference image — soul_2/ref triggers enhance_prompt and kills scene diversity). Fill soul_id after training."
+    "consistency": "reference_element",
+    "generation_model": "seedream",
+    "primary_element_id": null,
+    "element_v1": {
+      "element_id": null,
+      "generation_model": "seedream",
+      "element_status": "pending",
+      "canonical_face_job_id": null,
+      "images_path": "kols/mika-tran/images/seedream_v1/",
+      "note": "Real-IP seed chain via Seedream + Reference Element (user directive: build KOL IP with Seedream). Souls are soul_2-only, so identity consistency uses a Higgsfield Reference Element instead: generate a canonical face with Seedream -> show_reference_elements(action=create) -> generate content shots with Seedream + this element_id. Exact Seedream model id to confirm via models_explore. Fill element_id + job ids after generation."
     }
   },
   "ai_prompts": {
-    "engine_notes": "Real-IP / Flavor-3 look. Seed chain: text-only soul_cast generations for a consistent base face, then train a Higgsfield Soul, then generate content via soul_2 + soul_id. Always film-candid, never studio. See /kol-generate-image and docs/02-kol-image-photography-standard.md.",
+    "engine_notes": "Real-IP / Flavor-3 look, generated with SEEDREAM (user directive). Seed chain: Seedream text-to-image canonical face -> save as a Higgsfield Reference Element (show_reference_elements) -> generate content shots with Seedream + that element for identity consistency (Souls are soul_2-only and not used here). Always film-candid, never studio. See /kol-generate-image and docs/02-kol-image-photography-standard.md.",
     "base_character_prompt": "A candid, authentic phone-camera photo of Mika, a 24-year-old Vietnamese-American woman, petite and curvy with a natural toned figure, soft round-oval face with high cheekbones, dark brown expressive slightly-sleepy eyes, natural monolid-to-low-crease, long dark brown-black hair in a messy claw-clip bun or air-dried waves, healthy skin with real texture and a few small freckles and moles, minimal or no makeup, a bold relaxed knowing expression. Real-person influencer vibe, not studio-polished. Shot on 35mm film camera, film grain, natural available light, authentic unstaged moment, natural skin texture. --ar 3:4",
     "negative_prompt_sd": "studio lighting, glossy, over-retouched, plastic skin, heavy smoothing, airbrushed, posing for camera, professional model pose, oversaturated, fake AI look, nsfw, explicit, deformed, extra fingers, watermark, logo, text",
     "scenes": [

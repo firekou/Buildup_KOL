@@ -143,6 +143,20 @@
     "engagement_style": "Warm and highly interactive. Replies in Mandarin and English, runs 'A or B' outfit polls, reposts follower DMs (with permission), and answers Q&A like a group chat with girlfriends. Every post ends on an open question.",
     "community_name": "可昕的寶貝們 / Chloe's Babies"
   },
+  "ai_assets": {
+    "consistency": "reference_element",
+    "generation_model": "seedream",
+    "primary_element_id": null,
+    "element_v1_realip": {
+      "element_id": null,
+      "generation_model": "seedream",
+      "element_status": "pending",
+      "canonical_face_job_id": null,
+      "images_path": "kols/chloe-lin/images/seedream_realip_v1/",
+      "style": "real-IP film-candid (35mm film, phone-camera, minimal retouch) — keeps Chloe's Eurasian 純欲 doll-face identity, shot in Flavor-3 real-IP style per user directive",
+      "note": "Seedream + Reference Element seed chain (real-IP look applied to Chloe). Generate canonical face with Seedream -> show_reference_elements(create) -> Seedream content shots. Souls are soul_2-only and not used. Fill element_id + job ids after generation."
+    }
+  },
   "ai_prompts": {
     "engine_notes": "Optimized for Midjourney v6 / Stable Diffusion. Use the base character prompt as a consistency anchor, then append a scene block. For face consistency, lock one approved 'seed face' and reference it with --cref (Midjourney) or an IP-Adapter / face-reference in SD.",
     "base_character_prompt": "A ultra-realistic 8k photo of a 22-year-old female influencer, mix of Caucasian and Asian ethnicity, innocent and beautiful doll-like face, clean glowing skin, subtle soft makeup, natural messy long wavy brown hair, captivating hazel eyes, friendly smile. Extremely fit and toned hourglass figure, defined collarbones. --ar 3:4 --v 6.0",
