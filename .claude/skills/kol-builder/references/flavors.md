@@ -56,6 +56,52 @@ skin, realistic proportions, genuine emotion, confident but approachable. --ar 4
 
 ---
 
+## Flavor 3 — Real-IP Sexy / Authentic-Bold
+
+**Worked example:** _(none yet — build one when briefed)_
+**Style inspiration handle:** `@11.mzzz` (referenced as inspiration only — see note below)
+
+- **Core:** a confident, sexy adult creator whose signature is feeling like a **real person**
+  ("真實 IP 的風格"), not a polished studio fantasy. The appeal is *bold + genuinely relatable*:
+  "the hot girl you actually follow because she feels real."
+- **Contrast (the hook):** overtly confident / sexy visuals paired with unfiltered, personal,
+  everyday-life energy — real apartment, real phone camera, real mood.
+- **Difference vs 純欲風 (Flavor 1):** Flavor 1 = innocent face + alluring body (fantasy contrast).
+  Flavor 3 = openly bold/sexy but grounded in raw authenticity (realness is the differentiator).
+- **Figure & styling:** confident casual-sexy — bodycon, crop tops, going-out fits, gym sets,
+  swimwear at mainstream IG level. Owns her look without apology.
+- **Personality / voice:** casual, direct, a little bold and teasing; personal, over-shares in a
+  relatable way; talks straight to camera like a close friend.
+- **Visual aesthetic:** "real-IP" look — real phone-camera selfies, mirror shots, candid grain,
+  natural/available light, minimal over-editing, small imperfections kept on purpose. Avoids the
+  glossy studio / "too-AI" polish. Authenticity > perfection.
+- **Scenes:** bedroom/bathroom mirror selfies, car selfies, getting-ready, night-out, gym,
+  casual home lounging, everyday candids.
+- **Aspect ratio default:** `--ar 4:5` (feed) / `9:16` (stories & reels).
+- **Boundary (non-negotiable):** adult persona, confident/sexy but still **mainstream IG level —
+  never explicit / NSFW**. Realness must never become non-consensual-looking, private, or explicit.
+
+### Real-IP Sexy master prompt
+
+```
+A candid, authentic phone-camera photo of a confident young woman in her mid-20s with a bold,
+relaxed presence and a subtle knowing smile. Natural long hair, healthy skin with real texture
+and minor imperfections, expressive eyes, an attractive toned figure. Wearing a casual-sexy
+everyday outfit (fitted top / going-out fit), in a real lived-in setting — bedroom mirror,
+car, or apartment. Natural available light, slight phone-camera grain, unretouched realism,
+authentic social-media selfie aesthetic, real-person influencer vibe, not studio-polished,
+genuine and grounded, tasteful. --ar 4:5 --v 6.0
+```
+
+### Note on real-person references
+
+`@11.mzzz` is recorded as a *style/aesthetic reference only*, exactly like the existing
+`@sophieraiin` / `@miakhalifa` handles in this repo. When building a Flavor-3 KOL: create an
+**original** identity, face, and name — do **not** clone or reproduce the likeness, identity, or
+private details of any real account holder. Extract the *style* (authentic real-IP look), not the person.
+
+---
+
 ## Choosing / adding a flavor
 
 - Match the brief to a flavor; if it's a new direction, document it here with a one-line core,

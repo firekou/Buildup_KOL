@@ -62,9 +62,10 @@ These are shared defaults; flavor-specific nuance lives in `references/flavors.m
 
 ## Reference files
 
-- `references/flavors.md` — the house persona flavors (純欲風 / innocent-alluring →
-  `chloe-lin`; Cute×Elegant×Confident×Approachable wholesome-aspirational → `sienna-lai`),
-  each with its own master prompt, color/scene/camera notes, and boundary. Pick one first.
+- `references/flavors.md` — the house persona flavors: 純欲風 / innocent-alluring →
+  `chloe-lin`; Cute×Elegant×Confident×Approachable wholesome-aspirational → `sienna-lai`;
+  Real-IP sexy / authentic-bold (real-person-feel) → no worked example yet. Each has its own
+  master prompt, color/scene/camera notes, and boundary. Pick one first.
 - `references/style-guideline.md` — full visual rules, persona archetypes, voice, content pillars,
   the four reference-profile archetypes and how to blend them.
 - `references/prompt-templates.md` — base character prompt, scene prompt library, SD negative
