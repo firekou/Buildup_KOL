@@ -28,6 +28,7 @@ Buildup_KOL/
 | [xiang-xiang](kols/xiang-xiang/) | 香香 | 餐飲 / 生活風格 | 台灣人 | photos_collected |
 | [chloe-lin](kols/chloe-lin/) | Chloe Lin（林可昕） | 生活風格（純欲風） | 歐亞混血（英台） | draft |
 | [sienna-lai](kols/sienna-lai/) | Sienna Lai（賴思妍） | 生活風格（健康生活系 / Cute×Elegant） | 台裔加拿大人 | draft |
+| [brooke-sinclair](kols/brooke-sinclair/) | Brooke Sinclair | 生活風格 × 遊戲（性感） | 美國白人 | draft |
 
 ---
 
