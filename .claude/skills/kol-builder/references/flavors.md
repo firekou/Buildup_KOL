@@ -106,6 +106,32 @@ private details of any real account holder. Extract the *style* (authentic real-
 
 ---
 
+## Flavor 4 — Male Real-IP / Confident-Casual
+
+**Worked example:** `kols/jax-calloway/`
+**Style standard:** `docs/03-kol-male-real-ip-standard.md` (extends `docs/02`'s Film Candid
+base with male-specific identity anchors, styling motifs, and scene genres)
+**Style inspiration:** 3 user-uploaded reference photos (festival, road-trip, streetwear) —
+recorded as style reference only; the KOL uses an **original** identity, not the pictured
+person's likeness.
+
+- **Core:** the first male flavor in this house. Same real-IP doctrine as Flavor 3 (candid,
+  unstaged, film-grain, never studio) but the identity/styling spec is male: sharp jawline,
+  gym-lean (not bodybuilder) build, recurring waistband/necklace/belt-buckle motifs.
+- **Contrast:** confident/attractive but always "caught doing something" — never a static
+  posed stance. A direct-camera glance still reads as "caught looking up," not a model stare.
+- **Scene genres (3, not one studio look):** festival golden hour, desert/road-trip casual,
+  streetwear fast-food candid — each proves the styling holds up under a different real-world
+  light (warm backlight, flat hazy daylight, mixed fluorescent).
+- **Generation stack:** **Seedream** (`seedream_v4_5`) + Higgsfield **Reference Element**
+  (embed `<<<element_id>>>` in the prompt) — same mechanism as Flavor 3, Souls are
+  soul_2-only so not used.
+- **Aspect ratio default:** `--ar 3:4`.
+- **Boundary:** adult persona, mainstream/brand-safe (shirtless festival/beach content is
+  standard mainstream social content) — confident and attractive, **never explicit/NSFW**.
+
+---
+
 ## Choosing / adding a flavor
 
 - Match the brief to a flavor; if it's a new direction, document it here with a one-line core,

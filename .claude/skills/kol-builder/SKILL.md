@@ -64,7 +64,9 @@ These are shared defaults; flavor-specific nuance lives in `references/flavors.m
 
 - `references/flavors.md` — the house persona flavors: 純欲風 / innocent-alluring →
   `chloe-lin`; Cute×Elegant×Confident×Approachable wholesome-aspirational → `sienna-lai`;
-  Real-IP sexy / authentic-bold (real-person-feel) → `mika-tran`. Each has its own
+  Real-IP sexy / authentic-bold (real-person-feel) → `mika-tran`; Male Real-IP /
+  Confident-Casual → `jax-calloway` (first male KOL; see `docs/03-kol-male-real-ip-standard.md`).
+  Each has its own
   master prompt, color/scene/camera notes, and boundary. Pick one first.
 - `references/style-guideline.md` — full visual rules, persona archetypes, voice, content pillars,
   the four reference-profile archetypes and how to blend them.

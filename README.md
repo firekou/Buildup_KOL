@@ -30,6 +30,7 @@ Buildup_KOL/
 | [sienna-lai](kols/sienna-lai/) | Sienna Lai（賴思妍） | 生活風格（健康生活系 / Cute×Elegant） | 台裔加拿大人 | draft |
 | [brooke-sinclair](kols/brooke-sinclair/) | Brooke Sinclair | 生活風格 × 遊戲（性感） | 美國白人 | draft |
 | [mika-tran](kols/mika-tran/) | Mika Tran | 生活風格（真實 IP 風格 / Real-IP Sexy） | 越南裔美國人 | draft |
+| [jax-calloway](kols/jax-calloway/) | Jax Calloway | 生活風格（Male Real-IP，首個男性 KOL） | 美國白人 | draft |
 
 ---
 

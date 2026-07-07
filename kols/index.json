@@ -71,6 +71,17 @@
       "status": "draft",
       "created_at": "2026-07-05",
       "path": "kols/mika-tran/"
+    },
+    {
+      "id": "jax-calloway",
+      "name": "Jax Calloway",
+      "handle": "@jax.calloway",
+      "category": "lifestyle",
+      "gender": "male",
+      "ethnicity": "White American",
+      "status": "draft",
+      "created_at": "2026-07-05",
+      "path": "kols/jax-calloway/"
     }
   ]
 }
