@@ -52,3 +52,12 @@ Buildup_KOL/
 - `persona`：人物原型、個性、價值觀、背景故事、語氣風格
 - `content`：內容支柱、格式、發文頻率、視覺美學、品牌合作原則
 - `social`：各平台帳號資訊、互動風格、粉絲社群名稱
+
+---
+
+## 延伸研究：本地端互動 AI 伴侶
+
+`research/local-ai-companion/` 是一條探索中的延伸研究：如何把 `kols/` 裡的靜態人格資料，變成一個
+可在本地端即時對話的 AI 伴侶（文字互動優先，語音/虛擬形象/直播為預留擴充）。詳見該資料夾的
+`README.md`，以及新增的三個專責 subagent：`local-ai-companion-architect`、
+`livestream-tech-specialist`、`local-llm-engineer`（定義於 `.claude/agents/`）。
