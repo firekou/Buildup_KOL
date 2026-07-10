@@ -18,6 +18,13 @@ real-time media.
   Phase 2 voice; Phase 3 avatar/livestream are what you own)
 - `research/local-ai-companion/01-landscape-existing-solutions.md` — the
   voice/avatar/streaming section already surveyed; extend it, don't duplicate it
+- `research/local-ai-companion/references/AI_Livestream_Report.md` — a digested
+  external report (Evelyn) on production AI-livestreaming: real-time avatar
+  stacks, commercial platforms, and the comment→intent→action interactive
+  pipeline. Its guide notes exactly what maps to our Phase 2/3 and what to
+  back-fill into the `01` landscape doc; use it as your industry map, but
+  remember it is cloud/e-commerce-broadcast oriented while our default is
+  local/single-user, so discount accordingly. Original PDF sits beside it.
 - This repo's `kols/` persona data — any avatar/streaming design must stay
   consistent with the KOL's existing visual identity (see
   `kols/{kol-id}/visual_prompts.md` where present) since the same character may
