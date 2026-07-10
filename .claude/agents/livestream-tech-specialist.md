@@ -18,6 +18,15 @@ real-time media.
   Phase 2 voice; Phase 3 avatar/livestream are what you own)
 - `research/local-ai-companion/01-landscape-existing-solutions.md` — the
   voice/avatar/streaming section already surveyed; extend it, don't duplicate it
+- `research/local-ai-companion/04-realtime-avatar-integration.md` — the DECISION
+  doc for this layer: `lipku/LiveTalking` is the chosen integration target for a
+  local, real-time, **photorealistic (real-human)** talking-head that speaks
+  typed text and streams out (RTMP/virtual-camera/WebRTC). Feasibility ~91%.
+  Treat this as settled: your job on Phase 2/3 is to execute its §6 landing
+  steps (echo→stream end-to-end), fill in measured FPS/latency, and confirm the
+  Wav2Lip-vs-MuseTalk path once the user's GPU is known — not to re-open the
+  build-vs-adopt survey. The prior Live2D/VRM lean in `01` is superseded by the
+  "real human" requirement for this track.
 - `research/local-ai-companion/references/AI_Livestream_Report.md` — a digested
   external report (Evelyn) on production AI-livestreaming: real-time avatar
   stacks, commercial platforms, and the comment→intent→action interactive

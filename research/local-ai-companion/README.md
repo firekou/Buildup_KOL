@@ -32,6 +32,8 @@ research/local-ai-companion/
 ├── 02-architecture-exploration.md     # 針對本案的初始模組化架構草案
 ├── 03-phase1-detailed-design.md       # Phase 1 詳細設計（可直接動手實作）：目錄結構、persona
 │                                       # 轉換演算法、session/context 演算法、API 契約、預設模型
+├── 04-realtime-avatar-integration.md  # Phase 2/3 決策：選定 lipku/LiveTalking 為真人數位人整合對象
+│                                       # （文字→語音→真人臉→直播），含可行性評分與落地步驟
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -62,6 +64,12 @@ research/local-ai-companion/
   契約、預設模型建議（暫定，待硬體資訊確認）
 - ✅ 收錄外部參考：Evelyn 的 AI 直播帶貨技術報告（`references/`）—— 產業現況、商用平台、留言→行為
   互動 pipeline，供 Phase 2/3 與 `livestream-tech-specialist` 使用（導讀已標註哪些可回填 01 文件）
+- ✅ **Phase 2/3 真人數位人整合對象定案（`04-realtime-avatar-integration.md`）** —— 以「本地可立即
+  整合、可行性最高」為目標盤點後，選定 **`lipku/LiveTalking`**（可行性 ~91% > 80% 門檻）：單一 repo
+  打通「打字文案 → 聲音（可克隆真人聲）→ 真人樣貌數位人對嘴 → RTMP/虛擬攝影機直播」。已附可行性
+  評分、Wav2Lip/MuseTalk 雙硬體路徑、與 kols/ 及 03 設計的整合點、可執行落地步驟
+- ⬜ 你確認 **GPU 型號**（決定 Wav2Lip vs MuseTalk，把可行性推向 ~95%+）
+- ⬜ 由 `livestream-tech-specialist` 依 `04` 第 6 節落地步驟實跑 echo→直播端到端，回填實測數據
 - ⬜ 由 `local-llm-engineer` 依實際硬體核定/調整 `03-phase1-detailed-design.md` 第 4.2 節的
   模型選型，並視需要展開更細的推論效能調校
 - ⬜ 選一個既有 KOL（例如 `kols/chloe-lin` 或 `kols/sienna-lai`）作為第一個試跑角色，驗證 Phase 1 端到端可行性
