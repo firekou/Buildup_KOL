@@ -29,7 +29,9 @@ AI 伴侶（概念上類似「AI 女友」）：使用者輸入文字，AI 以�
 research/local-ai-companion/
 ├── README.md                          # 本文件：目標、分期、角色分工
 ├── 01-landscape-existing-solutions.md # 現成方案調查（frontend / 推論後端 / 語音 / 虛擬形象）
-└── 02-architecture-exploration.md     # 針對本案的初始模組化架構草案
+├── 02-architecture-exploration.md     # 針對本案的初始模組化架構草案
+└── 03-phase1-detailed-design.md       # Phase 1 詳細設計（可直接動手實作）：目錄結構、persona
+                                        # 轉換演算法、session/context 演算法、API 契約、預設模型
 ```
 
 ## 三個新增的專責角色（`.claude/agents/`）
@@ -52,6 +54,9 @@ research/local-ai-companion/
 - ✅ 研究框架建立（本資料夾）
 - ✅ 現成方案調查（`01-landscape-existing-solutions.md`）
 - ✅ 初始架構探索（`02-architecture-exploration.md`）
-- ⬜ 由 `local-ai-companion-architect` 展開 Phase 1 的詳細模組設計與待決策問題
-- ⬜ 由 `local-llm-engineer` 定案模型/推論後端與 KOL persona → character card 的綁定機制
+- ✅ Phase 1 詳細設計（`03-phase1-detailed-design.md`）—— 目錄結構、persona → system prompt
+  轉換演算法（含真實 KOL 渲染範例）、session/context 組裝與裁剪/摘要演算法、Orchestrator API
+  契約、預設模型建議（暫定，待硬體資訊確認）
+- ⬜ 由 `local-llm-engineer` 依實際硬體核定/調整 `03-phase1-detailed-design.md` 第 4.2 節的
+  模型選型，並視需要展開更細的推論效能調校
 - ⬜ 選一個既有 KOL（例如 `kols/chloe-lin` 或 `kols/sienna-lai`）作為第一個試跑角色，驗證 Phase 1 端到端可行性
