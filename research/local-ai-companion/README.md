@@ -36,6 +36,8 @@ research/local-ai-companion/
 │                                       # （文字→語音→真人臉→直播），含可行性評分與落地步驟
 ├── 05-tts-integration-decision.md     # Voice 層獨立落地：無 GPU 環境下 EdgeTTS/Piper 雙 backend
 │                                       # 已實作並實測跑通（填實 03 文件的 voice/ 空殼），可行性 ~91%
+├── 06-elimination-analysis.md         # 反證法(消去法)方案定案：把行不通的全判死，收斂出唯一存活路徑
+│                                       # （含肢體動作/真實感標竿/聲音溫暖度三個新條件，及商用授權消去）
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
