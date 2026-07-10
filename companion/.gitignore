@@ -1,0 +1,5 @@
+voices/*.onnx
+voices/*.onnx.json
+data/sessions/
+__pycache__/
+*.pyc

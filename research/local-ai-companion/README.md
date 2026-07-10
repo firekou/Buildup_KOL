@@ -34,6 +34,8 @@ research/local-ai-companion/
 │                                       # 轉換演算法、session/context 演算法、API 契約、預設模型
 ├── 04-realtime-avatar-integration.md  # Phase 2/3 決策：選定 lipku/LiveTalking 為真人數位人整合對象
 │                                       # （文字→語音→真人臉→直播），含可行性評分與落地步驟
+├── 05-tts-integration-decision.md     # Voice 層獨立落地：無 GPU 環境下 EdgeTTS/Piper 雙 backend
+│                                       # 已實作並實測跑通（填實 03 文件的 voice/ 空殼），可行性 ~91%
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -73,3 +75,7 @@ research/local-ai-companion/
 - ⬜ 由 `local-llm-engineer` 依實際硬體核定/調整 `03-phase1-detailed-design.md` 第 4.2 節的
   模型選型，並視需要展開更細的推論效能調校
 - ⬜ 選一個既有 KOL（例如 `kols/chloe-lin` 或 `kols/sienna-lai`）作為第一個試跑角色，驗證 Phase 1 端到端可行性
+- ✅ **Voice 層（文字→人聲）已獨立落地並實測（`05-tts-integration-decision.md`）**——不依賴
+  GPU，在純 CPU sandbox 已跑通：`companion/src/companion/voice/` 新增 EdgeTTS（品質優先，
+  zh-TW 神經語音）與 Piper（完全離線備援）雙 backend，可行性 ~91%，附實測音檔
+- ⬜ 把 Voice 層接上 Orchestrator 的逐句緩衝邏輯，以及聲音克隆（GPT-SoVITS/CosyVoice）升級

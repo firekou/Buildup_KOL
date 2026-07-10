@@ -61,3 +61,7 @@ Buildup_KOL/
 可在本地端即時對話的 AI 伴侶（文字互動優先，語音/虛擬形象/直播為預留擴充）。詳見該資料夾的
 `README.md`，以及新增的三個專責 subagent：`local-ai-companion-architect`、
 `livestream-tech-specialist`、`local-llm-engineer`（定義於 `.claude/agents/`）。
+
+`companion/` 是對應的程式碼庫。目前已落地並實測：**Voice 層**（打字輸入文字 → 本地產生人聲
+音檔，EdgeTTS + Piper 雙 backend，無需 GPU），見 `companion/src/companion/voice/README.md` 與
+`research/local-ai-companion/05-tts-integration-decision.md`。
