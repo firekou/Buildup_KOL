@@ -27,6 +27,16 @@ real-time media.
   Wav2Lip-vs-MuseTalk path once the user's GPU is known — not to re-open the
   build-vs-adopt survey. The prior Live2D/VRM lean in `01` is superseded by the
   "real human" requirement for this track.
+- `research/local-ai-companion/05-poc-execution-plan.md` — the executable POC
+  protocol for `04`'s decision: exact install/run commands, `/human` API calls,
+  a hardware-driven Wav2Lip-vs-MuseTalk gate, a troubleshooting table, and a
+  results log template (§9). None of its commands have been run yet — this
+  research sandbox has no GPU, so it was written from the official README/
+  `docs/api.md`/`config.py`, not verified end-to-end. When the user reports
+  back from running it on their own GPU machine, your job is to take their §9
+  log, fill the real feasibility/FPS/latency numbers into `04`, and update this
+  plan's troubleshooting table with whatever new failure modes they actually
+  hit — not to redesign the protocol from scratch.
 - `research/local-ai-companion/references/AI_Livestream_Report.md` — a digested
   external report (Evelyn) on production AI-livestreaming: real-time avatar
   stacks, commercial platforms, and the comment→intent→action interactive

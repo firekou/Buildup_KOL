@@ -34,6 +34,8 @@ research/local-ai-companion/
 │                                       # 轉換演算法、session/context 演算法、API 契約、預設模型
 ├── 04-realtime-avatar-integration.md  # Phase 2/3 決策：選定 lipku/LiveTalking 為真人數位人整合對象
 │                                       # （文字→語音→真人臉→直播），含可行性評分與落地步驟
+├── 05-poc-execution-plan.md           # POC 實驗計畫書：把 04 的落地步驟展開成逐字可照做的指令、
+│                                       # 驗收判準、疑難排解、執行記錄表（在你自己的 GPU 機器上跑）
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -68,8 +70,12 @@ research/local-ai-companion/
   整合、可行性最高」為目標盤點後，選定 **`lipku/LiveTalking`**（可行性 ~91% > 80% 門檻）：單一 repo
   打通「打字文案 → 聲音（可克隆真人聲）→ 真人樣貌數位人對嘴 → RTMP/虛擬攝影機直播」。已附可行性
   評分、Wav2Lip/MuseTalk 雙硬體路徑、與 kols/ 及 03 設計的整合點、可執行落地步驟
-- ⬜ 你確認 **GPU 型號**（決定 Wav2Lip vs MuseTalk，把可行性推向 ~95%+）
-- ⬜ 由 `livestream-tech-specialist` 依 `04` 第 6 節落地步驟實跑 echo→直播端到端，回填實測數據
+- ✅ **POC 實驗計畫書（`05-poc-execution-plan.md`）** —— 把 `04` 的落地步驟展開成逐字可照做的
+  安裝指令、API 呼叫範例、驗收判準、疑難排解對照表、執行記錄表，需在有 NVIDIA GPU 的機器上實跑
+  （此研究環境本身無 GPU，指令未實測，已據官方 README/`docs/api.md`/`config.py` 逐條核實）
+- ⬜ 你確認 **GPU 型號**（決定 Wav2Lip vs MuseTalk，把可行性推向 ~95%+），並在該機器上依
+  `05-poc-execution-plan.md` 逐 Stage 執行，填回第 9 節執行記錄表
+- ⬜ 由 `livestream-tech-specialist` 依實測結果回填 `04` 文件的可行性評分與效能數據
 - ⬜ 由 `local-llm-engineer` 依實際硬體核定/調整 `03-phase1-detailed-design.md` 第 4.2 節的
   模型選型，並視需要展開更細的推論效能調校
 - ⬜ 選一個既有 KOL（例如 `kols/chloe-lin` 或 `kols/sienna-lai`）作為第一個試跑角色，驗證 Phase 1 端到端可行性
