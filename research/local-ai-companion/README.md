@@ -36,6 +36,8 @@ research/local-ai-companion/
 │                                       # （文字→語音→真人臉→直播），含可行性評分與落地步驟
 ├── 05-poc-execution-plan.md           # POC 實驗計畫書：把 04 的落地步驟展開成逐字可照做的指令、
 │                                       # 驗收判準、疑難排解、執行記錄表（在你自己的 GPU 機器上跑）
+├── 06-agent-execution-charter.md      # 給執行 agent 的規範書：Mac mini/筆電硬體分流判斷、目標、
+│                                       # 明確禁止事項、時間預算、回報格式 —— 交給實際執行的 agent 讀
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -73,8 +75,13 @@ research/local-ai-companion/
 - ✅ **POC 實驗計畫書（`05-poc-execution-plan.md`）** —— 把 `04` 的落地步驟展開成逐字可照做的
   安裝指令、API 呼叫範例、驗收判準、疑難排解對照表、執行記錄表，需在有 NVIDIA GPU 的機器上實跑
   （此研究環境本身無 GPU，指令未實測，已據官方 README/`docs/api.md`/`config.py` 逐條核實）
-- ⬜ 你確認 **GPU 型號**（決定 Wav2Lip vs MuseTalk，把可行性推向 ~95%+），並在該機器上依
-  `05-poc-execution-plan.md` 逐 Stage 執行，填回第 9 節執行記錄表
+- ✅ **Agent 執行規範書（`06-agent-execution-charter.md`）** —— 因應「準備 Mac mini 或筆電、交給
+  agent 執行」的需求：Gate 0 硬體偵測分流（**Mac mini 確定無法跑 CUDA，屬 Track B 低優先探索**；
+  有 NVIDIA GPU 的筆電走 Track A = `05` 文件）、明確禁止事項（不公開直播、不用未授權真人素材、
+  不花錢、不深度移植原始碼、不自動 push 回 repo）、時間預算上限、機器可驗證 vs 需人類親自確認的
+  回報格式
+- ⬜ 你決定要準備哪一台機器（建議優先 NVIDIA 獨顯筆電；Mac mini 僅作次要嘗試），把
+  `06-agent-execution-charter.md` 交給實際在那台機器上執行的 agent
 - ⬜ 由 `livestream-tech-specialist` 依實測結果回填 `04` 文件的可行性評分與效能數據
 - ⬜ 由 `local-llm-engineer` 依實際硬體核定/調整 `03-phase1-detailed-design.md` 第 4.2 節的
   模型選型，並視需要展開更細的推論效能調校
