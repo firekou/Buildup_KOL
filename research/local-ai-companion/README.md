@@ -40,6 +40,8 @@ research/local-ai-companion/
 │                                       # 明確禁止事項、時間預算、回報格式 —— 交給實際執行的 agent 讀
 ├── 07-literature-and-china-market-review.md # 學術文獻回顧（Wav2Lip/MuseTalk/VASA-1/Live Avatar 等）
 │                                       # ＋大陸數位人直播市場規模、廠商、案例、法規現況
+├── 08-livetalking-effectiveness-evidence.md # 動手前先看：LiveTalking 官方展示影片、可線上試用的
+│                                       # demo 網站、GitHub Issues 裡真實使用者回報的優缺點
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -88,6 +90,10 @@ research/local-ai-companion/
   市場規模（京東×艾瑞白皮書：2026 年超過 845.7 億人民幣）、主要廠商（騰訊智影/百度曦靈/硅基智能/
   阿里通義曉橙/商湯如影）、真實案例（羅永浩、京東 618、杭州/廣州店家 ROI）、法規時間點（2026/05
   四大類禁令、2026/06 強制標示 AI 主播）已整理，可回填 `04` 文件風險章節
+- ✅ **LiveTalking 效果證據彙整（`08-livetalking-effectiveness-evidence.md`）** —— 動手前先看：
+  README 官方三支展示影片（Wav2Lip/ER-NeRF/MuseTalk，Bilibili）、可線上試用的官方 demo 站
+  `livetalking.top`、GitHub Issue #525 回報硬體門檻可能更低（T4/A30、~4GB VRAM 即可）、Issue #510
+  回報即時打斷對話能力偏弱（最快 3 秒響應，官方尚未修復，但不影響 POC 主線的 echo 模式範圍）
 - ⬜ 你決定要準備哪一台機器（建議優先 NVIDIA 獨顯筆電；Mac mini 僅作次要嘗試），把
   `06-agent-execution-charter.md` 交給實際在那台機器上執行的 agent
 - ⬜ 由 `livestream-tech-specialist` 依實測結果回填 `04` 文件的可行性評分與效能數據
