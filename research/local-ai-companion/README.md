@@ -38,6 +38,8 @@ research/local-ai-companion/
 │                                       # 驗收判準、疑難排解、執行記錄表（在你自己的 GPU 機器上跑）
 ├── 06-agent-execution-charter.md      # 給執行 agent 的規範書：Mac mini/筆電硬體分流判斷、目標、
 │                                       # 明確禁止事項、時間預算、回報格式 —— 交給實際執行的 agent 讀
+├── 07-literature-and-china-market-review.md # 學術文獻回顧（Wav2Lip/MuseTalk/VASA-1/Live Avatar 等）
+│                                       # ＋大陸數位人直播市場規模、廠商、案例、法規現況
 └── references/                         # 外部參考資料（原件 + 導讀）
     ├── AI_Livestream_Report.pdf        #   Evelyn 的 AI 直播帶貨技術報告（原件保存）
     └── AI_Livestream_Report.md         #   ↑ 導讀：重點整理 + 對應到本專案 Phase 2/3 的註記
@@ -80,6 +82,12 @@ research/local-ai-companion/
   有 NVIDIA GPU 的筆電走 Track A = `05` 文件）、明確禁止事項（不公開直播、不用未授權真人素材、
   不花錢、不深度移植原始碼、不自動 push 回 repo）、時間預算上限、機器可驗證 vs 需人類親自確認的
   回報格式
+- ✅ **學術文獻與大陸市場回顧（`07-literature-and-china-market-review.md`）** —— 確認 Wav2Lip
+  （ACM MM 2020）、MuseTalk（TMElyralab）等 `04`/`05` 選用的模型本身是同儕審查發表過的研究，
+  非野生工具；阿里巴巴 Live Avatar（ECCV 2026）驗證同技術方向已有大廠頂會投入；大陸數位人直播
+  市場規模（京東×艾瑞白皮書：2026 年超過 845.7 億人民幣）、主要廠商（騰訊智影/百度曦靈/硅基智能/
+  阿里通義曉橙/商湯如影）、真實案例（羅永浩、京東 618、杭州/廣州店家 ROI）、法規時間點（2026/05
+  四大類禁令、2026/06 強制標示 AI 主播）已整理，可回填 `04` 文件風險章節
 - ⬜ 你決定要準備哪一台機器（建議優先 NVIDIA 獨顯筆電；Mac mini 僅作次要嘗試），把
   `06-agent-execution-charter.md` 交給實際在那台機器上執行的 agent
 - ⬜ 由 `livestream-tech-specialist` 依實測結果回填 `04` 文件的可行性評分與效能數據
