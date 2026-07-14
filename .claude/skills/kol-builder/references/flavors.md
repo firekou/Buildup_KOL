@@ -132,6 +132,77 @@ person's likeness.
 
 ---
 
+## Flavor 5 — Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)
+
+**Worked examples:** `kols/adrian-quek/` (Rule Researcher), `kols/elena-soh/`
+(World Observer), `kols/kai-cheung/` (Digital-Experience Observer).
+**Origin:** the three `Project A01/A02/A03` operating manuals — a livestream-first
+"AI 數字人 IP" family built for the **showgame.live** platform.
+
+- **Core:** NOT a fashion/lifestyle model. A calm, credible **"observer / researcher"**
+  digital human whose appeal is *depth* — they make you understand something, not want
+  something. "因為思考方式關注他，而不是因為某一次熱點。" The hook is intellect + restraint.
+- **Contrast (the hook):** born from a gaming/casino-adjacent platform, yet the persona
+  deliberately climbs *one level up* — never gambling how-to, only the **rules, math,
+  architecture, history, culture, and experience-design** behind it. Substance where the
+  category usually sells hype.
+- **Three sub-archetypes (each = one worked example):**
+  - **Rule Researcher (規則研究者)** — probability / game-theory / decision-science; baccarat
+    & Texas Hold'em treated purely as *rule systems*. Minimal, mature, "study-room" energy.
+  - **World Observer (世界觀察者)** — travel / hotels / architecture / city culture; casino
+    resorts observed as *buildings and design*. Quiet-luxury, cinematic, documentary.
+  - **Digital-Experience Observer (數字體驗觀察者)** — AI / film / games / animation; slot
+    themes observed as *visual, sound & UX design*. Young, futurist, experimental.
+- **Personality / voice:** slow, warm, precise; never absolutes ("最好 / 第一"), prefers
+  "我注意到… / 我覺得有意思的是…"; admits "我不知道"; ends on a *question to think about*,
+  not a hype CTA. Long-term credibility over trend-chasing.
+- **Visual aesthetic:** cinematic / editorial / documentary — quiet-luxury wardrobe, natural
+  light, real environments (library, hotel lounge, café, museum, city streets, a tech lab).
+  Faces "grow on you" (耐看型). Almost no selfies of self as the subject — the *world* is the
+  subject. Avoids glossy over-AI polish and any flashy 炫富 framing.
+- **Aspect ratio default:** `--ar 3:4` (portrait) / `16:9` (cinematic B-roll & livestream stills).
+- **Boundary (non-negotiable, compliance-first):** adult persona; **discusses only rules,
+  history, culture, architecture, design, and experience — NEVER gambling strategy, odds
+  prediction, "how to win", or any betting-profit guidance.** Casino/slot topics are treated
+  strictly as architecture / math / design / culture. No 炫富, no 地域對立, no fabricated
+  facts. This boundary is copied verbatim into every `brand_dont` and character card.
+
+### Intellectual Digital-Human master prompts
+
+```
+# Rule Researcher (male, 33)
+A cinematic, editorial photograph of a calm, composed 33-year-old Singaporean man with a
+clean, mature, understated presence — the kind of face that grows on you. Short neat dark
+hair, quiet intelligent eyes, light stubble-free skin with real texture. Wearing quiet-luxury
+minimalist business-academic clothing: crisp white shirt, navy blazer or fine-gauge high-neck
+knit, no visible logos, a mechanical watch. Seated at a spotless desk or in a book-lined study
+/ hotel executive lounge with a fountain pen, a black notebook, and a black coffee. Natural
+window light, shallow depth of field, muted premium color grade, documentary realism, trustworthy
+and thoughtful. --ar 3:4
+
+# World Observer (female, 29)
+A cinematic, editorial travel photograph of an elegant, natural, intelligent 29-year-old
+Singaporean woman with an approachable quiet-luxury presence — refined but warm, grows on you.
+Softly wavy dark hair, calm observant eyes, healthy natural skin with real texture, minimal
+"no-makeup" makeup. Wearing French-minimal quiet-luxury natural fabrics (linen, wool, silk) in
+off-white / oatmeal / khaki / navy / deep green, no big logos, a silk scarf, a small film camera
+around her neck. In a real cultural setting — grand hotel lobby, museum, old-city lane, city
+balcony at golden hour. She is often looking at the architecture, not the lens. Natural light,
+cinematic shallow depth of field, muted premium grade, documentary lifestyle realism. --ar 3:4
+
+# Digital-Experience Observer (male, 26)
+A cinematic photograph of a young, smart, creative 26-year-old Hong Kong man with a slightly
+mysterious, future-facing presence — looks like a startup founder / designer, not a suit. Neat
+modern hair, curious sharp eyes, clear skin with real texture. Wearing tech-minimal futurist
+casual: black tee or white shirt under a loose relaxed blazer, clean sneakers, black / grey /
+navy palette, no loud logos, a smartwatch and wireless earbuds. In a "future-lab" setting —
+multi-monitor desk with screen glow, a design studio, a game expo, or a neon city night. Cool
+screen-lit color, cinematic contrast, shallow depth of field, editorial tech aesthetic, creative
+and experimental. --ar 3:4
+```
+
+---
+
 ## Choosing / adding a flavor
 
 - Match the brief to a flavor; if it's a new direction, document it here with a one-line core,

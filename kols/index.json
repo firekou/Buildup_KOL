@@ -82,6 +82,45 @@
       "status": "draft",
       "created_at": "2026-07-05",
       "path": "kols/jax-calloway/"
+    },
+    {
+      "id": "adrian-quek",
+      "name": "Adrian Quek (郭亦然)",
+      "handle": "@adrian.rulesroom",
+      "category": "knowledge_culture",
+      "gender": "male",
+      "ethnicity": "Singaporean Chinese",
+      "status": "draft",
+      "created_at": "2026-07-14",
+      "path": "kols/adrian-quek/",
+      "project_code": "Project A01",
+      "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
+    },
+    {
+      "id": "elena-soh",
+      "name": "Elena Soh (蘇以恬)",
+      "handle": "@elena.worldnotes",
+      "category": "travel_culture",
+      "gender": "female",
+      "ethnicity": "Singaporean Chinese",
+      "status": "draft",
+      "created_at": "2026-07-14",
+      "path": "kols/elena-soh/",
+      "project_code": "Project A02",
+      "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
+    },
+    {
+      "id": "kai-cheung",
+      "name": "Kai Cheung (張凱睿)",
+      "handle": "@kai.futurelab",
+      "category": "digital_culture",
+      "gender": "male",
+      "ethnicity": "Hong Kong Chinese",
+      "status": "draft",
+      "created_at": "2026-07-14",
+      "path": "kols/kai-cheung/",
+      "project_code": "Project A03",
+      "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
     }
   ]
 }
