@@ -126,15 +126,21 @@
   },
   "ai_assets": {
     "consistency": "reference_element",
-    "generation_model": "seedream",
-    "primary_element_id": null,
+    "generation_model": "seedream_v4_5",
+    "primary_element_id": "a0509497-4047-4623-ba2e-a43a76740e5f",
     "element_v1": {
-      "element_id": null,
-      "generation_model": "seedream",
-      "element_status": "pending",
-      "canonical_face_job_id": null,
+      "element_id": "a0509497-4047-4623-ba2e-a43a76740e5f",
+      "element_name": "kai-cheung-a03",
+      "generation_model": "seedream_v4_5",
+      "element_status": "completed",
+      "canonical_face_job_id": "6cae163f-1dd9-4f6b-b477-7e92d90ae6d1",
       "images_path": "kols/kai-cheung/images/seedream_v1/",
-      "note": "Intellectual Digital-Human seed chain. Generate a young, smart, slightly-mysterious founder-type male face with Seedream (text-only) -> show_reference_elements(action=create) -> generate content shots with Seedream + <<<element_id>>> embedded. Souls are soul_2-only and not used. Fill element_id + job ids after generation. Cinematic tech aesthetic, screen-lit, never solemn-corporate."
+      "generated_scenes": [
+        { "file": "scene_A_future_lab_desk.png", "job_id": "b06922b3-678a-4a05-b011-662fb6197c29", "ar": "3:4" },
+        { "file": "scene_F_ai_experiment_closeup.png", "job_id": "4a9d1cd1-a05c-4069-8de5-71c2746c1f54", "ar": "3:4" },
+        { "file": "scene_G_livestream_16x9.png", "job_id": "493bd370-cdac-451b-89cb-6a49acdc6388", "ar": "16:9" }
+      ],
+      "note": "Identity locked via Higgsfield Reference Element (embed <<<a0509497-4047-4623-ba2e-a43a76740e5f>>> in Seedream prompts). Canonical face + 3 seed scenes generated 2026-07-14. Cinematic tech aesthetic, screen-lit, founder-not-suit. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
     }
   },
   "ai_prompts": {

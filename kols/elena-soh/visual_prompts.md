@@ -116,8 +116,10 @@ documentary travel detail. --ar 16:9
 ## 3. 一致性工作流 (Consistent Character)
 
 1. **刷種子臉：** 用「基礎設定 Prompt」生成多張優雅自然、有親和力的女性臉孔，挑一張最「耐看」的當基準臉。
-2. **鎖臉：**
-   - **Seedream（本 Flavor 房規預設）：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
+2. **鎖臉（已完成 v1）：**
+   - **已建立 Reference Element：** `elena-soh-a02` → **`<<<94a1aa08-c337-4125-b85b-b3eaa7a02463>>>`**（基準臉 job `303f8566-cfdf-40cd-bc0f-f6bbcb0a1bfc`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
+   - 已產出種子場景：`scene_A_hotel_lobby` / `scene_F_resort_architecture_16x9`（綜合度假區＝純建築，無賭博元素）/ `scene_G_livestream_16x9`（見 `images/seedream_v1/`）。
+   - **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
    - **Midjourney：** `--cref <基準臉URL> --cw 100`。
    - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。多數場景「城市 / 建築為主角」，本人可縮小或側身。

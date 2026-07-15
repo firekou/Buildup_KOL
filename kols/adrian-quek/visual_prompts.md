@@ -108,8 +108,10 @@ cinematic documentary detail shot. --ar 16:9
 ## 3. 一致性工作流 (Consistent Character)
 
 1. **刷種子臉：** 用「基礎設定 Prompt」生成多張沉靜男性臉孔，挑一張最「耐看可信」的當基準臉。
-2. **鎖臉：**
-   - **Seedream（本 Flavor 房規預設）：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → 之後在 prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
+2. **鎖臉（已完成 v1）：**
+   - **已建立 Reference Element：** `adrian-quek-a01` → **`<<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>>`**（基準臉 job `27fd22bc-7d72-4bc9-bf8c-9c9f69b0341c`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
+   - 已產出種子場景：`scene_A_study_desk` / `scene_C_whiteboard_teardown` / `scene_F_livestream_16x9`（見 `images/seedream_v1/`）。
+   - **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
    - **Midjourney：** `--cref <基準臉URL> --cw 100`。
    - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。

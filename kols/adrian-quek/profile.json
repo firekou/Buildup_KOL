@@ -125,15 +125,21 @@
   },
   "ai_assets": {
     "consistency": "reference_element",
-    "generation_model": "seedream",
-    "primary_element_id": null,
+    "generation_model": "seedream_v4_5",
+    "primary_element_id": "2e323b3e-9d41-4ed1-829e-0c32c53bdcb5",
     "element_v1": {
-      "element_id": null,
-      "generation_model": "seedream",
-      "element_status": "pending",
-      "canonical_face_job_id": null,
+      "element_id": "2e323b3e-9d41-4ed1-829e-0c32c53bdcb5",
+      "element_name": "adrian-quek-a01",
+      "generation_model": "seedream_v4_5",
+      "element_status": "completed",
+      "canonical_face_job_id": "27fd22bc-7d72-4bc9-bf8c-9c9f69b0341c",
       "images_path": "kols/adrian-quek/images/seedream_v1/",
-      "note": "Intellectual Digital-Human seed chain. Generate a calm canonical male face with Seedream (text-only) -> show_reference_elements(action=create) -> generate content shots with Seedream + <<<element_id>>> embedded. Souls are soul_2-only and not used. Fill element_id + job ids after generation. Cinematic-documentary, never studio-glossy."
+      "generated_scenes": [
+        { "file": "scene_A_study_desk.png", "job_id": "b6634ec2-bc54-49fd-8c05-a0ff2be64004", "ar": "3:4" },
+        { "file": "scene_C_whiteboard_teardown.png", "job_id": "02ef0caa-d8b1-421e-9132-18625a9c45c5", "ar": "3:4" },
+        { "file": "scene_F_livestream_16x9.png", "job_id": "29eb212a-6cca-4467-ba39-e005d37049f3", "ar": "16:9" }
+      ],
+      "note": "Identity locked via Higgsfield Reference Element (embed <<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>> in Seedream prompts). Canonical face + 3 seed scenes generated 2026-07-14. Cinematic-documentary, quiet-luxury. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
     }
   },
   "ai_prompts": {
