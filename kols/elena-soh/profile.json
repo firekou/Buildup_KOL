@@ -141,6 +141,16 @@
         { "file": "scene_G_livestream_16x9.png", "job_id": "6b3258c5-85ca-4c71-a07a-eeb27697db84", "ar": "16:9" }
       ],
       "note": "Identity locked via Higgsfield Reference Element (embed <<<94a1aa08-c337-4125-b85b-b3eaa7a02463>>> in Seedream prompts). Canonical face + 3 seed scenes generated 2026-07-14. Cinematic-documentary travel, quiet-luxury; the world is often the subject. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
+    },
+    "videos_reels_v1": {
+      "generation_model": "kling3_0_turbo",
+      "duration_sec": 5,
+      "resolution": "720p",
+      "videos_path": "kols/elena-soh/videos/reels_v1/",
+      "clips": [
+        { "file": "clip_resort_atrium_pushin.mp4", "job_id": "c9aa5fe5-16f1-4d03-a81f-e311e0c6a953", "start_image_job": "48843828-f7ce-498e-a603-58d362443183", "motion": "slow architectural push-in + gaze up to the skylight — 《建築會說話》 clip (architecture only, compliance-safe)" }
+      ],
+      "note": "Image-to-video via Higgsfield kling3_0_turbo, seed frame = a generated scene job_id (role start_image). ~7.5 credits / 5s clip."
     }
   },
   "ai_prompts": {

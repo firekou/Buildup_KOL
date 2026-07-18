@@ -141,6 +141,16 @@
         { "file": "scene_G_livestream_16x9.png", "job_id": "493bd370-cdac-451b-89cb-6a49acdc6388", "ar": "16:9" }
       ],
       "note": "Identity locked via Higgsfield Reference Element (embed <<<a0509497-4047-4623-ba2e-a43a76740e5f>>> in Seedream prompts). Canonical face + 3 seed scenes generated 2026-07-14. Cinematic tech aesthetic, screen-lit, founder-not-suit. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
+    },
+    "videos_reels_v1": {
+      "generation_model": "kling3_0_turbo",
+      "duration_sec": 5,
+      "resolution": "720p",
+      "videos_path": "kols/kai-cheung/videos/reels_v1/",
+      "clips": [
+        { "file": "clip_future_lab_screenglow.mp4", "job_id": "3480b906-8277-46fc-9d5f-c9d0c4890cdb", "start_image_job": "b06922b3-678a-4a05-b011-662fb6197c29", "motion": "lean toward monitors + screen-light flicker on face — 《AI實驗》 clip" }
+      ],
+      "note": "Image-to-video via Higgsfield kling3_0_turbo, seed frame = a generated scene job_id (role start_image). ~7.5 credits / 5s clip."
     }
   },
   "ai_prompts": {

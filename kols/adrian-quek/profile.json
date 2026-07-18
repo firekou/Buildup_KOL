@@ -136,10 +136,24 @@
       "images_path": "kols/adrian-quek/images/seedream_v1/",
       "generated_scenes": [
         { "file": "scene_A_study_desk.png", "job_id": "b6634ec2-bc54-49fd-8c05-a0ff2be64004", "ar": "3:4" },
+        { "file": "scene_B_library_reading.png", "job_id": "f79d1e7e-52be-465f-b3a6-645b8bad3676", "ar": "3:4" },
         { "file": "scene_C_whiteboard_teardown.png", "job_id": "02ef0caa-d8b1-421e-9132-18625a9c45c5", "ar": "3:4" },
-        { "file": "scene_F_livestream_16x9.png", "job_id": "29eb212a-6cca-4467-ba39-e005d37049f3", "ar": "16:9" }
+        { "file": "scene_D_hotel_lounge.png", "job_id": "d8010065-cb05-4f75-9526-18f996734d42", "ar": "3:4" },
+        { "file": "scene_E_airport_reading.png", "job_id": "a556fcad-8f8d-4766-aa91-1b3f961b0797", "ar": "3:4" },
+        { "file": "scene_F_livestream_16x9.png", "job_id": "29eb212a-6cca-4467-ba39-e005d37049f3", "ar": "16:9" },
+        { "file": "scene_stilllife_book_pen_coffee_16x9.png", "job_id": "f4249da1-d29d-4aa5-a65b-32cab9a66aec", "ar": "16:9", "note": "no-people signature intro still-life" }
       ],
-      "note": "Identity locked via Higgsfield Reference Element (embed <<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>> in Seedream prompts). Canonical face + 3 seed scenes generated 2026-07-14. Cinematic-documentary, quiet-luxury. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
+      "note": "Identity locked via Higgsfield Reference Element (embed <<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>> in Seedream prompts). Canonical face + FULL scene set (A/B/C/D/E/F + still-life) generated 2026-07-14. Cinematic-documentary, quiet-luxury. To extend: reuse the same element_id with new scene blocks from visual_prompts.md."
+    },
+    "videos_reels_v1": {
+      "generation_model": "kling3_0_turbo",
+      "duration_sec": 5,
+      "resolution": "720p",
+      "videos_path": "kols/adrian-quek/videos/reels_v1/",
+      "clips": [
+        { "file": "clip_whiteboard_teardown.mp4", "job_id": "85406886-4507-4f1c-9fcd-5e0d2c3d0827", "start_image_job": "02ef0caa-d8b1-421e-9132-18625a9c45c5", "motion": "gentle marker gesture + subtle head movement — 《案例拆解》 talking clip" }
+      ],
+      "note": "Image-to-video via Higgsfield kling3_0_turbo, seed frame = a generated scene job_id (role start_image). ~7.5 credits / 5s clip."
     }
   },
   "ai_prompts": {
