@@ -204,6 +204,30 @@
 - IG 公開 Reel 可用 **`yt-dlp`** 直接下載（WebFetch / 瀏覽器會被 IG 擋 429）；私人帳號需登入 cookie。
 - 下載內容僅供**內部取材 / 動作參考驅動 / storyboard**，不得二次發佈（版權屬原創作者 / 經紀公司）。
 
+### F.6 動作驅動 POC 實測（2026-07-21）✅ 驗證成功
+
+以 DANZZUP STREET JAZZ 為動作驅動，實測「乾淨商業線條能否移轉到我們 KOL」：
+
+| 項目 | 設定 |
+|------|------|
+| 工具 | Higgsfield **Kling 3.0 Motion Control**（`motion_control`），720p |
+| 角色圖 | Sofia Vargas 全身圖 `soul_v3_training/09_wynwood_fullbody.png`（單人正面全身） |
+| 動作驅動 | DANZZUP Reel 裁成 **單人中央 9:16 × 6s**（前排 lead，去背景群舞干擾、去音軌） |
+| `scene_control` | `image`（背景取自 Sofia 原圖街景；動作取自 DANZZUP） |
+| 輸出 | **720×1280 / 5.6s / 30fps**（比自研 404×720 更清楚） |
+
+**結果評估：**
+- ✅ **舞步移轉乾淨**：isolation / 傾身 / 手臂 hit / body roll 都轉入，編舞感與線條俐落度明顯優於自研片
+- ✅ **identity 穩定**：臉 / 身材 / 穿搭（crop top + 牛仔褲，本就合街舞美學）全程一致
+- ✅ **解析度自動提升**：Kling 輸出 720p，順帶達成「§C.0 隱形三補」的放大
+- ✅ **單人裁切有效**：Kling 鎖定 lead，無其他舞者亂入
+- ⚠️ 快動作幀有動態模糊、轉身時臉偶爾糊 1–2 幀 → 可加 face-restore（GFPGAN / CodeFormer）補
+- ⚠️ 此版背景＝角色原圖街景；若要 DANZZUP 教室 spotlight，改 `scene_control=video`
+
+**可複製配方（結論）：**
+> **KOL 全身正面圖 + 從取材 Reel 裁出的「單人中央 9:16」驅動片 → Kling Motion Control（`scene_control=image` 保 KOL 場景 / `video` 借教室 spotlight）→ 720p 輸出 → face-restore 補臉。**
+> 這條路直接把「§C.a 舞步線條」和「§C.0 解析度」兩塊短板一次補上，是目前縮小與外部工具差距最有效的單一手段。
+
 ---
 
 ## 附錄：差距與調優一句話總結
