@@ -1,4 +1,4 @@
-# Adrian Quek — Visual / AI Image Prompts
+# Tan XiaoXiao — Visual / AI Image Prompts
 
 給 Seedream / Midjourney v6 / Stable Diffusion 使用的角色視覺設定。
 （結構化版本同步存於 [`profile.json`](profile.json) 的 `ai_prompts` 區塊。）
@@ -22,7 +22,7 @@
 每張圖都以這段墊底，作為一致性錨點，再接場景區塊。
 
 ```
-A cinematic, editorial photograph of Adrian, a calm and composed 33-year-old
+A cinematic, editorial photograph of XiaoXiao, a calm and composed 30-year-old
 Singaporean Chinese man with a clean, mature, understated presence — the kind
 of face that grows on you. Short neat dark hair, quiet intelligent attentive
 eyes, healthy skin with real texture. Wearing quiet-luxury minimalist
@@ -45,7 +45,7 @@ look, nsfw, explicit, deformed, extra fingers, watermark, text
 
 ### 場景 A — 書房書桌（招牌思考畫面）
 ```
-Adrian seated at a spotless minimalist desk in a book-lined study, a single
+XiaoXiao seated at a spotless minimalist desk in a book-lined study, a single
 open notebook, a fountain pen resting on it, a cup of black coffee, one laptop
 closed to the side, twirling the pen while thinking and looking slightly
 off-camera, warm floor-to-ceiling window light behind, muted premium color
@@ -55,7 +55,7 @@ focused. --ar 3:4
 
 ### 場景 B — 圖書館閱讀
 ```
-Adrian standing among tall wooden library shelves holding an open book,
+XiaoXiao standing among tall wooden library shelves holding an open book,
 dog-earing a page, calm absorbed expression, soft diffused daylight from high
 windows, dust motes in the light, navy blazer over white shirt, cinematic
 muted tones, editorial documentary photography. --ar 3:4
@@ -63,7 +63,7 @@ muted tones, editorial documentary photography. --ar 3:4
 
 ### 場景 C — 白板案例拆解（教學招牌）
 ```
-Adrian mid-explanation at a whiteboard covered in a clean probability tree
+XiaoXiao mid-explanation at a whiteboard covered in a clean probability tree
 diagram and flowchart arrows, marker in hand, mid-gesture, engaged teaching
 expression, fine-gauge high-neck knit, soft neutral workspace light, cinematic,
 credible educator vibe, real texture. --ar 3:4
@@ -71,7 +71,7 @@ credible educator vibe, real texture. --ar 3:4
 
 ### 場景 D — 酒店行政酒廊（金色光思考）
 ```
-Adrian sitting by a large window in a quiet hotel executive lounge at golden
+XiaoXiao sitting by a large window in a quiet hotel executive lounge at golden
 hour, a black coffee and a Kindle on the marble table, city skyline softly out
 of focus behind, smelling the coffee before a sip, quiet-luxury minimal outfit,
 warm cinematic light, muted grade, contemplative and composed. --ar 3:4
@@ -79,7 +79,7 @@ warm cinematic light, muted grade, contemplative and composed. --ar 3:4
 
 ### 場景 E — 機場候機閱讀（長途旅人）
 ```
-Adrian seated in a modern airport lounge reading on a Kindle, noise-cancelling
+XiaoXiao seated in a modern airport lounge reading on a Kindle, noise-cancelling
 headphones around his neck, a black notebook and fountain pen beside him, soft
 grey daylight through tall glass, understated navy-and-grey outfit, calm
 long-haul-traveller mood, cinematic documentary realism, shallow depth of
@@ -90,7 +90,7 @@ field. --ar 3:4
 ```
 A warm 'study room' livestream setup — a wooden desk with a book, a stack of
 notes, a fountain pen and black coffee, a soft bookshelf background with warm
-practical lamps, Adrian looking into the camera with a calm welcoming
+practical lamps, XiaoXiao looking into the camera with a calm welcoming
 half-smile, natural warm key light, cinematic, intimate learning-space mood,
 16:9 composition. --ar 16:9
 ```
@@ -107,11 +107,11 @@ cinematic documentary detail shot. --ar 16:9
 
 ## 3. 一致性工作流 (Consistent Character)
 
-1. **刷種子臉：** 用「基礎設定 Prompt」生成多張沉靜男性臉孔，挑一張最「耐看可信」的當基準臉。
-2. **鎖臉（已完成 v1）：**
-   - **已建立 Reference Element：** `adrian-quek-a01` → **`<<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>>`**（基準臉 job `27fd22bc-7d72-4bc9-bf8c-9c9f69b0341c`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
-   - 已產出種子場景：`scene_A_study_desk` / `scene_C_whiteboard_teardown` / `scene_F_livestream_16x9`（見 `images/seedream_v1/`）。
-   - **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
+1. **刷種子臉：** ~~用「基礎設定 Prompt」生成多張沉靜男性臉孔~~ → **2026-07-27 起改用客戶提供的真人參考照**（`images/ref/xiaoxiao_01_fullbody_front.png` / `xiaoxiao_02_kneeup_side.png` / `xiaoxiao_03_face_closeup.png`），不再從文字 prompt 生成基準臉。
+2. **鎖臉（待重建）：**
+   - **舊 Reference Element 已失效並移除：** ~~`adrian-quek-a01` → `<<<2e323b3e-9d41-4ed1-829e-0c32c53bdcb5>>>`~~（舊人設的基準臉，`images/seedream_v1/` 整批舊種子場景與 `videos/reels_v1/` 舊影片已一併刪除，不再使用）。
+   - **下一步：** 用 `images/ref/` 底下的真人照片建立新的 Reference Element（或訓練 Higgsfield Soul），鎖定 Tan XiaoXiao 的臉，再依本檔場景庫重新生成 A–F 整套場景。
+   - **Seedream 工作流：** 上傳真人參考照 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
    - **Midjourney：** `--cref <基準臉URL> --cw 100`。
    - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。
