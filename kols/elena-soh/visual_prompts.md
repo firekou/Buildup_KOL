@@ -1,4 +1,4 @@
-# Elena Soh — Visual / AI Image Prompts
+# Faye Tan — Visual / AI Image Prompts
 
 給 Seedream / Midjourney v6 / Stable Diffusion 使用的角色視覺設定。
 （結構化版本同步存於 [`profile.json`](profile.json) 的 `ai_prompts` 區塊。）
@@ -22,8 +22,8 @@
 每張圖都以這段墊底，作為一致性錨點，再接場景區塊。
 
 ```
-A cinematic, editorial travel photograph of Elena, an elegant, natural,
-intelligent 29-year-old Singaporean Chinese woman with an approachable
+A cinematic, editorial travel photograph of Faye, an elegant, natural,
+intelligent 30-year-old Singaporean Chinese woman with an approachable
 quiet-luxury presence — refined but warm, the kind of face that grows on you.
 Softly wavy dark hair, calm observant eyes, healthy natural skin with real
 texture, minimal no-makeup makeup. Wearing French-minimal quiet-luxury natural
@@ -46,7 +46,7 @@ fake AI look, nsfw, explicit, deformed, extra fingers, watermark, text
 
 ### 場景 A — 酒店大堂觀察（人小、建築大）
 ```
-Elena standing in a grand heritage hotel lobby looking up at the architecture
+Faye standing in a grand heritage hotel lobby looking up at the architecture
 and the light, small film camera in hand, quiet-luxury linen outfit and silk
 scarf, warm directional daylight through tall windows, cinematic wide shot with
 her small in the frame, muted premium grade, documentary travel realism, the
@@ -55,7 +55,7 @@ architecture is the subject. --ar 3:4
 
 ### 場景 B — 老城小巷散步
 ```
-Elena walking slowly down a quiet old European city lane holding a paper map,
+Faye walking slowly down a quiet old European city lane holding a paper map,
 looking off toward a doorway and a streetlight, no navigation, oatmeal wool
 coat, natural overcast light, film grain, cinematic candid travel photography,
 unhurried mood, real texture. --ar 3:4
@@ -63,7 +63,7 @@ unhurried mood, real texture. --ar 3:4
 
 ### 場景 C — 博物館光線（感受光十秒）
 ```
-Elena standing still in a minimalist museum gallery feeling the light before
+Faye standing still in a minimalist museum gallery feeling the light before
 lifting her camera, soft skylight, a sculpture softly out of focus behind, calm
 absorbed expression, quiet-luxury neutral outfit, cinematic muted tones,
 editorial documentary photography. --ar 3:4
@@ -71,7 +71,7 @@ editorial documentary photography. --ar 3:4
 
 ### 場景 D — 咖啡館窗邊寫筆記
 ```
-Elena sitting by a café window drawing a small map in a travel notebook with a
+Faye sitting by a café window drawing a small map in a travel notebook with a
 fountain pen, a coffee and a film camera on the marble table, warm afternoon
 window light, silk scarf, film-photography texture, cinematic, intimate and
 contemplative. --ar 3:4
@@ -79,7 +79,7 @@ contemplative. --ar 3:4
 
 ### 場景 E — 城市陽台黃昏
 ```
-Elena standing on a city balcony at golden-hour dusk looking out over the
+Faye standing on a city balcony at golden-hour dusk looking out over the
 skyline, a film camera resting in her hands, silk scarf moving slightly in the
 wind, warm cinematic backlight, muted premium grade, the city vista dominant in
 the frame, documentary realism. --ar 3:4
@@ -87,7 +87,7 @@ the frame, documentary realism. --ar 3:4
 
 ### 場景 F — 綜合度假區建築（僅建築 / 設計，合規）
 ```
-Elena standing in the soaring atrium of a modern integrated-resort hotel
+Faye standing in the soaring atrium of a modern integrated-resort hotel
 looking up at the ceiling art, geometry, and light — observing it purely as
 architecture and design, NO gaming elements in frame, quiet-luxury outfit,
 dramatic architectural daylight, cinematic wide shot, muted premium tones,
@@ -98,7 +98,7 @@ documentary architecture photography. --ar 16:9
 ```
 A warm 'travel living room' livestream setup — a soft armchair, a stack of
 photo prints and an old map on a wooden table, a film camera and a coffee, warm
-practical lamps and a shelf of travel books behind, Elena looking into the
+practical lamps and a shelf of travel books behind, Faye looking into the
 camera with a warm gentle smile, natural warm key light, cinematic intimate
 mood, 16:9 composition. --ar 16:9
 ```
