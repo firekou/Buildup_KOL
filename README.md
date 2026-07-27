@@ -33,7 +33,7 @@ Buildup_KOL/
 | [jax-calloway](kols/jax-calloway/) | Jax Calloway | 生活風格（Male Real-IP，首個男性 KOL） | 美國白人 | draft |
 | [adrian-quek](kols/adrian-quek/) | Adrian Quek（郭亦然） | 智性數字人 · 規則研究者（A01 / showgame.live） | 新加坡華人 | draft |
 | [elena-soh](kols/elena-soh/) | Elena Soh（蘇以恬） | 智性數字人 · 世界觀察者（A02 / showgame.live） | 新加坡華人 | draft |
-| [kai-cheung](kols/kai-cheung/) | Kai Cheung（張凱睿） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 香港華人 | draft |
+| [kai-cheung](kols/kai-cheung/) | Loi Ma Cheung（張萊孖） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | draft |
 
 ---
 
