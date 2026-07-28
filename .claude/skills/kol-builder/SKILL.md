@@ -72,6 +72,13 @@ These are shared defaults; flavor-specific nuance lives in `references/flavors.m
   the four reference-profile archetypes and how to blend them.
 - `references/prompt-templates.md` — base character prompt, scene prompt library, SD negative
   prompt, and the consistent-character workflow (--cref / IP-Adapter / Higgsfield Soul).
+- `references/content-production-rules.md` — caption tone rules (casual/daily, no lecturing or
+  poetic-quote endings), which platforms accept image-only posts, video shooting constraints
+  (single continuous handheld phone take, camera movement OK, no cuts/transitions/effects, and
+  keep the shot within a realistically filmable time span), and AI-generation feasibility limits
+  (no legible on-screen text/UI, no exact reproductions of real copyrighted scenes). Load this
+  whenever writing post captions or shooting/prompt directions for content — update it directly
+  when new client feedback changes these rules.
 - `assets/profile.template.json` — fill-in-the-blank profile conforming to the schema.
 - `assets/character-card.template.md` — the structured "Claude brain" card for writing posts/replies.
 
