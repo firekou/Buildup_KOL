@@ -134,8 +134,8 @@ person's likeness.
 
 ## Flavor 5 — Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)
 
-**Worked examples:** `kols/adrian-quek/` (Rule Researcher), `kols/elena-soh/`
-(World Observer), `kols/kai-cheung/` (Digital-Experience Observer).
+**Worked examples:** `kols/xiaoxiao-tan/` (Rule Researcher), `kols/faye-tan/`
+(World Observer), `kols/loima-cheung/` (Digital-Experience Observer).
 **Origin:** the three `Project A01/A02/A03` operating manuals — a livestream-first
 "AI 數字人 IP" family built for the **showgame.live** platform.
 

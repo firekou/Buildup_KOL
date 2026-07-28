@@ -116,13 +116,13 @@ shallow depth of field, editorial tech detail, no people. --ar 16:9
 
 1. **刷種子臉：** 用「基礎設定 Prompt」生成多張年輕、聰明、帶點神秘的「創業者 / 設計師」男性臉孔，挑一張最有創造感的當基準臉。
 2. **鎖臉（已完成 v1）：**
-   - **已建立 Reference Element：** `kai-cheung-a03` → **`<<<a0509497-4047-4623-ba2e-a43a76740e5f>>>`**（基準臉 job `6cae163f-1dd9-4f6b-b477-7e92d90ae6d1`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
+   - **已建立 Reference Element：** `loima-cheung-a03` → **`<<<a0509497-4047-4623-ba2e-a43a76740e5f>>>`**（基準臉 job `6cae163f-1dd9-4f6b-b477-7e92d90ae6d1`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
    - 已產出種子場景：`scene_A_future_lab_desk` / `scene_F_ai_experiment_closeup` / `scene_G_livestream_16x9`（見 `images/seedream_v1/`）。
    - **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
    - **Midjourney：** `--cref <基準臉URL> --cw 100`。
    - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。多用屏幕光與冷調。
-4. **存檔：** 把 `element_id` 與各 job id 記錄回 `profile.json` 的 `ai_assets`，圖片放進 `kols/kai-cheung/images/`。
+4. **存檔：** 把 `element_id` 與各 job id 記錄回 `profile.json` 的 `ai_assets`，圖片放進 `kols/loima-cheung/images/`。
 
 ---
 

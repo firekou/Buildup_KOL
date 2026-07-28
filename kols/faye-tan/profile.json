@@ -1,5 +1,5 @@
 {
-  "id": "elena-soh",
+  "id": "faye-tan",
   "meta": {
     "created_at": "2026-07-14",
     "updated_at": "2026-07-27",
@@ -133,11 +133,11 @@
     "primary_element_id": "94a1aa08-c337-4125-b85b-b3eaa7a02463",
     "element_v1": {
       "element_id": "94a1aa08-c337-4125-b85b-b3eaa7a02463",
-      "element_name": "elena-soh-a02",
+      "element_name": "faye-tan-a02",
       "generation_model": "seedream_v4_5",
       "element_status": "completed",
       "canonical_face_job_id": "303f8566-cfdf-40cd-bc0f-f6bbcb0a1bfc",
-      "images_path": "kols/elena-soh/images/seedream_v1/",
+      "images_path": "kols/faye-tan/images/seedream_v1/",
       "generated_scenes": [
         { "file": "scene_A_hotel_lobby.png", "job_id": "d23684e3-8147-42ab-a820-5e06cb274fa7", "ar": "3:4" },
         { "file": "scene_F_resort_architecture_16x9.png", "job_id": "48843828-f7ce-498e-a603-58d362443183", "ar": "16:9", "compliance_note": "integrated-resort atrium shot as ARCHITECTURE ONLY — no gaming elements in frame" },
@@ -149,7 +149,7 @@
       "generation_model": "kling3_0_turbo",
       "duration_sec": 5,
       "resolution": "720p",
-      "videos_path": "kols/elena-soh/videos/reels_v1/",
+      "videos_path": "kols/faye-tan/videos/reels_v1/",
       "clips": [
         { "file": "clip_resort_atrium_pushin.mp4", "job_id": "c9aa5fe5-16f1-4d03-a81f-e311e0c6a953", "start_image_job": "48843828-f7ce-498e-a603-58d362443183", "motion": "slow architectural push-in + gaze up to the skylight — 《建築會說話》 clip (architecture only, compliance-safe)" }
       ],

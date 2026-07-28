@@ -84,7 +84,7 @@
       "path": "kols/jax-calloway/"
     },
     {
-      "id": "adrian-quek",
+      "id": "xiaoxiao-tan",
       "name": "Tan XiaoXiao (陳曉曉)",
       "handle": "@xiaoxiao.rulesroom",
       "category": "knowledge_culture",
@@ -92,12 +92,12 @@
       "ethnicity": "Singaporean Chinese",
       "status": "draft",
       "created_at": "2026-07-14",
-      "path": "kols/adrian-quek/",
+      "path": "kols/xiaoxiao-tan/",
       "project_code": "Project A01",
       "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
     },
     {
-      "id": "elena-soh",
+      "id": "faye-tan",
       "name": "Faye Tan (陳曉菲)",
       "handle": "@faye.worldnotes",
       "category": "travel_culture",
@@ -105,12 +105,12 @@
       "ethnicity": "Singaporean Chinese",
       "status": "draft",
       "created_at": "2026-07-14",
-      "path": "kols/elena-soh/",
+      "path": "kols/faye-tan/",
       "project_code": "Project A02",
       "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
     },
     {
-      "id": "kai-cheung",
+      "id": "loima-cheung",
       "name": "Loi Ma Cheung (張萊孖)",
       "handle": "@loima.futurelab",
       "category": "digital_culture",
@@ -118,7 +118,7 @@
       "ethnicity": "Malaysian Chinese",
       "status": "draft",
       "created_at": "2026-07-14",
-      "path": "kols/kai-cheung/",
+      "path": "kols/loima-cheung/",
       "project_code": "Project A03",
       "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
     }

@@ -115,7 +115,7 @@ cinematic documentary detail shot. --ar 16:9
    - **Midjourney：** `--cref <基準臉URL> --cw 100`。
    - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。
-4. **存檔：** 把 `element_id` 與各 job id 記錄回 `profile.json` 的 `ai_assets`，圖片放進 `kols/adrian-quek/images/`。
+4. **存檔：** 把 `element_id` 與各 job id 記錄回 `profile.json` 的 `ai_assets`，圖片放進 `kols/xiaoxiao-tan/images/`。
 
 ---
 

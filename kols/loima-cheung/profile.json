@@ -1,5 +1,5 @@
 {
-  "id": "kai-cheung",
+  "id": "loima-cheung",
   "meta": {
     "created_at": "2026-07-14",
     "updated_at": "2026-07-27",
@@ -133,11 +133,11 @@
     "primary_element_id": "a0509497-4047-4623-ba2e-a43a76740e5f",
     "element_v1": {
       "element_id": "a0509497-4047-4623-ba2e-a43a76740e5f",
-      "element_name": "kai-cheung-a03",
+      "element_name": "loima-cheung-a03",
       "generation_model": "seedream_v4_5",
       "element_status": "completed",
       "canonical_face_job_id": "6cae163f-1dd9-4f6b-b477-7e92d90ae6d1",
-      "images_path": "kols/kai-cheung/images/seedream_v1/",
+      "images_path": "kols/loima-cheung/images/seedream_v1/",
       "generated_scenes": [
         { "file": "scene_A_future_lab_desk.png", "job_id": "b06922b3-678a-4a05-b011-662fb6197c29", "ar": "3:4" },
         { "file": "scene_F_ai_experiment_closeup.png", "job_id": "4a9d1cd1-a05c-4069-8de5-71c2746c1f54", "ar": "3:4" },
@@ -149,7 +149,7 @@
       "generation_model": "kling3_0_turbo",
       "duration_sec": 5,
       "resolution": "720p",
-      "videos_path": "kols/kai-cheung/videos/reels_v1/",
+      "videos_path": "kols/loima-cheung/videos/reels_v1/",
       "clips": [
         { "file": "clip_future_lab_screenglow.mp4", "job_id": "3480b906-8277-46fc-9d5f-c9d0c4890cdb", "start_image_job": "b06922b3-678a-4a05-b011-662fb6197c29", "motion": "lean toward monitors + screen-light flicker on face — 《AI實驗》 clip" }
       ],
