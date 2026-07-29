@@ -23,7 +23,7 @@
 
 ```
 A cinematic, editorial photograph of XiaoXiao, a calm and composed 30-year-old
-Singaporean Chinese man with a clean, mature, understated presence — the kind
+Malaysian Chinese man with a clean, mature, understated presence — the kind
 of face that grows on you. Short neat dark hair, quiet intelligent attentive
 eyes, healthy skin with real texture. Wearing quiet-luxury minimalist
 business-academic clothing: a crisp white shirt with a navy blazer or a
