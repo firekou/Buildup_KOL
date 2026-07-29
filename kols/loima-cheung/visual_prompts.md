@@ -1,4 +1,4 @@
-# Loi Ma Cheung — Visual / AI Image Prompts
+# Zhang Qinfeng — Visual / AI Image Prompts
 
 給 Seedream / Midjourney v6 / Stable Diffusion 使用的角色視覺設定。
 （結構化版本同步存於 [`profile.json`](profile.json) 的 `ai_prompts` 區塊。）
@@ -22,7 +22,7 @@
 每張圖都以這段墊底，作為一致性錨點，再接場景區塊。
 
 ```
-A cinematic photograph of Loi Ma, a young, smart, creative 30-year-old Malaysian
+A cinematic photograph of Qinfeng, a young, smart, creative 30-year-old Malaysian
 Chinese man with a slightly mysterious, future-facing presence — looks like a
 startup founder or designer, not a suit. Neat modern slightly tousled hair,
 curious sharp bright eyes, clear skin with real texture. Wearing tech-minimal
@@ -45,7 +45,7 @@ glossy, fake AI look, nsfw, explicit, deformed, extra fingers, watermark, text
 
 ### 場景 A — 未來實驗室書桌（招牌畫面）
 ```
-Loi Ma at a multi-monitor desk glowing with UI, code, and AI-generated images,
+Qinfeng at a multi-monitor desk glowing with UI, code, and AI-generated images,
 leaning in testing something with a curious focused expression, a mechanical
 keyboard and a tablet on the desk, wireless earbuds in, black tee under a loose
 blazer, cool screen-lit color with a warm practical lamp accent, cinematic
@@ -54,7 +54,7 @@ contrast, shallow depth of field, editorial tech aesthetic. --ar 3:4
 
 ### 場景 B — 放映室看電影（研究一個鏡頭）
 ```
-Loi Ma sitting in a dim private screening room, a paused cinematic film frame
+Qinfeng sitting in a dim private screening room, a paused cinematic film frame
 glowing on the big screen behind, looking back over his shoulder mid-thought as
 if noticing a detail, projector light and screen glow on his face, tech-minimal
 outfit, cinematic teal-and-amber contrast, shallow depth of field,
@@ -63,7 +63,7 @@ film-analysis mood. --ar 3:4
 
 ### 場景 C — 遊戲展觀察（設計角度）
 ```
-Loi Ma walking through a neon-lit game expo hall studying a display, colorful
+Qinfeng walking through a neon-lit game expo hall studying a display, colorful
 screen glow and blurred crowd behind, curious engaged expression, sneakers and
 loose blazer, dynamic cinematic lighting, muted neon accents, editorial
 documentary tech photography, real texture. --ar 3:4
@@ -71,7 +71,7 @@ documentary tech photography, real texture. --ar 3:4
 
 ### 場景 D — 設計工作室分析牆
 ```
-Loi Ma standing before a wall of pinned UI screenshots, film frames, and
+Qinfeng standing before a wall of pinned UI screenshots, film frames, and
 generative-art prints, gesturing mid-explanation connecting ideas, clean modern
 studio, soft daylight plus screen glow, tech-minimal outfit, cinematic,
 creative teaching energy. --ar 3:4
@@ -79,7 +79,7 @@ creative teaching energy. --ar 3:4
 
 ### 場景 E — 霓虹城市夜景
 ```
-Loi Ma on a rooftop or walkway at night with a neon Kuala Lumpur cityscape
+Qinfeng on a rooftop or walkway at night with a neon Kuala Lumpur cityscape
 (Petronas Towers skyline) and screen billboards behind, hands in pockets
 looking out thoughtfully, cool neon rim
 light, cinematic night contrast, tech-minimal jacket, future-facing mood,
@@ -88,7 +88,7 @@ shallow depth of field, editorial realism. --ar 3:4
 
 ### 場景 F — AI 實驗特寫（屏幕光眼神）
 ```
-Close-up over the shoulder as Loi Ma watches an AI generate an image / animation on
+Close-up over the shoulder as Qinfeng watches an AI generate an image / animation on
 screen, reflected screen glow in his eyes, slight surprised delighted
 expression, wireless earbuds, dark room lit only by the monitor, cinematic tech
 aesthetic, real skin texture, shallow depth of field. --ar 3:4
@@ -98,7 +98,7 @@ aesthetic, real skin texture, shallow depth of field. --ar 3:4
 ```
 A young creator's 'future lab' livestream setup — a desk with monitors showing
 AI tools and film stills, a game controller and VR headset nearby, film posters
-and RGB-accent shelves behind, Loi Ma looking into the camera with a bright
+and RGB-accent shelves behind, Qinfeng looking into the camera with a bright
 welcoming half-smile, cool screen key light with a warm accent, cinematic,
 energetic experimental mood, 16:9 composition. --ar 16:9
 ```
@@ -116,11 +116,11 @@ shallow depth of field, editorial tech detail, no people. --ar 16:9
 
 1. **刷種子臉：** 用「基礎設定 Prompt」生成多張年輕、聰明、帶點神秘的「創業者 / 設計師」男性臉孔，挑一張最有創造感的當基準臉。
 2. **鎖臉（已完成 v1）：**
-   - **已建立 Reference Element：** `loima-cheung-a03` → **`<<<a0509497-4047-4623-ba2e-a43a76740e5f>>>`**（基準臉 job `6cae163f-1dd9-4f6b-b477-7e92d90ae6d1`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
-   - 已產出種子場景：`scene_A_future_lab_desk` / `scene_F_ai_experiment_closeup` / `scene_G_livestream_16x9`（見 `images/seedream_v1/`）。
-   - **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
-   - **Midjourney：** `--cref <基準臉URL> --cw 100`。
-   - **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
+- **已建立 Reference Element：** `zhang-qinfeng-a03` → **`<<<a0509497-4047-4623-ba2e-a43a76740e5f>>>`**（基準臉 job `6cae163f-1dd9-4f6b-b477-7e92d90ae6d1`）。之後所有場景 prompt 直接在開頭嵌入此 element_id 即可鎖臉。
+- 已產出種子場景：`scene_A_future_lab_desk` / `scene_F_ai_experiment_closeup` / `scene_G_livestream_16x9`（見 `images/seedream_v1/`）。
+- **Seedream 工作流：** 生成基準臉 → `show_reference_elements(action=create)` 建立 Reference Element → prompt 內嵌 `<<<element_id>>>` 生成各場景。Souls 為 soul_2 專用，不與 Seedream 混用。
+- **Midjourney：** `--cref <基準臉URL> --cw 100`。
+- **Stable Diffusion：** IP-Adapter / InstantID 或訓練專屬 LoRA。
 3. **批次生成：** 基準臉鎖定後，固定基礎設定，只替換場景區塊，產出整套內容。多用屏幕光與冷調。
 4. **存檔：** 把 `element_id` 與各 job id 記錄回 `profile.json` 的 `ai_assets`，圖片放進 `kols/loima-cheung/images/`。
 
