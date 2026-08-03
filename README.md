@@ -37,6 +37,19 @@ Buildup_KOL/
 
 ---
 
+## 製作標準文件（`docs/`）
+
+| 文件 | 內容 |
+|------|------|
+| [01-video-generation-quick-ref](docs/01-video-generation-quick-ref.md) | 影片生成資產清單、後製管線、故障排除 |
+| [02-kol-image-photography-standard](docs/02-kol-image-photography-standard.md) | 靜態圖像預設風格 Film Candid、生活化動作準則 |
+| [03-kol-male-real-ip-standard](docs/03-kol-male-real-ip-standard.md) | 男性 KOL 專屬：身分錨點、造型母題、三種場域 |
+| [04-kol-dance-video-generation-techniques](docs/04-kol-dance-video-generation-techniques.md) | 舞蹈原型庫、5 種打光原型、卡拍與 QA 清單 |
+| [05-kol-dance-inhouse-method-and-tuning](docs/05-kol-dance-inhouse-method-and-tuning.md) | 自研舞蹈法差距分析、五維調優、取材與動作驅動 |
+| [06-viral-content-framework-and-four-axis-judgment](docs/06-viral-content-framework-and-four-axis-judgment.md) | **爆款方法論**（雷達／七欄拆解／五大母公式）與**娛樂性・音樂性・真實性・動作流暢性**四維判準 |
+
+---
+
 ## 新增 KOL 流程
 
 1. 在 `kols/` 下建立新目錄，命名規則：`{firstname}-{lastname}`（kebab-case）
