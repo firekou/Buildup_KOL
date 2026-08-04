@@ -56,6 +56,18 @@ Higgsfield Reference Element 名稱仍為 `kai-cheung-a03`（本次即以此鎖�
 
 > 兩版同 prompt、同鎖臉，唯一變因是模型 → 用來比對「聲線 + 對嘴 + 走路手持感」三項。
 
+### 產出（2026-08-04）
+
+| 版本 | Job ID | 成品 |
+|------|--------|------|
+| A · Seedance 2.0 | `b0de954a-1703-43e9-b6bc-713d34124523` | `hf_20260804_102144_b0de954a-1703-43e9-b6bc-713d34124523.mp4` |
+| B · Kling 3.0 pro | `8adf87b2-daab-47c3-baf4-0774d2e6b82f` | `hf_20260804_102144_8adf87b2-daab-47c3-baf4-0774d2e6b82f.mp4` |
+
+成品位於 Higgsfield 帳號的 generation 紀錄（CDN 前綴 `d8j0ntlcm91z4.cloudfront.net/user_3EteJc16XfecK7cZ6jFej2RURYi/`）；
+定案後請下載存入 `kols/loima-cheung/videos/podcast_ep01/`。
+
+**耗用點數：** A 135 credits／B 37.5 credits。
+
 **聲音方向（prompt 內指定）：** 溫暖、中低音、放鬆的男聲，咬字乾淨、語氣帶一點笑意，
 中文自然口語節奏不趕；環境音只留輕微街聲。
 
