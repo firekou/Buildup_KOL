@@ -1,21 +1,33 @@
 #!/usr/bin/env python3
 """
-亞洲網紅風美顏濾鏡 (Asian-creator beauty filter)
-- 磨皮 (skin smoothing): frequency-separation style, masked to face skin only
-- 細紋淡化 (fine line reduction): comes with the smoothing
-- 瘦下巴/瘦臉 (jaw slimming): mediapipe face-mesh landmark-driven inward warp
-- 提亮/柔光 (brighten + soft glow)
+KOL 美顏濾鏡 — 雙風格 (dual-style creator beauty filter)
 
-Keeps eyes, brows, lips, nostrils sharp so the face doesn't go plastic.
+usage: beauty_filter.py IN OUT [SMOOTH] [SLIM] [GLOW] [STYLE]
+       STYLE = asian | western   (default: asian)
+
+--- asian (抖音/小紅書風) ---
+  磨皮：抹平毛孔細紋、膚色勻淨白皙
+  瘦臉：下顎內推、下巴收窄 V 線
+  柔光：提亮 + 降紅
+
+--- western (Instagram clean-girl / glowy 風) ---
+  **保留毛孔與雀斑**——西方審美視為健康與個性，磨掉反而假
+  勻色：只在 LAB 的 a/b 色度通道抹平斑駁，**亮度細節完全保留**
+  水光：高光 bloom（screen blend）做出 dewy「由內發光」感
+  曬感：暖調 + 微飽和 + S 曲線對比（西方濾鏡對比高，亞洲濾鏡偏平亮）
+  幾乎不變形臉型（靠打光修飾而非推臉）
+
+兩種風格都排除眼、眉、唇、鼻孔，避免五官糊掉＝蠟像感。
 """
 import sys, cv2, numpy as np, mediapipe as mp
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python import vision as mp_vision
 
 IN, OUT = sys.argv[1], sys.argv[2]
-SMOOTH   = float(sys.argv[3]) if len(sys.argv) > 3 else 0.65   # 磨皮強度 0-1
+SMOOTH   = float(sys.argv[3]) if len(sys.argv) > 3 else 0.65   # 磨皮/勻色強度 0-1
 SLIM     = float(sys.argv[4]) if len(sys.argv) > 4 else 0.14   # 瘦臉強度 (比例)
-GLOW     = float(sys.argv[5]) if len(sys.argv) > 5 else 0.18   # 柔光強度
+GLOW     = float(sys.argv[5]) if len(sys.argv) > 5 else 0.18   # 柔光/水光強度
+STYLE    = (sys.argv[6] if len(sys.argv) > 6 else "asian").lower()
 MODEL    = "face_landmarker.task"
 
 # face-mesh landmark groups
@@ -99,6 +111,46 @@ def smooth_skin(img, mask):
     a = (mask.astype(np.float32)/255.0 * SMOOTH)[...,None]
     return (img.astype(np.float32)*(1-a) + base.astype(np.float32)*a).astype(np.uint8)
 
+def even_tone_western(img, mask):
+    """西方風勻色：只抹平 LAB 的 a/b 色度斑駁，**亮度細節(毛孔/雀斑)完全保留**"""
+    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB).astype(np.float32)
+    L, A, B = lab[...,0], lab[...,1], lab[...,2]
+    sig = W * 0.018
+    A_s = cv2.GaussianBlur(A, (0,0), sig)
+    B_s = cv2.GaussianBlur(B, (0,0), sig)
+    a = (mask.astype(np.float32)/255.0 * SMOOTH)
+    lab[...,1] = A*(1-a) + A_s*a
+    lab[...,2] = B*(1-a) + B_s*a
+    # 只壓「大面積」亮度斑塊（泛紅不均），保留高頻毛孔
+    L_low  = cv2.GaussianBlur(L, (0,0), W*0.03)
+    L_flat = L + (L_low - cv2.GaussianBlur(L, (0,0), W*0.06)) * (-0.35)
+    lab[...,0] = L*(1-a*0.45) + L_flat*(a*0.45)
+    return cv2.cvtColor(np.clip(lab,0,255).astype(np.uint8), cv2.COLOR_LAB2BGR)
+
+def dewy_glow_western(img, mask):
+    """水光感：高光 bloom (screen blend) + 暖曬調 + S 曲線對比"""
+    g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)/255.0
+    hi = np.clip((g - 0.62) / 0.38, 0, 1)                     # 取高光
+    hi = cv2.GaussianBlur(hi, (0,0), W*0.012)
+    m  = mask.astype(np.float32)/255.0
+    bloom = (hi * m * GLOW)[...,None]
+    f = img.astype(np.float32)/255.0
+    f = 1.0 - (1.0 - f) * (1.0 - bloom)                       # screen blend
+
+    lab = cv2.cvtColor((f*255).astype(np.uint8), cv2.COLOR_BGR2LAB).astype(np.float32)
+    lab[...,2] = np.clip(lab[...,2] + 4.5*m, 0, 255)          # 暖 / 曬感
+    lab[...,1] = np.clip(lab[...,1] + 1.0*m, 0, 255)
+    out = cv2.cvtColor(np.clip(lab,0,255).astype(np.uint8), cv2.COLOR_LAB2BGR)
+
+    # 全域 S 曲線（西方濾鏡的高對比特徵）
+    x = np.arange(256, dtype=np.float32)/255.0
+    lut = np.clip((x - 0.5)*1.10 + 0.5 + 0.045*np.sin(2*np.pi*x - np.pi/2)*0.5, 0, 1)
+    out = cv2.LUT(out, (lut*255).astype(np.uint8))
+    # 微飽和
+    hsv = cv2.cvtColor(out, cv2.COLOR_BGR2HSV).astype(np.float32)
+    hsv[...,1] = np.clip(hsv[...,1]*1.06, 0, 255)
+    return cv2.cvtColor(hsv.astype(np.uint8), cv2.COLOR_HSV2BGR)
+
 def soft_glow(img, mask):
     """柔光 + 提亮，模擬美顏 app 的通透感"""
     bl = cv2.GaussianBlur(img, (0,0), W*0.02)
@@ -132,12 +184,19 @@ with mp_vision.FaceLandmarker.create_from_options(opts) as lm:
         ts = int(idx * 1000 / max(FPS, 1))
         pts_ = detect(lm, frame, ts)
         if pts_:
-            frame = slim_face(frame, pts_)
-            # 瘦臉後重新偵測一次以對齊遮罩
-            p2 = detect(lm, frame, ts + 1) or pts_
+            if SLIM > 0.001:
+                frame = slim_face(frame, pts_)
+                # 瘦臉後重新偵測一次以對齊遮罩
+                p2 = detect(lm, frame, ts + 1) or pts_
+            else:
+                p2 = pts_
             m = skin_mask(p2)
-            frame = smooth_skin(frame, m)
-            frame = soft_glow(frame, m)
+            if STYLE == "western":
+                frame = even_tone_western(frame, m)
+                frame = dewy_glow_western(frame, m)
+            else:
+                frame = smooth_skin(frame, m)
+                frame = soft_glow(frame, m)
             done += 1
         vw.write(frame)
         idx += 1
