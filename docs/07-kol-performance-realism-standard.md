@@ -142,11 +142,51 @@
 
 ## Part F — 落地檢核（Next Actions）
 
-1. [ ] 建立 `.claude/agents/performance-director.md` 與 `emotion-director.md` 兩個 subagent（依 §B 規格）
-2. [ ] 下一支 Sofia 影片改用 **腰上半身取景 + 薄紗外套 + 窗光**（§C.1）
-3. [ ] 挑選「表情豐富 + 有鏡頭互動」的真人驅動片（§C.2）
-4. [ ] 產出後跑 §C.3 六項 AI 感偵測 + §D 擬真軸評分
+1. [x] 建立 `.claude/agents/performance-director.md` 與 `emotion-director.md` 兩個 subagent（依 §B 規格）
+2. [x] 下一支 Sofia 影片改用 **腰上半身取景 + 薄紗外套 + 窗光**（§C.1）
+3. [x] 挑選「表情豐富 + 有鏡頭互動」的真人驅動片（§C.2）
+4. [x] 產出後跑 §C.3 六項 AI 感偵測 + §D 擬真軸評分
 5. [ ] 通過後，將本標準套用至所有 KOL
+
+---
+
+## Part G — 首次驗證紀錄：Sofia realism v1（2026-08-04）✅ 通過
+
+**產出：** `kols/sofia-vargas/videos/sofia_realism_v1_window_light.mp4`（1072×1936 / 9.5s / 含音樂）
+**角色圖：** `kols/sofia-vargas/images/realism_v1/sofia_waistup_sheer_window.png`
+**表演設計：** [`performance-sheets/sofia-realism-v1.md`](performance-sheets/sofia-realism-v1.md)（100 BPM 幀級時間軸）
+**情緒設計：** [`performance-sheets/sofia-realism-v1-emotion.md`](performance-sheets/sofia-realism-v1-emotion.md)（27 個表情事件 + 去同步帳本）
+
+### 配方
+
+| 項目 | 設定 |
+|------|------|
+| 取景 | 腰上半身，臉部佔畫面高度 ≈18% |
+| 服裝 | 米白羅紋 crop top + **薄紗和服外套（寬版鐘形袖、無袖口）** + 金色圈耳環 |
+| 打光 | 大面積柔和窗光，45° 前側，無硬陰影 |
+| 驅動片 | 真人 TikTok（表情豐富、持續鏡頭互動），裁成腰上 9:16 |
+| 生成 | Kling 3.0 Motion Control，`scene_control=image`，1080p |
+
+### §C.3 AI 感偵測結果
+
+| 項目 | 結果 | 證據 |
+|------|------|------|
+| **R1 次級動態** | ✅ 通過 | 末幀 +5 幀比對：髮絲仍在移動，**未與身體同步靜止** |
+| **R2 微表情** | ✅ 通過 | 每 1.2s 抽幀，**每一幀表情皆不同**（閉眼、半笑、撇頭、手托腮） |
+| **R3 不對稱** | ✅ 通過 | 單邊嘴角較高、頭部持續微傾、瀏海單側散落 |
+| **R4 皮膚** | ✅ 通過 | 放大可見**毛孔、雀斑、鼻/顴骨油光層次** |
+| **R5 鏡頭關係** | ✅ 通過 | 眼神看鏡頭 → 移開 → 回望；臉部會移出固定裁切框＝真實頭部位移 |
+
+### 關鍵教訓（寫入標準）
+
+1. **腰上取景時，外套「下擺」不在畫面內 → 等於沒有 R1 載體。**
+   薄紗外套必須是**寬版／鐘形袖且無袖口**，靠「袖子 + 開襟前襬 + 長髮 + 圈耳環」帶動慣性。
+   （首版用一般袖口薄紗襯衫被 performance-director 判定為 blocking，已修正。）
+2. **驅動片必選標準：選「表情密度」而非「舞蹈品質」。**
+   驅動片若整段掛著同一個笑容，該面具會**原封不動轉印**到 KOL 臉上。
+   上線前務必跑「**停格 +5 幀比對**」：髮/衣有動＝可用，完全相同＝立刻棄用。
+3. **`scene_control=image` 可保護尺度。** 服裝來自 KOL 自己的角色圖而非驅動片，
+   因此可借用真人的**動作與表情**，同時維持 `05` §D 的優雅尺度（不必跟隨驅動片的服裝）。
 
 ---
 
