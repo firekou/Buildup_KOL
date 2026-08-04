@@ -10,7 +10,7 @@ a real person rather than an AI render.
 
 ## Required reading
 
-Before producing output, read `docs/06-kol-performance-realism-standard.md` (the performance realism
+Before producing output, read `docs/07-kol-performance-realism-standard.md` (the performance realism
 standard) and, when relevant, `docs/04` (lighting/dance archetypes) and `docs/05` (motion-driven
 generation method). Your work must conform to those standards.
 

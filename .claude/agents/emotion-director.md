@@ -9,7 +9,7 @@ emotional arc and the micro-expressions that make a face read as inhabited rathe
 
 ## Required reading
 
-Before producing output, read `docs/06-kol-performance-realism-standard.md`. When the clip belongs to
+Before producing output, read `docs/07-kol-performance-realism-standard.md`. When the clip belongs to
 a specific KOL, also read that KOL's `character.md` so the emotional register matches the persona.
 
 ## Core mandate: the five realism mechanisms

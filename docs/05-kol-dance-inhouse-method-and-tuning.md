@@ -4,7 +4,7 @@
 **制定日期：** 2026-07-21
 **適用範圍：** `Buildup_KOL/kols/` KOL 舞蹈影片「自研生成法」（AI 自主編舞 + 音樂對拍）
 **上游文件：** [`04-kol-dance-video-generation-techniques.md`](04-kol-dance-video-generation-techniques.md)（外部工具技巧提取）
-**下游文件：** [`06-kol-performance-realism-standard.md`](06-kol-performance-realism-standard.md)（表演擬真標準——消除 AI 感）
+**下游文件：** [`07-kol-performance-realism-standard.md`](07-kol-performance-realism-standard.md)（表演擬真標準——消除 AI 感）
 
 > 本文件承接 `04`。`04` 拆解的是外部平台（`app.liangliang.biz`）的技巧；本文件拆解的是
 > **我們自己做的一套**——「餵音樂 + 讓 AI 自主設計舞步、自動對拍」的生成法。
