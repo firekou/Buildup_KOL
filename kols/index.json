@@ -3,87 +3,6 @@
   "description": "Master index of all KOL profiles in this database",
   "kols": [
     {
-      "id": "sofia-vargas",
-      "name": "Sofia Vargas",
-      "handle": "@sofiavargasreal",
-      "category": "lifestyle",
-      "ethnicity": "Latina (Colombian)",
-      "status": "active",
-      "created_at": "2026-06-20",
-      "path": "kols/sofia-vargas/"
-    },
-    {
-      "id": "xie-yizhen",
-      "name": "謝宜蓁",
-      "handle": "@yizhen.daily",
-      "category": "lifestyle",
-      "ethnicity": "Taiwanese",
-      "status": "active",
-      "created_at": "2026-06-20",
-      "path": "kols/xie-yizhen/"
-    },
-    {
-      "id": "xiang-xiang",
-      "name": "香香",
-      "handle": null,
-      "category": "food_beverage_lifestyle",
-      "ethnicity": "Taiwanese",
-      "status": "photos_collected",
-      "created_at": "2026-06-21",
-      "path": "kols/xiang-xiang/"
-    },
-    {
-      "id": "chloe-lin",
-      "name": "Chloe Lin (林可昕)",
-      "handle": "@chloe.linnn",
-      "category": "lifestyle",
-      "ethnicity": "Eurasian (British-Taiwanese)",
-      "status": "draft",
-      "created_at": "2026-06-28",
-      "path": "kols/chloe-lin/"
-    },
-    {
-      "id": "sienna-lai",
-      "name": "Sienna Lai (賴思妍)",
-      "handle": "@sienna.lai",
-      "category": "lifestyle",
-      "ethnicity": "Taiwanese-Canadian",
-      "status": "draft",
-      "created_at": "2026-06-28",
-      "path": "kols/sienna-lai/"
-    },
-    {
-      "id": "brooke-sinclair",
-      "name": "Brooke Sinclair",
-      "handle": "@brookesinclair",
-      "category": "lifestyle",
-      "ethnicity": "White American",
-      "status": "draft",
-      "created_at": "2026-06-28",
-      "path": "kols/brooke-sinclair/"
-    },
-    {
-      "id": "mika-tran",
-      "name": "Mika Tran",
-      "handle": "@mika.trn",
-      "category": "lifestyle",
-      "ethnicity": "Vietnamese-American",
-      "status": "draft",
-      "created_at": "2026-07-05",
-      "path": "kols/mika-tran/"
-    },
-    {
-      "id": "jax-calloway",
-      "name": "Jax Calloway",
-      "handle": "@jax.calloway",
-      "category": "lifestyle",
-      "gender": "male",
-      "ethnicity": "White American",
-      "status": "draft",
-      "created_at": "2026-07-05",
-      "path": "kols/jax-calloway/"
-    },
-    {
       "id": "xiaoxiao-tan",
       "name": "Tan XiaoXiao (陳曉曉)",
       "handle": "@xiaoxiao.rulesroom",
@@ -111,7 +30,7 @@
     },
     {
       "id": "loima-cheung",
-      "name": "Loi Ma Cheung (張萊孖)",
+      "name": "Zhang Qinfeng (張秦峰)",
       "handle": "@loima.futurelab",
       "category": "digital_culture",
       "gender": "male",
@@ -121,6 +40,32 @@
       "path": "kols/loima-cheung/",
       "project_code": "Project A03",
       "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)"
+    },
+    {
+      "id": "rachel-ong",
+      "name": "Rachel Ong (王瑞秋)",
+      "handle": "@rachel.summitnotes",
+      "category": "outdoor_adventure",
+      "gender": "female",
+      "ethnicity": "Singaporean Chinese",
+      "status": "draft",
+      "created_at": "2026-08-04",
+      "path": "kols/rachel-ong/",
+      "project_code": "Project B01",
+      "flavor": "Boundary-Sense Adventure IP — 邊界感型高海拔登山向導"
+    },
+    {
+      "id": "rafael-costa",
+      "name": "Rafael Costa / Captain (拉斐爾·科斯塔)",
+      "handle": "@rafa.longgame",
+      "category": "sports_growth",
+      "gender": "male",
+      "ethnicity": "Brazilian",
+      "status": "draft",
+      "created_at": "2026-08-04",
+      "path": "kols/rafael-costa/",
+      "project_code": "Project B02",
+      "flavor": "Captain — 現役足球運動員 × 長期主義成長陪伴型 IP"
     }
   ]
 }

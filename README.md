@@ -23,17 +23,11 @@ Buildup_KOL/
 
 | ID | 姓名 | 類型 | 族裔 | 狀態 |
 |----|------|------|------|------|
-| [sofia-vargas](kols/sofia-vargas/) | Sofia Vargas | 生活風格 | 哥倫比亞裔拉丁美洲人 | active |
-| [xie-yizhen](kols/xie-yizhen/) | 謝宜蓁 | 生活風格 | 台灣人 | active |
-| [xiang-xiang](kols/xiang-xiang/) | 香香 | 餐飲 / 生活風格 | 台灣人 | photos_collected |
-| [chloe-lin](kols/chloe-lin/) | Chloe Lin（林可昕） | 生活風格（純欲風） | 歐亞混血（英台） | draft |
-| [sienna-lai](kols/sienna-lai/) | Sienna Lai（賴思妍） | 生活風格（健康生活系 / Cute×Elegant） | 台裔加拿大人 | draft |
-| [brooke-sinclair](kols/brooke-sinclair/) | Brooke Sinclair | 生活風格 × 遊戲（性感） | 美國白人 | draft |
-| [mika-tran](kols/mika-tran/) | Mika Tran | 生活風格（真實 IP 風格 / Real-IP Sexy） | 越南裔美國人 | draft |
-| [jax-calloway](kols/jax-calloway/) | Jax Calloway | 生活風格（Male Real-IP，首個男性 KOL） | 美國白人 | draft |
 | [xiaoxiao-tan](kols/xiaoxiao-tan/) | Tan XiaoXiao（陳曉曉） | 智性數字人 · 規則研究者（A01 / showgame.live） | 馬來西亞華人 | draft |
 | [faye-tan](kols/faye-tan/) | Faye Tan（陳曉菲） | 智性數字人 · 世界觀察者（A02 / showgame.live） | 新加坡華人 | draft |
-| [loima-cheung](kols/loima-cheung/) | Loi Ma Cheung（張萊孖） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | draft |
+| [loima-cheung](kols/loima-cheung/) | Zhang Qinfeng（張秦峰） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | draft |
+| [rachel-ong](kols/rachel-ong/) | Rachel Ong（王瑞秋） | 邊界感型高海拔登山向導（B01） | 新加坡華裔 | draft |
+| [rafael-costa](kols/rafael-costa/) | Rafael Costa / Captain（拉斐爾·科斯塔） | 現役足球運動員 × 長期主義成長陪伴型 IP（B02） | 巴西人 | draft |
 
 ---
 

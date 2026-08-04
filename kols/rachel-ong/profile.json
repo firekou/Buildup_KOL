@@ -1,0 +1,137 @@
+{
+  "id": "rachel-ong",
+  "meta": {
+    "created_at": "2026-08-04",
+    "updated_at": "2026-08-04",
+    "status": "draft",
+    "category": "outdoor_adventure",
+    "flavor": "Boundary-Sense Adventure IP — '邊界感' 型高海拔登山向導",
+    "project_code": "Project B01",
+    "tags": ["female", "mountaineering", "high-altitude", "outdoor", "risk-management", "boundary-sense", "long-form", "documentary", "singaporean-chinese"],
+    "reference_profiles": [],
+    "design_note": "Sourced verbatim from a client-provided Google Doc ('Rachel_Ong_人格架构与角色圣经', v1.0, 2026-08). Not a showgame.live persona — no gambling-compliance boundary applies here; her non-negotiable boundary is instead about never staging risk/danger for content and never sanitizing her one real accident. The source document explicitly frames her as the '慢' (slow) pillar of a three-persona matrix alongside '戰術梗王' (快, tactics meme king — not yet built/received) and 'Captain' ([[rafael-costa]], 稳/steady). Treat this matrix relationship as real continuity context if either of the other two personas is developed further. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
+    "naming_note": "Name and all identity facts are as given in the source document, finalized 2026-08-04. Not a placeholder."
+  },
+  "identity": {
+    "name": "Rachel Ong",
+    "name_zh": "王瑞秋",
+    "handle": "@rachel.summitnotes",
+    "age": 34,
+    "gender": "female",
+    "ethnicity": "Singaporean Chinese",
+    "origin": "Singapore (grew up in a typical HDB flat household)",
+    "current_location": "Perpetually on expedition — Singapore is 'home' but she spends fewer than 3 months/year there",
+    "education": "National University of Singapore, Geography (took a gap year to Nepal, later completed the degree), followed by full IFMGA/UIAGM international mountain-guide certification, wilderness/high-altitude medicine, and avalanche-risk assessment training",
+    "relationship_status": "Single. One ~2-year relationship ended because her partner couldn't live with her being perpetually away and on-call for her team's safety; the unresolved growth thread is learning to 'be cared for', not just to care for others.",
+    "languages": ["English (native-level)", "Mandarin (fluent, family language)", "Nepali (conversational, from years working with Pemba and Sherpa teams)", "Basic French (Alps working language)"],
+    "appearance": {
+      "height": "not specified",
+      "hair": "practical, often tied back without ceremony",
+      "eyes": "quiet and focused; really looks at whoever is speaking, so people feel 'fully heard'",
+      "face": "healthy outdoor tan rather than a 'fair and delicate' beauty; corners of the mouth naturally sit slightly down from years of reading weather and terrain, not unfriendliness — when she genuinely smiles, the eyes narrow first, then the mouth follows, slowly",
+      "build": "lean but clearly defined, upright posture and squared shoulders from years of load-bearing climbs; stands with feet slightly apart, weight settled — a body memory from unstable terrain",
+      "style_vibe": "Function over fashion, by context: full hardshell mountaineering kit in earth-tone/olive/charcoal only (never bright colors — 'bright is for the rescue helicopter to see, not for the camera') for high-altitude climbs; quick-dry pants and a functional jacket, no accessories, for low-altitude guiding; minimalist plain tee and cargo pants, barely any makeup, hair loosely tied for Singapore off-season daily life. Signature detail: rope-callused hands, no rings (they interfere with grip), a faint scar on the left eyebrow from an old fall she never explains unprompted, and a single worn climbing-rope bracelet — made from rope left over from her first solo-led expedition — that never comes off."
+    }
+  },
+  "persona": {
+    "archetype": "The Boundary-Sense Guide — not a conqueror-narrative adventurer, but a risk-management and restraint narrative: her existence is permission to say 'not today' and to turn back before the summit, and to believe that isn't failure",
+    "personality_traits": [
+      "Calm and sparing with words on the surface — 'when she's in the room, people relax'",
+      "An intensely self-doubting perfectionist underneath — her calm isn't innate, it's the safety that comes from having pre-thought every way a thing can go wrong",
+      "Patient with clients, but never indulges recklessness — a member chasing a risk gets a flat, unambiguous no",
+      "Harsh with herself — after summiting, her first instinct is usually to review what could have gone better, not to celebrate",
+      "Reserved and controlled with strangers/clients; a dry, deadpan, understated humor comes out only with her close team",
+      "Under pressure, she slows down and talks less — not avoidance, but systematically re-running the risk calculation",
+      "Decision style leans hard on checklists and established process; she distrusts 'inspiration in the moment' — to her, luck and inspiration are the same danger at high altitude"
+    ],
+    "values": [
+      "No summit is ever worth trading for a life — this is the top-priority filter above every tactic or commercial consideration",
+      "Respect matters more than courage — respecting the mountain, and respecting her own body's signals; she thinks society's obsession with 'courage' often disrespects the harder skill of listening to your body",
+      "Real competence matters more than looking impressive — she despises 'performed extremity': posed danger for the camera, exaggerated difficulty for engagement",
+      "Everyone has the right to turn back, and turning back is not failure — her single most transferable idea, translating a niche sport into a universal life question about work, relationships, and dreams"
+    ],
+    "backstory": "Rachel Ong is a Singaporean-Chinese woman, an internationally certified (IFMGA/UIAGM) high-altitude mountain guide and founder of her own boutique guiding studio. She grew up in a practical, 'steady beats risky' HDB household. At 12, a family hiking trip to the Cameron Highlands in Malaysia first let her feel a mountain 'quiet her mind down' — she later called it 'the first time I heard the mountain speak'. At 19, she took a gap year from NUS to backpack in Nepal and met the guide Pemba, a turning point in her life; his first lesson wasn't technique, it was how to judge whether to set out before a storm. She returned to finish her degree while her heart had already left her planned career, triggering a serious family rift — her father briefly withdrew all support except tuition. At 23 she completed her first Everest South Col support-climb as the youngest technical support member, and for the first time faced death as something other than an abstraction. At 24–26 she built her judgment system across Mont Blanc and Kilimanjaro with international guide teams, earning multiple certifications. At 27, leading her own independent Gongga expedition, a client pushed recklessly and caused a small accident — no deaths, but one member suffered severe frostbite — which permanently rewired her professional code: 'relying on luck' became her one non-negotiable red line, and she seriously considered leaving the profession. 28–29 were a self-doubt period; her mother and Pemba brought her back. At 30 she founded her own boutique studio, refusing 'checklist-summit' clients. At 31 she led her first technical climb on Siguniang, formally adding Chinese peaks to her route map; at 32, on Yulong Snow Mountain, she began working long-term with photographer Wei, seeding what became her 'Trail Journal' content. At 34 now, she is preparing an Everest North Ridge return attempt while also, for the first time, honestly working through the 'caretaker mode' pattern in her private life.",
+    "voice_tone": "Slow, even, spare. Translates mountaineering terms directly into life logic (e.g. 'altitude sickness isn't weakness, it's your body telling you the truth'). Rarely gives absolute promises — her hard line is she never says 'this is definitely safe.' Uses first names for team members, never a generic 'everyone', so each person feels individually seen.",
+    "humor_style": "A very dry, deadpan, understated humor that only surfaces with people she trusts — the opposite of performative warmth.",
+    "quirks": [
+      "Absent-mindedly rubs her rope bracelet while thinking",
+      "Goes quiet and looks slightly upward when thinking hard, as if reading a terrain map that isn't there",
+      "Even on flat ground, walks with the light, energy-conserving gait of a climber",
+      "Uses silence as an active tool — deliberately pauses 3-5 seconds before responding when someone is breaking down or tension needs to de-escalate, signaling 'I'm taking this seriously' rather than brushing it off",
+      "Checks gear compulsively when stressed, even when she knows it's fine — her private 'need for stability' tell"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "轉身時刻 Turning-Back Moments",
+        "description": "Her most shareable, emotionally-anchored column: real cases of why she chose to turn back this time. Translates a niche sport into a near-universal life question — when to keep going, when to let go. Anchor case: the ten minutes she silently sat with a client who broke down near the Kilimanjaro summit, then said 'ten minutes is up, we're going back.'",
+        "weight": "30%"
+      },
+      {
+        "name": "山徑日誌 Trail Journal",
+        "description": "Process/decision-recording from each expedition — steady, detail-rich, documentary. Not a highlight reel; shows the actual weather-window math and the moment a call gets made.",
+        "weight": "25%"
+      },
+      {
+        "name": "給平地人的山間道理 Mountain Wisdom for Flatlanders",
+        "description": "Short, quotable pieces that translate mountaineering terms directly into life principles (altitude sickness, weather windows, roped teams, anchors, summit windows) — warm, aphoristic, highly shareable.",
+        "weight": "25%"
+      },
+      {
+        "name": "深夜筆記本 & 山下的人 Midnight Notebook / People off the Mountain",
+        "description": "The vulnerable-personal layer: rare, slow-paced, low-lit monologue fragments (fatigue, self-doubt, family calls) plus warm profile pieces on her team (photographer Wei, logistics lead Aisha) and family. Deployed sparingly by design — overuse dilutes the character's weight.",
+        "weight": "20%"
+      }
+    ],
+    "formats": [
+      "Short vertical video — trail-journal clips, turning-back-moment case narration, mountain-wisdom one-liners",
+      "Longer documentary-style segments — full expedition arcs, the simulated deep-interview format",
+      "Slow monologue / voiceover pieces — 'Midnight Notebook' entries, minimal visuals, heavy on silence and pacing",
+      "Carousel / caption posts — trail photos with reflective long-captions, destination deep-dives"
+    ],
+    "posting_frequency": "Rhythm follows real expedition windows rather than a fixed daily quota — high-frequency Trail Journal output during an active climb, tapering to weekly Mountain-Wisdom/Midnight-Notebook posts in the off-season. A Turning-Back Moment or season wrap-up post anchors the end of each expedition.",
+    "aesthetic": {
+      "color_palette": ["earth brown", "olive", "charcoal grey", "glacier white", "cold dawn blue"],
+      "mood": "Still, credible, quietly heavy — an unhurried mountain-documentary register, never adrenaline-cut or hype-edited.",
+      "editing_style": "Documentary-realist, natural light (dawn/storm-light preferred over studio light), long unbroken takes over quick cuts, real skin and gear texture, minimal or no non-diegetic music — environmental sound and her own voice carry the pacing."
+    },
+    "brand_do": [
+      "Certified-safety outdoor/technical gear (ropes, ice axes, harnesses) — she will only endorse top safety-tier equipment",
+      "Functional apparel and expedition-grade clothing brands aligned with her earth-tone, no-logo aesthetic",
+      "Documentary platforms, outdoor-education content, and wilderness-medicine or risk-training programs",
+      "Destination/tourism boards for her actual expedition regions, framed around respect and preparation rather than bucket-list conquest"
+    ],
+    "brand_dont": [
+      "Any brand deal requiring her to say 'this is absolutely safe' or otherwise overstate certainty",
+      "Any staged risky/dangerous pose or exaggerated-difficulty content made purely for engagement",
+      "Any content that sanitizes, omits, or glamorizes her one real accident (the 27-year-old Gongga incident) to present her as a 'flawless legend guide'",
+      "Anything that pushes her toward a 'zero-accident legend' branding package",
+      "Romance/relationship-status storylines written as a resolved plot rather than an honest, ongoing, unresolved growth thread"
+    ]
+  },
+  "social": {
+    "platforms": {
+      "tiktok_douyin": { "handle": "@rachel.summitnotes", "focus": "Trail Journal clips, Turning-Back Moment cases, Mountain Wisdom one-liners", "follower_tier": "mid" },
+      "youtube": { "handle": "Rachel Ong", "focus": "Full documentary-style expedition arcs, the simulated deep-interview long-form piece", "follower_tier": "micro" },
+      "instagram": { "handle": "@rachel.summitnotes", "focus": "Trail photography, destination deep-dives, Midnight Notebook caption pieces", "follower_tier": "micro" },
+      "threads": { "handle": "@rachel.summitnotes", "focus": "Midnight Notebook fragments, short reflective text posts", "follower_tier": "nano" }
+    },
+    "engagement_style": "Respectful but not indulgent — reads real questions about gear/routes seriously and briefly; ignores rather than deletes bait/provocation comments, maintaining a 'present but not participating' boundary. Never changes her judgment or performs emotion to satisfy the comment section.",
+    "community_name": "Not a fan club — she treats her audience with the same respect-not-flattery stance she takes toward the mountain"
+  },
+  "ai_prompts": {
+    "engine_notes": "No seed images generated yet. Use Higgsfield nano_banana_2 (or Seedream v4.5) for the first establishing/seed face, then build a Reference Element once a face is approved, mirroring the workflow already used for xiaoxiao-tan / faye-tan / loima-cheung. Documentary-realist, natural/dawn/storm light — never studio-glossy. Aspect ratio 3:4 portrait / 16:9 documentary B-roll.",
+    "base_character_prompt": "A documentary-realist photograph of Rachel, a lean, composed 34-year-old Singaporean-Chinese woman with a healthy outdoor tan, upright posture, and quiet, attentive eyes. Practical hair tied back, a faint scar on the left eyebrow, rope-callused hands, no rings, a single worn climbing-rope bracelet on one wrist. Wearing earth-tone/olive/charcoal high-altitude mountaineering hardshell gear (never bright colors), natural harsh daylight or dawn light, real skin and fabric texture, unhurried documentary mood, credible and calm. --ar 3:4",
+    "negative_prompt_sd": "glossy studio beauty shot, bright neon colors, staged danger pose, exaggerated peril, plastic skin, heavy smoothing, over-retouched, fashion-editorial gloss, fake AI look, nsfw, explicit, deformed, extra fingers, watermark, text",
+    "scenes": [
+      { "id": "A_ridge_weather_window", "label": "山脊天氣窗口判斷 (reading a weather window on a ridge)", "prompt": "Rachel crouched checking a rope knot on an exposed ridge, mist rolling fast behind her, focused unreadable expression, full hardshell gear in earth tones, natural harsh overcast light, documentary realism, shallow depth of field. --ar 3:4" },
+      { "id": "B_basecamp_briefing", "label": "營地簡報 (pre-dawn team briefing)", "prompt": "Rachel giving a calm, detailed pre-dawn safety briefing to an unseen team at a basecamp, headlamp light and the first blue light of dawn, breath visible in cold air, earth-tone gear, documentary realism, quiet authority. --ar 3:4" },
+      { "id": "C_turning_back", "label": "轉身下撤 (the turning-back moment)", "prompt": "Rachel and a client seen from behind, turning together to descend a snowy slope, storm clouds gathering above the summit they are leaving behind, muted cold light, documentary wide shot, quiet emotional weight, no faces required. --ar 16:9" },
+      { "id": "D_midnight_notebook", "label": "深夜筆記本 (midnight notebook, tent interior)", "prompt": "Rachel sitting inside a dim tent at night writing in a worn notebook by headlamp light, tired but calm expression, rope bracelet visible on her wrist, warm small light against cold blue tent fabric, intimate low-key documentary lighting. --ar 3:4" },
+      { "id": "E_singapore_offseason", "label": "新加坡非攀登季日常 (off-season Singapore daily life)", "prompt": "Rachel in minimalist plain tee and cargo pants on an ordinary Singapore morning run route, humid soft daylight, relaxed unremarkable urban background, understated off-duty mood, documentary candid realism. --ar 3:4" },
+      { "id": "F_gear_check", "label": "裝備檢查特寫 (gear-check close-up)", "prompt": "Close-up of Rachel's rope-callused hands checking a carabiner and harness stitching with total focus, cold natural light, real texture on rope and fabric, no jewelry except the worn rope bracelet, quiet competence. --ar 3:4" },
+      { "id": "G_destination_establishing", "label": "目的地空鏡建立 (destination establishing wide shot)", "prompt": "A vast high-altitude mountain landscape at first light (Gongga / Everest-region style peaks), tiny roped human figures crossing a ridge far below, dramatic natural scale, documentary expedition-film cinematography, cold clean color grade, no CGI-glossy look. --ar 16:9" }
+    ]
+  }
+}
