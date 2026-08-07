@@ -128,10 +128,10 @@
   "ai_assets": {
     "consistency": "reference_element",
     "generation_model": "seedream_v4_5",
-    "primary_element_id": null,
+    "primary_element_id": "010e1db8-e6a5-4d99-b10e-cbdb4c77d1d4",
     "element_v1": {
-      "element_status": "pending_rebuild",
-      "note": "2026-07-27: old Reference Element (2e323b3e-9d41-4ed1-829e-0c32c53bdcb5, face job 27fd22bc-...) and all v1 generated scenes were built from the PREVIOUS identity and have been removed — they no longer match the finalized person (Tan XiaoXiao). Real reference photos from the client are now in kols/xiaoxiao-tan/images/ref/ (xiaoxiao_01_fullbody_front.png, xiaoxiao_02_kneeup_side.png, xiaoxiao_03_face_closeup.png). Next step: build a new Higgsfield Reference Element from these photos, then regenerate the scene set from visual_prompts.md."
+      "element_status": "built",
+      "note": "2026-08-03: built Higgsfield Reference Element 'Tan-XiaoXiao' (id 010e1db8-e6a5-4d99-b10e-cbdb4c77d1d4) from the 3 real reference photos in kols/xiaoxiao-tan/images/ref/. Use `<<<010e1db8-e6a5-4d99-b10e-cbdb4c77d1d4>>>` in generate_image/generate_video prompts (nano_banana_2, seedance_2_0, kling3_0, etc.) instead of re-uploading the 3 photos each time."
     },
     "videos_reels_v1": {
       "note": "2026-07-27: old clip (clip_whiteboard_teardown.mp4) was seeded from the previous identity's scene image and has been removed. Regenerate after the new Reference Element and scene set exist."

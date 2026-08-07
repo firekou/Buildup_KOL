@@ -1,0 +1,33 @@
+Zhang Qinfeng（遊戲哥）— 圖文/日常分享（2026-08-07）
+
+主題：EA的FIFA Ultimate Team球員包面臨集體訴訟，比利時已禁該機制、荷蘭曾罰款，本質是換個名字的抽卡機制。
+格式：圖文（1圖+文字），碎片化口氣，3-4行短句，心情陳述不硬接問句收尾。
+
+事實查證：EA的FIFA Ultimate Team球員包面臨集體訴訟（Slater Vecchio事務所），比利時已禁止該機制在當地上架，荷蘭2019年曾罰款1000萬歐元（2022年被撤銷）。
+來源：https://slatervecchio.com/class-action/loot-boxes-class-action/
+
+對標帳號手法：Extra Credits（IG）自製插畫圖卡承載觀念、不用遊戲截圖 + Thomas Flight（IG）單格劇照當主體、文案壓縮成一兩句。
+
+【文案】
+
+FIFA Ultimate Team的球员包最近又被告了
+用FIFA点数换随机球员，本质就是开箱抽卡
+比利时直接禁掉这个机制，荷兰也罚过一千万欧元
+换个名字是点数，本质没有变
+
+---
+
+配圖（2張，GPT Image 2 high quality，880×1168直式3:4，各4點）：
+
+A. qinfeng-cardpack-object-a.png — 純物件，沒有人：一疊足球卡牌包裝放在書桌上，包裝上是原創虛構足球員插畫（臉部完全虛構，非真實球星）＋典型球衣視覺語言（隊徽/隊名皆虛構、不存在的隊伍），旁邊散落已拆卡片，手機螢幕模糊。
+
+B. qinfeng-cardpack-portrait-b.png — 有人入鏡：他坐書桌前拿著同款卡牌包裝拆開，表情帶無奈苦笑，桌角放素色足球小物（無隊徽）。
+
+過程備註：原本用「足球剪影」設計被指出不夠具體，改用「原創虛構球員插畫+虛構隊服」技巧——真實風格但身分虛構，一眼看得出是足球卡包，但不影射真實品牌/球星，已記入 feedback_tuwen_image_planning.md。文案風格經三輪反饋修正，已記入 feedback_daily_life_post_style.md。
+
+狀態：已排程，2026-08-07 18:45 台北時間自動發布（Facebook/Instagram/Threads/X 四平台，2張圖以輪播方式呈現）。Metricool post id：359233643。
+費用：見 costs/video-generation-costs.md（2026-08-07 圖文配圖 8點）。
+
+---
+
+註：同日製作的「寶石/虛擬貨幣」影片（見 prompt list/2026-08-07.txt）為獨立內容，排定2026-08-08發佈，跟這篇圖文分開發佈時程。

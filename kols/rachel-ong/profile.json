@@ -9,7 +9,7 @@
     "project_code": "Project B01",
     "tags": ["female", "mountaineering", "high-altitude", "outdoor", "risk-management", "boundary-sense", "long-form", "documentary", "singaporean-chinese"],
     "reference_profiles": [],
-    "design_note": "Sourced verbatim from a client-provided Google Doc ('Rachel_Ong_人格架构与角色圣经', v1.0, 2026-08). Not a showgame.live persona — no gambling-compliance boundary applies here; her non-negotiable boundary is instead about never staging risk/danger for content and never sanitizing her one real accident. The source document explicitly frames her as the '慢' (slow) pillar of a three-persona matrix alongside '戰術梗王' (快, tactics meme king — not yet built/received) and 'Captain' ([[rafael-costa]], 稳/steady). Treat this matrix relationship as real continuity context if either of the other two personas is developed further. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
+    "design_note": "Sourced verbatim from a client-provided Google Doc ('Rachel_Ong_人格架构与角色圣经', v1.0, 2026-08). Height (168cm) was the one identity gap the source left unspecified, filled in by Claude to match her described lean/toned build — not something the client needs to confirm. Not a showgame.live persona — no gambling-compliance boundary applies here; her non-negotiable boundary is instead about never staging risk/danger for content and never sanitizing her one real accident. The source document explicitly frames her as the '慢' (slow) pillar of a three-persona matrix alongside '戰術梗王' (快, tactics meme king — not yet built/received) and 'Captain' ([[rafael-costa]], 稳/steady). Treat this matrix relationship as real continuity context if either of the other two personas is developed further. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
     "naming_note": "Name and all identity facts are as given in the source document, finalized 2026-08-04. Not a placeholder."
   },
   "identity": {
@@ -25,7 +25,7 @@
     "relationship_status": "Single. One ~2-year relationship ended because her partner couldn't live with her being perpetually away and on-call for her team's safety; the unresolved growth thread is learning to 'be cared for', not just to care for others.",
     "languages": ["English (native-level)", "Mandarin (fluent, family language)", "Nepali (conversational, from years working with Pemba and Sherpa teams)", "Basic French (Alps working language)"],
     "appearance": {
-      "height": "not specified",
+      "height": "168cm",
       "hair": "practical, often tied back without ceremony",
       "eyes": "quiet and focused; really looks at whoever is speaking, so people feel 'fully heard'",
       "face": "healthy outdoor tan rather than a 'fair and delicate' beauty; corners of the mouth naturally sit slightly down from years of reading weather and terrain, not unfriendliness — when she genuinely smiles, the eyes narrow first, then the mouth follows, slowly",
@@ -119,6 +119,17 @@
     },
     "engagement_style": "Respectful but not indulgent — reads real questions about gear/routes seriously and briefly; ignores rather than deletes bait/provocation comments, maintaining a 'present but not participating' boundary. Never changes her judgment or performs emotion to satisfy the comment section.",
     "community_name": "Not a fan club — she treats her audience with the same respect-not-flattery stance she takes toward the mountain"
+  },
+  "ai_assets": {
+    "consistency": "reference_photos_only",
+    "generation_model": "seedream_v4_5",
+    "note": "2026-08-04/05: full 3-photo identity reference set generated (fullbody front, knee-up side, face closeup), matching the convention used for xiaoxiao-tan/faye-tan/loima-cheung. No Reference Element or Soul used, per client decision (2026-08-04) — future generations attach these 3 photos directly as image_references each time. A separate lifestyle/avatar photo was also generated for profile-picture use.",
+    "seed_images": [
+      { "file": "images/ref/rachel_01_fullbody_front.png", "job_id": "4629af90-5789-4382-8577-101f2b45ea34", "seed": 477111, "ar": "3:4" },
+      { "file": "images/ref/rachel_02_kneeup_side.png", "job_id": "cb4a50eb-bbbb-4b34-9c61-09f6da0ab7b6", "seed": 781326, "ar": "3:4" },
+      { "file": "images/ref/rachel_03_face_closeup.png", "job_id": "0e73abea-5dae-434b-ad15-cf2189e6c2d8", "seed": 766906, "ar": "3:4" }
+    ],
+    "avatar_image": { "file": "images/rachel-avatar.png", "job_id": "32718c22-0cd6-40da-94d5-0a9642a1105a", "seed": 833008, "ar": "1:1", "note": "Lifestyle/profile-picture photo — mountain trail, golden hour, small genuine half-smile per her established slow-smile trait" }
   },
   "ai_prompts": {
     "engine_notes": "No seed images generated yet. Use Higgsfield nano_banana_2 (or Seedream v4.5) for the first establishing/seed face, then build a Reference Element once a face is approved, mirroring the workflow already used for xiaoxiao-tan / faye-tan / loima-cheung. Documentary-realist, natural/dawn/storm light — never studio-glossy. Aspect ratio 3:4 portrait / 16:9 documentary B-roll.",

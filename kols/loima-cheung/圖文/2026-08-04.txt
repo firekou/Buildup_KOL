@@ -1,0 +1,42 @@
+Zhang Qinfeng — 圖文/日常分享（2026-08-04）
+主題：凌晨刷到 OpenAI Astra 解開十個數學難題的新聞
+格式：純文字貼文，不配圖
+語氣：隨手記錄的日常感，不寫成起承轉合的小故事，輕度加入馬來西亞華人口語語助詞（啦/咯/sien/shiok）
+
+---
+
+【Facebook / Threads 版本，全文】
+
+凌晨两点半还醒着，讲真也是自己作的啦
+
+本来只是想测个新的提示词，刷手机刷到一条新闻，整个人瞬间清醒了
+
+OpenAI那个新模型Astra，两千美金算力，把十个悬了很久的数学公开问题解出来，证明还真的发到GitHub上，不是随便讲讲的demo
+
+两千美金诶，我一开始还以为自己看错单位
+
+然后就睡不着了咯，脑子一直在转这件事，越想越夸张
+
+早上闹钟响到超sien，出门才发现衣服穿反，不过也没差，反正整个人还是shiok到不行
+
+你们最近有刷到什么，看完会整个人清醒过来的吗
+
+新闻链接：https://thenextweb.com/news/openai-astra-model-ten-math-proofs-non-sofic-groups
+
+---
+
+【X（Twitter）短版，280字元內】
+
+凌晨刷到OpenAI新模型Astra的新闻，两千美金解开十个悬了很久的数学难题，证明还发到GitHub上，整个人瞬间清醒不想睡了。你们最近有刷到什么会让人清醒过来的新闻吗？
+https://thenextweb.com/news/openai-astra-model-ten-math-proofs-non-sofic-groups
+
+---
+
+新聞來源參考：
+- https://thenextweb.com/news/openai-astra-model-ten-math-proofs-non-sofic-groups
+- https://www.techtimes.com/articles/322710/20260802/openais-astra-solves-ten-decade-old-math-problems-machine-checkable-lean-proofs.htm
+
+發布紀錄：
+- 發布時間：2026-08-04 17:47（台北時間）
+- 平台：Facebook（post id 357772555）／Threads（post id 357772563）／X（post id 357772566）
+- Instagram／TikTok／YouTube 未發布（純文字格式不支援）

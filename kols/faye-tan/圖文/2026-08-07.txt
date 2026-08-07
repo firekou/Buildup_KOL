@@ -1,0 +1,33 @@
+Faye Tan — 圖文/日常分享（2026-08-07）
+
+主題：法國市集桃子正值產季，她偏好攤販整箱堆疊賣的形式而非超市分裝。
+格式：圖文（1圖+文字），碎片化口氣，3-4行短句，心情陳述不硬接問句收尾。
+
+事實查證：法國8月正是桃子產季高峰（今年預計採收22.7萬噸），夏朗德甜瓜（Charentais melon）也在盛產期。
+來源：https://tasteoffrancemag.com/where-to-eat/french-fruit-in-season-melon/
+
+具體設定：她目前人在法國，延續上支「手持風扇」影片的歐洲街頭設定。
+
+對標帳號手法：Everyday Asia（IG）一張照片配一句地點情境、不寫攻略 + Bald and Bankrupt（IG）照片不修圖不調色維持粗糙現場感。
+
+【文案】
+
+路过市场看到桃子上市了，摊主说今年产季比较早
+甜瓜也到了最甜的时候
+比起超市那种分装的，我更喜欢摊贩直接整箱堆着卖
+这个月出门买水果比逛景点还好玩
+
+---
+
+配圖（3張，GPT Image 2 high quality，880×1168直式3:4，各4點）：
+
+A. faye-market-scene-a.png — 純場景，沒有人：法國市集水果攤，一箱箱直接堆疊、無精美包裝的桃子和夏朗德甜瓜，招牌/價格牌模糊不可讀。
+
+B. faye-market-hand-b.png — 手部特寫，不用臉：手拿起一顆桃子端詳，臉部在畫面上緣、不是焦點，背景模糊的一整箱桃子（手臂比例自然，無拉長變形）。
+
+C. faye-market-portrait-c.png — 有人入鏡：她側身站著望向整排市集攤位，維持角色辨識度。
+
+過程備註：套用對標帳號研究後的第一批圖文，文案風格經三輪反饋修正（太長→太愛用問句收尾→太飄不具體），已記入 feedback_daily_life_post_style.md；配圖刻意混搭純場景/純細節/有人入鏡三種，已記入 feedback_tuwen_image_planning.md。
+
+狀態：已排程，2026-08-07 18:45 台北時間自動發布（Facebook/Instagram/Threads/X 四平台，3張圖以輪播方式呈現）。Metricool post id：359233605。
+費用：見 costs/video-generation-costs.md（2026-08-07 圖文配圖 12點）。

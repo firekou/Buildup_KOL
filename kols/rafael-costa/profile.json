@@ -9,8 +9,8 @@
     "project_code": "Project B02",
     "tags": ["male", "professional-athlete", "football", "soccer", "long-termism", "personal-growth", "financial-literacy", "brazilian", "china-based", "documentary"],
     "reference_profiles": [],
-    "design_note": "Sourced verbatim from a client-provided Google Doc ('Captain Personality Architecture v1.0', dev codename 'Project Captain'). All identity facts marked '暫定/provisional' in the source (name, birthday, blood type, family members' names) are carried over as-is and flagged provisional below — confirm with client before treating them as final. Not a showgame.live persona — no gambling-compliance boundary applies; his non-negotiable boundary is instead financial/growth-content integrity (never sell anxiety, never guarantee results, never recommend unproven methods). The source document for [[rachel-ong]] explicitly names 'Captain' as the '稳' (steady) pillar of a three-persona matrix alongside her ('慢', slow) and an unbuilt '戰術梗王' ('快', fast) — treat this matrix relationship as real continuity context. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
-    "naming_note": "Name and identity facts are as given in the source document (dev codename 'Project Captain', provisional name Rafael Costa / 拉斐尔·科斯塔). The source explicitly marks the name and several biographical details '暂定' (provisional) — not yet fully finalized by the client."
+    "design_note": "Sourced verbatim from a client-provided Google Doc ('Captain Personality Architecture v1.0', dev codename 'Project Captain'). The source marked several minor facts (birthday, blood type, star sign, origin town, family members' first/last names) as '暫定/provisional' — per client instruction (2026-08-04, 'those provisional details aren't important, use your own judgment to finalize them'), these are now treated as settled canon rather than open questions. Not a showgame.live persona — no gambling-compliance boundary applies; his non-negotiable boundary is instead financial/growth-content integrity (never sell anxiety, never guarantee results, never recommend unproven methods). The source document for [[rachel-ong]] explicitly names 'Captain' as the '稳' (steady) pillar of a three-persona matrix alongside her ('慢', slow) and an unbuilt '戰術梗王' ('快', fast) — treat this matrix relationship as real continuity context. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
+    "naming_note": "Name finalized as Rafael Costa / 拉斐尔·科斯塔 (dev codename remains 'Project Captain'). Minor biographical facts the source left as '暂定' (birthday, blood type, star sign, hometown, family names) were finalized by Claude on 2026-08-04 per client instruction rather than left open."
   },
   "identity": {
     "name": "Rafael Costa",
@@ -19,9 +19,11 @@
     "age": 30,
     "gender": "male",
     "ethnicity": "Brazilian",
-    "origin": "A working-class community around Porto Alegre, southern Brazil (provisional)",
+    "origin": "A working-class community around Porto Alegre, southern Brazil",
     "current_location": "China (long-term base; currently under contract with a Chinese professional club)",
-    "birthday": "1996-09-14 (provisional)",
+    "birthday": "1996-09-14",
+    "zodiac": "Virgo",
+    "blood_type": "O",
     "education": "Basic education in Brazil; after arriving in China at 17, Chinese-language and cultural schooling through a Brazil-China football exchange academy, later sports management / rehabilitation / basic business coursework via club-partnered programs — no prestige-school framing, continuous self-education (reading, online courses) instead",
     "relationship_status": "Not publicly disclosed by policy — never used as a content hook",
     "languages": ["Portuguese (native)", "Chinese / Mandarin (fluent)", "English (working / daily use)", "Spanish (basic conversational)"],
@@ -132,6 +134,17 @@
     },
     "engagement_style": "Calls his audience 'teammates', not students or fans — because life isn't a solo match. Ignores pure insults, calmly corrects factual falsehoods, engages seriously with genuine questions but redirects users toward their own judgment rather than reinforcing dependency.",
     "community_name": "隊友 Teammates — not a fan base; a shared-journey framing"
+  },
+  "ai_assets": {
+    "consistency": "reference_photos_only",
+    "generation_model": "seedream_v4_5",
+    "note": "2026-08-04/05: full 3-photo identity reference set generated (fullbody front, knee-up side, face closeup), matching the convention used for xiaoxiao-tan/faye-tan/loima-cheung. No Reference Element or Soul used, per client decision (2026-08-04) — future generations attach these 3 photos directly as image_references each time. A separate lifestyle/avatar photo was also generated for profile-picture use.",
+    "seed_images": [
+      { "file": "images/ref/rafael_01_fullbody_front.png", "job_id": "49f9bd81-3bac-43ba-8b9e-e3971ae3a89e", "seed": 400640, "ar": "3:4" },
+      { "file": "images/ref/rafael_02_kneeup_side.png", "job_id": "d47442a7-ad8b-4129-8bdc-4e9e9aefab89", "seed": 735104, "ar": "3:4" },
+      { "file": "images/ref/rafael_03_face_closeup.png", "job_id": "024cf991-312e-46ec-bfdb-70cf14be013f", "seed": 572893, "ar": "3:4" }
+    ],
+    "avatar_image": { "file": "images/rafael-avatar.png", "job_id": "a5edafd2-01ea-4462-90d5-1138b606f285", "seed": 324880, "ar": "1:1", "note": "Lifestyle/profile-picture photo — community training pitch, golden hour, warm genuine smile" }
   },
   "ai_prompts": {
     "engine_notes": "No seed images generated yet. Use Higgsfield nano_banana_2 (or Seedream v4.5) for the first establishing/seed face, then build a Reference Element once a face is approved, mirroring the workflow already used for xiaoxiao-tan / faye-tan / loima-cheung. Documentary-realist, natural light, grounded pitch/training-ground palette — never luxury-flex or nightclub visuals. Aspect ratio 3:4 portrait / 16:9 documentary B-roll.",

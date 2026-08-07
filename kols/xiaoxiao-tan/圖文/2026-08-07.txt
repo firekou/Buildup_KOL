@@ -1,0 +1,34 @@
+Tan XiaoXiao — 圖文/日常分享（2026-08-07）
+
+主題：韓國散戶因國內保證金門檻提高，轉買美股三倍槓桿ETF（SOXL、TSLL），監管換了名字但風險行為沒變。
+格式：圖文（1圖+文字），碎片化口氣，3-4行短句，心情陳述不硬接問句收尾。
+
+事實查證：韓國KOSPI從6月高點跌43%後，監管把個人保證金門檻從1000萬韓元提到3000萬韓元；散戶轉買美股槓桿ETF（SOXL三倍半導體、TSLL特斯拉兩倍），7月單月淨買進美股47億美金。
+來源：https://finance.sina.com.cn/roll/2026-08-06/doc-inimizpi4680903.shtml 、 https://www.storm.mg/article/11153912
+
+對標帳號手法：Nassim Taleb（X）把生活瑣事換算成機率語言、不怕打臉主流說法 + Matt Parker（X）抓現實數字現象當題材。
+
+【文案】
+
+韩国把杠杆门槛从一千万韩元提到三千万
+散户直接转去买美股的三倍杠杆ETF
+七月一个月砸进去四十七亿美金
+规则改了，行为完全没变，只是换了个交易所
+
+---
+
+配圖（2張，GPT Image 2 high quality，880×1168直式3:4，各4點）：
+
+A. xiaoxiao-etf-thumbnail-a.png — YT封面風格合成：他的臉/上半身去背合成在誇張風格背景上，背景是三倍槓桿ETF上衝的圖表線條，SOXL/TSLL股票代號當排版文字元素，韓元→美元轉換箭頭，高對比色調，明顯後製合成感，構圖模仿YouTube財經縮圖，表情誇張（驚訝又想笑）。
+
+B. xiaoxiao-etf-infographic-b.png — 純股市示意圖，沒有人：簡化資訊圖表，左側畫保證金門檻barrier圖示（1000萬→3000萬韓元），右側箭頭指向上升的美股槓桿ETF圖表線條，財經圖表配色。
+
+過程備註：這是套用對標帳號研究（BENCHMARK_ACCOUNTS.md研究成果）後的第一批圖文，文案風格經過三輪反饋修正（太長→太愛用問句收尾→太飄不具體），已記入 feedback_daily_life_post_style.md；配圖風格經過調整（不一定要人入鏡、財經題材可用明顯後製的圖表/縮圖風格），已記入 feedback_tuwen_image_planning.md。
+
+狀態：已發布（2026-08-07 16:10 台北時間，Facebook/Instagram/Threads/X 四平台，2張圖以輪播方式呈現，全部確認PUBLISHED）。原排定18:45發布，因使用者想先看輪播效果改為立即發布，刪除原排程貼文重建。Metricool post id：359235565。
+公開連結：
+- Twitter：https://twitter.com/a/status/2085639332832977382
+- Facebook：https://facebook.com/122107017879398198/posts/122111322177398198
+- Instagram：https://www.instagram.com/p/Dbu03OJlZjU/
+- Threads：https://www.threads.com/@xiaoxiaotan686/post/Dbu07-aiIO8
+費用：見 costs/video-generation-costs.md（2026-08-07 圖文配圖 8點）。
