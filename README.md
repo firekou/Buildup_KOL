@@ -9,12 +9,16 @@ KOL 角色設定資料庫。每個 KOL 為一個獨立目錄，包含結構化 J
 ```
 Buildup_KOL/
 ├── kols/
-│   ├── index.json          # 所有 KOL 的主索引
-│   ├── schema.json         # 標準欄位定義（JSON Schema）
+│   ├── index.json                  # 所有 KOL 的主索引
+│   ├── schema.json                 # 標準欄位定義（JSON Schema）
+│   ├── topic-axes.json             # 八軸屬性／領域／地區共用詞彙表
+│   ├── topic-affinity.schema.json  # 話題連結屬性的欄位定義
 │   └── {kol-id}/
-│       ├── profile.json    # 結構化角色資料（符合 schema）
-│       ├── character.md    # 完整角色 Bible（中文敘述）
-│       └── content_style.md # 內容方向與風格指南
+│       ├── profile.json            # 結構化角色資料（符合 schema）
+│       ├── topic_affinity.json     # 八軸屬性、話題連結點、紅線、導流基準
+│       ├── character.md            # 完整角色 Bible（中文敘述）
+│       └── content_style.md        # 內容方向與風格指南
+└── dashboard/                      # 評估儀表板（Node + React，部署於 Railway）
 ```
 
 ---
@@ -41,6 +45,23 @@ Buildup_KOL/
 | [04-kol-dance-video-generation-techniques](docs/04-kol-dance-video-generation-techniques.md) | 舞蹈原型庫、5 種打光原型、卡拍與 QA 清單 |
 | [05-kol-dance-inhouse-method-and-tuning](docs/05-kol-dance-inhouse-method-and-tuning.md) | 自研舞蹈法差距分析、五維調優、取材與動作驅動 |
 | [06-viral-content-framework-and-four-axis-judgment](docs/06-viral-content-framework-and-four-axis-judgment.md) | **爆款方法論**（雷達／七欄拆解／五大母公式）與**娛樂性・音樂性・真實性・動作流暢性**四維判準 |
+| [09-kol-topic-match-and-evaluation-methodology](docs/09-kol-topic-match-and-evaluation-methodology.md) | **KOL × 話題 Match 公式**（八軸向量／五維加權／一票否決）與**導流素材前後評估**、對照歸因、校準迴圈 |
+
+---
+
+## 評估儀表板（`dashboard/`）
+
+三個頁簽：**① KOL 屬性與人設 · ② 地區話題與作業流程 · ③ 導流素材前後評估**。
+計算全部依 [`docs/09`](docs/09-kol-topic-match-and-evaluation-methodology.md)，資料直接讀 `kols/`。
+
+```bash
+npm install
+npm run dev        # API :8080 + Vite :5173
+npm run build && npm start   # 單一服務，http://localhost:8080
+```
+
+部署（Railway）與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。
+**Root Directory 要留在 repo 根目錄**，否則後端讀不到 `kols/`。
 
 ---
 
@@ -48,8 +69,10 @@ Buildup_KOL/
 
 1. 在 `kols/` 下建立新目錄，命名規則：`{firstname}-{lastname}`（kebab-case）
 2. 按照 `kols/schema.json` 建立 `profile.json`
-3. 撰寫 `character.md`（角色 Bible）與 `content_style.md`（內容指南）
-4. 在 `kols/index.json` 新增對應紀錄
+3. 按照 `kols/topic-affinity.schema.json` 建立 `topic_affinity.json`（八軸屬性、支柱關鍵字、
+   3–5 個話題連結點、紅線、導流基準）——沒有這一份，該 KOL 進不了儀表板的 Match 計算
+4. 撰寫 `character.md`（角色 Bible）與 `content_style.md`（內容指南）
+5. 在 `kols/index.json` 新增對應紀錄
 
 ---
 

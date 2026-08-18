@@ -1,0 +1,279 @@
+{
+  "kol_id": "xiaoxiao-tan",
+  "version": "1.0.0",
+  "generated_at": "2026-08-18",
+  "source": "由 kols/xiaoxiao-tan/profile.json（persona / content.pillars / brand_dont）、character.md、content_style.md 與 kols/keywords.md 導出。分數為初始基準值，應隨實際發片數據以 docs/09 §5 的校準流程回寫。",
+  "persona_axes": {
+    "analysis": 95,
+    "narrative": 70,
+    "emotion": 35,
+    "visual": 45,
+    "authority": 80,
+    "daily": 55,
+    "contrarian": 90,
+    "aspiration": 30
+  },
+  "axis_evidence": {
+    "analysis": "archetype 就是 The Rule Researcher，人格配比理性 40%；『先問這件事由什麼規則決定』。",
+    "narrative": "博弈案例與經典概率故事兩支柱各 30% / 25%，靠歷史案例說故事，但不做人物弧線。",
+    "emotion": "voice_tone 明確為 slow, even, logically clean；brand_dont 禁止製造焦慮與 FOMO，情緒操作空間刻意壓低。",
+    "visual": "場景以書房／茶室／書店為主，資訊量偏低；ai_prompts 場景偏靜態人像，視覺不是他的主戰場。",
+    "authority": "身分是規則研究者＋每日閱讀，權威來自查證與可驗證性，非職業實績。",
+    "daily": "每日閱讀分享（30%）與讀書會提供日常錨點，但生活紋理不是敘事核心。",
+    "contrarian": "內容公式即為『大家覺得是這樣，其實機率上不是』——反直覺是他最強的鉤子。",
+    "aspiration": "values 明確反對造神與炫富，不製造嚮往感。"
+  },
+  "material_attributes": {
+    "identity_refs": 3,
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_photos_only",
+    "visual_language": "Film Candid 靜態人像為主：書房暖光、茶室、書店窗光；不使用棚燈與磨皮。",
+    "color_palette": [
+      "ink black",
+      "warm oak",
+      "paper cream",
+      "deep green"
+    ],
+    "usable_formats": [
+      "短影音口白",
+      "靜態圖文",
+      "直播讀書會",
+      "長文案 carousel"
+    ]
+  },
+  "pillar_keywords": {
+    "每日閱讀分享 Daily Reading": [
+      "阅读",
+      "读书",
+      "书单",
+      "笔记",
+      "一本书",
+      "书评",
+      "reading",
+      "book",
+      "notes"
+    ],
+    "博弈案例分享 Game-Theory Cases": [
+      "博弈",
+      "赛局",
+      "扑克",
+      "德州",
+      "百家乐",
+      "象棋",
+      "围棋",
+      "决策",
+      "game theory",
+      "poker",
+      "chess"
+    ],
+    "經典概率故事 Probability Stories": [
+      "概率",
+      "机率",
+      "悖论",
+      "谬误",
+      "期望值",
+      "随机",
+      "统计",
+      "抽卡",
+      "盲盒",
+      "保底",
+      "probability",
+      "paradox",
+      "odds",
+      "statistics"
+    ],
+    "粉絲交流 / 讀書會 Community & Book Club": [
+      "读书会",
+      "直播",
+      "问答",
+      "留言",
+      "社群",
+      "粉丝",
+      "book club",
+      "livestream",
+      "community"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "xt-movie-blackjack",
+      "domain": "movie",
+      "title": "《決勝21點》／《Rounders》裡的算牌與機率誤讀",
+      "angle": "不談怎麼贏，只拆『電影把哪一段機率演對了、哪一段為了戲劇效果演錯了』——把觀眾對牌桌的想像拉回規則本身。",
+      "affinity": 92,
+      "pillar": "博弈案例分享 Game-Theory Cases",
+      "keywords": [
+        "決勝21點",
+        "21點",
+        "算牌",
+        "Rounders",
+        "撲克電影",
+        "MIT"
+      ],
+      "evergreen": true,
+      "axis_demand": {
+        "analysis": 90,
+        "narrative": 80,
+        "emotion": 45,
+        "visual": 55,
+        "authority": 70,
+        "daily": 30,
+        "contrarian": 85,
+        "aspiration": 35
+      }
+    },
+    {
+      "id": "xt-history-monty-hall",
+      "domain": "history",
+      "title": "蒙提霍爾問題與聖彼得堡悖論：歷史上被吵翻的機率題",
+      "angle": "用當年數學家吵架的原始信件當敘事骨架，讓『直覺為什麼會錯』本身成為故事，而不是給一個答案。",
+      "affinity": 95,
+      "pillar": "經典概率故事 Probability Stories",
+      "keywords": [
+        "蒙提霍尔",
+        "三门问题",
+        "圣彼得堡悖论",
+        "概率悖论",
+        "生日悖论",
+        "赌徒谬误"
+      ],
+      "evergreen": true,
+      "axis_demand": {
+        "analysis": 95,
+        "narrative": 85,
+        "emotion": 40,
+        "visual": 40,
+        "authority": 80,
+        "daily": 25,
+        "contrarian": 95,
+        "aspiration": 25
+      }
+    },
+    {
+      "id": "xt-pop-gacha-ev",
+      "domain": "pop",
+      "title": "抽卡／盲盒熱潮裡的期望值誤區",
+      "angle": "從當期最紅的抽卡或盲盒事件切入，只講『保底機制怎麼改變期望值』與『為什麼你記得中的那次』，不評價要不要買。",
+      "affinity": 85,
+      "pillar": "經典概率故事 Probability Stories",
+      "keywords": [
+        "抽卡",
+        "盲盒",
+        "保底",
+        "期望值",
+        "概率公示",
+        "欧非"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "xt-news-algorithm",
+      "domain": "news",
+      "title": "推薦演算法與『近似輸』：介面怎麼設計你的注意力",
+      "angle": "把賭場的 near-miss 設計搬到短影音動態牆上比對，講的是介面規則，不是平台批判。",
+      "affinity": 78,
+      "pillar": "博弈案例分享 Game-Theory Cases",
+      "keywords": [
+        "推荐算法",
+        "近似输",
+        "near miss",
+        "注意力经济",
+        "无限下滑",
+        "行为设计"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "xt-book-decision",
+      "domain": "book",
+      "title": "每日閱讀：一本關於決策與不確定性的書",
+      "angle": "一天一句話的閱讀筆記，只留下一個可以被驗證的想法——這是他最穩定、最不吃時效的內容底盤。",
+      "affinity": 88,
+      "pillar": "每日閱讀分享 Daily Reading",
+      "keywords": [
+        "读书笔记",
+        "决策",
+        "不确定性",
+        "思考快与慢",
+        "黑天鹅",
+        "概率论"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "任何博弈攻略、勝率預測、教你怎麼贏、投注系統或以賭博獲利為框架的內容——不可協商，合規優先。",
+      "keywords": [
+        "攻略",
+        "必胜",
+        "稳赢",
+        "投注",
+        "下注技巧",
+        "打法",
+        "回本",
+        "赢钱",
+        "预测走势",
+        "路单"
+      ],
+      "severity": "veto"
+    },
+    {
+      "rule": "快速致富、保證收益、交易訊號或高風險投機商品。",
+      "keywords": [
+        "暴富",
+        "保证收益",
+        "荐股",
+        "内幕",
+        "翻倍",
+        "带单"
+      ],
+      "severity": "veto"
+    },
+    {
+      "rule": "製造焦慮或 FOMO 的框架（『99% 的人都不知道…』）。",
+      "keywords": [
+        "99%的人",
+        "再不看就晚了",
+        "错过后悔",
+        "焦虑"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "炫富／曬收入／名牌炫耀，與他的克制人設衝突。",
+      "keywords": [
+        "炫富",
+        "晒收入",
+        "豪车",
+        "名表"
+      ],
+      "severity": "high"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "MY",
+      "SG",
+      "TW",
+      "CN"
+    ],
+    "language": "zh-Hans",
+    "platforms": [
+      "tiktok_douyin",
+      "youtube",
+      "instagram",
+      "threads",
+      "facebook",
+      "x"
+    ]
+  },
+  "baseline_funnel": {
+    "assumed": true,
+    "avg_views": 18000,
+    "engagement_rate": 0.042,
+    "profile_visit_rate": 0.028,
+    "link_ctr": 0.075,
+    "conversion_rate": 0.018
+  }
+}

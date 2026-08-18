@@ -1,0 +1,276 @@
+{
+  "kol_id": "loima-cheung",
+  "version": "1.0.0",
+  "generated_at": "2026-08-18",
+  "source": "由 kols/loima-cheung/profile.json（persona / content.pillars / brand_dont）、character.md、content_style.md 與 kols/keywords.md 導出。分數為初始基準值，應隨實際發片數據以 docs/09 §5 的校準流程回寫。",
+  "persona_axes": {
+    "analysis": 88,
+    "narrative": 75,
+    "emotion": 45,
+    "visual": 80,
+    "authority": 65,
+    "daily": 60,
+    "contrarian": 82,
+    "aspiration": 65
+  },
+  "axis_evidence": {
+    "analysis": "archetype 是 The Digital-Experience Observer，四個支柱全部在問『這個設計為什麼有效』。",
+    "narrative": "紀錄片推薦與經典電影分析各 25%，敘事是他的工具，但服務於拆解。",
+    "emotion": "voice 年輕、輕快、提問式，刻意不走沉重情緒。",
+    "visual": "電影分鏡、遊戲畫面、未來實驗室場景撐得起畫面資訊量；但不可重現真實遊戲 UI。",
+    "authority": "創辦人／體驗研究者身分，權威來自親自玩過與拆過，非產業職稱。",
+    "daily": "有生活化的街機廳／展會場景，但不是日常紀錄型帳號。",
+    "contrarian": "『為什麼你還想再玩一局』這類反常識切角是他最強的鉤子。",
+    "aspiration": "未來感與 AI 前沿題材帶動嚮往，但 values 明確反對盲目吹捧科技。"
+  },
+  "material_attributes": {
+    "identity_refs": 3,
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_photos_only",
+    "visual_language": "冷色未來實驗室＋暖色街機懷舊兩套場景語言；螢幕光為主要光源；不生成可辨識的真實遊戲 UI 或撲克點數。",
+    "color_palette": [
+      "screen cyan",
+      "neon magenta",
+      "graphite",
+      "warm arcade amber"
+    ],
+    "usable_formats": [
+      "短影音拆解",
+      "螢幕光人像圖文",
+      "直播實測",
+      "紀錄片式旁白長片"
+    ]
+  },
+  "pillar_keywords": {
+    "數字娛樂設計 Digital Entertainment Design": [
+      "游戏",
+      "设计",
+      "机制",
+      "抽卡",
+      "奖励",
+      "街机",
+      "娃娃机",
+      "交互",
+      "体验",
+      "氪金",
+      "game",
+      "design",
+      "arcade",
+      "gacha",
+      "reward"
+    ],
+    "紀錄片推薦 Documentary Picks": [
+      "纪录片",
+      "叙事",
+      "documentary",
+      "narrative"
+    ],
+    "經典電影分析 Classic Film Analysis": [
+      "电影",
+      "镜头",
+      "构图",
+      "运镜",
+      "配乐",
+      "剪辑",
+      "导演",
+      "分镜",
+      "film",
+      "movie",
+      "cinematography",
+      "score",
+      "editing"
+    ],
+    "AI 科技觀察 AI & Tech Observation": [
+      "人工智能",
+      "机器人",
+      "虚拟人",
+      "科技",
+      "实测",
+      "tech",
+      "robot"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "lc-movie-cinematography",
+      "domain": "movie",
+      "title": "經典電影的鏡頭語言為什麼有效",
+      "angle": "抓一顆具體的鏡頭（《銀翼殺手》的逆光、《瘋狂麥斯》的中心構圖），只講這一顆為什麼讓你心跳變快——一次一個機制。",
+      "affinity": 94,
+      "pillar": "經典電影分析 Classic Film Analysis",
+      "keywords": [
+        "银翼杀手",
+        "疯狂麦斯",
+        "镜头语言",
+        "构图",
+        "调色",
+        "运镜",
+        "分镜"
+      ],
+      "evergreen": true,
+      "axis_demand": {
+        "analysis": 90,
+        "narrative": 80,
+        "emotion": 60,
+        "visual": 92,
+        "authority": 60,
+        "daily": 25,
+        "contrarian": 70,
+        "aspiration": 60
+      }
+    },
+    {
+      "id": "lc-game-reward-loop",
+      "domain": "game",
+      "title": "抽卡、沉沒成本與『再玩一局』的獎勵迴圈",
+      "angle": "把獎勵排程當成設計案例拆開講，重點是機制怎麼運作，不評價玩家、更不談收益。",
+      "affinity": 92,
+      "pillar": "數字娛樂設計 Digital Entertainment Design",
+      "keywords": [
+        "抽卡机制",
+        "沉没成本",
+        "奖励机制",
+        "游戏设计",
+        "上瘾设计",
+        "dark pattern",
+        "抓娃娃机"
+      ],
+      "evergreen": true,
+      "axis_demand": {
+        "analysis": 95,
+        "narrative": 60,
+        "emotion": 45,
+        "visual": 70,
+        "authority": 60,
+        "daily": 55,
+        "contrarian": 90,
+        "aspiration": 40
+      }
+    },
+    {
+      "id": "lc-tech-ai-release",
+      "domain": "tech",
+      "title": "當期 AI 工具發布：只講體驗，不背參數",
+      "angle": "每次新模型發布都用同一個題目實測一次，比較的是『用起來變了什麼』而非跑分——避開盲目吹捧與科技恐慌兩端。",
+      "affinity": 88,
+      "pillar": "AI 科技觀察 AI & Tech Observation",
+      "keywords": [
+        "AI工具",
+        "生成式AI",
+        "模型发布",
+        "实测",
+        "AI创作",
+        "虚拟人"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "lc-history-arcade",
+      "domain": "history",
+      "title": "街機廳與電子遊戲史：80 年代的介面遺產",
+      "angle": "從一台實體街機講起，說明今天手機遊戲的哪些習慣是那個年代留下來的——懷舊當入口，設計史當內容。",
+      "affinity": 78,
+      "pillar": "數字娛樂設計 Digital Entertainment Design",
+      "keywords": [
+        "街机厅",
+        "游戏史",
+        "80年代",
+        "怀旧",
+        "像素",
+        "投币"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "lc-music-score",
+      "domain": "music",
+      "title": "配樂如何操控情緒：主題動機（Leitmotif）拆解",
+      "angle": "同一段畫面配三種音樂播三次，讓觀眾自己感受差異——最容易做成高完播率的短影音格式。",
+      "affinity": 80,
+      "pillar": "經典電影分析 Classic Film Analysis",
+      "keywords": [
+        "配乐",
+        "主题动机",
+        "leitmotif",
+        "电影音乐",
+        "游戏音乐",
+        "音效设计"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "任何博弈方法、投注指引、賠率或獲利框架——不可協商，合規優先；老虎機／街機題材只能停留在視覺、聲音、動畫與 UX 設計。",
+      "keywords": [
+        "攻略",
+        "必胜",
+        "稳赢",
+        "投注",
+        "赔率",
+        "赢钱",
+        "打法",
+        "回本",
+        "下注"
+      ],
+      "severity": "veto"
+    },
+    {
+      "rule": "盲目科技吹捧（『這將取代一切』）或製造科技恐慌／FOMO。",
+      "keywords": [
+        "取代一切",
+        "全面淘汰",
+        "再不学就晚了",
+        "失业潮"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "捏造技術能力或未經驗證的宣稱。",
+      "keywords": [
+        "号称",
+        "据传",
+        "未经证实",
+        "内部消息"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "快速致富、高風險投機或『內幕』方案。",
+      "keywords": [
+        "暴富",
+        "内幕",
+        "翻倍",
+        "带单",
+        "撸羊毛"
+      ],
+      "severity": "veto"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "MY",
+      "SG",
+      "HK",
+      "TW",
+      "JP"
+    ],
+    "language": "zh-Hans",
+    "platforms": [
+      "tiktok_douyin",
+      "youtube",
+      "instagram",
+      "threads",
+      "facebook",
+      "x"
+    ]
+  },
+  "baseline_funnel": {
+    "assumed": true,
+    "avg_views": 21000,
+    "engagement_rate": 0.05,
+    "profile_visit_rate": 0.032,
+    "link_ctr": 0.085,
+    "conversion_rate": 0.019
+  }
+}

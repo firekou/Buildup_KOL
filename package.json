@@ -1,0 +1,29 @@
+{
+  "name": "buildup-kol-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "KOL 屬性評估、地區話題交叉查詢與導流素材前後評估儀表板",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "node --watch dashboard/server/index.js",
+    "dev:client": "vite",
+    "build": "vite build",
+    "start": "node dashboard/server/index.js",
+    "smoke": "node dashboard/server/smoke.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "opencc-js": "^1.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "vite": "^5.4.11"
+  }
+}

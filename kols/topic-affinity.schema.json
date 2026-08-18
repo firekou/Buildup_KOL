@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "KOL Topic Affinity Schema",
+  "description": "每個 KOL 的『可發揮屬性』與『時事話題連結點』。由 profile.json / character.md / content_style.md / kols/keywords.md 導出，供 Dashboard 計算人設與話題的 Match 分數。軸與領域詞彙見 kols/topic-axes.json。",
+  "type": "object",
+  "required": ["kol_id", "version", "persona_axes", "topic_hooks", "reach"],
+  "properties": {
+    "kol_id": { "type": "string", "description": "對應 kols/index.json 的 id" },
+    "version": { "type": "string" },
+    "generated_at": { "type": "string", "format": "date" },
+    "source": { "type": "string", "description": "本檔案內容的推導來源，供人工覆核" },
+    "persona_axes": {
+      "type": "object",
+      "description": "八軸屬性向量，0–100。鍵必須是 kols/topic-axes.json 的 axes[].key。",
+      "required": ["analysis", "narrative", "emotion", "visual", "authority", "daily", "contrarian", "aspiration"],
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
+    },
+    "axis_evidence": {
+      "type": "object",
+      "description": "每一軸為什麼給這個分數的依據（引用 profile 的哪一句），供人工覆核與調參。",
+      "additionalProperties": { "type": "string" }
+    },
+    "material_attributes": {
+      "type": "object",
+      "description": "建模素材屬性——這個 KOL 手上實際有什麼可用的生成素材與視覺語言。",
+      "properties": {
+        "identity_refs": { "type": "integer", "description": "身分參考圖張數" },
+        "generation_model": { "type": "string" },
+        "consistency": { "type": "string" },
+        "visual_language": { "type": "string" },
+        "color_palette": { "type": "array", "items": { "type": "string" } },
+        "usable_formats": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "pillar_keywords": {
+      "type": "object",
+      "description": "內容支柱的比對關鍵字。鍵為 profile.json content.pillars[].name。支柱的名稱與描述多為英文或繁體，而話題多為簡體，僅靠原文比對會漏；這裡補上兩種字體與中英文的關鍵字，pillarFit 才算得準（docs/09 §3.3）。",
+      "additionalProperties": { "type": "array", "items": { "type": "string" } }
+    },
+    "topic_hooks": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 8,
+      "description": "3–5 個（最多 8）該 KOL 與網路時事／文化的固定連結點。",
+      "items": {
+        "type": "object",
+        "required": ["id", "domain", "title", "angle", "affinity", "pillar", "keywords"],
+        "properties": {
+          "id": { "type": "string" },
+          "domain": { "type": "string", "description": "kols/topic-axes.json 的 domains[].key" },
+          "title": { "type": "string" },
+          "angle": { "type": "string", "description": "這個 KOL 切入這個連結點的專屬角度" },
+          "affinity": { "type": "number", "minimum": 0, "maximum": 100, "description": "人工／導出的連結強度" },
+          "pillar": { "type": "string", "description": "對應 profile.json content.pillars 的支柱名稱" },
+          "keywords": { "type": "array", "items": { "type": "string" }, "description": "用於與 Apify 抓回的 Tag 做交叉比對" },
+          "evergreen": { "type": "boolean", "description": "true = 長青題材，false = 需搭當期時事" },
+          "axis_demand": {
+            "type": "object",
+            "description": "選填。覆寫該連結點的軸需求；未填則套 domain 預設。",
+            "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
+          }
+        }
+      }
+    },
+    "redlines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule", "keywords", "severity"],
+        "properties": {
+          "rule": { "type": "string", "description": "紅線描述（取自 profile content.brand_dont）" },
+          "keywords": { "type": "array", "items": { "type": "string" }, "description": "命中即觸發風險判定的關鍵字" },
+          "severity": { "type": "string", "enum": ["veto", "high", "medium"], "description": "veto = 一票否決，不論其他分數多高" }
+        }
+      }
+    },
+    "reach": {
+      "type": "object",
+      "required": ["regions", "language"],
+      "properties": {
+        "regions": { "type": "array", "items": { "type": "string" }, "description": "主要覆蓋地區（topic-axes.json regions[].key），依相關性排序" },
+        "language": { "type": "string", "description": "貼文語言（zh-Hans / zh-Hant / en …），依 docs/06 的簡繁對應規則" },
+        "platforms": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "baseline_funnel": {
+      "type": "object",
+      "description": "該 KOL 目前的導流基準值，用於預評估的期望值推算。無實績時填產業基準並標註 assumed。",
+      "properties": {
+        "assumed": { "type": "boolean" },
+        "avg_views": { "type": "number" },
+        "engagement_rate": { "type": "number", "description": "0–1" },
+        "profile_visit_rate": { "type": "number", "description": "0–1，觀看→主頁" },
+        "link_ctr": { "type": "number", "description": "0–1，主頁→外連點擊" },
+        "conversion_rate": { "type": "number", "description": "0–1，點擊→目標轉換" }
+      }
+    }
+  }
+}
