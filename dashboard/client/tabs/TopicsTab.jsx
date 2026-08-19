@@ -32,6 +32,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
   const [crossResult, setCrossResult] = useState(null)
 
   const [fourAxis, setFourAxis] = useState({ entertaining: 4, musicality: 4, authenticity: 4, motionFluency: 4 })
+  const [targets, setTargets] = useState({ views: '', linkClicks: '' })
   const [saveMsg, setSaveMsg] = useState(null)
 
   const domainLabel = useMemo(
@@ -76,7 +77,16 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
         setResult(await api.topicToKols({ region, platforms, topicId: topic.id, tag: topic.tag, title: topic.title, domain: topic.domain }))
       } else {
         if (!selectedTopicIds.length) throw new Error('請先勾選 1–3 個話題')
-        setResult(await api.combination({ kolId: selectedKolId, region, platforms, topicIds: selectedTopicIds, fourAxis }))
+        setResult(
+          await api.combination({
+            kolId: selectedKolId,
+            region,
+            platforms,
+            topicIds: selectedTopicIds,
+            fourAxis,
+            targets: { views: Number(targets.views) || null, linkClicks: Number(targets.linkClicks) || null },
+          }),
+        )
       }
     } catch (e) {
       setError(e.message)
@@ -120,7 +130,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
             </button>
           </div>
         }
-        note="資料來源：Apify（Threads / TikTok / Instagram）。熱度 = 45% 量體（對數）＋ 35% 七日成長率 ＋ 20% 互動率，皆為本批結果內的相對位置。"
+        note="資料來源：Apify（Threads / TikTok / Instagram）。熱度 = 60% 量體（對數）＋ 40% 七日成長率，為本批結果內的相對位置。互動率多數 actor 抓不到，已不計入。"
       >
         <div className="controls" style={{ marginBottom: 14 }}>
           <div>
@@ -172,9 +182,6 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
                   <th className="num" style={{ width: 70 }}>
                     7日成長
                   </th>
-                  <th className="num" style={{ width: 70 }}>
-                    互動率
-                  </th>
                   <th style={{ width: 120 }}>熱度</th>
                   <th style={{ width: 150 }}>平台</th>
                 </tr>
@@ -198,7 +205,6 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
                     <td className="small">{domainLabel[t.domain] ?? t.domain}</td>
                     <td className="num">{num(t.volume)}</td>
                     <td className="num">{t.growth7d == null ? '—' : `${t.growth7d}%`}</td>
-                    <td className="num">{t.engagementRate == null ? '—' : `${(t.engagementRate * 100).toFixed(1)}%`}</td>
                     <td>
                       <div className="row" style={{ gap: 6 }}>
                         <span className="mono small" style={{ width: 30 }}>
@@ -320,32 +326,52 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
             </div>
           )}
           {direction === 'c' && (
-            <div>
-              <label>四維預估（1–5，門檻 4）</label>
-              <div className="row">
-                {[
-                  ['entertaining', '娛樂'],
-                  ['musicality', '音樂'],
-                  ['authenticity', '真實'],
-                  ['motionFluency', '流暢'],
-                ].map(([key, label]) => (
-                  <span key={key} className="row" style={{ gap: 4 }}>
-                    <span className="small muted">{label}</span>
-                    <select
-                      value={fourAxis[key]}
-                      onChange={(e) => setFourAxis({ ...fourAxis, [key]: Number(e.target.value) })}
-                      style={{ padding: '4px 6px' }}
-                    >
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <option key={n} value={n}>
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </span>
-                ))}
+            <>
+              <div>
+                <label>目標觀看</label>
+                <input
+                  type="number"
+                  value={targets.views}
+                  onChange={(e) => setTargets({ ...targets, views: e.target.value })}
+                  placeholder="這支要達到多少"
+                  style={{ width: 130 }}
+                />
               </div>
-            </div>
+              <div>
+                <label>目標外連點擊</label>
+                <input
+                  type="number"
+                  value={targets.linkClicks}
+                  onChange={(e) => setTargets({ ...targets, linkClicks: e.target.value })}
+                  placeholder="導流目標"
+                  style={{ width: 120 }}
+                />
+              </div>
+              <div>
+                <label>四維自評（檢查清單，不擋開工）</label>
+                <div className="row">
+                  {[
+                    ['entertaining', '娛樂'],
+                    ['musicality', '音樂'],
+                    ['authenticity', '真實'],
+                    ['motionFluency', '流暢'],
+                  ].map(([key, label]) => (
+                    <span key={key} className="row" style={{ gap: 4 }}>
+                      <span className="small muted">{label}</span>
+                      <select
+                        value={fourAxis[key]}
+                        onChange={(e) => setFourAxis({ ...fourAxis, [key]: Number(e.target.value) })}
+                        style={{ padding: '4px 6px' }}
+                      >
+                        {[1, 2, 3, 4, 5].map((n) => (
+                          <option key={n} value={n}>{n}</option>
+                        ))}
+                      </select>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </>
           )}
           <button className="primary" onClick={runWorkflow} disabled={running}>
             {running ? '計算中…' : '執行'}
@@ -462,39 +488,31 @@ function TopicToKols({ result }) {
 
 function Combination({ result, onSave }) {
   const { brief, match, preEvaluation } = result
-  const decisionTone =
-    preEvaluation.decision.key === 'go' ? 'good' : preEvaluation.decision.key === 'revise' || preEvaluation.decision.key === 'incomplete' ? 'warn' : 'bad'
+  const d = preEvaluation.decision
+  const tone = d.key === 'go' ? 'good' : d.key === 'needs_target' || d.key === 'unbound' ? 'warn' : 'bad'
 
   return (
     <>
-      <Alert tone={decisionTone}>
-        <strong>{preEvaluation.decision.label}</strong>：{preEvaluation.decision.reason}
+      <Alert tone={tone}>
+        <strong>{d.label}</strong>：{d.reason}
       </Alert>
 
       <div className="grid two">
         <div>
           <h4>素材企劃骨架</h4>
           <dl className="kv">
-            <dt>KOL</dt>
-            <dd>{brief.kol.name}</dd>
-            <dt>話題</dt>
-            <dd>{brief.topics.map((t) => t.tag).join('、')}</dd>
             <dt>綁定支柱</dt>
             <dd>
-              {brief.boundPillar ? `${brief.boundPillar.name}（${brief.boundPillar.weight}）` : '無支柱對應'}
+              {brief.boundPillar ? `${brief.boundPillar.name}（${brief.boundPillar.weight}）` : '無支柱對應——需人工綁定'}
             </dd>
             <dt>建議格式</dt>
-            <dd>{brief.suggestedFormats.slice(0, 2).join('；') || '—'}</dd>
-            <dt>視覺語言</dt>
-            <dd>{brief.visualLanguage ?? '—'}</dd>
-            <dt>語氣</dt>
-            <dd className="small">{brief.voiceTone ?? '—'}</dd>
+            <dd className="small">{brief.suggestedFormats.join('；') || '—'}</dd>
             <dt>可用場景</dt>
-            <dd className="small">{brief.availableScenes.map((s) => s.label).join('、') || '—'}</dd>
-            <dt>結構</dt>
-            <dd className="small">{brief.toFillIn.structure}</dd>
-            <dt>選曲</dt>
-            <dd className="small">{brief.toFillIn.musicPick}</dd>
+            <dd className="small">{brief.availableScenes.map((sc) => sc.label).join('、') || '—'}</dd>
+            <dt>視覺語言</dt>
+            <dd className="small">{brief.visualLanguage ?? '—'}</dd>
+            <dt>待填</dt>
+            <dd className="small muted">開場鉤子、結尾 CTA——引擎不寫文案</dd>
           </dl>
 
           <h4 style={{ marginTop: 14 }}>可執行性提示</h4>
@@ -518,20 +536,15 @@ function Combination({ result, onSave }) {
           <table>
             <tbody>
               {[
-                ['人設契合', match.dimensions.personaFit.score, '30%'],
-                ['支柱覆蓋', match.dimensions.pillarFit.score, '25%'],
+                ['人設契合', match.dimensions.personaFit.score, '35%'],
+                ['支柱覆蓋', match.dimensions.pillarFit.score, '30%'],
                 ['話題熱度', match.dimensions.topicHeat.score, '20%'],
                 ['地區契合', match.dimensions.regionFit.score, '15%'],
-                ['無風險度', 100 - match.dimensions.risk.score, '10%'],
               ].map(([label, score, weight]) => (
                 <tr key={label}>
-                  <td style={{ width: 100 }}>{label}</td>
-                  <td className="num" style={{ width: 46 }}>
-                    {score}
-                  </td>
-                  <td className="num muted" style={{ width: 46 }}>
-                    {weight}
-                  </td>
+                  <td style={{ width: 84 }}>{label}</td>
+                  <td className="num" style={{ width: 46 }}>{score}</td>
+                  <td className="num muted" style={{ width: 42 }}>{weight}</td>
                   <td>
                     <Bar value={score} tone={toneFor(score)} />
                   </td>
@@ -539,36 +552,39 @@ function Combination({ result, onSave }) {
               ))}
             </tbody>
           </table>
+          {match.warnings?.length > 0 && (
+            <Alert tone="warn">
+              紅線警告（不扣分）：{match.warnings.map((w) => w.keywords.join('／')).join('；')}
+            </Alert>
+          )}
 
-          <h4 style={{ marginTop: 14 }}>導流漏斗預測</h4>
+          <h4 style={{ marginTop: 14 }}>本次目標</h4>
           <table>
             <tbody>
-              {[
-                ['觸及 Views', preEvaluation.predictedFunnel.views],
-                ['互動', preEvaluation.predictedFunnel.engagements],
-                ['主頁造訪', preEvaluation.predictedFunnel.profileVisits],
-                ['外連點擊', preEvaluation.predictedFunnel.linkClicks],
-                ['轉換', preEvaluation.predictedFunnel.conversions],
-              ].map(([label, value]) => (
-                <tr key={label}>
-                  <td>{label}</td>
-                  <td className="num">{num(value, 1)}</td>
-                </tr>
-              ))}
+              <tr>
+                <td>目標觀看</td>
+                <td className="num">{preEvaluation.targets.views == null ? '未填' : num(preEvaluation.targets.views)}</td>
+              </tr>
+              <tr>
+                <td>目標外連點擊</td>
+                <td className="num">{preEvaluation.targets.linkClicks == null ? '未填' : num(preEvaluation.targets.linkClicks)}</td>
+              </tr>
             </tbody>
           </table>
           <div className="small muted" style={{ marginTop: 6 }}>
-            Match 乘數 ×{preEvaluation.predictedFunnel.lift}，熱度乘數 ×{preEvaluation.predictedFunnel.heatMultiplier}
-            {preEvaluation.predictedFunnel.baselineAssumed && '；基準值為假設值，僅供相對排序。'}
+            這兩個數字由企劃者填寫，不是系統預測——事後對照的是一個人做過的判斷。
           </div>
 
-          <h4 style={{ marginTop: 14 }}>四維預估</h4>
+          <h4 style={{ marginTop: 14 }}>四維檢查清單</h4>
           <div className="chips">
-            {preEvaluation.fourAxis.rows.map((r) => (
+            {preEvaluation.fourAxisChecklist.rows.map((r) => (
               <span key={r.key} className={`chip ${r.passes ? 'on' : ''}`}>
                 {r.label} {r.value ?? '—'}
               </span>
             ))}
+          </div>
+          <div className="small muted" style={{ marginTop: 4 }}>
+            成片品質判準（docs/06 Part D），發片前要跑，但不擋開工。
           </div>
 
           <button className="primary" style={{ marginTop: 14 }} onClick={onSave} disabled={match.blocked}>

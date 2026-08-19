@@ -45,14 +45,16 @@ async function main() {
 
   await check('GET /api/meta', async () => {
     const b = await json('/api/meta')
-    assert(b.axes?.length === 8, 'expected 8 axes')
+    assert(b.axes?.length === 4, `expected 4 axes, got ${b.axes?.length}`)
+    assert(b.matchWeights.risk === undefined, 'risk must no longer be a weighted dimension')
     return `topic source: ${b.topicSource}`
   })
 
   await check('GET /api/kols', async () => {
     const b = await json('/api/kols')
     assert(b.kols.length > 0, 'no KOLs')
-    assert(b.kols.every((k) => k.axes), 'a KOL is missing persona_axes')
+    assert(b.kols.every((k) => k.axes), 'a KOL is missing axes')
+    assert(b.kols.every((k) => k.formatFit), 'a KOL is missing format_fit')
     kolId = b.kols[0].id
     return `${b.kols.length} KOLs, first = ${kolId}`
   })
@@ -120,11 +122,15 @@ async function main() {
         region: 'SG',
         topicIds: [topics.topics[0].id],
         fourAxis: { entertaining: 4, musicality: 4, authenticity: 5, motionFluency: 4 },
+        targets: { views: 25000, linkClicks: 60 },
       }),
     })
-    assert(b.preEvaluation.predictedFunnel.views > 0, 'no predicted views')
+    assert(b.preEvaluation.predictedFunnel === undefined, 'funnel prediction should be gone')
+    assert(b.preEvaluation.targets.views === 25000, 'targets not carried through')
+    assert(b.brief.feasibility.some((f) => f.message.includes('日常適配')), 'format_fit not surfaced in the brief')
+    assert(Object.keys(b.brief).length <= 10, `brief has ${Object.keys(b.brief).length} fields, expected a trimmed one`)
     assert(b.preEvaluation.decision.key, 'no decision')
-    return `decision=${b.preEvaluation.decision.key}, match=${b.match.score}, predViews=${b.preEvaluation.predictedFunnel.views}`
+    return `decision=${b.preEvaluation.decision.key}, match=${b.match.score}, target=${b.preEvaluation.targets.views}`
   })
 
   await check('POST /api/evaluations/pre', async () => {
@@ -136,6 +142,7 @@ async function main() {
         region: 'SG',
         topicIds: [topics.topics[0].id],
         fourAxis: { entertaining: 4, musicality: 4, authenticity: 5, motionFluency: 4 },
+        targets: { views: 25000, linkClicks: 60 },
       }),
     })
     const saved = await json('/api/evaluations/pre', { method: 'POST', body: JSON.stringify(combo.preEvaluation) })
@@ -174,21 +181,35 @@ async function main() {
         fourAxisActual: { entertaining: 4, musicality: 3, authenticity: 5, motionFluency: 4 },
       }),
     })
-    assert(b.comparison?.rows?.length === 5, 'comparison should have 5 funnel rows')
+    assert(b.comparison?.rows?.length === 3, `comparison should have 3 rows, got ${b.comparison?.rows?.length}`)
     assert(b.comparison.attribution?.key, 'no attribution')
-    return `attribution=${b.comparison.attribution.key}`
+    // 顯示三欄，但原始欄位必須照存（docs/10 第五刀）
+    assert(b.record.actuals.profileVisits === 640, 'profileVisits must still be stored')
+    assert(b.record.actuals.saves === 40, 'saves must still be stored')
+    return `attribution=${b.comparison.attribution.key}, 已存欄位 ${Object.keys(b.record.actuals).length} 個`
   })
 
   await check('GET /api/evaluations/compare/:preId', async () => {
     const b = await json(`/api/evaluations/compare/${preId}`)
     assert(b.status === 'complete', `status=${b.status}`)
-    return `views variance ${b.comparison.rows[0].variancePercent}%`
+    return `觀看 vs 目標 ${b.comparison.rows[0].variancePercent}%（${b.comparison.rows[0].verdict}）`
   })
 
-  await check('GET /api/evaluations/calibration', async () => {
-    const b = await json('/api/evaluations/calibration')
-    assert('sampleSize' in b, 'no sampleSize')
-    return `sampleSize=${b.sampleSize}, ready=${b.ready}`
+  await check('校準端點已移除（docs/10 第六刀）', async () => {
+    const res = await fetch(`${BASE}/api/evaluations/calibration`)
+    assert(res.status === 404, `expected 404, got ${res.status}`)
+    return '404 as expected'
+  })
+
+  await check('無支柱對應 → 待綁定，不給等級', async () => {
+    const b = await json('/api/workflow/topic-to-kols', {
+      method: 'POST',
+      body: JSON.stringify({ region: 'SG', tag: '#盆栽修剪', title: '阳台盆栽修剪与介质配比', domain: 'life' }),
+    })
+    const unbound = b.recommended.filter((r) => r.match.needsBinding)
+    assert(unbound.length > 0, 'expected at least one KOL with no pillar home')
+    assert(unbound.every((r) => r.match.grade.key === 'unbound'), 'unbound match must not get a letter grade')
+    return `${unbound.length} 位待綁定`
   })
 
   console.log(`\nSmoke test against ${BASE}\n${results.join('\n')}\n`)

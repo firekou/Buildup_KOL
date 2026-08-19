@@ -104,7 +104,7 @@ function loadAll() {
         identityRefs: images.filter((i) => i.role === 'identity_ref').length,
         totalImages: images.length,
         topicHooks: affinity?.topic_hooks?.length ?? 0,
-        baselineAssumed: affinity?.baseline_funnel?.assumed !== false,
+        pillarKeywords: Object.keys(affinity?.pillar_keywords ?? {}).length,
       },
     }
   })
@@ -133,7 +133,8 @@ export function toSummary(kol) {
     flavor: kol.flavor,
     archetype: kol.profile?.persona?.archetype ?? null,
     tags: kol.profile?.meta?.tags ?? [],
-    axes: kol.affinity?.persona_axes ?? null,
+    axes: kol.affinity?.axes ?? null,
+    formatFit: kol.affinity?.format_fit ?? null,
     regions: kol.affinity?.reach?.regions ?? [],
     language: kol.affinity?.reach?.language ?? null,
     hookCount: kol.completeness.topicHooks,

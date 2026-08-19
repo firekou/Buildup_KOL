@@ -1,39 +1,31 @@
 {
   "kol_id": "faye-tan",
-  "version": "1.0.0",
-  "generated_at": "2026-08-18",
-  "source": "由 kols/faye-tan/profile.json（persona / content.pillars / brand_dont）、character.md、content_style.md 與 kols/keywords.md 導出。分數為初始基準值，應隨實際發片數據以 docs/09 §5 的校準流程回寫。",
-  "persona_axes": {
-    "analysis": 65,
-    "narrative": 88,
-    "emotion": 60,
-    "visual": 95,
-    "authority": 60,
-    "daily": 70,
-    "contrarian": 45,
-    "aspiration": 85
+  "schema_version": 2,
+  "axes": {
+    "analysis": {
+      "score": 55,
+      "why": "traits 理性 15%，會問「這座城為什麼這樣被規劃」，但 values 反對排名文化與地域優越感，刻意不走衝突路線。"
+    },
+    "story": {
+      "score": 74,
+      "why": "archetype 是 The World Observer，「把每座城市當一本書讀」；溫和 20%，共鳴來自安靜的觀察而非強烈情緒。"
+    },
+    "visual": {
+      "score": 90,
+      "why": "四大支柱有三個（城市／酒店／建築）本質是空間視覺，aesthetic 為 cinematic documentary；遠方城市與建築尺度天然帶嚮往感，是她最強的導流資產。"
+    },
+    "credibility": {
+      "score": 60,
+      "why": "權威來自查證過的歷史與親身在場，非證照或職業身分。"
+    }
   },
-  "axis_evidence": {
-    "analysis": "traits 理性 15%，會問『這座城為什麼這樣被規劃』，但拆解深度不是她的賣點。",
-    "narrative": "archetype 是 The World Observer，『把每座城市當一本書讀』，建築與歷史支柱佔 25%。",
-    "emotion": "溫和 20%，情緒偏靜——共鳴來自安靜的觀察，不是強烈情緒。",
-    "visual": "四大支柱有三個（城市／酒店／建築）本質是空間視覺；aesthetic 為 cinematic documentary。",
-    "authority": "權威來自查證過的歷史與親身在場，非證照或職業身分。",
-    "daily": "旅行隨筆 15% 提供隨手感；手持自拍走路視角是她的原生格式。",
-    "contrarian": "values 反對排名文化與製造地域優越感，刻意不走衝突路線。",
-    "aspiration": "遠方城市、酒店空間、建築尺度天然帶嚮往感，是她最強的導流資產。"
+  "format_fit": {
+    "score": 70,
+    "why": "手持自拍走路視角是她的原生格式，旅行隨筆（15%）提供隨手感。"
   },
   "material_attributes": {
-    "identity_refs": 3,
     "generation_model": "seedream_v4_5",
     "consistency": "reference_photos_only",
-    "visual_language": "Cinematic documentary：自然光、窗光、黃金時刻；空間縱深優先於人物特寫；禁 over-saturated 與 too-AI 光滑感。",
-    "color_palette": [
-      "warm beige",
-      "stone grey",
-      "muted teal",
-      "dusk amber"
-    ],
     "usable_formats": [
       "手持自拍走路短影音",
       "空間空鏡 B-roll",
@@ -103,7 +95,6 @@
       "domain": "history",
       "title": "一棟建築見證的時代：殖民建築與戰後重建",
       "angle": "從一棟仍在使用中的老建築進去，講它經歷過哪幾次身分改寫——歷史是空間的註腳，不是講義。",
-      "affinity": 93,
       "pillar": "建築與歷史 Architecture & History",
       "keywords": [
         "殖民建筑",
@@ -113,24 +104,13 @@
         "保育",
         "历史建筑"
       ],
-      "evergreen": true,
-      "axis_demand": {
-        "analysis": 70,
-        "narrative": 92,
-        "emotion": 55,
-        "visual": 90,
-        "authority": 75,
-        "daily": 30,
-        "contrarian": 45,
-        "aspiration": 70
-      }
+      "evergreen": true
     },
     {
       "id": "ft-movie-location",
       "domain": "movie",
       "title": "電影取景城市：《花樣年華》的香港、《愛情不用翻譯》的東京",
       "angle": "站在真實取景點，比對『電影拍到的那一面』與『現在那條街真正的樣子』——落差本身就是城市觀察。",
-      "affinity": 88,
       "pillar": "城市觀察 City Observation",
       "keywords": [
         "花样年华",
@@ -140,24 +120,13 @@
         "王家卫",
         "城市电影"
       ],
-      "evergreen": true,
-      "axis_demand": {
-        "analysis": 55,
-        "narrative": 88,
-        "emotion": 70,
-        "visual": 95,
-        "authority": 45,
-        "daily": 55,
-        "contrarian": 50,
-        "aspiration": 85
-      }
+      "evergreen": true
     },
     {
       "id": "ft-news-urban",
       "domain": "news",
       "title": "老街區拆除與保存爭議",
       "angle": "不站隊，只把兩邊的理由攤開講清楚，並帶觀眾看那條街現在還剩下什麼——符合她『不排名、不製造優越感』的紅線。",
-      "affinity": 80,
       "pillar": "城市觀察 City Observation",
       "keywords": [
         "拆迁",
@@ -174,7 +143,6 @@
       "domain": "pop",
       "title": "網紅打卡點 vs 在地生活的落差",
       "angle": "同一個地標拍兩次：一次照著攻略拍，一次在非尖峰時間拍——她的立場是理解而不是嘲諷。",
-      "affinity": 76,
       "pillar": "旅行隨筆 Travel Notes",
       "keywords": [
         "网红打卡",
@@ -190,7 +158,6 @@
       "domain": "music",
       "title": "City Pop 與一座城市的聲音記憶",
       "angle": "用一首當年的歌帶出那個年代的街景，讓音樂成為時間軸——貼合她慢節奏、電影感的剪輯語言。",
-      "affinity": 70,
       "pillar": "城市觀察 City Observation",
       "keywords": [
         "city pop",
@@ -215,7 +182,7 @@
         "打法",
         "回本"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "為文化／國家排名或製造地域優越感的內容。",
@@ -226,7 +193,7 @@
         "素质差",
         "国民性"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "捏造歷史或未經查證的『冷知識』。",
@@ -236,7 +203,7 @@
         "未经证实",
         "传闻"
       ],
-      "severity": "high"
+      "severity": "warn"
     },
     {
       "rule": "炫富／奢華炫耀式消費框架。",
@@ -246,7 +213,7 @@
         "天价",
         "顶奢"
       ],
-      "severity": "high"
+      "severity": "warn"
     }
   ],
   "reach": {
@@ -257,22 +224,6 @@
       "TW",
       "GLOBAL"
     ],
-    "language": "zh-Hans",
-    "platforms": [
-      "tiktok_douyin",
-      "instagram",
-      "youtube",
-      "threads",
-      "facebook",
-      "x"
-    ]
-  },
-  "baseline_funnel": {
-    "assumed": true,
-    "avg_views": 24000,
-    "engagement_rate": 0.048,
-    "profile_visit_rate": 0.035,
-    "link_ctr": 0.09,
-    "conversion_rate": 0.02
+    "language": "zh-Hans"
   }
 }

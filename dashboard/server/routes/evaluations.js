@@ -1,6 +1,6 @@
 import express from 'express'
 import * as store from '../lib/store.js'
-import { buildPostEvaluation, compare, calibration, normalizeActuals } from '../lib/scoring/evaluation.js'
+import { buildPostEvaluation, compare, normalizeActuals } from '../lib/scoring/evaluation.js'
 import { isApifyConfigured } from '../config.js'
 
 const router = express.Router()
@@ -122,10 +122,9 @@ router.get('/evaluations/pairs', (req, res) => {
   res.json({ pairs })
 })
 
-router.get('/evaluations/calibration', (req, res) => {
-  const posts = store.list('post')
-  const pairs = store.list('pre').map((pre) => ({ pre, post: posts.find((p) => p.preEvaluationId === pre.id) ?? null }))
-  res.json(calibration(pairs))
-})
+// The calibration loop (Pearson correlation + per-KOL baseline suggestions)
+// was removed in docs/10 第六刀: it needed 10 completed post-evaluations to
+// activate and there are zero, so its only effect was rendering "樣本 2 / 10".
+// Because 第五刀 keeps storing every raw metric, rebuilding it later is cheap.
 
 export default router

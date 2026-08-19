@@ -1,40 +1,31 @@
 {
   "kol_id": "rachel-ong",
-  "version": "1.0.0",
-  "generated_at": "2026-08-18",
-  "source": "由 kols/rachel-ong/profile.json（persona / content.pillars / brand_dont）與 character.md 導出。分數為初始基準值，應隨實際發片數據以 docs/09 §5 的校準流程回寫。",
-  "persona_axes": {
-    "analysis": 78,
-    "narrative": 90,
-    "emotion": 88,
-    "visual": 92,
-    "authority": 95,
-    "daily": 50,
-    "contrarian": 70,
-    "aspiration": 95
+  "schema_version": 2,
+  "axes": {
+    "analysis": {
+      "score": 74,
+      "why": "決策風格重度依賴檢查表與風險計算；「轉身不是失敗」直接對抗主流征服敘事，反直覺強度高但語氣不衝突。"
+    },
+    "story": {
+      "score": 89,
+      "why": "轉身時刻（30%）＋山徑日誌（25%）都是敘事型欄目，有真實事故作為弧線錨點；深夜筆記本是全 repo 情緒濃度最高的素材。"
+    },
+    "visual": {
+      "score": 94,
+      "why": "高海拔地景、暴風光、帳篷內頭燈——documentary-realist 視覺本身即內容；極限地景是最強嚮往感來源，但 brand_dont 禁止把危險演出來換取嚮往。"
+    },
+    "credibility": {
+      "score": 95,
+      "why": "IFMGA/UIAGM 國際認證嚮導，權威等級為全 repo 最高。"
+    }
   },
-  "axis_evidence": {
-    "analysis": "決策風格重度依賴檢查表與風險計算，『不信任當下的靈感』——理性存在，但服務於安全判斷而非知識輸出。",
-    "narrative": "轉身時刻（30%）＋山徑日誌（25%）都是敘事型欄目，且有真實事故作為弧線錨點。",
-    "emotion": "深夜筆記本支柱與『十分鐘到了，我們回去』的錨點案例是全 repo 情緒濃度最高的素材。",
-    "visual": "高海拔地景、暴風光、帳篷內頭燈——documentary-realist 視覺本身即內容。",
-    "authority": "IFMGA/UIAGM 國際認證嚮導，權威等級為全 repo 最高。",
-    "daily": "非攀登季新加坡日常有素材，但比例低（設計上刻意節制）。",
-    "contrarian": "『轉身不是失敗』直接對抗主流征服敘事，反直覺強度高但語氣不衝突。",
-    "aspiration": "極限地景＋專業身分＝最強嚮往感，但 brand_dont 禁止把危險演出來換取嚮往。"
+  "format_fit": {
+    "score": 50,
+    "why": "非攀登季新加坡日常有素材，但比例低（設計上刻意節制）。"
   },
   "material_attributes": {
-    "identity_refs": 3,
     "generation_model": "seedream_v4_5",
     "consistency": "reference_photos_only",
-    "visual_language": "Documentary-realist：自然光／黎明光／暴風光優先，長鏡頭少剪，保留皮膚與裝備質感；服裝限土色／橄欖／炭灰，禁亮色。",
-    "color_palette": [
-      "earth brown",
-      "olive",
-      "charcoal grey",
-      "glacier white",
-      "cold dawn blue"
-    ],
     "usable_formats": [
       "短影音案例口白",
       "紀錄片式長片段",
@@ -104,7 +95,6 @@
       "domain": "history",
       "title": "1996 聖母峰山難與《Into Thin Air》",
       "angle": "以嚮導的職業視角重讀那天的決策鏈：哪幾個時間點還能轉身、為什麼沒有——她講的是判斷，不是災難本身。",
-      "affinity": 92,
       "pillar": "山徑日誌 Trail Journal",
       "keywords": [
         "1996珠峰山难",
@@ -114,24 +104,13 @@
         "关门时间",
         "向导"
       ],
-      "evergreen": true,
-      "axis_demand": {
-        "analysis": 85,
-        "narrative": 95,
-        "emotion": 80,
-        "visual": 70,
-        "authority": 95,
-        "daily": 20,
-        "contrarian": 70,
-        "aspiration": 70
-      }
+      "evergreen": true
     },
     {
       "id": "ro-movie-freesolo",
       "domain": "movie",
       "title": "《Free Solo》／《聖母峰》：登山電影的風險敘事與真實落差",
       "angle": "逐段指出電影拍得對的部分與被戲劇化的部分——她的紅線正好是『演出來的危險』，這個切角天然對上。",
-      "affinity": 90,
       "pillar": "轉身時刻 Turning-Back Moments",
       "keywords": [
         "free solo",
@@ -141,24 +120,13 @@
         "风险",
         "真实还原"
       ],
-      "evergreen": true,
-      "axis_demand": {
-        "analysis": 75,
-        "narrative": 90,
-        "emotion": 80,
-        "visual": 90,
-        "authority": 90,
-        "daily": 25,
-        "contrarian": 80,
-        "aspiration": 90
-      }
+      "evergreen": true
     },
     {
       "id": "ro-news-everest-queue",
       "domain": "news",
       "title": "聖母峰塞車與商業登山事故新聞",
       "angle": "當期新聞一出就是她的主場：不評論死者，只講『這個天氣窗口下，隊伍該在幾點做什麼決定』。",
-      "affinity": 88,
       "pillar": "轉身時刻 Turning-Back Moments",
       "keywords": [
         "珠峰堵车",
@@ -175,7 +143,6 @@
       "domain": "pop",
       "title": "『轉身不是失敗』對上離職、放手與停損話題",
       "angle": "把登山術語（關門時間、天氣窗口、確保點）直接翻成職涯與感情裡的判斷——她單一最可轉譯的想法。",
-      "affinity": 85,
       "pillar": "給平地人的山間道理 Mountain Wisdom for Flatlanders",
       "keywords": [
         "离职",
@@ -193,7 +160,6 @@
       "domain": "music",
       "title": "環境音與慢節奏民謠：深夜筆記本的聲音",
       "angle": "以風聲、帳篷布聲、頭燈開關聲當主音軌，音樂只當底噪——符合她『環境音與人聲帶節奏』的剪輯規則。",
-      "affinity": 62,
       "pillar": "深夜筆記本 & 山下的人 Midnight Notebook / People off the Mountain",
       "keywords": [
         "环境音",
@@ -215,7 +181,7 @@
         "保证成功",
         "百分百"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "為互動率擺拍危險動作或誇大難度。",
@@ -226,7 +192,7 @@
         "刺激",
         "搏命"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "美化、省略或包裝她 27 歲那次真實事故，把她塑造成零失誤傳奇。",
@@ -236,7 +202,7 @@
         "从未失手",
         "完美纪录"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "把感情狀態寫成已完結的劇情線，而非誠實、未解的成長線。",
@@ -246,7 +212,7 @@
         "恋情",
         "情感剧本"
       ],
-      "severity": "high"
+      "severity": "warn"
     }
   ],
   "reach": {
@@ -257,20 +223,6 @@
       "CN",
       "GLOBAL"
     ],
-    "language": "zh-Hans",
-    "platforms": [
-      "tiktok_douyin",
-      "youtube",
-      "instagram",
-      "threads"
-    ]
-  },
-  "baseline_funnel": {
-    "assumed": true,
-    "avg_views": 26000,
-    "engagement_rate": 0.055,
-    "profile_visit_rate": 0.04,
-    "link_ctr": 0.07,
-    "conversion_rate": 0.022
+    "language": "zh-Hans"
   }
 }

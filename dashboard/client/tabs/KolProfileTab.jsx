@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { api } from '../api.js'
-import { Card, Grade, Badge, Bar, Loading, Empty, Alert, Radar, RadarLegend, SERIES_KOL, SERIES_TOPIC, num, pct, toneFor } from '../components/ui.jsx'
-
-const DOMAIN_LABEL = {}
+import { Card, Grade, Badge, Bar, Loading, Empty, Alert, Radar, RadarLegend, SERIES_KOL, SERIES_TOPIC, toneFor } from '../components/ui.jsx'
 
 export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
   const [detail, setDetail] = useState(null)
@@ -10,7 +8,7 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
   const [error, setError] = useState(null)
   const [openHook, setOpenHook] = useState(null)
 
-  for (const d of meta.domains) DOMAIN_LABEL[d.key] = d.label_zh
+  const domainLabel = Object.fromEntries(meta.domains.map((d) => [d.key, d.label_zh]))
 
   useEffect(() => {
     if (!selectedId) return
@@ -26,16 +24,17 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
       .finally(() => setLoading(false))
   }, [selectedId])
 
+  const axisValues = detail?.axes
+    ? Object.fromEntries(Object.entries(detail.axes).map(([k, v]) => [k, v.score]))
+    : {}
+  const activeHook = detail?.hooks?.find((h) => h.id === openHook) ?? null
+
   return (
     <div className="grid sidebar">
       <div>
         <Card title="KOL">
           {kols.map((k) => (
-            <div
-              key={k.id}
-              className={`list-row ${k.id === selectedId ? 'on' : ''}`}
-              onClick={() => onSelect(k.id)}
-            >
+            <div key={k.id} className={`list-row ${k.id === selectedId ? 'on' : ''}`} onClick={() => onSelect(k.id)}>
               <div className="grow">
                 <div className="title">{k.name}</div>
                 <div className="sub">
@@ -53,6 +52,7 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
         {error && <Alert tone="bad">{error}</Alert>}
         {!loading && detail && (
           <>
+            {/* 卡片 1／4：身分 + 建模素材 */}
             <Card
               title={
                 <div>
@@ -65,47 +65,26 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
               actions={
                 <div className="row">
                   <Badge>{detail.projectCode}</Badge>
-                  <Badge tone={detail.status === 'active' ? 'good' : ''}>{detail.status}</Badge>
                   <Badge tone={detail.completeness.identityRefs >= 3 ? 'good' : 'warn'}>
                     身分參考圖 {detail.completeness.identityRefs}
                   </Badge>
+                  <Badge>{detail.reach?.regions?.join(' › ')}｜{detail.reach?.language}</Badge>
                 </div>
               }
             >
-              <div className="grid two">
-                <dl className="kv">
-                  <dt>原型</dt>
-                  <dd>{detail.persona?.archetype ?? '—'}</dd>
-                  <dt>語氣</dt>
-                  <dd>{detail.persona?.voice_tone ?? '—'}</dd>
-                  <dt>現居</dt>
-                  <dd>{detail.identity?.current_location ?? '—'}</dd>
-                  <dt>語言</dt>
-                  <dd>{(detail.identity?.languages ?? []).join('、') || '—'}</dd>
-                  <dt>覆蓋地區</dt>
-                  <dd>
-                    {(detail.reach?.regions ?? []).join(' › ')}｜貼文語言 {detail.reach?.language ?? '—'}
-                  </dd>
-                </dl>
-                <dl className="kv">
-                  <dt>視覺語言</dt>
-                  <dd>{detail.materialAttributes?.visual_language ?? '—'}</dd>
-                  <dt>色盤</dt>
-                  <dd>{(detail.materialAttributes?.color_palette ?? []).join('、') || '—'}</dd>
-                  <dt>生成模型</dt>
-                  <dd>
-                    {detail.materialAttributes?.generation_model ?? '—'}（{detail.materialAttributes?.consistency ?? '—'}）
-                  </dd>
-                  <dt>可用格式</dt>
-                  <dd>{(detail.materialAttributes?.usable_formats ?? []).join('、') || '—'}</dd>
-                </dl>
-              </div>
-            </Card>
-
-            <Card
-              title="建模素材"
-              note={`共 ${detail.images.length} 張可用圖像；身分參考圖是每次生成時附上的一致性依據。`}
-            >
+              <dl className="kv" style={{ marginBottom: 14 }}>
+                <dt>原型</dt>
+                <dd>{detail.persona?.archetype ?? '—'}</dd>
+                <dt>語氣</dt>
+                <dd className="small">{detail.persona?.voice_tone ?? '—'}</dd>
+                <dt>視覺語言</dt>
+                <dd className="small">{detail.aesthetic?.editing_style ?? '—'}</dd>
+                <dt>生成條件</dt>
+                <dd className="small">
+                  {detail.materialAttributes?.generation_model ?? '—'}（{detail.materialAttributes?.consistency ?? '—'}）
+                  ｜可用格式：{(detail.materialAttributes?.usable_formats ?? []).join('、') || '—'}
+                </dd>
+              </dl>
               {detail.images.length === 0 ? (
                 <Empty>此 KOL 目錄下沒有圖像檔案。</Empty>
               ) : (
@@ -114,7 +93,7 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                     <figure key={img.file}>
                       <img src={img.url} alt={img.label} loading="lazy" />
                       <figcaption>
-                        {img.role === 'identity_ref' ? '身分參考' : img.role === 'avatar' ? '頭像' : '場景'} · {img.file}
+                        {img.role === 'identity_ref' ? '身分參考' : img.role === 'avatar' ? '頭像' : '場景'}
                       </figcaption>
                     </figure>
                   ))}
@@ -122,62 +101,70 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
               )}
             </Card>
 
-            <div className="grid two">
-              <Card title="八軸屬性向量" note="這位 KOL 可以發揮的屬性強度。Match 計算時，話題需求高的軸權重最大。">
-                {detail.axes ? (
-                  <>
+            {/* 卡片 2／4：四軸雷達（依據收在 hover） */}
+            <Card
+              title="四軸屬性向量"
+              note="這位 KOL 可以發揮的屬性強度。Match 計算時，話題需求高的軸權重最大。滑過分數可看該軸的判定依據。"
+              actions={
+                detail.formatFit && (
+                  <Badge tone={detail.formatFit.score >= 70 ? 'good' : ''} title={detail.formatFit.why}>
+                    日常適配 {detail.formatFit.score}（不計分）
+                  </Badge>
+                )
+              }
+            >
+              {!detail.axes ? (
+                <Alert tone="warn">此 KOL 缺少 topic_affinity.json，無法計算屬性向量。</Alert>
+              ) : (
+                <div className="grid two">
+                  <div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                       <Radar
                         axes={meta.axes}
                         series={[
-                          { label: detail.name, values: detail.axes, ...SERIES_KOL },
-                          ...(openHook
-                            ? [
-                                {
-                                  label: '所選連結點需求',
-                                  values: detail.hooks.find((h) => h.id === openHook)?.axisDemand ?? {},
-                                  ...SERIES_TOPIC,
-                                },
-                              ]
-                            : []),
+                          { label: detail.name, values: axisValues, ...SERIES_KOL },
+                          ...(activeHook ? [{ label: '所選連結點需求', values: activeHook.axisDemand ?? {}, ...SERIES_TOPIC }] : []),
                         ]}
                       />
                     </div>
                     <RadarLegend
                       series={[
                         { label: '人設可發揮屬性', ...SERIES_KOL },
-                        ...(openHook ? [{ label: '所選連結點的軸需求', ...SERIES_TOPIC }] : []),
+                        ...(activeHook ? [{ label: '所選連結點的軸需求', ...SERIES_TOPIC }] : []),
                       ]}
                     />
-                  </>
-                ) : (
-                  <Alert tone="warn">此 KOL 缺少 topic_affinity.json，無法計算屬性向量。</Alert>
-                )}
-              </Card>
-
-              <Card title="軸分數依據" note="每個分數都要能回溯到 profile.json 的哪一句（docs/09 §0 原則二）。">
-                <table>
-                  <tbody>
-                    {meta.axes.map((axis) => (
-                      <tr key={axis.key}>
-                        <td style={{ width: 92 }}>{axis.label_zh}</td>
-                        <td className="num" style={{ width: 44 }}>
-                          {detail.axes?.[axis.key] ?? '—'}
-                        </td>
-                        <td style={{ width: 70 }}>
-                          <Bar value={detail.axes?.[axis.key] ?? 0} tone={toneFor(detail.axes?.[axis.key] ?? 0)} />
-                        </td>
-                        <td className="small muted">{detail.axisEvidence?.[axis.key] ?? '—'}</td>
+                  </div>
+                  <table>
+                    <tbody>
+                      {meta.axes.map((axis) => {
+                        const cell = detail.axes[axis.key]
+                        return (
+                          <tr key={axis.key} title={cell?.why ?? ''}>
+                            <td style={{ width: 90 }}>{axis.label_zh}</td>
+                            <td className="num" style={{ width: 44 }}>
+                              {cell?.score ?? '—'}
+                            </td>
+                            <td>
+                              <Bar value={cell?.score ?? 0} tone={toneFor(cell?.score ?? 0)} />
+                            </td>
+                          </tr>
+                        )
+                      })}
+                      <tr title={detail.formatFit?.why ?? ''} className="muted">
+                        <td>日常適配</td>
+                        <td className="num">{detail.formatFit?.score ?? '—'}</td>
+                        <td className="small">不進 Match，供素材企劃判斷切角</td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Card>
-            </div>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </Card>
 
+            {/* 卡片 3／4：時事話題連結點 */}
             <Card
               title="時事與話題連結屬性"
-              note="這位 KOL 與網路上時事／文化的固定連結點。分數為完整 Match（人設契合 30% ＋ 支柱覆蓋 25% ＋ 熱度 20% ＋ 地區 15% ＋ 風險 10%）。"
+              note="這位 KOL 與網路時事／文化的固定連結點。分數為完整 Match（人設 35% ＋ 支柱 30% ＋ 熱度 20% ＋ 地區 15%）；紅線是 gate，不參與加權。"
             >
               {detail.hooks.length === 0 ? (
                 <Empty>尚未建立話題連結點。</Empty>
@@ -188,14 +175,14 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                       className={`list-row ${hook.id === openHook ? 'on' : ''}`}
                       onClick={() => setOpenHook(hook.id === openHook ? null : hook.id)}
                     >
-                      <div className={`score sm`} style={{ width: 52 }}>
+                      <div className="score sm" style={{ width: 52 }}>
                         {hook.match.score}
                       </div>
                       <Grade grade={hook.match.grade} />
                       <div className="grow">
                         <div className="title">{hook.title}</div>
                         <div className="sub">
-                          {DOMAIN_LABEL[hook.domain] ?? hook.domain} · 支柱：{hook.pillar}
+                          {domainLabel[hook.domain] ?? hook.domain} · 支柱：{hook.pillar}
                         </div>
                       </div>
                       <Badge tone={hook.evergreen ? 'good' : 'warn'}>{hook.evergreen ? '長青' : '需搭時事'}</Badge>
@@ -211,60 +198,32 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                           ))}
                         </div>
                         <table>
-                          <thead>
-                            <tr>
-                              <th>Match 維度</th>
-                              <th className="num">分數</th>
-                              <th className="num">權重</th>
-                              <th>說明</th>
-                            </tr>
-                          </thead>
                           <tbody>
-                            <tr>
-                              <td>人設契合</td>
-                              <td className="num">{hook.match.dimensions.personaFit.score}</td>
-                              <td className="num">30%</td>
-                              <td className="small muted">
-                                最弱軸：{hook.match.dimensions.personaFit.weakest?.label}（缺口{' '}
-                                {hook.match.dimensions.personaFit.weakest?.gap}）
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>支柱覆蓋</td>
-                              <td className="num">{hook.match.dimensions.pillarFit.score}</td>
-                              <td className="num">25%</td>
-                              <td className="small muted">
-                                {hook.match.dimensions.pillarFit.pillar ?? '無支柱對應'}
-                                {hook.match.dimensions.pillarFit.bound ? '（已綁定）' : ''}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>話題熱度</td>
-                              <td className="num">{hook.match.dimensions.topicHeat.score}</td>
-                              <td className="num">20%</td>
-                              <td className="small muted">連結點以 affinity 值代替平台熱度</td>
-                            </tr>
-                            <tr>
-                              <td>地區契合</td>
-                              <td className="num">{hook.match.dimensions.regionFit.score}</td>
-                              <td className="num">15%</td>
-                              <td className="small muted">
-                                {hook.match.dimensions.regionFit.detail.topicRegion} vs{' '}
-                                {hook.match.dimensions.regionFit.detail.kolRegions.join('、')}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>紅線風險</td>
-                              <td className="num">{hook.match.dimensions.risk.score}</td>
-                              <td className="num">10%</td>
-                              <td className="small muted">
-                                {hook.match.dimensions.risk.hits.length
-                                  ? hook.match.dimensions.risk.hits.map((h) => h.keywords.join('／')).join('；')
-                                  : '無命中'}
-                              </td>
-                            </tr>
+                            {[
+                              ['人設契合', hook.match.dimensions.personaFit.score, '35%',
+                                `最弱軸：${hook.match.dimensions.personaFit.weakest?.label}（缺口 ${hook.match.dimensions.personaFit.weakest?.gap}）`],
+                              ['支柱覆蓋', hook.match.dimensions.pillarFit.score, '30%',
+                                hook.match.dimensions.pillarFit.pillar ?? '無支柱對應'],
+                              ['話題熱度', hook.match.dimensions.topicHeat.score, '20%',
+                                '連結點無平台熱度，取中性值 50；實際熱度由地區話題提供'],
+                              ['地區契合', hook.match.dimensions.regionFit.score, '15%',
+                                `${hook.match.dimensions.regionFit.detail.topicRegion} vs ${hook.match.dimensions.regionFit.detail.kolRegions.join('、')}`],
+                            ].map(([label, score, weight, note]) => (
+                              <tr key={label}>
+                                <td style={{ width: 80 }}>{label}</td>
+                                <td className="num" style={{ width: 46 }}>{score}</td>
+                                <td className="num muted" style={{ width: 40 }}>{weight}</td>
+                                <td className="small muted">{note}</td>
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
+                        {hook.match.warnings?.length > 0 && (
+                          <Alert tone="warn">
+                            紅線警告（不扣分，但要看見）：
+                            {hook.match.warnings.map((w) => w.keywords.join('／')).join('；')}
+                          </Alert>
+                        )}
                       </div>
                     )}
                   </div>
@@ -272,60 +231,24 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
               )}
             </Card>
 
-            <div className="grid two">
-              <Card title="內容支柱" note="pillarFit 就是比對話題落不落得進這些支柱。">
-                <table>
-                  <tbody>
-                    {(detail.content?.pillars ?? []).map((p) => (
-                      <tr key={p.name}>
-                        <td style={{ width: 200 }}>{p.name}</td>
-                        <td className="num" style={{ width: 48 }}>
-                          {p.weight}
-                        </td>
-                        <td className="small muted">{p.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Card>
-
-              <Card title="紅線與導流基準">
-                <h4>紅線</h4>
-                <div className="stack" style={{ marginBottom: 16 }}>
-                  {detail.redlines.map((r) => (
-                    <div key={r.rule} className="row" style={{ alignItems: 'flex-start' }}>
-                      <Badge tone={r.severity === 'veto' ? 'bad' : 'warn'}>
-                        {r.severity === 'veto' ? '一票否決' : r.severity}
-                      </Badge>
-                      <div className="grow small">
-                        {r.rule}
-                        <div className="muted mono" style={{ fontSize: 11 }}>
-                          {r.keywords.join(' · ')}
-                        </div>
+            {/* 卡片 4／4：紅線 */}
+            <Card title="紅線" note="block 會讓話題不進推薦清單；warn 照常排序，但把風險擺出來。不做扣分。">
+              <div className="stack">
+                {detail.redlines.map((r) => (
+                  <div key={r.rule} className="row" style={{ alignItems: 'flex-start' }}>
+                    <Badge tone={r.severity === 'block' ? 'bad' : 'warn'}>
+                      {r.severity === 'block' ? '擋下來' : '標示出來'}
+                    </Badge>
+                    <div className="grow small">
+                      {r.rule}
+                      <div className="muted mono" style={{ fontSize: 11 }}>
+                        {r.keywords.join(' · ')}
                       </div>
                     </div>
-                  ))}
-                </div>
-                <h4>導流基準值</h4>
-                {detail.baselineFunnel?.assumed !== false && (
-                  <Alert tone="warn">
-                    目前為假設值（尚無實績）。預測數字只能當相對排序用，累積 10 筆後評估後以 docs/09 §5 回寫。
-                  </Alert>
-                )}
-                <dl className="kv">
-                  <dt>平均觀看</dt>
-                  <dd className="mono">{num(detail.baselineFunnel?.avg_views)}</dd>
-                  <dt>互動率</dt>
-                  <dd className="mono">{pct(detail.baselineFunnel?.engagement_rate)}</dd>
-                  <dt>主頁造訪率</dt>
-                  <dd className="mono">{pct(detail.baselineFunnel?.profile_visit_rate)}</dd>
-                  <dt>外連點擊率</dt>
-                  <dd className="mono">{pct(detail.baselineFunnel?.link_ctr)}</dd>
-                  <dt>轉換率</dt>
-                  <dd className="mono">{pct(detail.baselineFunnel?.conversion_rate)}</dd>
-                </dl>
-              </Card>
-            </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
           </>
         )}
       </div>

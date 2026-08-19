@@ -29,7 +29,6 @@ export const api = {
   listPre: (kolId) => request(`/evaluations/pre${kolId ? `?kolId=${kolId}` : ''}`),
   savePost: (payload) => post('/evaluations/post', payload),
   pairs: (kolId) => request(`/evaluations/pairs${kolId ? `?kolId=${kolId}` : ''}`),
-  calibration: () => request('/evaluations/calibration'),
 
   matchRecords: (kolId) => request(`/match-records${kolId ? `?kolId=${kolId}` : ''}`),
   saveMatchRecord: (payload) => post('/match-records', payload),

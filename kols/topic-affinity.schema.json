@@ -1,62 +1,64 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "KOL Topic Affinity Schema",
-  "description": "每個 KOL 的『可發揮屬性』與『時事話題連結點』。由 profile.json / character.md / content_style.md / kols/keywords.md 導出，供 Dashboard 計算人設與話題的 Match 分數。軸與領域詞彙見 kols/topic-axes.json。",
+  "title": "KOL Topic Affinity Schema (v2)",
+  "description": "每個 KOL 的『可發揮屬性』與『時事話題連結點』。由 profile.json / character.md / content_style.md / kols/keywords.md 導出，供 Dashboard 計算人設與話題的 Match 分數。軸與領域詞彙見 kols/topic-axes.json。v2 由 v1 精簡而來（docs/10）：四軸取代八軸、拿掉 baseline_funnel 與逐 hook 的 affinity/axis_demand，新增一位 KOL 要填的數字從約 60 個降到約 20 個。",
   "type": "object",
-  "required": ["kol_id", "version", "persona_axes", "topic_hooks", "reach"],
+  "required": ["kol_id", "schema_version", "axes", "pillar_keywords", "topic_hooks", "reach"],
+  "additionalProperties": false,
   "properties": {
     "kol_id": { "type": "string", "description": "對應 kols/index.json 的 id" },
-    "version": { "type": "string" },
-    "generated_at": { "type": "string", "format": "date" },
-    "source": { "type": "string", "description": "本檔案內容的推導來源，供人工覆核" },
-    "persona_axes": {
+    "schema_version": { "const": 2 },
+    "axes": {
       "type": "object",
-      "description": "八軸屬性向量，0–100。鍵必須是 kols/topic-axes.json 的 axes[].key。",
-      "required": ["analysis", "narrative", "emotion", "visual", "authority", "daily", "contrarian", "aspiration"],
-      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
+      "description": "四軸屬性向量。鍵必須是 kols/topic-axes.json 的 axes[].key。",
+      "required": ["analysis", "story", "visual", "credibility"],
+      "additionalProperties": false,
+      "properties": {
+        "analysis": { "$ref": "#/definitions/axisScore" },
+        "story": { "$ref": "#/definitions/axisScore" },
+        "visual": { "$ref": "#/definitions/axisScore" },
+        "credibility": { "$ref": "#/definitions/axisScore" }
+      }
     },
-    "axis_evidence": {
-      "type": "object",
-      "description": "每一軸為什麼給這個分數的依據（引用 profile 的哪一句），供人工覆核與調參。",
-      "additionalProperties": { "type": "string" }
+    "format_fit": {
+      "$ref": "#/definitions/axisScore",
+      "description": "日常適配。**不參與 Match 計分**——它影響的是怎麼拍，不是選什麼題。供作業流程 (c) 的素材企劃判斷是否適合做成日常／隨手感切角。"
     },
     "material_attributes": {
       "type": "object",
-      "description": "建模素材屬性——這個 KOL 手上實際有什麼可用的生成素材與視覺語言。",
+      "description": "可執行性檢查需要的生成條件。視覺語言與色盤不放這裡——直接讀 profile.json 的 content.aesthetic。",
+      "additionalProperties": false,
       "properties": {
-        "identity_refs": { "type": "integer", "description": "身分參考圖張數" },
         "generation_model": { "type": "string" },
         "consistency": { "type": "string" },
-        "visual_language": { "type": "string" },
-        "color_palette": { "type": "array", "items": { "type": "string" } },
         "usable_formats": { "type": "array", "items": { "type": "string" } }
       }
     },
     "pillar_keywords": {
       "type": "object",
-      "description": "內容支柱的比對關鍵字。鍵為 profile.json content.pillars[].name。支柱的名稱與描述多為英文或繁體，而話題多為簡體，僅靠原文比對會漏；這裡補上兩種字體與中英文的關鍵字，pillarFit 才算得準（docs/09 §3.3）。",
+      "description": "內容支柱的比對關鍵字。鍵為 profile.json content.pillars[].name。支柱名稱與描述多為英文或繁體，話題多為簡體，僅靠原文比對會漏。**關鍵字要具體**——「判斷」「選擇」「故事」這類泛用詞會讓所有支柱都命中，等於沒有支柱。",
       "additionalProperties": { "type": "array", "items": { "type": "string" } }
     },
     "topic_hooks": {
       "type": "array",
       "minItems": 3,
       "maxItems": 8,
-      "description": "3–5 個（最多 8）該 KOL 與網路時事／文化的固定連結點。",
+      "description": "3–5 個（最多 8）該 KOL 與網路時事／文化的固定連結點。不再自帶 affinity 分數——分數由引擎算。",
       "items": {
         "type": "object",
-        "required": ["id", "domain", "title", "angle", "affinity", "pillar", "keywords"],
+        "required": ["id", "domain", "title", "angle", "pillar", "keywords"],
+        "additionalProperties": false,
         "properties": {
           "id": { "type": "string" },
           "domain": { "type": "string", "description": "kols/topic-axes.json 的 domains[].key" },
           "title": { "type": "string" },
           "angle": { "type": "string", "description": "這個 KOL 切入這個連結點的專屬角度" },
-          "affinity": { "type": "number", "minimum": 0, "maximum": 100, "description": "人工／導出的連結強度" },
           "pillar": { "type": "string", "description": "對應 profile.json content.pillars 的支柱名稱" },
           "keywords": { "type": "array", "items": { "type": "string" }, "description": "用於與 Apify 抓回的 Tag 做交叉比對" },
           "evergreen": { "type": "boolean", "description": "true = 長青題材，false = 需搭當期時事" },
           "axis_demand": {
             "type": "object",
-            "description": "選填。覆寫該連結點的軸需求；未填則套 domain 預設。",
+            "description": "選填，且**預設不要填**。只有當這個連結點的軸需求明顯偏離 domain 平均時才覆寫（例如同為 movie 但這題是純情緒故事）。",
             "additionalProperties": { "type": "number", "minimum": 0, "maximum": 100 }
           }
         }
@@ -64,35 +66,44 @@
     },
     "redlines": {
       "type": "array",
+      "description": "兩種嚴重度而已：block 擋下來，warn 標示出來。v1 的扣分算術（high −40 / medium −20）已移除——沒有人能說清楚那兩個數字的差別。",
       "items": {
         "type": "object",
         "required": ["rule", "keywords", "severity"],
+        "additionalProperties": false,
         "properties": {
           "rule": { "type": "string", "description": "紅線描述（取自 profile content.brand_dont）" },
-          "keywords": { "type": "array", "items": { "type": "string" }, "description": "命中即觸發風險判定的關鍵字" },
-          "severity": { "type": "string", "enum": ["veto", "high", "medium"], "description": "veto = 一票否決，不論其他分數多高" }
+          "keywords": { "type": "array", "items": { "type": "string" }, "description": "命中即觸發的關鍵字" },
+          "severity": {
+            "type": "string",
+            "enum": ["block", "warn"],
+            "description": "block = 不進推薦清單，只出現在「已排除」；warn = 照常排序，但列出警告，不扣分"
+          }
         }
       }
     },
     "reach": {
       "type": "object",
       "required": ["regions", "language"],
+      "additionalProperties": false,
       "properties": {
         "regions": { "type": "array", "items": { "type": "string" }, "description": "主要覆蓋地區（topic-axes.json regions[].key），依相關性排序" },
-        "language": { "type": "string", "description": "貼文語言（zh-Hans / zh-Hant / en …），依 docs/06 的簡繁對應規則" },
-        "platforms": { "type": "array", "items": { "type": "string" } }
+        "language": { "type": "string", "description": "貼文語言（zh-Hans / zh-Hant / en …），依 docs/06 的簡繁對應規則" }
       }
-    },
-    "baseline_funnel": {
+    }
+  },
+  "definitions": {
+    "axisScore": {
       "type": "object",
-      "description": "該 KOL 目前的導流基準值，用於預評估的期望值推算。無實績時填產業基準並標註 assumed。",
+      "required": ["score", "why"],
+      "additionalProperties": false,
       "properties": {
-        "assumed": { "type": "boolean" },
-        "avg_views": { "type": "number" },
-        "engagement_rate": { "type": "number", "description": "0–1" },
-        "profile_visit_rate": { "type": "number", "description": "0–1，觀看→主頁" },
-        "link_ctr": { "type": "number", "description": "0–1，主頁→外連點擊" },
-        "conversion_rate": { "type": "number", "description": "0–1，點擊→目標轉換" }
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "why": {
+          "type": "string",
+          "minLength": 10,
+          "description": "這個分數是從 profile.json 的哪一句推出來的。**沒有 why 的分數視為未定義，不可進入計算。**"
+        }
       }
     }
   }

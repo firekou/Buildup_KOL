@@ -5,6 +5,11 @@ import { containsKeyword } from '../text.js'
  * Domain classification for raw tags coming back from Apify.
  * Deliberately rule-based rather than model-based: selection has to be
  * explainable and reproducible (docs/09 §0 原則二).
+ *
+ * v1 also applied per-tag axis nudges (+15 analysis for 「拆解」, +18 emotion
+ * for 「療癒」…). Those numbers were invented, and with zero published results
+ * there is nothing to tune them against — removed in docs/10 第八刀. A topic's
+ * axis demand now comes from its domain, or from an explicit override.
  */
 const DOMAIN_KEYWORDS = {
   movie: ['電影', '电影', 'film', 'movie', '影評', '影评', '導演', '导演', '預告', '预告', '院線', '院线', 'cinema', '劇場版', '剧场版'],
@@ -20,21 +25,6 @@ const DOMAIN_KEYWORDS = {
   book: ['書', '书', 'book', '閱讀', '阅读', 'reading', '文學', '文学', '作者'],
   life: ['日常', '生活', 'vlog', 'lifestyle', '穿搭', '美食', '料理', '寵物', '宠物', '育兒', '育儿', '職場', '职场'],
 }
-
-/**
- * Axis nudges applied on top of the domain default when a tag carries a
- * signal the domain alone does not capture.
- */
-const AXIS_RULES = [
-  { match: ['懶人包', '懒人包', '解析', '拆解', '為什麼', '为什么', 'why', '原理', '機制', '机制'], adjust: { analysis: +15, contrarian: +8 } },
-  { match: ['其實', '其实', '迷思', '误区', '誤區', '真相', '被騙', '被骗', '反轉', '反转'], adjust: { contrarian: +18, analysis: +8 } },
-  { match: ['故事', '訪談', '访谈', '紀錄', '纪录', '人物', '經歷', '经历'], adjust: { narrative: +15, emotion: +8 } },
-  { match: ['哭', '感動', '感动', '陪伴', '療癒', '疗愈', '孤獨', '孤独', '焦慮', '焦虑', '內耗', '内耗'], adjust: { emotion: +18, daily: +8 } },
-  { match: ['美圖', '美图', '攝影', '摄影', '空拍', '航拍', '夜景', '光影', 'aesthetic'], adjust: { visual: +15, aspiration: +8 } },
-  { match: ['專家', '专家', '職人', '职人', '認證', '认证', '教練', '教练', '醫師', '医师', '研究'], adjust: { authority: +18 } },
-  { match: ['日常', 'vlog', '開箱', '开箱', '一天', '隨手', '随手'], adjust: { daily: +18, visual: +5 } },
-  { match: ['夢想', '梦想', '極限', '极限', '冠軍', '冠军', '登頂', '登顶', '奢華', '奢华', '頂級', '顶级'], adjust: { aspiration: +18 } },
-]
 
 const clamp = (n, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, n))
 
@@ -57,34 +47,20 @@ export function classifyDomain(topic) {
 
 /**
  * Resolve a topic's axis demand vector.
- * Priority: explicit axis_demand → domain default → domain default + tag nudges.
+ * Priority: explicit axis_demand → domain default.
  */
 export function resolveAxisDemand(topic) {
   const { domain_axis_demand: defaults, axes } = getAxes()
   const domain = classifyDomain(topic)
+  const base = defaults[domain] ?? defaults.pop
 
   if (topic.axis_demand) {
     const filled = {}
     for (const axis of axes) {
-      filled[axis.key] = clamp(topic.axis_demand[axis.key] ?? defaults[domain]?.[axis.key] ?? 50)
+      filled[axis.key] = clamp(topic.axis_demand[axis.key] ?? base[axis.key] ?? 50)
     }
-    return { domain, demand: filled, derivedFrom: 'explicit' }
+    return { domain, demand: filled, derivedFrom: 'explicit override' }
   }
 
-  const base = { ...(defaults[domain] ?? defaults.pop) }
-  const text = haystack(topic)
-  const applied = []
-  for (const rule of AXIS_RULES) {
-    if (!rule.match.some((w) => containsKeyword(text, w))) continue
-    applied.push(rule.match[0])
-    for (const [key, delta] of Object.entries(rule.adjust)) {
-      base[key] = clamp((base[key] ?? 50) + delta)
-    }
-  }
-
-  return {
-    domain,
-    demand: base,
-    derivedFrom: applied.length ? `domain:${domain} + rules(${applied.join(', ')})` : `domain:${domain}`,
-  }
+  return { domain, demand: { ...base }, derivedFrom: `domain:${domain}` }
 }

@@ -55,19 +55,24 @@ function mergeByTag(rows) {
   return [...byTag.values()]
 }
 
-/** docs/09 §3.4 — heat is always relative to the result set it was computed in. */
+/**
+ * Heat is always relative to the result set it was computed in (docs/09 §3.4).
+ *
+ * v1 also weighted engagement rate at 20%. Most Apify hashtag actors do not
+ * return it at all, so once real scraping is on it degenerates to the constant
+ * 50 and contributes nothing — it only ever had values in the fixture set,
+ * i.e. it was scoring on fake data (docs/10 第四刀).
+ */
 function scoreHeat(rows) {
   const logVolume = normalize(rows.map((r) => Math.log10(Math.max(r.volume, 1))))
   const growth = normalize(rows.map((r) => r.growth7d))
-  const engagement = normalize(rows.map((r) => r.engagementRate))
 
   return rows.map((r) => {
     const parts = {
       volume: logVolume(Math.log10(Math.max(r.volume, 1))),
       growth: growth(r.growth7d),
-      engagement: engagement(r.engagementRate),
     }
-    const heat = 0.45 * parts.volume + 0.35 * parts.growth + 0.2 * parts.engagement
+    const heat = 0.6 * parts.volume + 0.4 * parts.growth
     return { ...r, heat: Math.round(heat * 10) / 10, heatParts: parts }
   })
 }

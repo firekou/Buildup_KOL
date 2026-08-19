@@ -2,17 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { api } from '../api.js'
 import { Card, Grade, Badge, Bar, Loading, Empty, Alert, num, pct, toneFor } from '../components/ui.jsx'
 
-const BAND_TONE = { underestimated: 'accent', onTarget: 'good', overestimated: 'bad' }
-
-const METRIC_FIELDS = [
+/**
+ * Every field the platform gives us is stored; only the first three are the
+ * ones a human is asked to read (docs/10 第五刀). The rest sit behind a
+ * disclosure so they are visible when someone actually wants them.
+ */
+const PRIMARY_FIELDS = [
   ['views', '觀看'],
   ['likes', '按讚'],
   ['comments', '留言'],
   ['shares', '分享'],
   ['saves', '收藏'],
-  ['profileVisits', '主頁造訪'],
   ['linkClicks', '外連點擊'],
+]
+
+const SECONDARY_FIELDS = [
+  ['reach', '觸及'],
+  ['impressions', '曝光'],
+  ['profileVisits', '主頁造訪'],
   ['conversions', '轉換'],
+  ['follows', '新增追蹤'],
+  ['completionRate', '完播率'],
 ]
 
 const FOUR_AXIS_FIELDS = [
@@ -25,18 +35,16 @@ const FOUR_AXIS_FIELDS = [
 export default function EvaluationTab({ kols, refreshToken }) {
   const [pairs, setPairs] = useState([])
   const [records, setRecords] = useState([])
-  const [calibration, setCalibration] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   const load = () => {
     setLoading(true)
-    Promise.all([api.pairs(), api.matchRecords(), api.calibration()])
-      .then(([p, r, c]) => {
+    Promise.all([api.pairs(), api.matchRecords()])
+      .then(([p, r]) => {
         setPairs(p.pairs)
         setRecords(r.records)
-        setCalibration(c)
         setSelectedId((prev) => prev ?? p.pairs[0]?.pre.id ?? null)
       })
       .catch((e) => setError(e.message))
@@ -49,14 +57,13 @@ export default function EvaluationTab({ kols, refreshToken }) {
 
   return (
     <div className="grid sidebar">
+      {/* 卡片 1／3：預評清單 */}
       <div>
         <Card title="預評記錄" note="每一筆都是一次「素材生成前」的決策快照。">
           {loading && <Loading />}
           {error && <Alert tone="bad">{error}</Alert>}
           {!loading && pairs.length === 0 && (
-            <Empty>
-              尚無記錄。到「地區話題」頁簽用方向 (c) 產出素材企劃後，按「存為預評記錄」。
-            </Empty>
+            <Empty>尚無記錄。到「地區話題」頁簽用方向 (c) 產出素材企劃後，按「存為預評記錄」。</Empty>
           )}
           {pairs.map(({ pre, post }) => (
             <div
@@ -73,51 +80,27 @@ export default function EvaluationTab({ kols, refreshToken }) {
             </div>
           ))}
         </Card>
-
-        <Card title="校準迴圈" note="每累積 10 筆完成後評估的記錄跑一次（docs/09 §5）。">
-          {calibration && (
-            <>
-              <div className="row" style={{ marginBottom: 8 }}>
-                <Badge tone={calibration.ready ? 'good' : 'warn'}>
-                  樣本 {calibration.sampleSize} / {calibration.required}
-                </Badge>
-                {calibration.matchVsEngagementCorrelation != null && (
-                  <Badge tone={calibration.matchVsEngagementCorrelation >= 0.3 ? 'good' : 'bad'}>
-                    r = {calibration.matchVsEngagementCorrelation}
-                  </Badge>
-                )}
-              </div>
-              <p className="small muted">{calibration.verdict ?? calibration.message}</p>
-              {(calibration.perKol ?? []).map((k) => (
-                <div key={k.kolId} className="small" style={{ marginTop: 8 }}>
-                  <div className="mono">{k.kolId}（{k.sampleSize} 筆）</div>
-                  <div className="muted">
-                    建議 avg_views {num(k.suggestedBaseline.avg_views)}、互動率 {pct(k.suggestedBaseline.engagement_rate)}
-                    {!k.enoughSamples && '（樣本不足 10，僅供參考）'}
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-        </Card>
       </div>
 
       <div>
         {selected ? (
           <>
-            <PreSummary pre={selected.pre} />
-            {selected.post ? (
-              <ComparisonView pre={selected.pre} post={selected.post} comparison={selected.comparison} />
-            ) : (
-              <PostEntry
-                pre={selected.pre}
-                records={records.filter((r) => r.kolId === selected.pre.kolId)}
-                onSaved={load}
-              />
-            )}
+            {/* 卡片 2／3：預評摘要 + 回填（合併） */}
+            <PreAndEntry
+              pre={selected.pre}
+              post={selected.post}
+              records={records.filter((r) => r.kolId === selected.pre.kolId)}
+              onSaved={load}
+            />
+            {/* 卡片 3／3：對照分析 */}
+            {selected.post && <ComparisonView post={selected.post} comparison={selected.comparison} />}
           </>
         ) : (
-          !loading && <Card><Empty>左側選一筆預評記錄。</Empty></Card>
+          !loading && (
+            <Card>
+              <Empty>左側選一筆預評記錄。</Empty>
+            </Card>
+          )
         )}
 
         <MatchLibrary kols={kols} records={records} onSaved={load} />
@@ -128,79 +111,11 @@ export default function EvaluationTab({ kols, refreshToken }) {
 
 /* -------------------------------------------------------------------- */
 
-function PreSummary({ pre }) {
+function PreAndEntry({ pre, post, records, onSaved }) {
   const m = pre.matchSnapshot
-  return (
-    <Card
-      title={`預先評估｜${pre.kolName}`}
-      actions={
-        <div className="row">
-          <span className="score sm">{m.score}</span>
-          <Grade grade={m.grade} />
-          <Badge tone={pre.decision.key === 'go' ? 'good' : pre.decision.key === 'revise' ? 'warn' : 'bad'}>
-            {pre.decision.label}
-          </Badge>
-        </div>
-      }
-      note={`話題：${(pre.topicTags ?? []).join('、')}｜建立於 ${new Date(pre.createdAt).toLocaleString('zh-TW')}`}
-    >
-      <div className="grid two">
-        <div>
-          <h4>Match 快照</h4>
-          <table>
-            <tbody>
-              {[
-                ['人設契合', m.dimensions.personaFit.score],
-                ['支柱覆蓋', m.dimensions.pillarFit.score],
-                ['話題熱度', m.dimensions.topicHeat.score],
-                ['地區契合', m.dimensions.regionFit.score],
-                ['無風險度', 100 - m.dimensions.risk.score],
-              ].map(([label, score]) => (
-                <tr key={label}>
-                  <td style={{ width: 100 }}>{label}</td>
-                  <td className="num" style={{ width: 46 }}>{score}</td>
-                  <td><Bar value={score} tone={toneFor(score)} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <h4>預測漏斗</h4>
-          <table>
-            <tbody>
-              {[
-                ['觸及', pre.predictedFunnel.views],
-                ['互動', pre.predictedFunnel.engagements],
-                ['主頁造訪', pre.predictedFunnel.profileVisits],
-                ['外連點擊', pre.predictedFunnel.linkClicks],
-                ['轉換', pre.predictedFunnel.conversions],
-              ].map(([label, value]) => (
-                <tr key={label}>
-                  <td>{label}</td>
-                  <td className="num">{num(value, 1)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="chips" style={{ marginTop: 10 }}>
-            {pre.fourAxis.rows.map((r) => (
-              <span key={r.key} className={`chip ${r.passes ? 'on' : ''}`}>
-                {r.label} {r.value ?? '—'}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Card>
-  )
-}
-
-/* -------------------------------------------------------------------- */
-
-function PostEntry({ pre, records, onSaved }) {
   const [matchRecordId, setMatchRecordId] = useState('')
-  const [manual, setManual] = useState(Object.fromEntries(METRIC_FIELDS.map(([k]) => [k, ''])))
+  const [manual, setManual] = useState({})
+  const [showMore, setShowMore] = useState(false)
   const [fourAxisActual, setFourAxisActual] = useState({})
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
@@ -233,59 +148,136 @@ function PostEntry({ pre, records, onSaved }) {
 
   return (
     <Card
-      title="後續評估：回填實際成效"
-      note="從 Match 庫挑一筆已發布素材的成效資料，或直接手動輸入。四維實測分數決定對照分析能不能分辨「選題問題」與「製作問題」。"
+      title={`預先評估｜${pre.kolName}`}
+      actions={
+        <div className="row">
+          <span className="score sm">{m.score}</span>
+          <Grade grade={m.grade} />
+          <Badge tone={pre.decision.key === 'go' ? 'good' : pre.decision.key === 'blocked' ? 'bad' : 'warn'}>
+            {pre.decision.label}
+          </Badge>
+        </div>
+      }
+      note={`話題：${(pre.topicTags ?? []).join('、')}｜建立於 ${new Date(pre.createdAt).toLocaleString('zh-TW')}`}
     >
-      {error && <Alert tone="bad">{error}</Alert>}
-      <div className="field">
-        <label>Match 庫記錄</label>
-        <select value={matchRecordId} onChange={(e) => setMatchRecordId(e.target.value)} style={{ width: '100%' }}>
-          <option value="">（不使用，改為手動輸入）</option>
-          {records.map((r) => (
-            <option key={r.id} value={r.id}>
-              {r.platform ?? '—'} · {num(r.metrics.views)} views · {r.postUrl ?? r.id}
-            </option>
-          ))}
-        </select>
+      <div className="grid two">
+        <div>
+          <h4>Match 快照</h4>
+          <table>
+            <tbody>
+              {[
+                ['人設契合', m.dimensions.personaFit.score],
+                ['支柱覆蓋', m.dimensions.pillarFit.score],
+                ['話題熱度', m.dimensions.topicHeat.score],
+                ['地區契合', m.dimensions.regionFit.score],
+              ].map(([label, score]) => (
+                <tr key={label}>
+                  <td style={{ width: 84 }}>{label}</td>
+                  <td className="num" style={{ width: 46 }}>{score}</td>
+                  <td>
+                    <Bar value={score} tone={toneFor(score)} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>本次目標（企劃者填寫）</h4>
+          <table>
+            <tbody>
+              <tr>
+                <td>目標觀看</td>
+                <td className="num">{pre.targets?.views == null ? '未填' : num(pre.targets.views)}</td>
+              </tr>
+              <tr>
+                <td>目標外連點擊</td>
+                <td className="num">{pre.targets?.linkClicks == null ? '未填' : num(pre.targets.linkClicks)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="chips" style={{ marginTop: 10 }}>
+            {(pre.fourAxisChecklist?.rows ?? []).map((r) => (
+              <span key={r.key} className={`chip ${r.passes ? 'on' : ''}`}>
+                {r.label} {r.value ?? '—'}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {!matchRecordId && (
-        <div className="grid three">
-          {METRIC_FIELDS.map(([key, label]) => (
-            <div className="field" key={key}>
-              <label>{label}</label>
-              <input
-                type="number"
-                value={manual[key]}
-                onChange={(e) => setManual({ ...manual, [key]: e.target.value })}
-              />
-            </div>
-          ))}
-        </div>
-      )}
-
-      <h4 style={{ marginTop: 8 }}>四維實測（1–5）</h4>
-      <div className="row" style={{ marginBottom: 12 }}>
-        {FOUR_AXIS_FIELDS.map(([key, label]) => (
-          <span key={key} className="row" style={{ gap: 4 }}>
-            <span className="small muted">{label}</span>
-            <select
-              value={fourAxisActual[key] ?? ''}
-              onChange={(e) => setFourAxisActual({ ...fourAxisActual, [key]: e.target.value })}
-              style={{ padding: '4px 6px' }}
-            >
-              <option value="">—</option>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n}>{n}</option>
+      {post ? (
+        <Alert tone="good">已回填實際成效，對照分析見下方。</Alert>
+      ) : (
+        <>
+          <h4 style={{ marginTop: 16 }}>回填實際成效</h4>
+          <div className="section-note">
+            從 Match 庫挑一筆，或手動輸入。<strong>平台給得出來的欄位就填</strong>——顯示只用三個，但存下來的
+            每一欄都是之後歸因用得到的事實，砍掉就補不回來。
+          </div>
+          {error && <Alert tone="bad">{error}</Alert>}
+          <div className="field">
+            <label>Match 庫記錄</label>
+            <select value={matchRecordId} onChange={(e) => setMatchRecordId(e.target.value)} style={{ width: '100%' }}>
+              <option value="">（不使用，改為手動輸入）</option>
+              {records.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.platform ?? '—'} · {num(r.metrics.views)} views · {r.postUrl ?? r.id}
+                </option>
               ))}
             </select>
-          </span>
-        ))}
-      </div>
+          </div>
 
-      <button className="primary" onClick={submit} disabled={busy}>
-        {busy ? '儲存中…' : '儲存並產生對照分析'}
-      </button>
+          {!matchRecordId && (
+            <>
+              <div className="grid three">
+                {PRIMARY_FIELDS.map(([key, label]) => (
+                  <div className="field" key={key}>
+                    <label>{label}</label>
+                    <input type="number" value={manual[key] ?? ''} onChange={(e) => setManual({ ...manual, [key]: e.target.value })} />
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => setShowMore(!showMore)} style={{ marginBottom: 10 }}>
+                {showMore ? '收起其他欄位' : `其他欄位（${SECONDARY_FIELDS.length}）`}
+              </button>
+              {showMore && (
+                <div className="grid three">
+                  {SECONDARY_FIELDS.map(([key, label]) => (
+                    <div className="field" key={key}>
+                      <label>{label}</label>
+                      <input type="number" value={manual[key] ?? ''} onChange={(e) => setManual({ ...manual, [key]: e.target.value })} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          <h4>四維實測（1–5）</h4>
+          <div className="row" style={{ marginBottom: 12 }}>
+            {FOUR_AXIS_FIELDS.map(([key, label]) => (
+              <span key={key} className="row" style={{ gap: 4 }}>
+                <span className="small muted">{label}</span>
+                <select
+                  value={fourAxisActual[key] ?? ''}
+                  onChange={(e) => setFourAxisActual({ ...fourAxisActual, [key]: e.target.value })}
+                  style={{ padding: '4px 6px' }}
+                >
+                  <option value="">—</option>
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <option key={n} value={n}>{n}</option>
+                  ))}
+                </select>
+              </span>
+            ))}
+          </div>
+
+          <button className="primary" onClick={submit} disabled={busy}>
+            {busy ? '儲存中…' : '儲存並產生對照分析'}
+          </button>
+        </>
+      )}
     </Card>
   )
 }
@@ -293,50 +285,49 @@ function PostEntry({ pre, records, onSaved }) {
 /* -------------------------------------------------------------------- */
 
 function ComparisonView({ post, comparison }) {
+  const [showStored, setShowStored] = useState(false)
+  const tone = comparison.attribution.key === 'onTarget' ? 'good' : comparison.attribution.key === 'incomplete' ? 'info' : 'warn'
+
   return (
     <Card
       title="對照分析"
-      actions={<Badge tone={comparison.attribution.key === 'onTarget' ? 'good' : 'warn'}>{comparison.attribution.label}</Badge>}
+      actions={<Badge tone={tone === 'good' ? 'good' : 'warn'}>{comparison.attribution.label}</Badge>}
       note={`發布於 ${post.publishedAt ? new Date(post.publishedAt).toLocaleString('zh-TW') : '未記錄'}`}
     >
-      <Alert tone={comparison.attribution.key === 'onTarget' ? 'good' : 'warn'}>
+      <Alert tone={tone}>
         <strong>{comparison.attribution.label}</strong>：{comparison.attribution.detail}
       </Alert>
 
-      <div className="scroll-x">
-        <table>
-          <thead>
-            <tr>
-              <th>漏斗層</th>
-              <th className="num">預測</th>
-              <th className="num">實際</th>
-              <th className="num">差距</th>
-              <th className="num">偏差</th>
-              <th style={{ width: 80 }}>判讀</th>
-              <th>動作</th>
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th className="num">目標</th>
+            <th className="num">實際</th>
+            <th className="num">差距</th>
+            <th style={{ width: 80 }}>判讀</th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparison.rows.map((r) => (
+            <tr key={r.key}>
+              <td>{r.label}</td>
+              <td className="num">{r.target == null ? '—' : num(r.target)}</td>
+              <td className="num">{num(r.actual)}</td>
+              <td className="num">
+                {r.variancePercent == null ? '—' : `${r.variancePercent > 0 ? '+' : ''}${r.variancePercent}%`}
+              </td>
+              <td>
+                <Badge tone={r.verdict === '達標' ? 'good' : r.verdict === '未達標' ? 'bad' : ''}>{r.verdict}</Badge>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {comparison.rows.map((r) => (
-              <tr key={r.key}>
-                <td>{r.label}</td>
-                <td className="num">{num(r.predicted, 1)}</td>
-                <td className="num">{num(r.actual, 1)}</td>
-                <td className="num">{r.delta > 0 ? `+${num(r.delta, 1)}` : num(r.delta, 1)}</td>
-                <td className="num">{r.variancePercent > 0 ? `+${r.variancePercent}` : r.variancePercent}%</td>
-                <td>
-                  <Badge tone={BAND_TONE[r.band]}>{r.bandLabel}</Badge>
-                </td>
-                <td className="small muted">{r.action}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
 
       <div className="grid two" style={{ marginTop: 16 }}>
         <div>
-          <h4>四維：預估 vs 實測</h4>
+          <h4>四維：自評 vs 實測</h4>
           <table>
             <tbody>
               {comparison.fourAxisDelta.map((r) => (
@@ -351,15 +342,28 @@ function ComparisonView({ post, comparison }) {
           </table>
         </div>
         <div>
-          <h4>互動率</h4>
+          <h4>其他</h4>
           <dl className="kv">
-            <dt>預測</dt>
-            <dd className="mono">{pct(comparison.predictedEngagementRate)}</dd>
-            <dt>實際</dt>
-            <dd className="mono">{pct(comparison.actualEngagementRate)}</dd>
+            <dt>互動率</dt>
+            <dd className="mono">{pct(comparison.engagementRate)}</dd>
             <dt>Match 分數</dt>
             <dd className="mono">{comparison.matchScore}</dd>
           </dl>
+          <button onClick={() => setShowStored(!showStored)}>
+            {showStored ? '收起' : `已儲存的其他欄位（${Object.keys(comparison.storedOnly ?? {}).length}）`}
+          </button>
+          {showStored && (
+            <table style={{ marginTop: 8 }}>
+              <tbody>
+                {Object.entries(comparison.storedOnly ?? {}).map(([k, v]) => (
+                  <tr key={k}>
+                    <td className="mono small">{k}</td>
+                    <td className="num">{v ?? '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
           {post.notes && <p className="small muted">{post.notes}</p>}
         </div>
       </div>
@@ -371,7 +375,7 @@ function ComparisonView({ post, comparison }) {
 
 function MatchLibrary({ kols, records, onSaved }) {
   const [form, setForm] = useState({ kolId: kols[0]?.id ?? '', platform: 'tiktok', postUrl: '' })
-  const [metrics, setMetrics] = useState(Object.fromEntries(METRIC_FIELDS.map(([k]) => [k, ''])))
+  const [metrics, setMetrics] = useState({})
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
   const [open, setOpen] = useState(false)
@@ -385,7 +389,7 @@ function MatchLibrary({ kols, records, onSaved }) {
         publishedAt: new Date().toISOString(),
         ...Object.fromEntries(Object.entries(metrics).filter(([, v]) => v !== '').map(([k, v]) => [k, Number(v)])),
       })
-      setMetrics(Object.fromEntries(METRIC_FIELDS.map(([k]) => [k, ''])))
+      setMetrics({})
       setOpen(false)
       onSaved()
     } catch (e) {
@@ -427,10 +431,10 @@ function MatchLibrary({ kols, records, onSaved }) {
             </div>
           </div>
           <div className="grid three">
-            {METRIC_FIELDS.map(([key, label]) => (
+            {[...PRIMARY_FIELDS, ...SECONDARY_FIELDS].map(([key, label]) => (
               <div className="field" key={key}>
                 <label>{label}</label>
-                <input type="number" value={metrics[key]} onChange={(e) => setMetrics({ ...metrics, [key]: e.target.value })} />
+                <input type="number" value={metrics[key] ?? ''} onChange={(e) => setMetrics({ ...metrics, [key]: e.target.value })} />
               </div>
             ))}
           </div>
@@ -453,7 +457,6 @@ function MatchLibrary({ kols, records, onSaved }) {
                 <th className="num">互動</th>
                 <th className="num">互動率</th>
                 <th className="num">外連點擊</th>
-                <th className="num">轉換</th>
                 <th>發布時間</th>
               </tr>
             </thead>
@@ -466,7 +469,6 @@ function MatchLibrary({ kols, records, onSaved }) {
                   <td className="num">{num(r.metrics.engagements)}</td>
                   <td className="num">{pct(r.metrics.engagementRate)}</td>
                   <td className="num">{num(r.metrics.linkClicks)}</td>
-                  <td className="num">{num(r.metrics.conversions)}</td>
                   <td className="small muted">
                     {r.publishedAt ? new Date(r.publishedAt).toLocaleString('zh-TW') : '—'}
                   </td>

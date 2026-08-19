@@ -1,57 +1,42 @@
 {
-  "version": "1.0.0",
-  "updated_at": "2026-08-18",
-  "description": "共用的八軸屬性詞彙表（Shared Attribute Axis Vocabulary）。KOL 的『可發揮屬性』與話題的『需求屬性』使用同一組軸，才能做向量比對算出 Match 分數。詳見 docs/09-kol-topic-match-and-evaluation-methodology.md。",
+  "version": "2.0.0",
+  "updated_at": "2026-08-19",
+  "description": "共用的四軸屬性詞彙表。KOL 的『可發揮屬性』與話題的『需求屬性』使用同一組軸，才能做向量比對算出 Match 分數。v2.0 由八軸合併而來（docs/10 第一刀）——合併掉的三組軸在本 repo 的內容裡幾乎同時出現同時消失，分開打分沒有讓任何一次排序改變過。",
   "axes": [
     {
       "key": "analysis",
       "label_zh": "理性拆解",
       "label_en": "Analytical Deconstruction",
-      "description": "把一件事拆成規則、機率、結構或設計邏輯來講的能力／需求。"
+      "description": "把一件事拆成規則、機率、結構或設計邏輯來講，並打破常識直覺的能力／需求。",
+      "merged_from": ["analysis 理性拆解", "contrarian 反直覺衝突"]
     },
     {
-      "key": "narrative",
-      "label_zh": "敘事張力",
-      "label_en": "Narrative Tension",
-      "description": "以人物、事件弧線、歷史脈絡把內容講成一個故事的能力／需求。"
-    },
-    {
-      "key": "emotion",
-      "label_zh": "情緒共鳴",
-      "label_en": "Emotional Resonance",
-      "description": "脆弱、陪伴、療癒、共感——讓觀眾『被說中』的能力／需求。"
+      "key": "story",
+      "label_zh": "敘事情緒",
+      "label_en": "Story & Emotion",
+      "description": "以人物、事件弧線、歷史脈絡把內容講成故事，並讓觀眾『被說中』的能力／需求。",
+      "merged_from": ["narrative 敘事張力", "emotion 情緒共鳴"]
     },
     {
       "key": "visual",
-      "label_zh": "視覺表現",
-      "label_en": "Visual Expression",
-      "description": "場景、建築、光影、身體與畫面資訊量所能撐起的表現力／需求。"
+      "label_zh": "視覺張力",
+      "label_en": "Visual Pull",
+      "description": "場景、光影、空間資訊量所能撐起的表現力，以及隨之而來的嚮往感／需求。",
+      "merged_from": ["visual 視覺表現", "aspiration 嚮往感"]
     },
     {
-      "key": "authority",
-      "label_zh": "專業權威",
-      "label_en": "Professional Authority",
-      "description": "由職業身分、實績或長期積累帶來的可信度／需求。"
-    },
-    {
-      "key": "daily",
-      "label_zh": "生活貼近",
-      "label_en": "Everyday Relatability",
-      "description": "日常感、可複製、隨手記錄的貼近程度／需求。"
-    },
-    {
-      "key": "contrarian",
-      "label_zh": "反直覺衝突",
-      "label_en": "Contrarian Hook",
-      "description": "打破常識、製造認知反差的能力／需求（不等於製造焦慮）。"
-    },
-    {
-      "key": "aspiration",
-      "label_zh": "嚮往感",
-      "label_en": "Aspiration",
-      "description": "遠方、極限、成就與『我也想成為那樣』的牽引力／需求。"
+      "key": "credibility",
+      "label_zh": "身分可信",
+      "label_en": "Credibility",
+      "description": "由職業身分、實績或長期積累帶來的可信度／需求。這是唯一無法靠製作補的軸。"
     }
   ],
+  "format_fit": {
+    "key": "format_fit",
+    "label_zh": "日常適配",
+    "label_en": "Everyday Format Fit",
+    "description": "日常感、可複製、隨手記錄的貼近程度。**不參與 Match 計分**——它影響的是『怎麼拍』而不是『選什麼題』。保留給作業流程 (c) 的素材企劃，用來判斷這題適不適合做成日常／隨手感的切角。"
+  },
   "domains": [
     { "key": "movie", "label_zh": "電影", "label_en": "Film" },
     { "key": "tv", "label_zh": "影集／綜藝", "label_en": "TV & Series" },
@@ -67,19 +52,19 @@
     { "key": "life", "label_zh": "生活方式", "label_en": "Lifestyle" }
   ],
   "domain_axis_demand": {
-    "_note": "話題若沒有自帶 axis_demand（例如從 Apify 抓回來的原始 Tag），系統會用它的 domain 套這張預設需求表，再依 tag 規則微調。這是一張可覆寫的預設值，不是硬規則。",
-    "movie":   { "analysis": 70, "narrative": 90, "emotion": 70, "visual": 85, "authority": 45, "daily": 35, "contrarian": 55, "aspiration": 60 },
-    "tv":      { "analysis": 55, "narrative": 85, "emotion": 70, "visual": 70, "authority": 35, "daily": 55, "contrarian": 50, "aspiration": 50 },
-    "history": { "analysis": 75, "narrative": 90, "emotion": 55, "visual": 60, "authority": 80, "daily": 25, "contrarian": 60, "aspiration": 45 },
-    "pop":     { "analysis": 40, "narrative": 60, "emotion": 70, "visual": 75, "authority": 25, "daily": 85, "contrarian": 65, "aspiration": 55 },
-    "music":   { "analysis": 35, "narrative": 55, "emotion": 85, "visual": 70, "authority": 25, "daily": 65, "contrarian": 35, "aspiration": 55 },
-    "news":    { "analysis": 80, "narrative": 70, "emotion": 60, "visual": 45, "authority": 75, "daily": 60, "contrarian": 70, "aspiration": 35 },
-    "game":    { "analysis": 85, "narrative": 65, "emotion": 50, "visual": 75, "authority": 55, "daily": 60, "contrarian": 75, "aspiration": 45 },
-    "sports":  { "analysis": 60, "narrative": 85, "emotion": 80, "visual": 75, "authority": 85, "daily": 50, "contrarian": 45, "aspiration": 85 },
-    "tech":    { "analysis": 90, "narrative": 55, "emotion": 35, "visual": 55, "authority": 75, "daily": 50, "contrarian": 70, "aspiration": 60 },
-    "city":    { "analysis": 60, "narrative": 80, "emotion": 60, "visual": 95, "authority": 50, "daily": 70, "contrarian": 40, "aspiration": 85 },
-    "book":    { "analysis": 85, "narrative": 70, "emotion": 55, "visual": 30, "authority": 70, "daily": 45, "contrarian": 60, "aspiration": 40 },
-    "life":    { "analysis": 40, "narrative": 55, "emotion": 80, "visual": 70, "authority": 30, "daily": 95, "contrarian": 40, "aspiration": 50 }
+    "_note": "話題的軸需求預設值，依 domain 套用。topic_hooks[].axis_demand 可以覆寫，但預設不填——同一個 domain 裡『理性解釋型』與『情緒故事型』確實需求不同，需要時才覆寫。v1 的『Tag 關鍵字加減分』規則已移除（docs/10 第八刀）：那些 +15 / +18 同樣是編出來的數字，0 筆實績下沒資格維護。",
+    "movie":   { "analysis": 63, "story": 80, "visual": 73, "credibility": 45 },
+    "tv":      { "analysis": 53, "story": 78, "visual": 60, "credibility": 35 },
+    "history": { "analysis": 68, "story": 73, "visual": 53, "credibility": 80 },
+    "pop":     { "analysis": 53, "story": 65, "visual": 65, "credibility": 25 },
+    "music":   { "analysis": 35, "story": 70, "visual": 63, "credibility": 25 },
+    "news":    { "analysis": 75, "story": 65, "visual": 40, "credibility": 75 },
+    "game":    { "analysis": 80, "story": 58, "visual": 60, "credibility": 55 },
+    "sports":  { "analysis": 53, "story": 83, "visual": 80, "credibility": 85 },
+    "tech":    { "analysis": 80, "story": 45, "visual": 58, "credibility": 75 },
+    "city":    { "analysis": 50, "story": 70, "visual": 90, "credibility": 50 },
+    "book":    { "analysis": 73, "story": 63, "visual": 35, "credibility": 70 },
+    "life":    { "analysis": 40, "story": 68, "visual": 60, "credibility": 30 }
   },
   "regions": [
     { "key": "TW", "label_zh": "台灣", "language": "zh-Hant" },

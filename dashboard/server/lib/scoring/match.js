@@ -9,11 +9,10 @@ import { coverage, containsKeyword } from '../text.js'
  */
 
 export const WEIGHTS = {
-  personaFit: 0.3,
-  pillarFit: 0.25,
+  personaFit: 0.35,
+  pillarFit: 0.3,
   topicHeat: 0.2,
   regionFit: 0.15,
-  risk: 0.1,
 }
 
 const round = (n, d = 1) => Math.round(n * 10 ** d) / 10 ** d
@@ -33,7 +32,7 @@ export function personaFit(personaAxes, axisDemand) {
 
   for (const axis of axes) {
     const demand = axisDemand?.[axis.key] ?? 50
-    const have = personaAxes?.[axis.key] ?? 0
+    const have = personaAxes?.[axis.key]?.score ?? 0
     const w = demand / 100
     const attainment = Math.min(have / Math.max(demand, 1), 1)
     weighted += w * attainment
@@ -59,16 +58,15 @@ export function personaFit(personaAxes, axisDemand) {
 
 export function pillarFit(kol, topic, boundPillarName = null) {
   const pillars = kol.profile?.content?.pillars ?? []
-  if (!pillars.length) return { score: 0, pillar: null, bound: false, candidates: [] }
+  if (!pillars.length) return { score: 0, pillar: null, bound: false, needsBinding: true, candidates: [] }
 
   const weights = pillars.map((p) => Number(String(p.weight ?? '').replace('%', '')) || 0)
   const maxWeight = Math.max(...weights, 1)
+  const pillarKeywords = kol.affinity?.pillar_keywords ?? {}
 
   const needleText = [topic.tag?.replace(/^#/, ''), topic.title, ...(topic.keywords ?? [])]
     .filter(Boolean)
     .join(' ')
-
-  const pillarKeywords = kol.affinity?.pillar_keywords ?? {}
 
   const candidates = pillars.map((p, i) => {
     const hay = [p.name, p.description ?? '', ...(pillarKeywords[p.name] ?? [])].join(' ')
@@ -88,24 +86,35 @@ export function pillarFit(kol, topic, boundPillarName = null) {
     }
   })
 
+  // An editorially bound hook is marked as such, but its score is still
+  // computed. v1 floored it at 70, which let one binding bypass scoring
+  // entirely (docs/10 第八刀).
   if (boundPillarName) {
     const bound = candidates.find((c) => c.name === boundPillarName)
-    if (bound) {
-      // An explicitly bound hook already passed human judgement — floor it at 70
-      // so a keyword miss cannot override an editorial decision.
-      return { score: Math.max(bound.score, 70), pillar: bound.name, bound: true, candidates }
-    }
+    if (bound) return { score: bound.score, pillar: bound.name, bound: true, needsBinding: false, candidates }
   }
 
   const best = [...candidates].sort((a, b) => b.score - a.score)[0]
-  // No overlap with any pillar means the topic has no home on this account —
-  // say so rather than naming the highest-weighted pillar with a score of 0.
-  if (!best || best.score === 0) return { score: 0, pillar: null, bound: false, candidates }
-  return { score: best.score, pillar: best.name, bound: false, candidates }
+  // No overlap with any pillar means the topic has no home on this account.
+  // v1 applied a made-up capping curve here; now it is an explicit state.
+  if (!best || best.score === 0) {
+    return { score: 0, pillar: null, bound: false, needsBinding: true, candidates }
+  }
+  return { score: best.score, pillar: best.name, bound: false, needsBinding: false, candidates }
 }
 
-/* ------------------------------------------------------------------ §3.5 */
+/* ------------------------------------------------------------------ §3.4 */
 
+/**
+ * Region and language fit.
+ *
+ * This dimension is scored, not merely flagged. In direction (a) — one KOL
+ * against a region's topic list — every topic shares a region, so it adds
+ * nothing to the ranking. But direction (b) scores ONE topic against ALL KOLs,
+ * whose regions and languages differ, and there it is a genuine source of
+ * ranking difference. Dropping it would let a KOL who does not publish in that
+ * language rank first (docs/10 v0.2 「被 review 推翻的判斷」).
+ */
 export function regionFit(reach, topicRegion, topicLanguage) {
   const regions = reach?.regions ?? []
   const kolLanguage = reach?.language ?? null
@@ -130,10 +139,16 @@ export function regionFit(reach, topicRegion, topicLanguage) {
   }
 }
 
-/* ------------------------------------------------------------------ §3.6 */
+/* ------------------------------------------------------------------ §3.5 */
 
-const SEVERITY_POINTS = { veto: 100, high: 40, medium: 20 }
-
+/**
+ * Redlines are a gate, not a weighted term. v1 gave risk 10% of the score AND
+ * a veto special case — the same thing written twice — plus a three-level
+ * severity whose −40 / −20 deductions nobody could justify (docs/10 第二刀).
+ *
+ * Two states only: `block` keeps it out of the recommendation list, `warn`
+ * shows up alongside it without changing the score.
+ */
 export function riskCheck(redlines, topic) {
   const hay = [
     topic.tag,
@@ -145,25 +160,25 @@ export function riskCheck(redlines, topic) {
     .filter(Boolean)
     .join(' ')
 
-  const hits = []
-  let score = 0
-  let blocked = false
+  const blocks = []
+  const warnings = []
 
   for (const rule of redlines ?? []) {
     const matched = (rule.keywords ?? []).filter((k) => containsKeyword(hay, k))
     if (!matched.length) continue
-    hits.push({ rule: rule.rule, severity: rule.severity, keywords: matched })
-    if (rule.severity === 'veto') blocked = true
-    score += SEVERITY_POINTS[rule.severity] ?? 20
+    const hit = { rule: rule.rule, severity: rule.severity, keywords: matched }
+    if (rule.severity === 'block') blocks.push(hit)
+    else warnings.push(hit)
   }
 
-  return { score: Math.min(score, 100), blocked, hits }
+  return { blocked: blocks.length > 0, blocks, warnings, hits: [...blocks, ...warnings] }
 }
 
-/* ------------------------------------------------------------------ §3.7 */
+/* ------------------------------------------------------------------ §3.6 */
 
-export function grade(score, blocked) {
+export function grade(score, { blocked, needsBinding } = {}) {
   if (blocked) return { key: 'blocked', label: '✕｜否決', action: '紅線命中，不論分數' }
+  if (needsBinding) return { key: 'unbound', label: '—｜待綁定', action: '沒有內容支柱對應，需人工綁定支柱後再判' }
   if (score >= 80) return { key: 'A', label: 'A｜強配', action: '直接排進製作' }
   if (score >= 65) return { key: 'B', label: 'B｜可做', action: '需要一個明確的切角才開工' }
   if (score >= 50) return { key: 'C', label: 'C｜勉強', action: '缺題時使用，須補足最弱的軸' }
@@ -187,12 +202,12 @@ export function matchKolToTopic(kol, topic, context = {}) {
       topicId: topic.id,
       score: 0,
       blocked: true,
-      grade: grade(0, true),
+      grade: grade(0, { blocked: true }),
       missingData: 'topic_affinity.json 不存在，無法計算 Match',
     }
   }
 
-  const persona = personaFit(affinity.persona_axes, topic.axisDemand)
+  const persona = personaFit(affinity.axes, topic.axisDemand)
   const pillar = pillarFit(kol, topic, topic.boundPillar ?? null)
   const region = regionFit(affinity.reach, context.region ?? topic.region ?? 'GLOBAL', context.language ?? null)
   const risk = riskCheck(affinity.redlines, topic)
@@ -202,16 +217,9 @@ export function matchKolToTopic(kol, topic, context = {}) {
     WEIGHTS.personaFit * persona.score +
     WEIGHTS.pillarFit * pillar.score +
     WEIGHTS.topicHeat * heat +
-    WEIGHTS.regionFit * region.score +
-    WEIGHTS.risk * (100 - risk.score)
+    WEIGHTS.regionFit * region.score
 
-  // A topic with no pillar home cannot be an A/B pick however hot it is —
-  // cap it at the top of grade C (docs/09 §3.3). The cap is a shallow curve
-  // rather than a flat clamp, so capped topics still sort against each other.
-  const capped = pillar.score === 0 ? Math.min(raw, 54 + raw * 0.1) : raw
-  const score = risk.blocked ? 0 : round(capped)
-  const notes = []
-  if (pillar.score === 0) notes.push('沒有任何內容支柱對應——已封頂於 C 級。')
+  const score = risk.blocked ? 0 : round(raw)
 
   return {
     kolId: kol.id,
@@ -222,15 +230,15 @@ export function matchKolToTopic(kol, topic, context = {}) {
     domain: topic.domain,
     score,
     blocked: risk.blocked,
-    grade: grade(score, risk.blocked),
+    needsBinding: pillar.needsBinding,
+    warnings: risk.warnings,
+    grade: grade(score, { blocked: risk.blocked, needsBinding: pillar.needsBinding }),
     dimensions: {
       personaFit: { score: persona.score, weight: WEIGHTS.personaFit, perAxis: persona.perAxis, weakest: persona.weakest },
-      pillarFit: { score: pillar.score, weight: WEIGHTS.pillarFit, pillar: pillar.pillar, bound: pillar.bound },
+      pillarFit: { score: pillar.score, weight: WEIGHTS.pillarFit, pillar: pillar.pillar, bound: pillar.bound, needsBinding: pillar.needsBinding },
       topicHeat: { score: round(heat), weight: WEIGHTS.topicHeat, parts: topic.heatParts ?? null },
       regionFit: { score: region.score, weight: WEIGHTS.regionFit, detail: region },
-      risk: { score: risk.score, weight: WEIGHTS.risk, blocked: risk.blocked, hits: risk.hits },
     },
-    notes,
     /** Plain-language reason, so the ranking never looks like an oracle. */
     rationale: buildRationale({ persona, pillar, region, risk, heat, score }),
   }
@@ -238,19 +246,20 @@ export function matchKolToTopic(kol, topic, context = {}) {
 
 function buildRationale({ persona, pillar, region, risk, heat, score }) {
   if (risk.blocked) {
-    return `紅線否決：${risk.hits.filter((h) => h.severity === 'veto').map((h) => h.keywords.join('／')).join('；')}`
+    return `紅線否決：${risk.blocks.map((h) => h.keywords.join('／')).join('；')}`
   }
-  const parts = []
-  parts.push(`人設契合 ${persona.score}（最弱：${persona.weakest?.label ?? '—'}，缺口 ${persona.weakest?.gap ?? 0}）`)
-  parts.push(`支柱「${pillar.pillar ?? '無'}」覆蓋 ${pillar.score}${pillar.bound ? '（已綁定）' : ''}`)
-  parts.push(`熱度 ${Math.round(heat)}`)
-  parts.push(`地區契合 ${region.score}`)
-  if (risk.hits.length) parts.push(`風險扣分 ${risk.score}`)
+  const parts = [
+    `人設契合 ${persona.score}（最弱：${persona.weakest?.label ?? '—'}，缺口 ${persona.weakest?.gap ?? 0}）`,
+    pillar.needsBinding ? '無支柱對應——需人工綁定' : `支柱「${pillar.pillar}」覆蓋 ${pillar.score}${pillar.bound ? '（已綁定）' : ''}`,
+    `熱度 ${Math.round(heat)}`,
+    `地區契合 ${region.score}`,
+  ]
+  if (risk.warnings.length) parts.push(`⚠ ${risk.warnings.length} 項紅線警告`)
   return `總分 ${score}｜${parts.join('，')}`
 }
 
 /** Promote a KOL's own topic hook into a topic object the match engine accepts. */
-export function hookToTopic(hook, { region = null, heat = null } = {}) {
+export function hookToTopic(hook, { region = null, heat = 50 } = {}) {
   const { demand } = resolveAxisDemand({
     domain: hook.domain,
     title: hook.title,
@@ -267,10 +276,13 @@ export function hookToTopic(hook, { region = null, heat = null } = {}) {
     samples: [hook.angle].filter(Boolean),
     axisDemand: demand,
     boundPillar: hook.pillar,
-    heat: heat ?? hook.affinity ?? 50,
+    // A hook carries no platform heat of its own. v1 used a hand-written
+    // `affinity` number here, which meant a human score and an engine score
+    // fought each other. Evergreen hooks sit at the neutral midpoint until a
+    // real region topic supplies actual heat.
+    heat,
     region,
     isHook: true,
-    affinity: hook.affinity,
     evergreen: hook.evergreen,
     angle: hook.angle,
   }

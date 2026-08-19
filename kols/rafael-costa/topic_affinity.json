@@ -1,39 +1,31 @@
 {
   "kol_id": "rafael-costa",
-  "version": "1.0.0",
-  "generated_at": "2026-08-18",
-  "source": "由 kols/rafael-costa/profile.json（persona / content.pillars / brand_dont）與 character.md 導出。分數為初始基準值，應隨實際發片數據以 docs/09 §5 的校準流程回寫。",
-  "persona_axes": {
-    "analysis": 70,
-    "narrative": 85,
-    "emotion": 82,
-    "visual": 75,
-    "authority": 92,
-    "daily": 80,
-    "contrarian": 60,
-    "aspiration": 88
+  "schema_version": 2,
+  "axes": {
+    "analysis": {
+      "score": 65,
+      "why": "冠军思维支柱每篇給一條判斷原則，以經驗歸納為主不引研究壓人；長期主義對抗速成敘事有反差，但語氣溫和不做衝突式鉤子。"
+    },
+    "story": {
+      "score": 84,
+      "why": "從巴西工人社區到中國職業聯賽的路徑就是敘事骨幹；「如果我是20歲的你」與傷病／投資失敗的自揭，情緒濃度高但克制。"
+    },
+    "visual": {
+      "score": 82,
+      "why": "訓練場、更衣室、球場夜燈提供穩定畫面；職業運動員＋冠軍思維帶來高嚮往感，但 brand_dont 禁止假豪宅與炫富包裝。"
+    },
+    "credibility": {
+      "score": 92,
+      "why": "現役職業球員是最硬的權威來源，且 values 要求只推薦親身驗證過的東西。"
+    }
   },
-  "axis_evidence": {
-    "analysis": "冠军思维支柱每篇給一條判斷原則，理性存在但以經驗歸納為主，不引用研究壓人。",
-    "narrative": "從巴西工人社區到中國職業聯賽的路徑本身就是敘事骨幹；球場之外支柱佔 25%。",
-    "emotion": "『如果我是20歲的你』與傷病／投資失敗的自揭，情緒濃度高但克制。",
-    "visual": "訓練場、更衣室、球場夜燈提供穩定畫面，但視覺不是內容主體。",
-    "authority": "現役職業球員身分是最硬的權威來源，且 values 要求只推薦親身驗證過的東西。",
-    "daily": "『訓練結束以後』（30%）就是日常紀錄格式，日常感是他的原生語言。",
-    "contrarian": "長期主義對抗速成敘事，有反差但語氣溫和，不做衝突式鉤子。",
-    "aspiration": "職業運動員＋冠軍思維帶來高嚮往感，但 brand_dont 禁止假豪宅與炫富包裝。"
+  "format_fit": {
+    "score": 80,
+    "why": "「訓練結束以後」（30%）就是日常紀錄格式，日常感是他的原生語言。"
   },
   "material_attributes": {
-    "identity_refs": 3,
     "generation_model": "seedream_v4_5",
     "consistency": "reference_photos_only",
-    "visual_language": "真實紀錄感：訓練場自然光、更衣室日光燈、夜間球場燈；保留汗水與皮膚質感，不誇張肌肉線條、不健美化。",
-    "color_palette": [
-      "pitch green",
-      "training grey",
-      "night floodlight white",
-      "clay orange"
-    ],
     "usable_formats": [
       "訓練後短影音口白",
       "問答式短片",
@@ -104,7 +96,6 @@
       "domain": "sports",
       "title": "大賽關鍵時刻的選擇與心態",
       "angle": "當期比賽一結束就切入：不評球員好壞，只講那個當下他會怎麼想、教練席上在算什麼——現役身分讓這個角度沒人能複製。",
-      "affinity": 94,
       "pillar": "冠军思维 Champion Mindset",
       "keywords": [
         "世界杯",
@@ -115,24 +106,13 @@
         "更衣室",
         "教练"
       ],
-      "evergreen": false,
-      "axis_demand": {
-        "analysis": 65,
-        "narrative": 85,
-        "emotion": 80,
-        "visual": 70,
-        "authority": 95,
-        "daily": 55,
-        "contrarian": 45,
-        "aspiration": 90
-      }
+      "evergreen": false
     },
     {
       "id": "rc-history-brazil",
       "domain": "history",
       "title": "巴西足球史與貧民區出身球員的路徑",
       "angle": "用自己的成長環境當入口講這條路真正的樣子——不勵志包裝，也不賣慘，符合他『真實優於完美』的價值觀。",
-      "affinity": 86,
       "pillar": "球場之外 Off the Pitch",
       "keywords": [
         "巴西足球",
@@ -142,24 +122,13 @@
         "桑巴",
         "出身"
       ],
-      "evergreen": true,
-      "axis_demand": {
-        "analysis": 55,
-        "narrative": 92,
-        "emotion": 85,
-        "visual": 70,
-        "authority": 85,
-        "daily": 40,
-        "contrarian": 55,
-        "aspiration": 85
-      }
+      "evergreen": true
     },
     {
       "id": "rc-pop-longtermism",
       "domain": "pop",
       "title": "躺平 vs 長期主義：年輕人的選擇題",
       "angle": "不否定躺平，先承認短期刺激為什麼有效，再給一個五年尺度的比較——他的公式是每條建議都要收在一個可執行動作。",
-      "affinity": 84,
       "pillar": "如果我是20歲的你 If I Were You at 20",
       "keywords": [
         "躺平",
@@ -177,7 +146,6 @@
       "domain": "movie",
       "title": "運動電影／紀錄片裡的長期主義",
       "angle": "《The Last Dance》《Coach Carter》這類作品他只挑一個場景講：那個決定當下有多不划算，五年後為什麼對。",
-      "affinity": 82,
       "pillar": "冠军思维 Champion Mindset",
       "keywords": [
         "最后一舞",
@@ -194,7 +162,6 @@
       "domain": "life",
       "title": "訓練結束以後：一天最普通的那 20 分鐘",
       "angle": "從當天訓練裡的一個小動作切出一個道理，是他最原生、最穩定、最不吃時效的內容底盤。",
-      "affinity": 90,
       "pillar": "訓練結束以後 After Training",
       "keywords": [
         "训练日常",
@@ -219,7 +186,7 @@
         "错过就没了",
         "带单"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "推薦他沒有親自使用或驗證過的收益方法、產品或投資。",
@@ -229,7 +196,7 @@
         "投资课程",
         "返佣"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "假豪宅生活、擺拍公益、炫富，或消費貧困兒童博取情緒。",
@@ -240,7 +207,7 @@
         "卖惨",
         "摆拍公益"
       ],
-      "severity": "veto"
+      "severity": "block"
     },
     {
       "rule": "捏造榮譽、蹭災難／悲劇新聞熱度，或性別對立／世代對立的釣魚題。",
@@ -251,7 +218,7 @@
         "垮掉的一代",
         "杜撰荣誉"
       ],
-      "severity": "veto"
+      "severity": "block"
     }
   ],
   "reach": {
@@ -262,21 +229,6 @@
       "SG",
       "GLOBAL"
     ],
-    "language": "zh-Hans",
-    "platforms": [
-      "tiktok_douyin",
-      "youtube",
-      "instagram",
-      "threads",
-      "facebook"
-    ]
-  },
-  "baseline_funnel": {
-    "assumed": true,
-    "avg_views": 32000,
-    "engagement_rate": 0.052,
-    "profile_visit_rate": 0.036,
-    "link_ctr": 0.082,
-    "conversion_rate": 0.024
+    "language": "zh-Hans"
   }
 }

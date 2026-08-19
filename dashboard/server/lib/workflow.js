@@ -81,7 +81,7 @@ export async function topicToKols(topicRef, { region = 'GLOBAL', platforms = PLA
  * the hook line, script and shot list stay human work — what the engine
  * supplies is the binding, the constraints, and the feasibility warnings.
  */
-export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms = PLATFORMS, fourAxis = {} }) {
+export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms = PLATFORMS, fourAxis = {}, targets = {} }) {
   const kol = getKol(kolId)
   if (!kol) throw Object.assign(new Error(`unknown KOL "${kolId}"`), { status: 404 })
 
@@ -110,6 +110,7 @@ export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [
     ...primary,
     score: combinedScore,
     blocked,
+    needsBinding: primary.needsBinding,
     combination: {
       primaryTopicId: primary.topicId,
       supportingTopicIds: supporting.map((m) => m.topicId),
@@ -123,47 +124,53 @@ export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [
   const scenes = kol.profile?.ai_prompts?.scenes ?? []
   const material = kol.affinity?.material_attributes ?? {}
 
+  const identityRefs = kol.images.filter((i) => i.role === 'identity_ref').length
+  const formatFit = kol.affinity?.format_fit ?? null
+
   const feasibility = []
-  if ((material.identity_refs ?? 0) < 3) {
-    feasibility.push({ level: 'warn', message: '身分參考圖少於 3 張，多場景敘事的臉部一致性風險高。' })
+  if (identityRefs < 3) {
+    feasibility.push({ level: 'warn', message: `身分參考圖只有 ${identityRefs} 張，多場景敘事的臉部一致性風險高。` })
   }
   if (!scenes.length) {
     feasibility.push({ level: 'warn', message: 'profile.json 沒有 ai_prompts.scenes，需要先補場景 prompt。' })
   }
-  if (kol.affinity?.baseline_funnel?.assumed !== false) {
-    feasibility.push({ level: 'info', message: '導流基準值仍為假設值，預測數字只能當相對排序用（docs/09 §4.1）。' })
+  if (primary.needsBinding) {
+    feasibility.push({ level: 'block', message: '這個話題沒有對應到任何內容支柱——先決定它屬於哪一根支柱，否則不該排進製作。' })
   }
-  for (const hit of primary.dimensions.risk.hits) {
-    feasibility.push({ level: hit.severity === 'veto' ? 'block' : 'warn', message: `紅線：${hit.rule}（命中：${hit.keywords.join('、')}）` })
+  for (const hit of primary.warnings ?? []) {
+    feasibility.push({ level: 'warn', message: `紅線警告：${hit.rule}（命中：${hit.keywords.join('、')}）` })
   }
   const weakest = primary.dimensions.personaFit.weakest
   if (weakest && weakest.gap >= 20) {
     feasibility.push({ level: 'warn', message: `最弱軸「${weakest.label}」缺口 ${weakest.gap}——這一軸要靠腳本或製作補，否則會拉低成效。` })
   }
+  if (formatFit) {
+    feasibility.push({
+      level: 'info',
+      message:
+        formatFit.score >= 70
+          ? `日常適配 ${formatFit.score}：這位 KOL 撐得起隨手感／vlog 式切角。`
+          : `日常適配 ${formatFit.score}：偏低，這題不適合做成日常隨手風格，走他原生的格式比較穩。`,
+    })
+  }
 
+  // Five fields, down from ten (docs/10 第七刀). Everything kept here is
+  // something a planner cannot look up faster elsewhere.
   const brief = {
     kol: { id: kol.id, name: kol.name, handle: kol.handle },
     region,
     topics: topics.map((t) => ({ id: t.id, tag: t.tag, title: t.title, domain: t.domain, heat: t.heat, angle: t.angle ?? null })),
     boundPillar: pillar ? { name: pillar.name, weight: pillar.weight, description: pillar.description } : null,
-    suggestedFormats: kol.profile?.content?.formats ?? [],
-    visualLanguage: material.visual_language ?? kol.profile?.content?.aesthetic?.editing_style ?? null,
-    colorPalette: material.color_palette ?? kol.profile?.content?.aesthetic?.color_palette ?? [],
+    suggestedFormats: (material.usable_formats ?? kol.profile?.content?.formats ?? []).slice(0, 4),
     availableScenes: scenes.map((s) => ({ id: s.id, label: s.label })),
-    voiceTone: kol.profile?.persona?.voice_tone ?? null,
-    language: kol.affinity?.reach?.language ?? null,
-    brandDont: kol.profile?.content?.brand_dont ?? [],
+    visualLanguage: kol.profile?.content?.aesthetic?.editing_style ?? null,
+    formatFit,
     feasibility,
-    /** Fields a planner fills in — the engine does not write copy. */
-    toFillIn: {
-      hookLine: '',
-      structure: '亮相 → 主歌 groove → 副歌 hook → 收尾（docs/06 D.1）',
-      cta: '',
-      musicPick: '發片前重抓當週熱曲（docs/06 D.2）',
-    },
+    /** The two things the engine will not write: the hook and the CTA. */
+    toFillIn: { hookLine: '', cta: '' },
   }
 
-  const preEvaluation = buildPreEvaluation({ kol, topics, match: combinedMatch, fourAxis, plan: brief })
+  const preEvaluation = buildPreEvaluation({ kol, topics, match: combinedMatch, fourAxis, targets, plan: brief })
 
   return { direction: 'combination_to_brief', brief, match: combinedMatch, preEvaluation }
 }

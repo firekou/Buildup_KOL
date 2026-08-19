@@ -5,7 +5,7 @@ import { PORT, CLIENT_DIST, isApifyConfigured } from './config.js'
 import { getAxes, listKols, getData } from './lib/kols.js'
 import * as store from './lib/store.js'
 import { WEIGHTS } from './lib/scoring/match.js'
-import { FOUR_AXES } from './lib/scoring/evaluation.js'
+import { FOUR_AXES, DISPLAY_FIELDS } from './lib/scoring/evaluation.js'
 import { PLATFORMS } from './lib/topics/index.js'
 import kolsRouter from './routes/kols.js'
 import topicsRouter from './routes/topics.js'
@@ -24,11 +24,13 @@ app.get('/api/meta', (req, res) => {
   const { axes, domains, regions } = getAxes()
   res.json({
     axes,
+    formatFit: getAxes().format_fit,
     domains,
     regions,
     platforms: PLATFORMS,
     matchWeights: WEIGHTS,
     fourAxes: FOUR_AXES,
+    displayFields: DISPLAY_FIELDS,
     topicSource: isApifyConfigured() ? 'apify' : 'fixtures',
     store: store.stats(),
     methodology: 'docs/09-kol-topic-match-and-evaluation-methodology.md',
