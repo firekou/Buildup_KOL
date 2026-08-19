@@ -65,6 +65,25 @@ npm run build && npm start   # 單一服務，http://localhost:8080
 
 ---
 
+## 第三方服務：AI Token King MCP
+
+`.mcp.json` 已接上 [AI Token King](https://www.aitokenking.com.tw/) 的 HTTP MCP server
+（`https://api.aitokenking.com.tw/mcp`），提供 14 個工具：模型查詢（`list_models` / `get_model`）、
+文字生成（`chat_completion` / `create_message` / `create_response`）、
+圖像與影片生成（`create_image_generation` / `create_video_generation` 及對應的輪詢工具）、
+餘額與用量（`get_balance` / `list_usage` / `list_transactions`）。
+
+**API key 不進 repo。** `.mcp.json` 寫的是 `${AITOKENKING_API_KEY}`，用前先在環境設好：
+
+```bash
+export AITOKENKING_API_KEY=sk-...   # 從 aitokenking 後台取得
+claude                              # 啟動時會提示批准這個 MCP server
+```
+
+用途範例：把設計文件交給第三方模型做交叉 review，結果收在 [`docs/reviews/`](docs/reviews/)。
+
+---
+
 ## 新增 KOL 流程
 
 1. 在 `kols/` 下建立新目錄，命名規則：`{firstname}-{lastname}`（kebab-case）
