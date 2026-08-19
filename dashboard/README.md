@@ -41,17 +41,38 @@ BASE=https://… npm run smoke   # 打已部署的環境
 
 ---
 
-## 部署到 Railway
+## Railway 部署
 
-1. 建立 service，來源指向這個 repo，**Root Directory 保持在 repo 根目錄**——
-   後端要能讀到 `kols/`，把 root 設成 `dashboard/` 會讓資料消失。
-2. Build / Start 指令由 [`railway.json`](../railway.json) 提供（`npm run build` / `npm start`），
-   健康檢查為 `/api/health`。
-3. 在 Variables 設定 [`.env.example`](../.env.example) 列出的變數。最低限度可以什麼都不設就跑起來
-   （話題會使用範例資料），但正式使用至少要設：
-   - `APIFY_TOKEN` — 沒有它，地區話題是手寫的範例資料，畫面上會標示。
-   - `DATA_DIR` — 掛一個 Railway Volume 並指過去，否則評估記錄會在每次部署時消失
-     （右上角的「資料為暫存」標籤就是在講這件事）。
+**已部署：** https://dashboard-production-010e.up.railway.app
+（project `buildup-kol-dashboard` / service `dashboard` / production；
+source 為本 repo 的 `claude/kol-evaluation-dashboard-7e7hxh` 分支）
+
+### 重新部署或另建一份時要注意的
+
+1. **Root Directory 必須留在 repo 根目錄。** 後端要讀 `kols/`，
+   把 root 設成 `dashboard/` 會讓整個資料層消失。
+2. **建立 service 時第一次 build 可能抓錯分支。** 實際遇過：service 剛建立時的第一個 build
+   用了 `main`（那裡沒有 `package.json` 與 `dashboard/`），build 直接失敗；
+   branch 設定其實已經寫進 source，補推一個 commit 觸發重建就正常了。
+   看到 `Railpack could not determine how to build the app` 且列出的檔案樹裡沒有 `package.json`，
+   就是這個情況——不是設定錯，是搶跑。
+3. Build / Start 指令由 [`railway.json`](../railway.json) 提供（`npm run build` / `npm start`），
+   健康檢查 `/api/health`。**不指定 builder**，用 Railway 預設的 Railpack。
+
+### 還沒設定的兩件事（需要在 Railway 後台手動做）
+
+| 項目 | 現況 | 要做什麼 | 不做的後果 |
+|------|------|---------|-----------|
+| `APIFY_TOKEN` | 未設 | 在 Variables 加上 token | 地區話題用手寫範例資料，畫面上會標示「範例資料」 |
+| Volume + `DATA_DIR` | 未設 | 在 service 加一個 Volume（例如掛載到 `/data`），再設 `DATA_DIR=/data` | 評估記錄在每次重新部署時清空。右上角「資料為暫存」標籤就是在講這件事 |
+
+Railway 的 MCP 沒有建立 Volume 的工具，所以這一步得在後台點。
+
+### 驗證部署
+
+```bash
+BASE=https://dashboard-production-010e.up.railway.app npm run smoke
+```
 
 ---
 

@@ -60,7 +60,11 @@ npm run dev        # API :8080 + Vite :5173
 npm run build && npm start   # 單一服務，http://localhost:8080
 ```
 
-部署（Railway）與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。
+**已部署：** https://dashboard-production-010e.up.railway.app
+（尚未設定 `APIFY_TOKEN` 與 Volume，所以話題是範例資料、評估記錄為暫存——見
+[`dashboard/README.md`](dashboard/README.md)）
+
+部署與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。
 **Root Directory 要留在 repo 根目錄**，否則後端讀不到 `kols/`。
 
 ---
