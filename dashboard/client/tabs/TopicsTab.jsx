@@ -130,7 +130,11 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
             </button>
           </div>
         }
-        note="資料來源：Apify（Threads / TikTok / Instagram）。熱度 = 60% 量體（對數）＋ 40% 七日成長率，為本批結果內的相對位置。互動率多數 actor 抓不到，已不計入。"
+        note={
+          topicSet?.volumeMeaning === 'sample_frequency'
+            ? `Apify 實抓 ${topicSet.postsScraped ?? 0} 則貼文，統計其中的 hashtag。「帳號數」是使用該 tag 的不重複帳號數（不是平台總量——三個 actor 都不回傳這種欄位）；「48h」是該 tag 的貼文有多少比例來自最近兩天。熱度 = 60% 帳號數（對數）＋ 40% 48h 佔比，皆為本批內的相對位置。搜尋用的種子字已排除。`
+            : '資料來源：Apify（Threads / TikTok / Instagram）。目前顯示的是手寫範例資料，數字不是真的。熱度 = 60% 量體（對數）＋ 40% 七日成長率。'
+        }
       >
         <div className="controls" style={{ marginBottom: 14 }}>
           <div>
@@ -176,11 +180,11 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
                   <th style={{ width: 34 }} />
                   <th>話題</th>
                   <th style={{ width: 90 }}>領域</th>
-                  <th className="num" style={{ width: 90 }}>
-                    量體
+                  <th className="num" style={{ width: 80 }}>
+                    {topicSet.volumeMeaning === 'sample_frequency' ? '帳號數' : '量體'}
                   </th>
                   <th className="num" style={{ width: 70 }}>
-                    7日成長
+                    {topicSet.volumeMeaning === 'sample_frequency' ? '48h' : '7日成長'}
                   </th>
                   <th style={{ width: 120 }}>熱度</th>
                   <th style={{ width: 150 }}>平台</th>
@@ -203,7 +207,10 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
                       <div className="small muted">{t.title}</div>
                     </td>
                     <td className="small">{domainLabel[t.domain] ?? t.domain}</td>
-                    <td className="num">{num(t.volume)}</td>
+                    <td className="num" title={t.postCount ? `${t.postCount} 則貼文` : ''}>
+                      {num(t.volume)}
+                      {t.postCount ? <span className="muted small"> /{t.postCount}</span> : null}
+                    </td>
                     <td className="num">{t.growth7d == null ? '—' : `${t.growth7d}%`}</td>
                     <td>
                       <div className="row" style={{ gap: 6 }}>

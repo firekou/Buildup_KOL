@@ -34,11 +34,13 @@ function mergeByTag(rows) {
       byTag.set(key, {
         ...row,
         platforms: [{ platform: row.platform, volume: row.volume }],
+        postCount: row.postCount ?? null,
         tags: [row.tag],
       })
       continue
     }
     existing.volume += row.volume
+    existing.postCount = (existing.postCount ?? 0) + (row.postCount ?? 0) || null
     existing.platforms.push({ platform: row.platform, volume: row.volume })
     if (Number.isFinite(row.growth7d)) {
       existing.growth7d = Number.isFinite(existing.growth7d)
@@ -89,12 +91,15 @@ function enrich(rows) {
       axisDemand: demand,
       axisDerivedFrom: derivedFrom,
       volume: row.volume,
+      postCount: row.postCount ?? null,
       growth7d: row.growth7d,
       engagementRate: row.engagementRate,
       platforms: row.platforms ?? [{ platform: row.platform, volume: row.volume }],
       heat: row.heat,
       heatParts: row.heatParts,
       samples: row.samples ?? [],
+      sampleEngagement: row.sampleEngagement ?? null,
+      sampleViews: row.sampleViews ?? null,
     }
   })
 }
@@ -113,15 +118,17 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
   let raw = []
   let source = 'fixtures'
   let errors = []
+  let postsScraped = 0
 
   if (isApifyConfigured()) {
     const result = await fetchRegionTopics(region, platforms, { limit: Math.max(limit * 4, 40) })
     errors = result.errors
+    postsScraped = result.postsScraped
     if (result.topics.length) {
       raw = result.topics
       source = result.errors.length ? 'apify_partial' : 'apify'
     } else {
-      errors.push({ platform: 'all', message: 'Apify returned no items — falling back to fixtures' })
+      errors.push({ platform: 'all', message: `Apify 取回 ${result.postsScraped} 則貼文但聚不出話題——已退回範例資料` })
     }
   }
 
@@ -140,6 +147,9 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
     errors,
     fetchedAt: new Date().toISOString(),
     total: ranked.length,
+    postsScraped,
+    /** volume 的語意隨來源而不同——UI 要據此改標籤，不能一律叫「量體」。 */
+    volumeMeaning: source.startsWith('apify') ? 'sample_frequency' : 'platform_volume',
     topics: ranked.slice(0, limit),
     allTopics: ranked,
   }

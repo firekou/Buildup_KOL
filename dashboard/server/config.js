@@ -24,7 +24,7 @@ export const apify = {
   token: process.env.APIFY_TOKEN || '',
   /** Actor ids are configurable so the actor can be swapped without a code change. */
   actors: {
-    threads: process.env.APIFY_ACTOR_THREADS || 'curious_coder~threads-scraper',
+    threads: process.env.APIFY_ACTOR_THREADS || 'watcher.data~search-threads-by-keywords',
     tiktok: process.env.APIFY_ACTOR_TIKTOK || 'clockworks~tiktok-scraper',
     instagram: process.env.APIFY_ACTOR_INSTAGRAM || 'apify~instagram-hashtag-scraper',
   },
