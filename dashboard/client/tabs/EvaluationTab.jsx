@@ -63,7 +63,17 @@ export default function EvaluationTab({ kols, refreshToken }) {
           {loading && <Loading />}
           {error && <Alert tone="bad">{error}</Alert>}
           {!loading && pairs.length === 0 && (
-            <Empty>尚無記錄。到「地區話題」頁簽用方向 (c) 產出素材企劃後，按「存為預評記錄」。</Empty>
+            <Empty>
+              <div style={{ textAlign: 'left', lineHeight: 1.9 }}>
+                <strong>這一頁是流程的最後一站，不能從這裡開始。</strong>
+                <div className="small muted" style={{ marginTop: 8 }}>
+                  ① 到「地區話題」頁簽，選地區、勾 1–3 個話題
+                  <br />② 切到「(c) 組合產出素材企劃」，選 KOL、填兩個目標，按【執行】
+                  <br />③ 覺得可以就按【存為預評記錄】——記錄才會出現在這裡
+                  <br />④ 影片發布後回到這裡，點那筆記錄回填實際成效，看目標 vs 實際的對照
+                </div>
+              </div>
+            </Empty>
           )}
           {pairs.map(({ pre, post }) => (
             <div
@@ -98,7 +108,7 @@ export default function EvaluationTab({ kols, refreshToken }) {
         ) : (
           !loading && (
             <Card>
-              <Empty>左側選一筆預評記錄。</Empty>
+              <Empty>左側選一筆預評記錄，就能在這裡回填實際成效並看到對照分析。</Empty>
             </Card>
           )
         )}
@@ -403,7 +413,7 @@ function MatchLibrary({ kols, records, onSaved }) {
     <Card
       title="Match 庫"
       actions={<button onClick={() => setOpen(!open)}>{open ? '收起' : '新增記錄'}</button>}
-      note="已發布素材的成效資料表，後續評估從這裡取數。設定 APIFY_TOKEN 後可改為自動回抓。"
+      note="已發布素材的成效資料表，後續評估從這裡取數。目前為手動輸入（自動回抓單篇貼文成效尚未接上——那需要另一個對貼文網址取數的 actor）。平台給得出來的欄位就填，只有觀看／按讚／留言／分享／收藏／外連點擊會進對照表，其餘是存起來備用的。"
     >
       {error && <Alert tone="bad">{error}</Alert>}
       {open && (

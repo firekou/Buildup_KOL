@@ -59,15 +59,19 @@ source 為本 repo 的 `claude/kol-evaluation-dashboard-7e7hxh` 分支）
 3. Build / Start 指令由 [`railway.json`](../railway.json) 提供（`npm run build` / `npm start`），
    健康檢查 `/api/health`。**不指定 builder**，用 Railway 預設的 Railpack。
 
-### 還沒設定的兩件事（需要在 Railway 後台手動做）
-
-| 項目 | 現況 | 要做什麼 | 不做的後果 |
-|------|------|---------|-----------|
-| Volume + `DATA_DIR` | **未設** | 在 service 加一個 Volume（例如掛載到 `/data`），再設 `DATA_DIR=/data` | 評估記錄在每次重新部署時清空。右上角「資料為暫存」標籤就是在講這件事 |
-
-Railway 的 MCP 沒有建立 Volume 的工具，所以這一步得在後台點。
-
 ### 已設定
+
+| 項目 | 值 | 說明 |
+|------|-----|------|
+| Volume `dashboard-data` | 掛載於 `/data` | 評估記錄與 Match 庫的持久化位置。已實測：寫入一筆記錄後強制重新部署，記錄存活 |
+| `DATA_DIR` | `/data` | 指向上面的掛載點。**沒設它的話 Volume 等於白掛**——app 會寫到 `/app/data`，那是容器內的暫存目錄 |
+
+> **踩過的坑：** Railway MCP 的 `railway-agent` 回報「DATA_DIR 已設 ✓」，但 `list-variables`
+> 查不到這個變數，容器裡的 `dataDir` 仍是 `/app/data`。**agent 的回報不能當驗證**——
+> 用 `list-variables` 確認變數存在，再用「寫一筆 → 重新部署 → 看還在不在」確認 Volume 真的生效。
+> 這兩步都做過才算數。
+
+### 其他變數
 
 | 變數 | 值 | 說明 |
 |------|-----|------|
