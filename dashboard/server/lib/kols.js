@@ -61,6 +61,23 @@ function collectImages(kolDir, kolId, profile, limit = 12) {
   return found.slice(0, limit)
 }
 
+/**
+ * Enforce docs/09 §0 原則二. Returns a list of axes whose score cannot be
+ * trusted; the match engine drops those axes rather than scoring on a number
+ * nobody can justify.
+ */
+function validateAxes(affinity) {
+  if (!affinity?.axes) return []
+  const issues = []
+  for (const [key, cell] of Object.entries(affinity.axes)) {
+    if (!Number.isFinite(cell?.score)) issues.push({ axis: key, reason: 'score 缺失或非數字' })
+    else if (!cell?.why || String(cell.why).trim().length < 10) {
+      issues.push({ axis: key, reason: 'why 缺失或過短——依 docs/09 §0 原則二，此分數視為未定義' })
+    }
+  }
+  return issues
+}
+
 function readMarkdown(kolDir, name) {
   const file = path.join(kolDir, name)
   return exists(file) ? fs.readFileSync(file, 'utf8') : null
@@ -77,6 +94,9 @@ function loadAll() {
 
     const profile = exists(profilePath) ? readJson(profilePath) : null
     const affinity = exists(affinityPath) ? readJson(affinityPath) : null
+    // docs/09 §0 原則二：沒有 why 的分數視為未定義，不可進入計算。
+    // 規格這樣寫就要真的擋，否則那條原則只是文件上的宣示。
+    const axisIssues = validateAxes(affinity)
     const images = profile ? collectImages(kolDir, entry.id, profile) : []
 
     return {
@@ -98,9 +118,11 @@ function loadAll() {
         characterCard: readMarkdown(kolDir, 'character-card.md'),
       },
       /** Data-completeness flags — the dashboard shows these instead of silently degrading. */
+      axisIssues,
       completeness: {
         hasProfile: Boolean(profile),
         hasAffinity: Boolean(affinity),
+        axisIssues: axisIssues.length,
         identityRefs: images.filter((i) => i.role === 'identity_ref').length,
         totalImages: images.length,
         topicHooks: affinity?.topic_hooks?.length ?? 0,

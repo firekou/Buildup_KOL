@@ -36,25 +36,32 @@ function mergeByTag(rows) {
         platforms: [{ platform: row.platform, volume: row.volume }],
         postCount: row.postCount ?? null,
         tags: [row.tag],
+        _growths: Number.isFinite(row.growth7d) ? [{ v: row.growth7d, w: row.volume }] : [],
+        _rates: Number.isFinite(row.engagementRate) ? [{ v: row.engagementRate, w: row.volume }] : [],
       })
       continue
     }
     existing.volume += row.volume
     existing.postCount = (existing.postCount ?? 0) + (row.postCount ?? 0) || null
     existing.platforms.push({ platform: row.platform, volume: row.volume })
-    if (Number.isFinite(row.growth7d)) {
-      existing.growth7d = Number.isFinite(existing.growth7d)
-        ? (existing.growth7d + row.growth7d) / 2
-        : row.growth7d
-    }
-    if (Number.isFinite(row.engagementRate)) {
-      existing.engagementRate = Number.isFinite(existing.engagementRate)
-        ? (existing.engagementRate + row.engagementRate) / 2
-        : row.engagementRate
-    }
+    // Collect, then average once at the end. Folding pairwise as we go
+    // ((a+b)/2 then (…+c)/2) gives the LAST platform half the weight and makes
+    // the result depend on merge order.
+    if (Number.isFinite(row.growth7d)) existing._growths.push({ v: row.growth7d, w: row.volume })
+    if (Number.isFinite(row.engagementRate)) existing._rates.push({ v: row.engagementRate, w: row.volume })
     if (row.title && row.title.length > (existing.title?.length ?? 0)) existing.title = row.title
   }
-  return [...byTag.values()]
+  // Volume-weighted average, computed once — a tag carried by 20 accounts on
+  // one platform should outweigh the same tag carried by 2 on another.
+  const weighted = (rows) => {
+    const wSum = rows.reduce((n, r) => n + (r.w || 1), 0)
+    return wSum ? rows.reduce((n, r) => n + r.v * (r.w || 1), 0) / wSum : null
+  }
+  return [...byTag.values()].map(({ _growths, _rates, ...row }) => ({
+    ...row,
+    growth7d: _growths.length ? weighted(_growths) : row.growth7d,
+    engagementRate: _rates.length ? weighted(_rates) : row.engagementRate,
+  }))
 }
 
 /**

@@ -24,13 +24,19 @@ const round = (n, d = 1) => Math.round(n * 10 ** d) / 10 ** d
  * needs most dominate the score, and strength on axes the topic does not need
  * earns nothing. Prevents the "generalist looks perfect for everything" bug.
  */
-export function personaFit(personaAxes, axisDemand) {
+export function personaFit(personaAxes, axisDemand, invalidAxes = new Set()) {
   const { axes } = getAxes()
   let weighted = 0
   let weightSum = 0
   const perAxis = []
 
   for (const axis of axes) {
+    // docs/09 §0 原則二：沒有依據的分數不進計算——整條軸略過，
+    // 而不是當成 0（當 0 會變成「這個 KOL 這一軸很差」，那是另一種造假）。
+    if (invalidAxes.has(axis.key)) {
+      perAxis.push({ key: axis.key, label: axis.label_zh, demand: axisDemand?.[axis.key] ?? 50, have: null, attainment: null, gap: 0, excluded: '缺少 why，未納入計算' })
+      continue
+    }
     const demand = axisDemand?.[axis.key] ?? 50
     const have = personaAxes?.[axis.key]?.score ?? 0
     const w = demand / 100
@@ -207,7 +213,8 @@ export function matchKolToTopic(kol, topic, context = {}) {
     }
   }
 
-  const persona = personaFit(affinity.axes, topic.axisDemand)
+  const invalidAxes = new Set((kol.axisIssues ?? []).map((i) => i.axis))
+  const persona = personaFit(affinity.axes, topic.axisDemand, invalidAxes)
   const pillar = pillarFit(kol, topic, topic.boundPillar ?? null)
   const region = regionFit(affinity.reach, context.region ?? topic.region ?? 'GLOBAL', context.language ?? null)
   const risk = riskCheck(affinity.redlines, topic)
@@ -232,6 +239,7 @@ export function matchKolToTopic(kol, topic, context = {}) {
     blocked: risk.blocked,
     needsBinding: pillar.needsBinding,
     warnings: risk.warnings,
+    dataIssues: kol.axisIssues ?? [],
     grade: grade(score, { blocked: risk.blocked, needsBinding: pillar.needsBinding }),
     dimensions: {
       personaFit: { score: persona.score, weight: WEIGHTS.personaFit, perAxis: persona.perAxis, weakest: persona.weakest },

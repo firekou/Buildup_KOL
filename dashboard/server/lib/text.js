@@ -56,15 +56,23 @@ export function coverage(needleText, haystackText) {
   return hits / needle.size
 }
 
-/** Does the haystack contain this keyword, script-insensitively? */
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+/**
+ * Does the haystack contain this keyword, script-insensitively?
+ *
+ * Latin keywords — including multi-word ones — must match on a word boundary.
+ * Without that, "turn back" fires on "re[turn back]ground", and "ai" fires on
+ * "d[ai]ly". CJK has no word boundaries, so substring matching is correct
+ * there and is what the bigram model already assumes.
+ */
 export function containsKeyword(haystackText, keyword) {
   const k = normalize(keyword).trim()
   if (!k) return false
   const hay = normalize(haystackText)
-  // Short latin keywords must match on a word boundary — "ai" should not fire
-  // on "daily". CJK has no boundaries, so substring matching is correct there.
-  if (/^[a-z0-9]+$/.test(k)) {
-    return new RegExp(`(^|[^a-z0-9])${k}([^a-z0-9]|$)`).test(hay)
+  // Latin-only (possibly multi-word) → boundary match on both ends.
+  if (/^[a-z0-9]+(?:[\s-][a-z0-9]+)*$/.test(k)) {
+    return new RegExp(`(^|[^a-z0-9])${escapeRe(k)}([^a-z0-9]|$)`).test(hay)
   }
   return hay.includes(k)
 }

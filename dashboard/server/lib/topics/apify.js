@@ -37,6 +37,10 @@ const JUNK_TAGS = new Set([
   'tiktok', 'instagram', 'insta', 'reels', 'reel', 'explore', 'explorepage', 'threads',
   'follow', 'followme', 'like', 'likes', 'love', 'photooftheday', 'picoftheday',
   'video', 'shorts', 'capcut', 'duet', 'xyzbca', 'tiktokviral',
+  // 區域型流量字：英文名單擋不到，但在小樣本下同樣會霸榜且不帶題材資訊
+  '推薦', '推荐', '爆紅', '爆红', '熱門', '热门', '流量密碼', '流量密码',
+  '追蹤', '追踪', '按讚', '点赞', '分享', '限動', '限动', '日常', '紀錄', '记录',
+  'berandafyp', 'masukberanda', 'fypシ', 'fypp', 'foryoupageofficiall',
 ])
 
 async function runActor(actorId, input, signal) {
@@ -86,6 +90,7 @@ const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0)
  * Field names differ per actor; verified against live runs.
  */
 function toPost(item, platform) {
+  if (!item || typeof item !== 'object') return null
   switch (platform) {
     case 'instagram': {
       const text = item.caption ?? ''
@@ -126,6 +131,14 @@ function toPost(item, platform) {
 }
 
 const RECENT_WINDOW_MS = 48 * 60 * 60 * 1000
+
+/**
+ * Minimum posts before the 48h ratio is meaningful. Also note what this ratio
+ * is NOT: actors tend to return newest-first, so it partly reflects the
+ * scraper's sort order rather than the topic's real momentum. It is a weak
+ * signal deliberately kept at 40% weight, never a growth rate.
+ */
+const MIN_POSTS_FOR_GROWTH = 3
 
 /**
  * Tally hashtags across scraped posts into topic rows matching the shape the
@@ -177,7 +190,13 @@ export function aggregatePostsToTopics(posts, { now = Date.now(), minAuthors = 2
       platform: [...e.platforms][0] ?? 'apify',
       volume: authorCount,
       postCount: e.postCount,
-      growth7d: e.postCount ? Math.round((e.recentCount / e.postCount) * 100) : null,
+      // A tag with 2 posts that both happen to be recent scores 100% and tops
+      // the chart on pure noise. Below MIN_POSTS_FOR_GROWTH the ratio says
+      // nothing, so report null — normalize() then treats it as neutral rather
+      // than as a perfect score.
+      growth7d: e.postCount >= MIN_POSTS_FOR_GROWTH
+        ? Math.round((e.recentCount / e.postCount) * 100)
+        : null,
       engagementRate: null, // no reliable per-tag impression base; heat ignores it
       samples: e.samples,
       /** Extra context the UI can show without pretending it is platform volume. */
