@@ -62,7 +62,7 @@ npm run build && npm start   # 單一服務，http://localhost:8080
 ```
 
 **已部署：** https://dashboard-production-010e.up.railway.app
-（尚未設定 `APIFY_TOKEN` 與 Volume，所以話題是範例資料、評估記錄為暫存——見
+（Apify 已接上，地區話題為真實抓取；Volume 尚未掛載，評估記錄仍為暫存——見
 [`dashboard/README.md`](dashboard/README.md)）
 
 部署與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。

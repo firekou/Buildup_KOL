@@ -63,10 +63,21 @@ source 為本 repo 的 `claude/kol-evaluation-dashboard-7e7hxh` 分支）
 
 | 項目 | 現況 | 要做什麼 | 不做的後果 |
 |------|------|---------|-----------|
-| `APIFY_TOKEN` | 未設 | 在 Variables 加上 token | 地區話題用手寫範例資料，畫面上會標示「範例資料」 |
-| Volume + `DATA_DIR` | 未設 | 在 service 加一個 Volume（例如掛載到 `/data`），再設 `DATA_DIR=/data` | 評估記錄在每次重新部署時清空。右上角「資料為暫存」標籤就是在講這件事 |
+| Volume + `DATA_DIR` | **未設** | 在 service 加一個 Volume（例如掛載到 `/data`），再設 `DATA_DIR=/data` | 評估記錄在每次重新部署時清空。右上角「資料為暫存」標籤就是在講這件事 |
 
 Railway 的 MCP 沒有建立 Volume 的工具，所以這一步得在後台點。
+
+### 已設定
+
+| 變數 | 值 | 說明 |
+|------|-----|------|
+| `APIFY_TOKEN` | 已設 | 地區話題改用真實抓取，畫面標示「Apify 即時資料」 |
+| `TOPIC_CACHE_TTL_SECONDS` | `3600` | 每個地區 × 平台組合一小時內只抓一次。**這直接關係到 Apify 用量**——三個 actor 每次查詢都要跑 |
+| `APIFY_TIMEOUT_MS` | `180000` | 首次抓取一個地區約 40–90 秒（三個 actor 併行），逾時會退回範例資料並在畫面標示 |
+
+**用量提醒：** 每個「地區 × 平台組合」的首次查詢會跑三個 actor、抓約 300 則貼文。
+切地區、按「重新抓取」都會觸發。快取一小時是主要的節流手段——
+如果覺得跑太兇，把 `TOPIC_CACHE_TTL_SECONDS` 調大。
 
 ### 驗證部署
 
