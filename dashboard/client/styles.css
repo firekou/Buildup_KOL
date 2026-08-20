@@ -186,3 +186,5 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 .stack { display: flex; flex-direction: column; gap: 10px; }
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .scroll-x { overflow-x: auto; }
+
+.warn-text { color: var(--warn); }

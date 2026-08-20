@@ -21,6 +21,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
   const [topicSet, setTopicSet] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [runError, setRunError] = useState(null)
 
   const [direction, setDirection] = useState('a')
   const [selectedTopicIds, setSelectedTopicIds] = useState([])
@@ -65,7 +66,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
 
   const runWorkflow = async () => {
     setRunning(true)
-    setError(null)
+    setRunError(null)
     setResult(null)
     setSaveMsg(null)
     try {
@@ -89,7 +90,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
         )
       }
     } catch (e) {
-      setError(e.message)
+      setRunError(e.message)
     } finally {
       setRunning(false)
     }
@@ -111,11 +112,23 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
       setSaveMsg(`已存入預評記錄 ${saved.id}——切到「前後評估」頁簽即可回填實際成效。`)
       onPreEvaluationSaved?.(saved)
     } catch (e) {
-      setError(e.message)
+      setRunError(e.message)
     }
   }
 
   const src = SOURCE_LABEL[topicSet?.source] ?? { tone: '', text: topicSet?.source ?? '—' }
+
+  /**
+   * 按下去才報錯是最差的回饋——尤其錯誤訊息還可能渲染在畫面外。
+   * 先算出缺什麼，直接標在按鈕旁邊。
+   */
+  const missing = (() => {
+    if (direction === 'a') return selectedKolId ? null : '請先選一位 KOL'
+    if (direction === 'b') return selectedTopicIds.length ? null : '請先在上方話題清單勾選一個話題'
+    if (!selectedKolId) return '請先選一位 KOL'
+    if (!selectedTopicIds.length) return '請先在上方話題清單勾選 1–3 個話題'
+    return null
+  })()
 
   return (
     <>
@@ -380,12 +393,21 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
               </div>
             </>
           )}
-          <button className="primary" onClick={runWorkflow} disabled={running}>
-            {running ? '計算中…' : '執行'}
-          </button>
+          <div>
+            <button className="primary" onClick={runWorkflow} disabled={running || Boolean(missing)}>
+              {running ? '計算中…' : '執行'}
+            </button>
+            {missing && (
+              <div className="small warn-text" style={{ marginTop: 4 }}>
+                {missing}
+              </div>
+            )}
+          </div>
         </div>
 
+        {runError && <Alert tone="bad">執行失敗：{runError}</Alert>}
         {saveMsg && <Alert tone="good">{saveMsg}</Alert>}
+        {running && <Loading>計算中…第一次抓某個地區要跑三個 actor，約 40–90 秒。</Loading>}
 
         {result?.direction === 'kol_to_topics' && (
           <KolToTopics result={result} domainLabel={domainLabel} />

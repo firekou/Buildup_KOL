@@ -54,8 +54,16 @@ app.use((err, req, res, next) => {
 // Built client, when present. `npm run build` produces it; in dev the Vite
 // server proxies /api here instead.
 if (fs.existsSync(CLIENT_DIST)) {
-  app.use(express.static(CLIENT_DIST))
-  app.get('*', (req, res) => res.sendFile(path.join(CLIENT_DIST, 'index.html')))
+  // Hashed asset filenames can be cached hard; index.html must not be, or a
+  // browser keeps pointing at bundle names that this deploy already deleted
+  // (vite builds with emptyOutDir), and the user silently runs stale code.
+  app.use(express.static(CLIENT_DIST, { index: false, setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) res.setHeader('cache-control', 'no-cache')
+  } }))
+  app.get('*', (req, res) => {
+    res.setHeader('cache-control', 'no-cache')
+    res.sendFile(path.join(CLIENT_DIST, 'index.html'))
+  })
 } else {
   app.get('*', (req, res) =>
     res
