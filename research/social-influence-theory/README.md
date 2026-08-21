@@ -29,12 +29,15 @@
 | 檔案 | 內容 | 狀態 |
 |---|---|---|
 | `01-claude-literature.md` | Claude 檢索底稿：可查證文獻 + 對現有 Dashboard 的對照 | ✅ |
-| `02-gpt.md` | GPT（AI Token King）回答 | ⏳ |
-| `03-gemini.md` | Gemini（AI Token King）回答 | ⏳ |
-| `04-qwen.md` | 千問（AI Token King）回答 | ⏳ |
-| `05-doubao.md` | 豆包 / Seed（AI Token King）回答 | ⏳ |
-| `99-verification.md` | 引用查證結果與知識邊界 | ⏳ |
-| `90-synthesis.md` | 流量體系 / 人設體系 / 社群帳號體系 的理論框架 | ⏳ |
+| `02-gpt.md` | GPT `gpt-5.5` 回答 ＋ Claude 判讀 | ✅ 引用 8/8 全對 |
+| `03-gemini.md` | Gemini `gemini-3.1-pro-preview` 回答 ＋ Claude 判讀 | ✅ 引用 7/8 |
+| `04-qwen.md` | 千問 `qwen3.8-max` 回答 ＋ Claude 判讀 | ⚠️ 3/5，**1 筆虛構** |
+| `05-doubao.md` | 豆包 `dola-seed-2.0-pro` 回答 ＋ Claude 判讀 | 🔴 1/4，**1 筆內容錯誤 ＋ 大量無出處數字** |
+| `99-verification.md` | 25 筆引用查證、兩種失敗模式、模型可靠度總表 | ✅ |
+| **`90-synthesis.md`** | **收斂：三大體系的知識框架、系統診斷、跨體系優先修正清單** | ✅ **先讀這份** |
+| `91-traffic-system.md` | 流量體系：理論骨架、10 條可操作判準、9 條修正路徑 | ✅ |
+| `92-persona-system.md` | 人設體系：理論骨架、AI／虛擬 KOL 的特殊性、四軸診斷 | ✅ |
+| `93-account-system.md` | 社群帳號體系：三機制互斥、內容矩陣、冷啟動實驗設計 | ✅ |
 
 ## 三、五個模型被問的是同一組問題
 
