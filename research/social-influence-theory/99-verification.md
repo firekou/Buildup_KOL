@@ -83,13 +83,24 @@ GPT 自評為〔中〕：Fleck, Korchia & Le Roy 2012、Cataldi et al.
 
 ---
 
-## E. 豆包（`05`）
+## E. 跨模型共用引用（多個模型都提到，已查證）
+
+| # | 引用 | 提出者 | 結果 | 查證後的正確書目與關鍵發現 |
+|---|---|---|---|---|
+| E1 | Mandler 1982，schema congruity 的倒 U 型 | Gemini | ✅ | **Mandler, G. (1982), "The Structure of Value: Accounting for Taste", in Clark, M. S. & Fiske, S. T. (eds.), *Affect and Cognition: The 17th Annual Carnegie Symposium on Cognition*, Erlbaum, 3–36.**<br>倒 U 的機制：一致 → 溫和正面（期待被確認）；**不一致 → 引發更多認知精緻化，若成功化解，產生好奇與興趣等正面情感**；極端不一致 → 無法化解 → 負評。<br>**這正式確立了 Gemini 的 G4 建議在理論上成立**：「完全契合」不是最優解。但注意——Mandler 談的是**化解的成功與否**，不是任何 0–100 尺度上的區間。Gemini 的「50–70」仍屬憑空。 |
+| E2 | Salganik, Dodds & Watts 2006，MusicLab | GPT ＋ Gemini | ✅ | ***Science*, 311(5762), 854–856.** 14,341 名參與者的人造音樂市場。**社會影響力愈強，成功的不平等與不可預測性同時增加。**「最好的歌很少墊底，最差的很少爬頂，但**其他任何結果都可能發生**。」→ [Science](https://www.science.org/doi/10.1126/science.1121066)<br>**這是「不要在冷啟動期用一條公式決定內容」最強的單一依據。** |
+| E3 | Reeves & Nass，CASA／媒體等式 | Gemini | ✅ | **Reeves, B. & Nass, C. (1996), *The Media Equation: How People Treat Computers, Television, and New Media Like Real People and Places*.**<br>原文：「任何夠接近的媒介都會得到人類式的對待，即使人們知道這很荒謬、事後也可能否認。」<br>→ **支持 Gemini 的 G5：揭露為 AI 並不會讓 PSI 消失。** |
+| E4 | Lou & Yuan 2019 | Gemini | ✅ | **Lou, C. & Yuan, S., "Influencer Marketing: How Message Value and Credibility Affect Consumer Trust of Branded Content on Social Media", *Journal of Interactive Advertising*, 19(1), 58–73.** DOI 10.1080/15252019.2018.1533501。<br>PLS 路徑模型：**內容的資訊價值、影響者的可信賴度、吸引力、與追隨者的相似性**，正向影響追隨者的信任。<br>注意：**「相似性（similarity/homophily）」是四個前因之一，而我們的四軸完全沒有這個維度。** |
+
+---
+
+## F. 豆包（`05`）
 
 ⏳ 待報告產出後填入。
 
 ---
 
-## F. 目前為止的模型可靠度（只看已查證的部分）
+## G. 目前為止的模型可靠度（只看已查證的部分）
 
 | 模型 | 已查證 | ✅ | ⚠️ | ❌ | 備註 |
 |---|---|---|---|---|---|
