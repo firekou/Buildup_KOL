@@ -55,9 +55,50 @@ GPT 自評為〔中〕：Fleck, Korchia & Le Roy 2012、Cataldi et al.
 
 ---
 
-## C. Gemini（`03`）／千問（`04`）／豆包（`05`）
+## C. Gemini（`03-gemini.md`）
 
-⏳ 待這三份報告產出後填入。
+| # | 模型給的引用 | 自評 | 結果 | 查證後的正確書目 |
+|---|---|---|---|---|
+| C1 | Watts & Dodds 2007，Influentials Hypothesis 被推翻 | 高 | ✅ | **Watts, D. J. & Dodds, P. S., "Influentials, Networks, and Public Opinion Formation", *Journal of Consumer Research*, 34(4), 441–458.** 原文：「在多數條件下，大規模的影響串連不是由影響者驅動，而是由一群易受影響的個人所構成的臨界量驅動。」→ [Oxford Academic](https://academic.oup.com/jcr/article-abstract/34/4/441/1820236)｜[PDF](https://www.uvm.edu/pdodds/research/papers/others/2007/watts2007a.pdf) |
+| C2 | Aral et al. 2009，同質性使影響力被高估 **300–700%** | 高 | ✅ | **Aral, S., Muchnik, L. & Sundararajan, A., "Distinguishing influence-based contagion from homophily-driven diffusion in dynamic networks", *PNAS*, 106(51).** 2,740 萬使用者的即時通訊網絡，動態配對樣本估計。原文數字就是 **300–700%**，且**同質性可解釋 >50% 的表面行為傳染**。→ [PNAS](https://www.pnas.org/doi/10.1073/pnas.0908800106)<br>⚠️ 這一筆我原本假設是模型編的。**查證結果是模型對、我錯。** |
+| C3 | Rathje et al. 2021，外團體敵意驅動互動 | 高 | ✅ | **Rathje, S., Van Bavel, J. J. & van der Linden, S., "Out-group animosity drives engagement on social media", *PNAS*, 118(26).** 270 萬則貼文；提到政治外團體的貼文分享／轉發約為提到內團體的**兩倍**，且此效果**強於情緒語言**這個既有預測因子。→ [PNAS](https://www.pnas.org/doi/10.1073/pnas.2024292118) |
+| C4 | Abidin，Calibrated Amateurism，年份 **2015** | 中 | ⚠️ **部分正確** | 論文存在，**年份錯誤**。正確為 **Abidin, C. (2017), "#familygoals: Family Influencers, Calibrated Amateurism, and Justifying Young Digital Labor", *Social Media + Society*, 3(2), 1–15.**（源自 Goffman 1956 的排程理論與 MacCannell 1973 的舞台化真實性）→ [SAGE](https://journals.sagepub.com/doi/10.1177/2056305117707191)<br>模型自評為〔中〕，與實際誤差相符——自評機制有效。 |
+
+**Gemini 小結：4 筆查證，3 ✅、1 ⚠️（僅年份誤差，且已自評為中）。**
+待查：Fleck et al. 2012〔中〕、Mandler 1982、Reeves & Nass CASA、Lou & Yuan 2019、Crane & Sornette 2008、Loewenstein 資訊落差〔中〕、Salganik et al. 2006、Berger 後期研究〔中〕
+
+---
+
+## D. 千問（`04-qwen.md`）
+
+| # | 模型給的引用 | 自評 | 結果 | 查證結果 |
+|---|---|---|---|---|
+| D1 | **Tilman & Wheeler (2006)**，對 Meaning Transfer Model 的量化驗證；用來支撐「文獻明確反對將契合度設為 Gate」 | **高** | ❌ **查無此文** | 四輪不同角度檢索（作者＋主題、作者＋年份、meaning transfer 量化驗證、perceived fit scale）**均查無此著作**。該領域確有 McCracken 1989 之後的量化驗證研究，但作者不是這兩位。<br>**嚴重性：這是千問 Q2 唯一的支撐，而其結論與 GPT、Gemini、以及已驗證的 Meyers-Levy & Tybout 1989（A1 ✅）全部相反。** 若按字面採納，會拆掉系統裡唯一有理論支撐的設計（紅線 gate）。**已判定不採用。** |
+| D2 | Aral & Walker 2012，*Science* | 高 | ✅ | **Aral, S. & Walker, D., "Identifying Influential and Susceptible Members of Social Networks", *Science*, 337(6092), 337–341.** 1,200 萬 Facebook 使用者的大規模隨機實驗。→ [Science](https://www.science.org/doi/10.1126/science.1215842)<br>千問轉述「高中心性節點未必是高擴散者」與原文相符。原文另有一個千問沒提、但對我們很重要的發現：**有影響力的人本身較不易被影響，且他們在網絡中會群聚；易受影響者則不會。** |
+| D3 | Bakshy et al. **2012** | 高 | ⚠️ **年份錯誤** | 正確為 **2011**（WSDM '11），已於 B-a 查證。 |
+
+**千問小結：3 筆查證，1 ✅、1 ⚠️、1 ❌。而唯一那筆 ❌ 剛好是它整段結論的地基。**
+
+待查：Freeman 1978、Borgatti 2005、Katz & Lazarsfeld 1955、Huffaker 2010〔中〕、Green & Brock 2000、Friestad & Wright 1994、Choi et al. 2023〔中〕、Kim & Song 2023〔中〕、Burt 1992、喻國明團隊 ❓
+
+---
+
+## E. 豆包（`05`）
+
+⏳ 待報告產出後填入。
+
+---
+
+## F. 目前為止的模型可靠度（只看已查證的部分）
+
+| 模型 | 已查證 | ✅ | ⚠️ | ❌ | 備註 |
+|---|---|---|---|---|---|
+| GPT `gpt-5.5` | 8 | 8 | 0 | 0 | 主動說過一次「我不會硬湊」 |
+| Gemini `gemini-3.1-pro-preview` | 4 | 3 | 1 | 0 | 唯一誤差是自評〔中〕的年份 |
+| 千問 `qwen3.8-max` | 3 | 1 | 1 | 1 | ❌ 那筆自評〔高〕，且是核心論點的唯一支撐 |
+
+**觀察：自評把握程度是有訊號的，但不完全可靠。** Gemini 的 ⚠️ 出現在自評〔中〕的那筆（自評有效）；千問的 ❌ 出現在自評〔高〕的那筆（自評失效）。
+**結論：自評可以用來排查證的優先序，不能用來取代查證。**
 
 ---
 
