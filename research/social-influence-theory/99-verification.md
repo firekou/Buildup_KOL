@@ -36,9 +36,18 @@
 
 ---
 
-## B. GPT — 中優先引用（待查）
+## B. GPT — 中優先引用
 
-Bakshy et al. 2011、Aral & Walker 2012、Kempe/Kleinberg/Tardos 2003、Salganik et al. 2006、Hovland & Weiss 1951、McCracken meaning transfer、Till & Busler、Rifon sponsorship congruence、Covington et al. 2016、Teixeira/Wedel/Pieters 2012、Romero/Meeder/Kleinberg 2011、Leskovec/Backstrom/Kleinberg 2009、Adcock & Collier 2001、Aaker 1997、Freeman 1978/1979、Saaty AHP、Hwang & Yoon TOPSIS、鄧聚龍 灰色系統、Allan TDT、Blei & Lafferty dynamic topic model、Adams & MacKay BOCPD、TwitterMonitor
+### 已查證
+
+| # | 引用 | 結果 | 查證後的正確書目與關鍵發現 |
+|---|---|---|---|
+| B-a | Bakshy, Hofman, Mason & Watts 2011 | ✅ | ***Everyone's an Influencer: Quantifying Influence on Twitter*, WSDM '11.** 追蹤 160 萬使用者、7,400 萬次擴散事件。→ [ACM DL](https://dl.acm.org/doi/10.1145/1935826.1935845)<br>**對我們最重要的一句**：「**預測哪一位使用者或哪一則內容會造成大規模串連，相對不可靠。**」而且在多數合理假設下，**成本效益最高的是「普通影響者」**——影響力平均甚至低於平均的人。<br>→ 這對「用一個 Match 分數挑出最佳 KOL×話題組合」的整個前提是嚴重挑戰：文獻說這件事本質上預測力就有限。 |
+| B-b | Romero, Meeder & Kleinberg 2011 | ✅ | ***Differences in the Mechanics of Information Diffusion Across Topics: Idioms, Political Hashtags, and Complex Contagion on Twitter*, WWW '11, 695–704.** → [Cornell PDF](https://www.cs.cornell.edu/home/kleinber/www11-hashtags.pdf)<br>**關鍵發現**：不同題材的擴散機制不同——政治性 hashtag 呈現「複雜傳染」（需要多次重複曝光才會被採用），而慣用語／梗則不需要。<br>→ 含義：`topicHeat` 用同一個公式套用到所有 domain 是錯的。政治／爭議題的熱度曲線與生活題**本質上不同**。 |
+
+### 尚未查證（只在 `90-synthesis.md` 實際引用時才逐筆查）
+
+Aral & Walker 2012、Kempe/Kleinberg/Tardos 2003、Salganik et al. 2006、Hovland & Weiss 1951、McCracken meaning transfer、Till & Busler、Rifon sponsorship congruence、Covington et al. 2016、Teixeira/Wedel/Pieters 2012、Leskovec/Backstrom/Kleinberg 2009、Adcock & Collier 2001、Aaker 1997、Freeman 1978/1979、Saaty AHP、Hwang & Yoon TOPSIS、鄧聚龍 灰色系統、Allan TDT、Blei & Lafferty dynamic topic model、Adams & MacKay BOCPD、TwitterMonitor
 
 GPT 自評為〔中〕：Fleck, Korchia & Le Roy 2012、Cataldi et al.
 
