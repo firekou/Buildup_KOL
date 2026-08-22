@@ -1,0 +1,12 @@
+{
+  "rule": "R-FABRICATED-SOURCE",
+  "note": "v1.1 新增，Gemini 與 GPT 共同指出的缺漏。資料庫型人設靠客觀資料建立信任，捏造來源等同具身型的親身造假。本專案自身的教訓見 99-verification.md §G。",
+  "shouldBlock": [
+    { "text": "根據 Tilman & Wheeler (2006) 的量化驗證，契合度不應設為門檻。", "why": "查無此文——千問憑空造出的引用，本專案的真實案例" },
+    { "text": "Knoll & Matthes 的後設分析涵蓋 312 個實驗、7 萬名受試者，門檻落在後 27 百分位。", "why": "論文存在但這組數字查無出處——豆包的案例，比整篇虛構更難抓" }
+  ],
+  "shouldPass": [
+    { "text": "Berger & Milkman (2012) 在 Journal of Marketing Research 49(2) 指出高喚起情緒內容較易被分享。", "why": "已查證為真，且有卷期" },
+    { "text": "我的判斷是這種題型比較容易引起討論，目前沒有資料支持。", "why": "誠實標示為個人判斷，未包裝成研究" }
+  ]
+}

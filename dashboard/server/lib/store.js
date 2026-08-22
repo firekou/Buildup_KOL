@@ -35,6 +35,15 @@ const FILES = {
    * region below the EXPERIMENT band.
    */
   vetoLog: 'veto-log.json',
+  /**
+   * docs/11 §5.6 — every time a human overturns the semantic layer's verdict.
+   *
+   * This is the only signal that says whether a rule's `semantic_prompt` is
+   * written well. Without it the second layer is unfalsifiable, which is the
+   * exact failure GPT flagged: "otherwise it just hides the unreliability
+   * inside the prompt".
+   */
+  judgementLog: 'judgement-log.json',
 }
 
 function ensureDir() {

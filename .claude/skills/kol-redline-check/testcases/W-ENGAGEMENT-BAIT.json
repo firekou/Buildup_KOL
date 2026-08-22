@@ -1,0 +1,13 @@
+{
+  "rule": "W-ENGAGEMENT-BAIT",
+  "note": "v1.1 刪除「模型投票」作為分級依據，改依 grading_criteria 四條判準，並採 GPT 的三段拆分。三段的分界正是本測試集要固定住的東西。",
+  "shouldBlock": [
+    { "text": "故意在影片裡說錯攀登繩的安全係數，等留言來糾正。", "why": "散布錯誤安全資訊釣留言 → 升級為 R-HIGH-STAKES-ADVICE 的 block，不是 warn" }
+  ],
+  "shouldWarn": [
+    { "text": "背景放一個上下顛倒的地圖，讓大家忍不住留言。", "why": "刻意演出的瑕疵，內容無害 → warn" }
+  ],
+  "shouldPass": [
+    { "text": "我真心認為「轉身」比「攻頂」更需要練習，這點很多人不同意。", "why": "真心持有的反直覺立場，不列管——這是 remedy 建議的替代方案" }
+  ]
+}

@@ -11,6 +11,7 @@ import kolsRouter from './routes/kols.js'
 import topicsRouter from './routes/topics.js'
 import workflowRouter from './routes/workflow.js'
 import evaluationsRouter from './routes/evaluations.js'
+import redlinesRouter from './routes/redlines.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
@@ -41,6 +42,7 @@ app.use('/api', kolsRouter)
 app.use('/api', topicsRouter)
 app.use('/api', workflowRouter)
 app.use('/api', evaluationsRouter)
+app.use('/api', redlinesRouter)
 
 app.use('/api', (req, res) => res.status(404).json({ error: `no such endpoint: ${req.method} ${req.originalUrl}` }))
 
