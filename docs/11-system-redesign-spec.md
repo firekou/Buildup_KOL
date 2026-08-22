@@ -676,17 +676,20 @@ $$f^2 = \frac{R^2_{\text{full}} - R^2_{\text{base}}}{1 - R^2_{\text{full}}}$$
 
 ## §11 Action Plan
 
-### 批次 1 · 止血（不改評分邏輯）
-P1-1 `topicSnapshots`｜P1-2 post 加 `measuredAt`/`postAgeHours`/`experimentBand`｜P1-3 修 `mergeByTag` 與 `platformsSeen`｜P1-4 heat 全等時不顯示排名｜P1-5 `growth7d` → `recencyRatio48h`｜**P1-6【新】`vetoLog` store**
+> **實作狀態（2026-08-22）：四個批次全部完成。** 逐項驗收見下表的 ✅。
+> 實作過程中發現並修正的、規格沒有預見的問題，記在 §15。
 
-### 批次 2 · Zone C
-P2-1 `rules.json` 擴充為 9 block + 4 warn，加 `detection` / `semantic_prompt`｜P2-2 `check.mjs` 改回傳 `needsReview`｜P2-3 SKILL.md 補第二層語意判定指引｜P2-4 後端共讀 `rules.json`
+### 批次 1 · 止血（不改評分邏輯）✅
+P1-1 ✅ `topicSnapshots`（fixtures 不入庫）｜P1-2 ✅ post 加 `measuredAt`/`postAgeHours`/`observationWindow`/`eligibleForCalibration`/`experimentBand`｜P1-3 ✅ 修 `mergeByTag` 與 `platformsSeen`｜P1-4 ✅ `heatDiscriminates`｜P1-5 ✅ `recencyRatio48h`｜P1-6 ✅ `vetoLog`
 
-### 批次 3 · Zone A
-P3-1 VALIDATION / GATES 兩階段拆分｜P3-2 `credibilityMode` 上移為 G2｜P3-3 三維等權 + `fit` 地板 + **EXPERIMENT 帶**｜P3-4 `screeningScore` 降格為分帶｜P3-5 `pillarFit` M1/M2（**M3 已刪除**）｜P3-6 `homophily` + schema v3｜P3-7 `heatConfidence` + domain 內 normalize｜P3-8 §3 備註全維度｜P3-9 Zone B sandbox 隔離
+### 批次 2 · Zone C ✅
+P2-1 ✅ `rules.json` v1.1（9 block + 4 warn + 1 validation）｜P2-2 ✅ `check.mjs` 回傳 `needsReview` / `pendingSemantic` / `complete`｜P2-3 ✅ SKILL.md 兩層操作指引｜P2-4 ✅ `lib/redlines.js` 共讀｜**P2-5 ✅ 黃金測試集（§5.6）：9 條規則各 ≥3 擋/3 放，`npm run test:redlines` 58 項通過**
 
-### 批次 4 · 引導式流程
-P4-1 `/create` 8 步 + 側欄｜P4-2 `/explore`｜P4-3 `/plans`（覆蓋規則，非配額）｜P4-4 首頁校準狀態
+### 批次 3 · Zone A ✅
+P3-1 ✅ VALIDATION / GATES 拆分｜P3-2 ✅ `credibilityMode` → G2｜P3-3 ✅ 三維等權 + `fit` 地板 + EXPERIMENT 帶｜P3-4 ✅ 分帶取代分數｜P3-5 ✅ `pillarFit` M1/M2（M3 未實作，依 review 刪除）｜P3-6 ✅ `homophily` + schema v3（5 位 KOL 已遷移）｜P3-7 ✅ `heatConfidence` + domain 內 normalize｜P3-8 ✅ §3 備註｜P3-9 ✅ Zone B 隔離（`/explore/cross-domain` 回 `enabled: false` 且不含數值）
+
+### 批次 4 · 引導式流程 ✅
+P4-1 ✅ `/create` 8 步 + 專家側欄｜P4-2 ✅ `/explore`（分類別清單 + 種子詞警語）｜P4-3 ✅ `/plans`（覆蓋提醒，非配額）｜P4-4 ✅ 首頁校準橫幅「已校準項目：0 / 3」
 
 ---
 
@@ -769,3 +772,25 @@ P4-1 `/create` 8 步 + 側欄｜P4-2 `/explore`｜P4-3 `/plans`（覆蓋規則�
 | GPT | 「不能全案開工；剩下必須先改的一件事：把 §9.4 的判準寫成可執行規格。」（→ 已於 §9.4-E 完成） |
 
 **兩者的阻擋條件是同一件事，已於 v1.2 修正。**
+
+---
+
+## §15 實作紀錄：規格沒有預見的問題
+
+四個批次都完成，但實作過程中撞到五件規格裡沒寫、而且會影響正確性的事。記在這裡，因為它們是下一版規格要處理的輸入。
+
+| # | 問題 | 處理 |
+|---|---|---|
+| 1 | **domain 內 normalize 讓跨 domain 的分數不可比。** §2.9 要求同 domain 內比較，但沒說「那跨 domain 的清單怎麼辦」。照舊排成一張榜，等於又在比不能比的東西 | 新增 `byDomain` 分組與 `crossDomainComparable: false`；UI 改為分類別清單，不給跨類別排行榜 |
+| 2 | **`homophily` 第一版模型是錯的。** 我用「話題文字 vs 受眾描述」的字面重疊當分數，全部算出 0。Lou & Yuan 量的是 **KOL 與受眾之間**的相似性，不是話題與受眾 | 改為帳號層宣告值（附 `why`，同 R-NO-WHY 紀律）＋ 話題共鳴作為有上限的加成 |
+| 3 | **`needsReview` 顯示 11 項。** `pendingSemantic`（每次都一樣的常設清單）被混進每一張卡。同一份清單重複十一次，會讓人學會忽略這個欄位 | 拆為 `lintHits`（這則內容真的命中的）與批次層級的 `semanticChecklist` |
+| 4 | **回應 225KB。** 每個企劃的每個維度都內嵌完整 note | 改為 `noteKey` 引用 + `/api/notes` 一次取回，降到 26KB |
+| 5 | **具身型 KOL 會靜悄悄通過 G2。** 規格只寫「資料庫型遇到具身題目 → 否決」，沒寫反方向。但我們的 KOL 全是 AI 生成，`embodied` 宣告本身就是一個帳號兌現不了的長期主張 | G2 對 `embodied` / `hybrid` 回 `undecided`，要求逐題人工簽核 |
+
+### 一個尚未解決的觀察
+
+`personaFit` 經常回傳 100——因為它是需求加權的達成率，只要每一軸都達到話題的需求就滿分。這讓 **G3 的地板很少被觸發，`EXPERIMENT` 帶也就很少出現**。
+
+這不是 bug（達成率的語意是對的），但它有一個後果：**§2.4 為了解決倖存者偏差而設計的 EXPERIMENT 帶，實際上收不到多少樣本。** 底線校準的資料來源因此比預期更稀薄。
+
+下一版要處理的方向：`fit` 是否應該區分「達到需求」與「超出需求」——目前兩者都是 100，但 Mandler 的倒 U 說的正是「完全契合不是最優解」。這件事目前沒有實作，也不該由我自己決定一個新公式。
