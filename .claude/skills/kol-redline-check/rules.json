@@ -1,22 +1,44 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "updated": "2026-08-22",
   "source": "docs/11-system-redesign-spec.md §5 · research/social-influence-theory/99-verification.md",
   "note": "唯一真實來源。Dashboard 後端與 kol-redline-check skill 讀同一份，規則不會漂移。修改此檔即同時改變兩邊行為。",
 
+  "changelog": {
+    "1.1": "依 Gemini 與 GPT 的規格 review 修訂。(a) 關鍵字比對降格為第一層 lint，回傳 needs_review 而非直接否決——假陽性太高（「我親身比對了三份報告」「我實際測試了三種提示詞模板」都是正當用法）。(b) 新增 detection 與 semantic_prompt，第二層由 LLM 做語意判定。(c) 新增 4 條 block：R-FABRICATED-SOURCE、R-AI-DISCLOSURE、R-REAL-PERSON-IMPERSONATION、R-HIGH-STAKES-ADVICE，並從 W-OUTGROUP 拆出 R-HATE-HARASSMENT。(d) 刪除「模型投票」作為分級依據，改為四條客觀判準。(e) 修正 R-EMBODIMENT 的 applies_when（v1.0 寫反了——資料庫型 KOL 說「我爬過」一樣要擋）。(f) R-CREDENTIAL 的 scope 加入 plan 與 script。(g) R-FAKE-CERTAINTY 移除「一定會」（「觀眾一定會問你是不是真的去過」是正當用法）。"
+  },
+
   "severities": {
-    "block": "一致認為不能做。命中即否決，不論其他維度分數多高。",
+    "block": "命中即否決，不論其他維度分數多高。不得存檔或發布。",
     "warn": "有爭議或有明確代價。顯示警告，不阻擋，但必須被看見並記錄決定。"
+  },
+
+  "grading_criteria": {
+    "note": "docs/11 §5.3。v1.0 曾用「哪個模型推薦、哪個模型反對」來決定等級——兩位審查者都指出這違反了「只有已查證文獻可以影響決策」的紀律。v1.1 改為四條客觀判準。",
+    "criteria": [
+      "傷害是否不可逆",
+      "是否構成欺騙",
+      "是否違法或危害人身",
+      "文獻證據是否一致"
+    ]
+  },
+
+  "detection_levels": {
+    "lint": "關鍵字只是第一層過濾，目的是不要漏，容許高假陽性。命中一律回傳 needs_review，由第二層語意判定。",
+    "exact": "字串本身即無歧義，可直接判定。僅用於極少數情況。"
   },
 
   "rules": [
     {
       "id": "R-EMBODIMENT",
+      "category": "redline",
       "severity": "block",
+      "detection": "lint",
       "scope": ["persona", "plan", "script"],
       "title": "具身主張紅線",
       "rule": "AI KOL 不得主張「我親身在場／親身經歷／我的身體感受」且該主張不可查證。",
-      "why_plain": "這是一個 AI 生成的角色。「我爬過那座山」這句話對它來說是假的，而且是所有人都能一秒看穿的假。一旦被戳破，這個帳號之後講什麼都會被打折，救不回來。",
+      "why_plain": "這是一個 AI 生成的角色。「我爬過那座山」這句話對它來說是假的，而且是所有人都能一秒看穿的假。一旦被戳破，這個帳號之後講什麼都會被打折，很難救回來。",
+      "semantic_prompt": "判斷這段文字裡的第一人稱敘述，是否宣稱了一個「只有真實肉身在場才可能發生」的經驗——例如身體感受、現場才知道的細節、個人生命史。\n\n【要擋】「上次在營地醒來」「那晚我手指凍到沒感覺」「抵達稜線的時候」「我當時就站在那裡」——注意這些都不含明顯的關鍵字，是第一層 lint 抓不到的。\n【不要擋】「我親身比對了三份報告」「我實際測試了三種提示詞模板」「我走過很多彎路才找到這份資料」——這些是資料處理行為或比喻用法，不是肉身在場。\n\n關鍵問題：這件事一個沒有身體的角色做得到嗎？做得到就放行。",
       "evidence": [
         {
           "claim": "人會用「這是機器做的」當成判斷可信度的捷徑；這個捷徑對客觀分析是加分，對「我親身在場」是直接的反證。",
@@ -25,26 +47,29 @@
           "status": "verified"
         },
         {
-          "claim": "真誠（sincerity）與透明揭露（transparent endorsement）在具身人設上會互相衝突。",
+          "claim": "揭露 AI 身分會讓具身經驗的主張更難被相信。",
           "source": "Lee, J. A. & Eastin, M. S. (2021), Journal of Research in Interactive Marketing, 15(4), 822-841",
           "url": "https://www.emerald.com/jrim/article-abstract/15/4/822/451011/Perceived-authenticity-of-social-media-influencers",
           "status": "verified"
         }
       ],
-      "applies_when": { "credibility_mode": ["embodied", "hybrid", null] },
       "patterns": {
-        "zh": ["我親身", "我亲身", "我走過", "我走过", "我爬過", "我爬过", "我當時在", "我当时在", "我去過現場", "我去过现场", "我體驗過", "我体验过", "我的身體", "我的身体", "當時我在場", "当时我在场", "我實際測試", "我实际测试"],
-        "en": ["i was there", "i personally", "i climbed", "i hiked", "i tested it myself", "when i was on site"]
+        "zh": ["我親身", "我亲身", "我走過", "我走过", "我爬過", "我爬过", "我當時在", "我当时在", "我去過現場", "我去过现场", "我體驗過", "我体验过", "我的身體", "我的身体", "當時我在場", "当时我在场"],
+        "en": ["i was there", "i personally climbed", "i hiked", "when i was on site"]
       },
-      "remedy": "改寫成可查證的形式：不要說「我走過」，要說「這條路線的紀錄顯示」／「根據三份事故報告」。"
+      "remedy": "改寫成可查證的形式：不要說「我走過」，要說「這條路線的紀錄顯示」／「根據三份事故報告」。",
+      "v1_1_fix": "v1.0 有 applies_when: { credibility_mode: [embodied, hybrid, null] }，把資料庫型排除在外——這是寫反的。資料庫型 KOL 說「我爬過」一樣要擋。已移除該條件。"
     },
     {
       "id": "R-CREDENTIAL",
+      "category": "redline",
       "severity": "block",
-      "scope": ["persona"],
+      "detection": "lint",
+      "scope": ["persona", "plan", "script"],
       "title": "不可能憑證紅線",
       "rule": "不得宣稱 AI 在結構上不可能取得的憑證——執照、國際認證、實地資歷、機構職位。",
-      "why_plain": "認證是要有一個真人去考、去登記、去被機構承認的。一個 AI 角色掛上「IFMGA 國際認證嚮導」，只要有人去查名冊就露餡了，而且這種東西是可以查的。",
+      "why_plain": "認證是要有一個真人去考、去登記、去被機構承認的。一個 AI 角色掛上「IFMGA 國際認證嚮導」，只要有人去查名冊就露餡了，而且這種東西是查得到的。",
+      "semantic_prompt": "判斷這段文字是否把某個「需要真人通過機構程序才能取得」的資格，掛在這個 AI 角色身上。\n\n【要擋】「IFMGA 認證嚮導」「持照建築師」「CFA 持證人」「在某某醫院任職」。\n【不要擋】「整理自 IFMGA 公開的路線標準」「參考建築師公會的規範」——引用他人的資格是可以的，宣稱自己有才不行。",
       "evidence": [
         {
           "claim": "同一條機器捷思對資料庫型主張是加分，對具身型主張是否定證據。",
@@ -54,52 +79,157 @@
         }
       ],
       "patterns": {
-        "zh": ["認證嚮導", "认证向导", "持照", "執照", "执照", "國際認證", "国际认证", "註冊", "注册建築師", "注册建筑师", "取得資格", "取得资格", "考取"],
+        "zh": ["認證嚮導", "认证向导", "持照", "執照", "执照", "國際認證", "国际认证", "註冊建築師", "注册建筑师", "考取", "取得資格", "取得资格"],
         "en": ["ifmga", "uiagm", "certified guide", "licensed", "board-certified", "registered architect", "cfa charterholder"]
       },
       "remedy": "改為可查證的知識來源：「整理自 IFMGA 公開的路線標準」而不是「IFMGA 認證嚮導」。",
-      "note": "現行 validateAxes() 只檢查 why 的長度，抓不到這件事——這正是本規則存在的理由。"
+      "v1_1_fix": "scope 由 persona 擴充為 persona/plan/script——企劃或腳本裡臨時寫「她是持照嚮導」也要擋。"
     },
     {
-      "id": "R-NO-WHY",
+      "id": "R-FABRICATED-SOURCE",
+      "category": "redline",
       "severity": "block",
-      "scope": ["persona"],
-      "title": "沒有理由的分數不得進入計算",
-      "rule": "任何軸分數必須附 why，長度 ≥ 10 字；否則該軸視為未定義，整條軸排除於計算之外（不得當成 0）。",
-      "why_plain": "填一個數字很快，但寫不出理由就代表這個數字是隨手打的。隨手打的數字進到公式裡，出來的還是隨手打的答案，只是看起來像有算過。",
+      "detection": "lint",
+      "scope": ["plan", "script"],
+      "title": "捏造來源紅線",
+      "rule": "不得捏造研究、報告、路線紀錄、統計數字、新聞事件或任何可被查證的外部依據。",
+      "why_plain": "如果這個角色是靠「我把資料整理好給你看」建立信任的，那捏造資料就等於在拆自己唯一的地基。這跟一個真人 KOL 假裝自己去過某個地方，是同一種等級的事。",
+      "semantic_prompt": "檢查文字中所有可被查證的外部引用——論文、統計數字、報告名稱、事故案例、新聞事件、機構說法。\n\n對每一筆問兩個問題：(1) 這個來源真的存在嗎？(2) 它真的說了這句話嗎？\n無法確認的，標為 needs_verification 而不是直接放行。\n\n特別注意「精確到看起來像真的」的數字——這正是最容易被編造、也最容易被直接抄進規格的部分。",
       "evidence": [
         {
-          "claim": "docs/09 §0 原則二",
-          "source": "本專案方法論",
+          "claim": "資料庫型人設的可信度來自客觀資料處理能力；捏造來源直接摧毀這個基礎。",
+          "source": "Sundar, S. S. (2008), MAIN Model",
+          "url": "https://www.researchgate.net/publication/323990996",
+          "status": "verified"
+        },
+        {
+          "claim": "本專案自身的教訓：千問憑空造出 Tilman & Wheeler (2006)，豆包在真論文上掛假數字。後者更難抓——論文在、作者對、期刊對，只有數字是編的。",
+          "source": "research/social-influence-theory/99-verification.md §G",
           "url": null,
           "status": "internal"
         }
       ],
-      "check": "axis_why_length",
-      "min_length": 10,
-      "remedy": "寫出這個分數的依據；寫不出來就把分數拿掉，不要填 0。"
+      "patterns": {
+        "zh": ["研究顯示", "研究显示", "數據顯示", "数据显示", "根據報告", "根据报告", "統計指出", "统计指出", "調查發現", "调查发现", "有研究", "報告指出", "报告指出"],
+        "en": ["studies show", "research shows", "according to a report", "data shows"]
+      },
+      "remedy": "每一筆引用都要附可點開的連結，並確認來源真的說了那句話。查不到就改成「我的判斷是」，不要包裝成研究。",
+      "added_in": "1.1 —— Gemini 與 GPT 共同指出的缺漏。"
+    },
+    {
+      "id": "R-AI-DISCLOSURE",
+      "category": "redline",
+      "severity": "block",
+      "detection": "lint",
+      "scope": ["persona", "plan", "script"],
+      "title": "AI 身分揭露紅線",
+      "rule": "不得假裝是真人，也不得隱瞞 AI 身分來支撐可信度。",
+      "why_plain": "被問到的時候要能誠實回答。用「假裝自己是真人」換來的信任，被拆穿的那天會連本帶利還回去，而且會連累同一個帳號講過的所有其他事情。",
+      "semantic_prompt": "判斷這段文字是否主動聲稱、或刻意誘導觀眾相信這是一個真實存在的人——特別是當這個聲稱正好是用來支撐某個主張的可信度時。\n\n【要擋】「我不是 AI」「我跟你一樣是普通人」，以及任何把「我是真人」當成論據的段落。\n【不要擋】以第一人稱說話本身。角色用「我」是正常的敘事，不是欺騙。",
+      "evidence": [
+        {
+          "claim": "透明揭露（transparent endorsement）是感知真實性的五個構面之一。",
+          "source": "Lee, J. A. & Eastin, M. S. (2021), JRIM, 15(4), 822-841",
+          "url": "https://www.emerald.com/jrim/article-abstract/15/4/822/451011/Perceived-authenticity-of-social-media-influencers",
+          "status": "verified"
+        }
+      ],
+      "patterns": {
+        "zh": ["我不是 AI", "我不是ai", "我是真人", "我跟你一樣是人", "我跟你一样是人"],
+        "en": ["i'm not an ai", "i am a real person", "i'm human"]
+      },
+      "remedy": "被問就答。揭露方式在 wizard 第 1 步就要決定，不要臨場迴避。",
+      "added_in": "1.1 —— GPT 提出。"
+    },
+    {
+      "id": "R-REAL-PERSON-IMPERSONATION",
+      "category": "redline",
+      "severity": "block",
+      "detection": "lint",
+      "scope": ["persona", "plan", "script"],
+      "title": "冒充真實人物",
+      "rule": "不得冒充真實存在的人物、機構職位，或可被查證的特定從業者。",
+      "why_plain": "這比「掛一個假證照」更嚴重，因為受害的是真的有那個人。這也是所有平台都會直接砍帳號的那一類。",
+      "semantic_prompt": "判斷這個角色是否被設定成、或被寫成某個真實存在的人（本名、可辨識的經歷組合、特定機構的特定職位）。相似的職業設定沒問題，指向特定真人才有問題。",
+      "evidence": [
+        { "claim": "比 R-CREDENTIAL 更廣：不只是資格，而是身分本身。", "source": "GPT 於 docs/reviews/2026-08-22-spec-v1.0-gpt.md 提出", "url": null, "status": "internal" }
+      ],
+      "patterns": { "zh": [], "en": [] },
+      "remedy": "把可辨識的真人特徵換掉。要致敬某個人可以，要在內容裡寫明是致敬。",
+      "added_in": "1.1 —— GPT 提出。",
+      "detection_note": "沒有關鍵字可抓，純靠第二層語意判定。"
+    },
+    {
+      "id": "R-HIGH-STAKES-ADVICE",
+      "category": "redline",
+      "severity": "block",
+      "detection": "lint",
+      "scope": ["plan", "script"],
+      "title": "高風險領域的個案指令",
+      "rule": "醫療、金融、法律、人身安全領域，不得給出確定性的個案指令。",
+      "why_plain": "「你這個情況就該這樣做」——這句話在這四個領域裡，講錯了是會出事的，而且我們沒有辦法知道看的人到底是什麼情況。講原則可以，講「你該怎麼做」不行。",
+      "semantic_prompt": "判斷這段文字是否對醫療、金融、法律或人身安全，給出了針對個別讀者的、確定性的行動指令。\n\n【要擋】「這種情況直接下撤就對了」「這支現在可以進場」「你可以不用理那個條款」。\n【不要擋】「判斷是否下撤，通常會看這三件事」——講決策框架與原則是可以的。\n\n關鍵差別：講「怎麼想」可以，講「你去做」不行。",
+      "evidence": [
+        {
+          "claim": "受眾會運用說服知識評估說服企圖，並據此同時修正對內容與對來源本身的態度。",
+          "source": "Friestad, M. & Wright, P. (1994), Journal of Consumer Research, 21(1), 1-31",
+          "url": "https://academic.oup.com/jcr/article-abstract/21/1/1/1853712",
+          "status": "verified"
+        }
+      ],
+      "patterns": {
+        "zh": ["你應該吃", "你应该吃", "直接買", "直接买", "可以進場", "可以进场", "不用擔心", "不用担心", "照做就對", "照做就对", "一定要撤", "不會有事", "不会有事"],
+        "en": ["you should buy", "just do this", "you'll be fine"]
+      },
+      "remedy": "把個案指令改成決策框架：「判斷這件事我會看這三點」，而不是「你就這樣做」。",
+      "added_in": "1.1 —— GPT 提出。本專案有登山安全與長期投資兩個人設，這條是實質需要的。"
+    },
+    {
+      "id": "R-HATE-HARASSMENT",
+      "category": "redline",
+      "severity": "block",
+      "detection": "lint",
+      "scope": ["plan", "script"],
+      "title": "貶低受保護或易受害群體",
+      "rule": "不得以貶低種族、性別、性傾向、身心障礙、宗教、移民身分等群體來換取互動。",
+      "why_plain": "這跟「立場尖銳」不是同一件事。針對這些群體的貶低會傷到真的人，而且平台會直接處理。",
+      "semantic_prompt": "區分兩件事：(a) 對某個立場、政策或做法的批評——這是言論；(b) 針對某個群體的身分本身進行貶低、刻板化或嘲弄——這是要擋的。",
+      "evidence": [
+        { "claim": "從 W-OUTGROUP 拆出：政治立場層級的對立可留在 warn，受保護群體的部分應為 block。", "source": "GPT 於 docs/reviews/2026-08-22-spec-v1.0-gpt.md 提出", "url": null, "status": "internal" }
+      ],
+      "patterns": { "zh": [], "en": [] },
+      "remedy": "把攻擊對象從「人」換成「做法」。",
+      "added_in": "1.1 —— GPT 提出，從 W-OUTGROUP 拆出。",
+      "detection_note": "純靠第二層語意判定，關鍵字清單在這個題目上既擋不乾淨也會誤傷。"
     },
     {
       "id": "R-FAKE-CERTAINTY",
+      "category": "redline",
       "severity": "block",
+      "detection": "exact",
       "scope": ["plan", "script"],
       "title": "絕對化保證",
       "rule": "不得出現「絕對安全／零風險／保證成功／百分之百」這類無法成立的確定性宣稱。",
       "why_plain": "沒有任何事情是百分之百的。講了就是騙，而且是會被抓的那種騙。",
+      "semantic_prompt": null,
       "evidence": [{ "claim": "既有 KOL 紅線，沿用", "source": "kols/*/topic_affinity.json", "url": null, "status": "internal" }],
       "patterns": {
-        "zh": ["絕對安全", "绝对安全", "零風險", "零风险", "保證成功", "保证成功", "百分百", "百分之百", "一定會", "一定会"],
+        "zh": ["絕對安全", "绝对安全", "零風險", "零风险", "保證成功", "保证成功", "百分百", "百分之百"],
         "en": ["100% safe", "guaranteed", "zero risk", "risk-free"]
       },
-      "remedy": "改成有條件的表述：「在這個天氣窗口下，風險降到⋯⋯」。"
+      "remedy": "改成有條件的表述：「在這個天氣窗口下，風險降到⋯⋯」。",
+      "v1_1_fix": "移除「一定會／一定会」——GPT 指出「觀眾一定會問你是不是真的去過」是正當的風險提醒，不是保證宣稱。這是本規則唯一標為 exact 的理由：剩下的字串本身無歧義。"
     },
     {
       "id": "R-STAGED-DANGER",
+      "category": "redline",
       "severity": "block",
+      "detection": "lint",
       "scope": ["plan", "script"],
       "title": "為互動率擺拍危險",
       "rule": "不得為了互動率演出危險動作、誇大難度或美化冒險。",
       "why_plain": "這會讓看的人去模仿，而他們沒有你設定裡那些條件。這是會出人命的那一類。",
+      "semantic_prompt": "判斷這個企劃是否把「危險本身」當成了賣點——也就是說，如果把危險的部分拿掉，這支內容就沒有吸引力了。是的話就要擋。",
       "evidence": [{ "claim": "既有 KOL 紅線，沿用", "source": "kols/*/topic_affinity.json", "url": null, "status": "internal" }],
       "patterns": {
         "zh": ["作死", "極限挑戰", "极限挑战", "無保護", "无保护", "搏命", "玩命"],
@@ -109,30 +239,57 @@
     },
 
     {
+      "id": "R-NO-WHY",
+      "category": "validation",
+      "severity": "block",
+      "detection": "exact",
+      "scope": ["persona"],
+      "title": "沒有理由的分數不得進入計算",
+      "rule": "任何軸分數必須附 why，長度 ≥ 10 字；否則該軸視為未定義，整條軸排除於計算之外（不得當成 0）。",
+      "why_plain": "填一個數字很快，但寫不出理由就代表這個數字是隨手打的。隨手打的數字進到公式裡，出來的還是隨手打的答案，只是看起來像有算過。",
+      "semantic_prompt": null,
+      "evidence": [{ "claim": "docs/09 §0 原則二", "source": "本專案方法論", "url": null, "status": "internal" }],
+      "check": "axis_why_length",
+      "min_length": 10,
+      "remedy": "寫出這個分數的依據；寫不出來就把分數拿掉，不要填 0。",
+      "v1_1_fix": "category 改為 validation。Gemini 指出這是表單驗證而非內容紅線——流程上它移到 docs/11 §2.1 的 V1 階段。保留在本檔的理由是：skill 在稽核既有 repo 檔案時仍然需要它。"
+    },
+
+    {
       "id": "W-ENGAGEMENT-BAIT",
+      "category": "redline",
       "severity": "warn",
+      "detection": "lint",
       "scope": ["plan", "script"],
       "title": "互動誘餌（刻意留破綻換留言）",
-      "rule": "刻意說錯、留破綻、擺反道具，誘發觀眾糾正欲以換取留言。",
+      "rule": "刻意演出小瑕疵、擺反道具、說出自己不相信的話，誘發觀眾糾正欲以換取留言。",
       "why_plain": "這招短期真的有用，但觀眾一旦看出「你是故意的」，扣分的不只是這一支影片，是他對這個帳號的整體評價。你等於用長期信任換一次留言數。",
+      "semantic_prompt": "區分三件事：\n(a) 這是作者真心持有的反直覺立場 → 不列管，這只是有觀點；\n(b) 刻意演出的瑕疵或錯誤，內容無害 → warn；\n(c) 故意散布錯誤的安全／醫療／金融資訊來釣留言 → 這不是 warn，改判 R-HIGH-STAKES-ADVICE 或 R-FABRICATED-SOURCE 的 block。",
       "evidence": [
         {
-          "claim": "人們會發展並運用「說服知識」來應對說服企圖，並據此同時修正對產品與對行銷者本身的態度。",
+          "claim": "人們會發展並運用說服知識來應對說服企圖，並據此同時修正對產品與對行銷者本身的態度。",
           "source": "Friestad, M. & Wright, P. (1994), Journal of Consumer Research, 21(1), 1-31",
           "url": "https://academic.oup.com/jcr/article-abstract/21/1/1/1853712",
           "status": "verified"
         }
       ],
-      "model_disagreement": "Gemini 明確推薦此做法；GPT 與 Claude 反對。因模型間不一致，列為 warn 而非 block。",
-      "remedy": "改用「真心持有但反直覺」的立場——它一樣能引發討論，但被看穿也不傷信任，因為那本來就是你的想法。"
+      "patterns": {
+        "zh": ["故意說錯", "故意说错", "留個破綻", "留个破绽", "引戰", "引战", "釣留言", "钓留言"],
+        "en": ["engagement bait"]
+      },
+      "remedy": "改用「真心持有但反直覺」的立場——它一樣能引發討論，但被看穿也不傷信任，因為那本來就是你的想法。",
+      "v1_1_fix": "v1.0 的分級理由寫的是「Gemini 推薦、GPT 與 Claude 反對」。兩位審查者都指出用模型投票決定紅線等級，本身就違反了「只有已查證文獻可以影響決策」的紀律。已刪除該理由，改依 grading_criteria 的四條判準重新判定，並採用 GPT 的三段拆分。"
     },
     {
       "id": "W-OUTGROUP",
+      "category": "redline",
       "severity": "warn",
+      "detection": "lint",
       "scope": ["plan", "script"],
-      "title": "以外團體敵意換互動",
-      "rule": "用貶低某個群體（世代、性別、地域、政治立場、職業）來換取分享與留言。",
+      "title": "以外團體對立換互動",
+      "rule": "用貶低某個立場群體（政治立場、世代、地域、職業）來換取分享與留言。",
       "why_plain": "這確實有效，效果大約是講自己人好話的兩倍。但你買到的是同溫層裡的更深，不是更廣——因為這種內容主要在「本來就同意你的人」之間傳。想觸及新的人，這招反而是反效果。",
+      "semantic_prompt": "判斷這個企劃的擴散動力是否主要來自「跟某個群體對立」。若對立的對象屬於受保護或易受害群體，改判 R-HATE-HARASSMENT 的 block。",
       "evidence": [
         {
           "claim": "提到政治外團體的貼文，其分享／轉發約為提到內團體的兩倍，且此效果強於情緒語言。",
@@ -147,15 +304,20 @@
           "status": "verified"
         }
       ],
-      "remedy": "如果目標是跨圈觸達，換題。如果目標本來就是鞏固既有受眾，可以做，但要知道自己在做什麼並記錄下來。"
+      "patterns": { "zh": [], "en": [] },
+      "remedy": "如果目標是跨圈觸達，換題。如果目標本來就是鞏固既有受眾，可以做，但要知道自己在買什麼並記錄下來。",
+      "v1_1_fix": "受保護群體的部分已拆出為 R-HATE-HARASSMENT（block）。本規則現在只涵蓋立場層級的對立。"
     },
     {
       "id": "W-BLURRED-PILLAR",
+      "category": "redline",
       "severity": "warn",
+      "detection": "exact",
       "scope": ["persona", "plan"],
       "title": "人設邊界模糊",
-      "rule": "內容支柱超過 3 根，或某個支柱靠單一泛用關鍵字（人生／職場／內耗／邊界／決定／風險⋯⋯）就能命中任何題目。",
+      "rule": "內容支柱超過 3 根，或某個支柱靠單一泛用關鍵字就能命中任何題目。",
       "why_plain": "支柱太多、關鍵字太泛，等於這個帳號什麼都能講。什麼都能講的帳號，觀眾會不知道要為了什麼追蹤你，市場會直接把你打折。",
+      "semantic_prompt": null,
       "evidence": [
         {
           "claim": "未被所屬產業專門分析師覆蓋的公司，股價會被折價——身分歸類不清會被市場懲罰。",
@@ -166,15 +328,19 @@
       ],
       "generic_keywords": ["人生", "职场", "職場", "内耗", "內耗", "边界", "邊界", "决定", "決定", "风险", "風險", "选择", "選擇", "故事", "工具", "判断", "判斷", "成长", "成長", "改变", "改變"],
       "max_pillars": 3,
-      "remedy": "收斂到 2–3 根，並把泛用關鍵字換成只有這根支柱會用的具體詞。"
+      "remedy": "收斂到 2–3 根，並把泛用關鍵字換成只有這根支柱會用的具體詞。",
+      "v1_1_note": "docs/11 v1.0 曾設計「支柱 > 3 時分數乘以 3/n」的扣分。兩位審查者都判定那是「用新編造的公式取代舊編造的數字」——Zuckerman 只說會被折價，沒說折價函數是 3/n。該扣分已從評分中刪除，支柱治理現在完全由本條警示 + 人的判斷承接。"
     },
     {
       "id": "W-NO-BASELINE",
+      "category": "redline",
       "severity": "warn",
+      "detection": "exact",
       "scope": ["plan"],
       "title": "沒有歷史基準就談時機",
-      "rule": "在 heatConfidence = none（沒有時間序列快照）時，做出任何與「正在升溫／趨勢／時機」有關的決策。",
+      "rule": "在 heatConfidence = none（沒有時間序列快照）時，做出任何與「正在升溫／趨勢／時機」有關的宣稱。",
       "why_plain": "要說一個話題「正在紅」，你必須知道它「以前沒這麼紅」。我們現在只有今天這一張快照，所以講不出這句話——講了就是猜的。",
+      "semantic_prompt": null,
       "evidence": [
         {
           "claim": "burst 的偵測建立在「相對於自身歷史基準的異常增加」，需要時間序列與狀態轉移成本。",
@@ -187,7 +353,7 @@
         "zh": ["正在紅", "正在红", "新趨勢", "新趋势", "爆紅", "爆红", "跨圈潛力", "跨圈潜力", "熱度上升", "热度上升", "正在升溫", "正在升温"],
         "en": ["trending now", "going viral", "breaking out"]
       },
-      "remedy": "改稱「樣本共現密度」，並等 topicSnapshots 累積滿 7 天再談升溫。"
+      "remedy": "改稱「樣本共現密度」，並等 topicSnapshots 累積滿 3 個完整週週期再談升溫。"
     }
   ]
 }
