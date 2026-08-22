@@ -22,10 +22,11 @@ export async function kolToTopics(kolId, { region = 'GLOBAL', platforms = PLATFO
 
   const ranked = topicSet.topics
     .map((topic) => ({ topic, match: matchKolToTopic(kol, topic, context) }))
-    .sort((a, b) => b.match.score - a.match.score)
+    .sort((a, b) => (b.match.screeningScore ?? -1) - (a.match.screeningScore ?? -1))
 
-  const recommended = ranked.filter((r) => !r.match.blocked)
-  const excluded = ranked.filter((r) => r.match.blocked)
+  // docs/11 §2.1 — "excluded" now means a gate refused it, not a low score.
+  const recommended = ranked.filter((r) => r.match.gates?.passed)
+  const excluded = ranked.filter((r) => !r.match.gates?.passed)
 
   // The KOL's own evergreen hooks, scored on the same scale — they are the
   // fallback when nothing in this week's trending set fits.
@@ -35,7 +36,7 @@ export async function kolToTopics(kolId, { region = 'GLOBAL', platforms = PLATFO
           const topic = hookToTopic(hook, { region })
           return { topic, hook, match: matchKolToTopic(kol, topic, context) }
         })
-        .sort((a, b) => b.match.score - a.match.score)
+        .sort((a, b) => (b.match.screeningScore ?? -1) - (a.match.screeningScore ?? -1))
     : []
 
   return {
@@ -63,14 +64,14 @@ export async function topicToKols(topicRef, { region = 'GLOBAL', platforms = PLA
   const context = { region, language: languageOf(region) }
   const ranked = listKols()
     .map((kol) => ({ kol: { id: kol.id, name: kol.name, handle: kol.handle, category: kol.category }, match: matchKolToTopic(kol, topic, context) }))
-    .sort((a, b) => b.match.score - a.match.score)
+    .sort((a, b) => (b.match.screeningScore ?? -1) - (a.match.screeningScore ?? -1))
 
   return {
     direction: 'topic_to_kols',
     topic,
     region,
-    recommended: ranked.filter((r) => !r.match.blocked),
-    excluded: ranked.filter((r) => r.match.blocked),
+    recommended: ranked.filter((r) => r.match.gates?.passed),
+    excluded: ranked.filter((r) => !r.match.gates?.passed),
   }
 }
 
@@ -81,7 +82,7 @@ export async function topicToKols(topicRef, { region = 'GLOBAL', platforms = PLA
  * the hook line, script and shot list stay human work — what the engine
  * supplies is the binding, the constraints, and the feasibility warnings.
  */
-export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms = PLATFORMS, fourAxis = {}, targets = {} }) {
+export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms = PLATFORMS, fourAxis = {}, targets = {}, primaryTask = null, secondaryEffects = [] }) {
   const kol = getKol(kolId)
   if (!kol) throw Object.assign(new Error(`unknown KOL "${kolId}"`), { status: 404 })
 
@@ -100,26 +101,28 @@ export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [
   // Combination score = the primary topic, with a small bonus for each
   // additional topic that also clears the C grade — genuinely reinforcing
   // angles help, tacking on weak tags does not.
-  const primary = [...matches].sort((a, b) => b.score - a.score)[0]
+  const primary = [...matches].sort((a, b) => (b.screeningScore ?? -1) - (a.screeningScore ?? -1))[0]
   const supporting = matches.filter((m) => m !== primary)
-  const bonus = supporting.filter((m) => !m.blocked && m.score >= 50).length * 3
-  const blocked = matches.some((m) => m.blocked)
-  const combinedScore = blocked ? 0 : Math.min(Math.round((primary.score + bonus) * 10) / 10, 100)
+  // docs/11 §2.5 — no headline number. A supporting topic that also clears the
+  // gates is listed, not converted into a bonus: inventing a "+3 per extra
+  // topic" rule would be exactly the kind of made-up formula the spec forbids.
+  const reinforcing = supporting.filter((m) => m.gates?.passed)
+  const anyVetoed = matches.some((m) => !m.gates?.passed)
 
   const combinedMatch = {
     ...primary,
-    score: combinedScore,
-    blocked,
+    gatesPassed: Boolean(primary.gates?.passed) && !anyVetoed,
+    anyVetoed,
     needsBinding: primary.needsBinding,
     combination: {
       primaryTopicId: primary.topicId,
       supportingTopicIds: supporting.map((m) => m.topicId),
-      bonus,
-      perTopic: matches.map((m) => ({ topicId: m.topicId, topicTitle: m.topicTitle, score: m.score, blocked: m.blocked, grade: m.grade })),
+      reinforcingTopicIds: reinforcing.map((m) => m.topicId),
+      perTopic: matches.map((m) => ({ topicId: m.topicId, topicTitle: m.topicTitle, screeningScore: m.screeningScore, band: m.band, gatesPassed: m.gates?.passed ?? false, decision: m.decision })),
     },
   }
 
-  const pillarName = primary.dimensions.pillarFit.pillar
+  const pillarName = primary.dimensions?.pillar?.pillar ?? null
   const pillar = (kol.profile?.content?.pillars ?? []).find((p) => p.name === pillarName) ?? null
   const scenes = kol.profile?.ai_prompts?.scenes ?? []
   const material = kol.affinity?.material_attributes ?? {}
@@ -138,9 +141,18 @@ export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [
     feasibility.push({ level: 'block', message: '這個話題沒有對應到任何內容支柱——先決定它屬於哪一根支柱，否則不該排進製作。' })
   }
   for (const hit of primary.warnings ?? []) {
-    feasibility.push({ level: 'warn', message: `紅線警告：${hit.rule}（命中：${hit.keywords.join('、')}）` })
+    const where = (hit.findings ?? []).map((f) => f.detail).join('；')
+    feasibility.push({ level: 'warn', message: `紅線警示 ${hit.id}：${hit.title}${where ? `（${where}）` : ''}` })
   }
-  const weakest = primary.dimensions.personaFit.weakest
+  // docs/11 §5.4 — lint hits are candidates, not verdicts. They must be shown,
+  // but as something a human still owes an answer on.
+  for (const item of primary.needsReview ?? []) {
+    feasibility.push({
+      level: 'review',
+      message: `待語意判定 ${item.id ?? item.key}：${item.title ?? item.label}——關鍵字比對命中，需要人或語意層確認是不是真的。`,
+    })
+  }
+  const weakest = primary.dimensions?.fit?.weakest
   if (weakest && weakest.gap >= 20) {
     feasibility.push({ level: 'warn', message: `最弱軸「${weakest.label}」缺口 ${weakest.gap}——這一軸要靠腳本或製作補，否則會拉低成效。` })
   }
@@ -170,7 +182,9 @@ export async function combinationToBrief({ kolId, topicIds = [], adHocTopics = [
     toFillIn: { hookLine: '', cta: '' },
   }
 
-  const preEvaluation = buildPreEvaluation({ kol, topics, match: combinedMatch, fourAxis, targets, plan: brief })
+  const preEvaluation = buildPreEvaluation({
+    kol, topics, match: combinedMatch, fourAxis, targets, plan: brief, primaryTask, secondaryEffects,
+  })
 
   return { direction: 'combination_to_brief', brief, match: combinedMatch, preEvaluation }
 }

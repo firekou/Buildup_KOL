@@ -33,14 +33,15 @@ router.get('/kols/:id', (req, res) => {
       ...hook,
       axisDemand: topic.axisDemand,
       match: {
-        score: match.score,
-        grade: match.grade,
-        blocked: match.blocked,
+        screeningScore: match.screeningScore,
+        band: match.band,
+        decision: match.decision,
+        gatesPassed: match.gates?.passed ?? false,
         rationale: match.rationale,
         dimensions: match.dimensions,
       },
     }
-  }).sort((a, b) => b.match.score - a.match.score)
+  }).sort((a, b) => (b.match.screeningScore ?? -1) - (a.match.screeningScore ?? -1))
 
   res.json({
     id: kol.id,

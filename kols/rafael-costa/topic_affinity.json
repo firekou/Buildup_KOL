@@ -1,6 +1,27 @@
 {
   "kol_id": "rafael-costa",
-  "schema_version": 2,
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "public_record",
+      "desc": "公開賽事數據、聯賽紀錄、訓練方法的公開文獻",
+      "verifiable": true
+    },
+    {
+      "type": "career_claim",
+      "desc": "「現役職業球員」身分與個人生涯敘述",
+      "verifiable": false
+    }
+  ],
+  "homophily": {
+    "score": 52,
+    "why": "「正在撐著、還看不到結果」這個處境高度共通；但現役職業球員的身分本身就是一種距離，他靠隊友語氣拉近，不靠身分相似。",
+    "audience_identity": "18–30 歲、正在一件事上撐著、還看不到結果的人",
+    "shared_situation": "努力了但沒有回報，周圍的人開始勸你務實一點",
+    "language_register": "像隊友而不是教練；不喊話、不居高臨下"
+  },
+  "credibility_risk": "「現役職業球員」是具身身分主張。長期投資／人生建議類內容另需注意 R-HIGH-STAKES-ADVICE。",
   "axes": {
     "analysis": {
       "score": 65,
@@ -72,7 +93,6 @@
       "年轻人",
       "建议",
       "迷茫",
-      "选择",
       "职业",
       "躺平",
       "内卷",
@@ -84,7 +104,6 @@
     "今天我學到了什麼 What I Learned Today": [
       "学到",
       "误判",
-      "成长",
       "learned",
       "book",
       "growth"

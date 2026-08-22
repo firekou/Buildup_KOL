@@ -1,19 +1,38 @@
 import { getAxes } from '../kols.js'
 import { resolveAxisDemand } from '../topics/classify.js'
 import { coverage, containsKeyword } from '../text.js'
+import { validate, credibilityModeGate, fitGate, redlineGateFor, toBand, getConfig } from './gates.js'
+import { withNote } from './notes.js'
 
 /**
- * Match engine — implements docs/09 §3.
- * Every exported function here has a §-numbered counterpart in that document.
- * Change one, change the other.
+ * Match engine — implements docs/11 §2 (supersedes docs/09 §3).
+ *
+ * The single most important change from v1: there is no weighted total that
+ * mixes gates with scores. v1 computed
+ *
+ *     score = 0.35·personaFit + 0.30·pillarFit + 0.20·topicHeat + 0.15·regionFit
+ *
+ * and those weights were invented. Worse than invented — the shape was wrong:
+ * a linear compensatory model lets topic heat buy persona fit, which both
+ * Mandler (1982) and Zuckerman (1999) rule out. Congruence that fails is not
+ * congruence that scores low.
+ *
+ * Now: validate → gates → a three-dimension equal-weight screening score →
+ * timing shown alongside, never inside.
  */
 
-export const WEIGHTS = {
-  personaFit: 0.35,
-  pillarFit: 0.3,
-  topicHeat: 0.2,
-  regionFit: 0.15,
-}
+/**
+ * Equal weights. This is not neutrality and we do not pretend it is — it
+ * assumes the three matter equally for ranking, which is itself a strong claim.
+ * It is chosen because we have zero outcome data, so any other split would just
+ * be 0.35 renamed to 0.4. Equal weighting at least states something true: we do
+ * not know which dimension matters more.
+ *
+ * The mitigation for its weakness is in the UI, not the arithmetic — the total
+ * is shown as a band and the three bars sit next to it, so a short leg stays
+ * visible instead of being averaged away.
+ */
+export const DIMENSIONS = ['fit', 'pillar', 'homophily']
 
 const round = (n, d = 1) => Math.round(n * 10 ** d) / 10 ** d
 
@@ -80,14 +99,22 @@ export function pillarFit(kol, topic, boundPillarName = null) {
     // Declared pillar keywords are precise, so a direct hit counts fully —
     // coverage over a long English description is structurally small and would
     // otherwise drown the signal.
-    const keywordHit = (pillarKeywords[p.name] ?? []).some((k) => containsKeyword(needleText, k))
+    const hits = (pillarKeywords[p.name] ?? []).filter((k) => containsKeyword(needleText, k))
+    const keywordHit = hits.length > 0
     const normalizedWeight = weights[i] / maxWeight
-    const scaled = keywordHit ? Math.max(Math.min(cov * 2.5, 1), 0.7) : Math.min(cov * 2.5, 1)
+    // docs/11 §2.6 M2 — v1 floored a keyword hit at 0.7, which meant the wider
+    // your keyword list, the better you scored. That rewards exactly what
+    // Zuckerman (1999) says gets punished: a blurred category boundary. One
+    // generic word like 「离职」 was enough to put a workplace-feelings topic
+    // into "workable" on a mountain guide's account.
+    // Hits now add on top of real coverage instead of replacing it.
+    const scaled = Math.min(cov * 2.5 + Math.min(hits.length, 3) * 0.08, 1)
     return {
       name: p.name,
       weight: p.weight,
       coverage: round(cov * 100),
       keywordHit,
+      keywordHits: hits,
       score: round(scaled * (0.6 + 0.4 * normalizedWeight) * 100),
     }
   })
@@ -107,6 +134,71 @@ export function pillarFit(kol, topic, boundPillarName = null) {
     return { score: 0, pillar: null, bound: false, needsBinding: true, candidates }
   }
   return { score: best.score, pillar: best.name, bound: false, needsBinding: false, candidates }
+}
+
+/* ------------------------------------------------- docs/11 §2.4 · homophily */
+
+/**
+ * Similarity between the KOL and the intended audience.
+ *
+ * New in the rewrite, and the single biggest gap the literature review found:
+ * Lou & Yuan (2019) identify four antecedents of follower trust — information
+ * value, trustworthiness, attractiveness, and SIMILARITY — and the previous
+ * four axes had no representation of the last one at all.
+ *
+ * Deliberately has no floor. Lou & Yuan establish it as an antecedent; nothing
+ * establishes a line below which it fails. Inventing one would break §0 rule 2,
+ * so a low score is surfaced loudly instead of vetoing.
+ */
+export function homophilyFit(kol, topic) {
+  const h = kol.affinity?.homophily
+  if (!h) {
+    return { score: null, missing: true, reason: 'topic_affinity.json 尚未宣告 homophily——這一維無法計算，不計入平均。' }
+  }
+
+  // Lou & Yuan measure similarity as a property of the KOL–audience
+  // relationship, not of a topic. So the base is declared per KOL and carries a
+  // `why`, under the same discipline as the axes: a number nobody can justify
+  // does not enter the calculation.
+  const base = Number(h.score)
+  if (!Number.isFinite(base) || String(h.why ?? '').trim().length < 10) {
+    return {
+      score: null,
+      missing: true,
+      reason: 'homophily.score 缺失，或 why 短於 10 字——依 docs/09 §0 原則二，這個分數視為未定義，不計入平均。',
+    }
+  }
+
+  // The topic then modulates it: a topic that lands inside the audience's own
+  // situation reads as "one of us talking about our thing"; one that does not
+  // still carries the account's baseline similarity, just without the lift.
+  const needle = [topic.tag?.replace(/^#/, ''), topic.title, ...(topic.keywords ?? []), ...(topic.samples ?? [])]
+    .filter(Boolean)
+    .join(' ')
+
+  const facets = [
+    { key: 'audience_identity', label: '受眾身分', text: h.audience_identity },
+    { key: 'shared_situation', label: '共同處境', text: h.shared_situation },
+    { key: 'language_register', label: '語域', text: h.language_register },
+  ].map((f) => ({ ...f, overlap: f.text ? round(Math.min(coverage(needle, f.text) * 2.5, 1) * 100) : null }))
+
+  const overlaps = facets.filter((f) => Number.isFinite(f.overlap)).map((f) => f.overlap)
+  const topicResonance = overlaps.length ? round(overlaps.reduce((a, b) => a + b, 0) / overlaps.length) : 0
+
+  // Bounded lift, so the declared base stays the dominant term and a lucky
+  // word match cannot manufacture similarity.
+  const score = round(Math.min(base + topicResonance * 0.2, 100))
+
+  return {
+    score,
+    missing: false,
+    base,
+    why: h.why,
+    topicResonance,
+    perFacet: facets,
+    weakest: [...facets].filter((f) => Number.isFinite(f.overlap)).sort((a, b) => a.overlap - b.overlap)[0] ?? null,
+    explain: `帳號層的相似性 ${base}（宣告值），這個題目與受眾處境的重疊 ${topicResonance} → 加權後 ${score}。`,
+  }
 }
 
 /* ------------------------------------------------------------------ §3.4 */
@@ -180,53 +272,110 @@ export function riskCheck(redlines, topic) {
   return { blocked: blocks.length > 0, blocks, warnings, hits: [...blocks, ...warnings] }
 }
 
-/* ------------------------------------------------------------------ §3.6 */
+/* ------------------------------------------------------ docs/11 §2.1 · 主流程 */
 
-export function grade(score, { blocked, needsBinding } = {}) {
-  if (blocked) return { key: 'blocked', label: '✕｜否決', action: '紅線命中，不論分數' }
-  if (needsBinding) return { key: 'unbound', label: '—｜待綁定', action: '沒有內容支柱對應，需人工綁定支柱後再判' }
-  if (score >= 80) return { key: 'A', label: 'A｜強配', action: '直接排進製作' }
-  if (score >= 65) return { key: 'B', label: 'B｜可做', action: '需要一個明確的切角才開工' }
-  if (score >= 50) return { key: 'C', label: 'C｜勉強', action: '缺題時使用，須補足最弱的軸' }
-  return { key: 'D', label: 'D｜不建議', action: '換人或換題' }
-}
-
-/* ------------------------------------------------------------------ §3.1 */
+const mean = (xs) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null)
 
 /**
- * Full match between one KOL and one topic.
+ * Full evaluation of one KOL against one topic.
  *
- * `topic` may be a region topic (from the topic pipeline) or a KOL topic hook
- * promoted via `hookToTopic`. `context.region` / `context.language` describe
- * where the topic was observed.
+ * Returns a shape with no single headline number. `screeningScore` is null —
+ * not 0 — whenever the gates did not clear, because 0 reads as "scored badly"
+ * when the truth is "never scored".
  */
 export function matchKolToTopic(kol, topic, context = {}) {
-  const affinity = kol.affinity
-  if (!affinity) {
+  const cfg = getConfig()
+
+  /* 階段 0 — validation. Not a gate: nothing is scored, the user is sent back. */
+  const validation = validate(kol, topic)
+  if (!validation.passed) {
     return {
       kolId: kol.id,
+      kolName: kol.name,
       topicId: topic.id,
-      score: 0,
-      blocked: true,
-      grade: grade(0, { blocked: true }),
-      missingData: 'topic_affinity.json 不存在，無法計算 Match',
+      topicTag: topic.tag,
+      topicTitle: topic.title,
+      domain: topic.domain,
+      validation,
+      gates: null,
+      band: toBand(null),
+      screeningScore: null,
+      dimensions: null,
+      timing: buildTiming(topic),
+      decision: { key: 'needs_input', label: '待補資料', detail: validation.problems.map((p) => p.message).join('；') },
+      experimental: {},
     }
   }
 
+  /* 階段 1 — gates. None of these can be bought by another dimension. */
   const invalidAxes = new Set((kol.axisIssues ?? []).map((i) => i.axis))
-  const persona = personaFit(affinity.axes, topic.axisDemand, invalidAxes)
+  const persona = personaFit(kol.affinity?.axes, topic.axisDemand, invalidAxes)
   const pillar = pillarFit(kol, topic, topic.boundPillar ?? null)
-  const region = regionFit(affinity.reach, context.region ?? topic.region ?? 'GLOBAL', context.language ?? null)
-  const risk = riskCheck(affinity.redlines, topic)
-  const heat = Number.isFinite(topic.heat) ? topic.heat : 50
+  const homophily = homophilyFit(kol, topic)
 
-  const raw =
-    WEIGHTS.personaFit * persona.score +
-    WEIGHTS.pillarFit * pillar.score +
-    WEIGHTS.topicHeat * heat +
-    WEIGHTS.regionFit * region.score
+  const g1 = redlineGateFor(kol, topic)
+  const g2 = credibilityModeGate(kol, topic)
+  const g3 = fitGate(persona.score)
 
-  const score = risk.blocked ? 0 : round(raw)
+  const gateList = [g1, g2, g3]
+  const failed = gateList.filter((g) => g.veto)
+  const undecided = gateList.filter((g) => g.undecided)
+
+  // A topic with no pillar to live on is a binding decision for a human, not a
+  // veto — Zuckerman says an unclear category is discounted, not forbidden.
+  const needsBinding = pillar.needsBinding
+
+  if (failed.length) {
+    return {
+      kolId: kol.id,
+      kolName: kol.name,
+      topicId: topic.id,
+      topicTag: topic.tag,
+      topicTitle: topic.title,
+      domain: topic.domain,
+      validation,
+      gates: { passed: false, failed: failed.map((g) => g.key), undecided: undecided.map((g) => g.key), detail: gateList },
+      band: toBand(null),
+      screeningScore: null,
+      dimensions: null,
+      gateDimensions: { credibilityMode: withNote('credibilityMode', g2) },
+      timing: buildTiming(topic),
+      warnings: g1.warnings ?? [],
+      needsReview: [...(g1.pending ?? []), ...undecided],
+      decision: {
+        key: 'veto',
+        label: '否決',
+        detail: failed.map((g) => g.reason).filter(Boolean).join('；') || '未通過 gate',
+      },
+      /** docs/11 §2.4 — G3 vetoes must be logged, or the floor can never be calibrated. */
+      shouldLogVeto: Boolean(g3.logVeto),
+      vetoRecord: g3.logVeto ? { kolId: kol.id, topicId: topic.id, fit: persona.score, gatesFailed: failed.map((g) => g.key) } : null,
+      experimental: {},
+    }
+  }
+
+  /* 階段 2 — screening score. Equal weight, three dimensions, heat excluded. */
+  const parts = [persona.score, pillar.score, homophily.score].filter((v) => Number.isFinite(v))
+  const screeningScore = round(mean(parts) ?? 0)
+  const experimentBand = Boolean(g3.experimentBand)
+
+  const dimensions = {
+    fit: withNote('fit', { score: persona.score, perAxis: persona.perAxis, weakest: persona.weakest, band: g3.band }),
+    pillar: withNote('pillar', {
+      score: pillar.score,
+      pillar: pillar.pillar,
+      bound: pillar.bound,
+      needsBinding,
+      candidates: pillar.candidates,
+    }),
+    homophily: withNote('homophily', homophily),
+  }
+
+  // The short leg, stated rather than averaged away — the answer to both
+  // reviewers' point that mean() is still a compensatory model.
+  const shortest = Object.entries(dimensions)
+    .filter(([, d]) => Number.isFinite(d.score))
+    .sort((a, b) => a[1].score - b[1].score)[0]
 
   return {
     kolId: kol.id,
@@ -235,35 +384,59 @@ export function matchKolToTopic(kol, topic, context = {}) {
     topicTag: topic.tag,
     topicTitle: topic.title,
     domain: topic.domain,
-    score,
-    blocked: risk.blocked,
-    needsBinding: pillar.needsBinding,
-    warnings: risk.warnings,
+    validation,
+    gates: { passed: true, failed: [], undecided: undecided.map((g) => g.key), detail: gateList },
+    band: toBand(screeningScore, { experimentBand }),
+    screeningScore,
+    experimentBand,
+    dimensions,
+    gateDimensions: { credibilityMode: withNote('credibilityMode', g2) },
+    timing: buildTiming(topic),
+    weakestDimension: shortest ? { key: shortest[0], label: shortest[1].note?.label ?? shortest[0], score: shortest[1].score } : null,
+    needsBinding,
+    warnings: g1.warnings ?? [],
+    needsReview: [...(g1.pending ?? []), ...undecided],
     dataIssues: kol.axisIssues ?? [],
-    grade: grade(score, { blocked: risk.blocked, needsBinding: pillar.needsBinding }),
-    dimensions: {
-      personaFit: { score: persona.score, weight: WEIGHTS.personaFit, perAxis: persona.perAxis, weakest: persona.weakest },
-      pillarFit: { score: pillar.score, weight: WEIGHTS.pillarFit, pillar: pillar.pillar, bound: pillar.bound, needsBinding: pillar.needsBinding },
-      topicHeat: { score: round(heat), weight: WEIGHTS.topicHeat, parts: topic.heatParts ?? null },
-      regionFit: { score: region.score, weight: WEIGHTS.regionFit, detail: region },
-    },
-    /** Plain-language reason, so the ranking never looks like an oracle. */
-    rationale: buildRationale({ persona, pillar, region, risk, heat, score }),
+    decision: needsBinding
+      ? { key: 'unbound', label: '待綁定支柱', detail: '這個話題在該帳號上沒有內容支柱可以歸屬，先決定它屬於哪一根支柱再判。' }
+      : experimentBand
+        ? { key: 'experiment', label: '實驗帶，可做', detail: g3.reason }
+        : { key: 'go', label: '可做', detail: `分帶 ${toBand(screeningScore).label}，最短板是「${shortest?.[1]?.note?.label ?? '—'}」。` },
+    rationale: buildRationale({ persona, pillar, homophily, g1, screeningScore, experimentBand, shortest }),
+    /** Zone B is physically absent from the main path (docs/11 §1.1). */
+    experimental: {},
+    equalWeightNotice: cfg.dimensions.note,
   }
 }
 
-function buildRationale({ persona, pillar, region, risk, heat, score }) {
-  if (risk.blocked) {
-    return `紅線否決：${risk.blocks.map((h) => h.keywords.join('／')).join('；')}`
+/**
+ * docs/11 §2.8 — timing sits beside the decision, never inside it.
+ * It is not part of the score and not a gate.
+ */
+function buildTiming(topic) {
+  return {
+    value: Number.isFinite(topic.heat) ? round(topic.heat) : null,
+    label: '樣本共現密度',
+    confidence: topic.heatConfidence ?? 'none',
+    discriminates: topic.heatDiscriminates ?? null,
+    parts: topic.heatParts ?? null,
+    normalizedWithin: topic.normalizedWithin ?? null,
+    caveat: topic.heatCaveat
+      ?? '這不是平台熱度。它說的是：在我們用種子詞抓到的樣本裡，有幾個不同帳號用了這個標籤。沒有歷史快照就無法判定升溫。',
+    note: withNote('timing', {}).note,
   }
+}
+
+function buildRationale({ persona, pillar, homophily, g1, screeningScore, experimentBand, shortest }) {
   const parts = [
-    `人設契合 ${persona.score}（最弱：${persona.weakest?.label ?? '—'}，缺口 ${persona.weakest?.gap ?? 0}）`,
-    pillar.needsBinding ? '無支柱對應——需人工綁定' : `支柱「${pillar.pillar}」覆蓋 ${pillar.score}${pillar.bound ? '（已綁定）' : ''}`,
-    `熱度 ${Math.round(heat)}`,
-    `地區契合 ${region.score}`,
+    `人設契合 ${persona.score}（最弱的軸：${persona.weakest?.label ?? '—'}）`,
+    pillar.needsBinding ? '無支柱對應——需人工綁定' : `支柱「${pillar.pillar}」${pillar.score}`,
+    homophily.missing ? '相似性未設定' : `相似性 ${homophily.score}`,
   ]
-  if (risk.warnings.length) parts.push(`⚠ ${risk.warnings.length} 項紅線警告`)
-  return `總分 ${score}｜${parts.join('，')}`
+  if (experimentBand) parts.push('落在底線附近，標為實驗帶')
+  if (g1.warnings?.length) parts.push(`⚠ ${g1.warnings.length} 項紅線警示`)
+  if (shortest) parts.push(`最短板：${shortest[1].note?.label ?? shortest[0]}`)
+  return `篩選分 ${screeningScore}｜${parts.join('，')}`
 }
 
 /** Promote a KOL's own topic hook into a topic object the match engine accepts. */

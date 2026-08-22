@@ -46,7 +46,11 @@ async function main() {
   await check('GET /api/meta', async () => {
     const b = await json('/api/meta')
     assert(b.axes?.length === 4, `expected 4 axes, got ${b.axes?.length}`)
-    assert(b.matchWeights.risk === undefined, 'risk must no longer be a weighted dimension')
+    // docs/11 §2 — there is no weighted total any more. Gates are not weights.
+    assert(b.matchWeights === undefined, 'matchWeights must be gone — gates are not weighted terms')
+    assert(Array.isArray(b.scoringDimensions) && b.scoringDimensions.length === 3, 'expected 3 scored dimensions')
+    assert(!b.scoringDimensions.includes('topicHeat'), 'topicHeat must not be a scored dimension')
+    assert(b.calibration && Object.values(b.calibration).every((c) => c.status === 'none'), 'nothing may claim to be calibrated yet')
     return `topic source: ${b.topicSource}`
   })
 
@@ -62,9 +66,9 @@ async function main() {
   await check('GET /api/kols/:id', async () => {
     const b = await json(`/api/kols/${kolId}`)
     assert(b.hooks.length >= 3, 'fewer than 3 topic hooks')
-    assert(b.hooks.every((h) => Number.isFinite(h.match.score)), 'a hook has no match score')
+    assert(b.hooks.every((h) => 'gatesPassed' in h.match || h.match.validation), 'a hook has no gate result')
     assert(b.images.length > 0, 'no images resolved')
-    return `${b.hooks.length} hooks, ${b.images.length} images, top match ${b.hooks[0].match.score}`
+    return `${b.hooks.length} hooks, ${b.images.length} images, top band ${b.hooks[0].match.band?.label ?? '—'}`
   })
 
   await check('GET /api/topics?region=SG', async () => {
@@ -96,7 +100,7 @@ async function main() {
       body: JSON.stringify({ region: 'SG', tag: '#登山事故', title: '高海拔登山事故與風險判斷', domain: 'news' }),
     })
     assert(b.recommended.length > 0, 'no KOL recommended')
-    return `top = ${b.recommended[0].kol.id} (${b.recommended[0].match.score})`
+    return `top = ${b.recommended[0].kol.id} (${b.recommended[0].match.band?.label ?? '—'})`
   })
 
   await check('redline veto blocks a gambling topic', async () => {
@@ -104,13 +108,12 @@ async function main() {
       method: 'POST',
       body: JSON.stringify({ region: 'MY', tag: '#百家樂攻略', title: '百家乐必胜投注攻略 稳赢打法', domain: 'game' }),
     })
-    const compliance = ['xiaoxiao-tan', 'faye-tan', 'loima-cheung']
-    const blockedIds = b.excluded.map((e) => e.kol.id)
-    assert(
-      compliance.every((id) => blockedIds.includes(id)),
-      `showgame KOLs not blocked: blocked = ${blockedIds.join(',') || 'none'}`,
-    )
-    return `${b.excluded.length} blocked by redlines`
+    // docs/11 §5.4 — keyword matching is now a lint layer, so a redline hit
+    // surfaces as needsReview rather than an automatic veto. What must still
+    // hold is that nobody sails through with a clean bill of health.
+    const clean = b.recommended.filter((r) => (r.match.needsReview ?? []).length === 0 && (r.match.warnings ?? []).length === 0)
+    assert(clean.length === 0, `賭博話題不該有任何 KOL 完全無標記：${clean.map((c) => c.kol.id).join(',')}`)
+    return `${b.excluded.length} 被 gate 擋下，${b.recommended.length} 需人工判定`
   })
 
   await check('(c) POST /api/workflow/combination', async () => {
@@ -130,7 +133,7 @@ async function main() {
     assert(b.brief.feasibility.some((f) => f.message.includes('日常適配')), 'format_fit not surfaced in the brief')
     assert(Object.keys(b.brief).length <= 10, `brief has ${Object.keys(b.brief).length} fields, expected a trimmed one`)
     assert(b.preEvaluation.decision.key, 'no decision')
-    return `decision=${b.preEvaluation.decision.key}, match=${b.match.score}, target=${b.preEvaluation.targets.views}`
+    return `decision=${b.preEvaluation.decision.key}, band=${b.match.band?.label ?? '—'}, target=${b.preEvaluation.targets.views}`
   })
 
   await check('POST /api/evaluations/pre', async () => {
@@ -182,6 +185,8 @@ async function main() {
       }),
     })
     assert(b.comparison?.rows?.length === 3, `comparison should have 3 rows, got ${b.comparison?.rows?.length}`)
+    assert('measuredAt' in b.record, 'post record must carry measuredAt (docs/11 §9.4-B)')
+    assert('observationWindow' in b.record, 'post record must resolve an observation window')
     assert(b.comparison.attribution?.key, 'no attribution')
     // 顯示三欄，但原始欄位必須照存（docs/10 第五刀）
     assert(b.record.actuals.profileVisits === 640, 'profileVisits must still be stored')
@@ -208,7 +213,7 @@ async function main() {
     })
     const unbound = b.recommended.filter((r) => r.match.needsBinding)
     assert(unbound.length > 0, 'expected at least one KOL with no pillar home')
-    assert(unbound.every((r) => r.match.grade.key === 'unbound'), 'unbound match must not get a letter grade')
+    assert(unbound.every((r) => r.match.decision?.key === 'unbound'), 'unbound match must be flagged as needing a pillar binding')
     return `${unbound.length} 位待綁定`
   })
 

@@ -1,6 +1,27 @@
 {
   "kol_id": "faye-tan",
-  "schema_version": 2,
+  "schema_version": 3,
+  "credibility_mode": "hybrid",
+  "credibility_basis": [
+    {
+      "type": "public_archive",
+      "desc": "建築檔案、都市計畫文件、殖民時期圖資",
+      "verifiable": true
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我到過這座城市」這類敘述——無法查證，需改寫",
+      "verifiable": false
+    }
+  ],
+  "homophily": {
+    "score": 58,
+    "why": "同樣是會為建築繞路的人，審美取向接近；但「能長期旅行」這件事本身就跟多數上班族的處境有距離。",
+    "audience_identity": "28–45 歲、會為了一棟建築特地繞路的人",
+    "shared_situation": "看得到城市在變，但講不出來哪裡不對勁",
+    "language_register": "像在跟朋友走路時邊走邊講，不像導覽稿"
+  },
+  "credibility_risk": "旅行人設天然含具身主張。credibility_mode 設為 hybrid 是誠實的標記，不是解法——需要決定要不要把「我到過」全面改寫成「檔案顯示」。",
   "axes": {
     "analysis": {
       "score": 55,

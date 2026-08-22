@@ -4,8 +4,10 @@ import path from 'node:path'
 import { PORT, CLIENT_DIST, isApifyConfigured } from './config.js'
 import { getAxes, listKols, getData } from './lib/kols.js'
 import * as store from './lib/store.js'
-import { WEIGHTS } from './lib/scoring/match.js'
-import { FOUR_AXES, DISPLAY_FIELDS } from './lib/scoring/evaluation.js'
+import { DIMENSIONS } from './lib/scoring/match.js'
+import { getConfig } from './lib/scoring/gates.js'
+import { FOUR_AXES, DISPLAY_FIELDS, PRIMARY_TASKS } from './lib/scoring/evaluation.js'
+import { listNotes } from './lib/scoring/notes.js'
 import { PLATFORMS } from './lib/topics/index.js'
 import kolsRouter from './routes/kols.js'
 import topicsRouter from './routes/topics.js'
@@ -29,12 +31,16 @@ app.get('/api/meta', (req, res) => {
     domains,
     regions,
     platforms: PLATFORMS,
-    matchWeights: WEIGHTS,
+    scoringDimensions: DIMENSIONS,
+    scoringConfig: getConfig(),
     fourAxes: FOUR_AXES,
     displayFields: DISPLAY_FIELDS,
     topicSource: isApifyConfigured() ? 'apify' : 'fixtures',
     store: store.stats(),
-    methodology: 'docs/09-kol-topic-match-and-evaluation-methodology.md',
+    methodology: 'docs/11-system-redesign-spec.md',
+    primaryTasks: PRIMARY_TASKS,
+    dimensionNotes: listNotes(),
+    calibration: getConfig().calibration,
   })
 })
 

@@ -39,7 +39,7 @@ router.post('/workflow/topic-to-kols', async (req, res, next) => {
 /** (c) 從人選與話題的組合產出導流素材企劃 + 預評 */
 router.post('/workflow/combination', async (req, res, next) => {
   try {
-    const { kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms, fourAxis = {}, targets = {} } = req.body ?? {}
+    const { kolId, topicIds = [], adHocTopics = [], region = 'GLOBAL', platforms, fourAxis = {}, targets = {}, primaryTask = null, secondaryEffects = [] } = req.body ?? {}
     res.json(
       await combinationToBrief({
         kolId,
@@ -49,6 +49,8 @@ router.post('/workflow/combination', async (req, res, next) => {
         platforms: parsePlatforms(platforms),
         fourAxis,
         targets,
+        primaryTask,
+        secondaryEffects,
       }),
     )
   } catch (err) {

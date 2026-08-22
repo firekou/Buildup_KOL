@@ -1,6 +1,26 @@
 {
   "kol_id": "xiaoxiao-tan",
-  "schema_version": 2,
+  "schema_version": 3,
+  "credibility_mode": "database",
+  "credibility_basis": [
+    {
+      "type": "public_rules",
+      "desc": "棋類與撲克的公開規則、賽制與官方紀錄",
+      "verifiable": true
+    },
+    {
+      "type": "textbook",
+      "desc": "機率與賽局的教科書級結果，可逐條指出出處",
+      "verifiable": true
+    }
+  ],
+  "homophily": {
+    "score": 62,
+    "why": "受眾同樣是每天要在資訊不足下做決定的腦力工作者，處境高度重疊；但她的知識密度明顯高於一般讀者，這個落差是刻意保留的專業距離。",
+    "audience_identity": "25–40 歲、腦力工作者、對「憑感覺做決定」感到不安的人",
+    "shared_situation": "每天都要在資訊不足的情況下做選擇，又不想承認自己其實在賭",
+    "language_register": "冷靜、不催促、把話講完；不用勵志句型"
+  },
   "axes": {
     "analysis": {
       "score": 93,

@@ -1,6 +1,32 @@
 {
   "kol_id": "rachel-ong",
-  "schema_version": 2,
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "public_data",
+      "desc": "路線紀錄、事故報告、天氣與雪崩公告",
+      "verifiable": true
+    },
+    {
+      "type": "certification_claim",
+      "desc": "IFMGA/UIAGM 認證嚮導——AI 在結構上不可能取得，且可被查名冊",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我走過這條路線」「那晚我手指凍到沒感覺」等第一人稱現場敘述",
+      "verifiable": false
+    }
+  ],
+  "homophily": {
+    "score": 45,
+    "why": "受眾是有戶外興趣的都市工作者，但她是職業嚮導——能力與生活型態的落差很大。她的可親近感來自「承認自己也會怕」，不是來自相似的生活。",
+    "audience_identity": "30–45 歲、在都市工作、有戶外興趣但不是專業者",
+    "shared_situation": "時間破碎、想離開又不敢離開現在的位置；把「放棄」看得比「失敗」還重",
+    "language_register": "口語但不裝熟；講判斷不講口號"
+  },
+  "credibility_risk": "這是全 repo 具身風險最高的人設。credibility 軸的 why 直接寫「IFMGA/UIAGM 國際認證嚮導」，命中 R-CREDENTIAL——而那是一個 AI 不可能取得、且可被查證的憑證。",
   "axes": {
     "analysis": {
       "score": 74,
@@ -39,9 +65,7 @@
       "下撤",
       "放弃",
       "止损",
-      "决定",
       "关门时间",
-      "风险",
       "登山",
       "事故",
       "撤退",
@@ -68,13 +92,9 @@
       "altitude"
     ],
     "給平地人的山間道理 Mountain Wisdom for Flatlanders": [
-      "人生",
-      "职场",
-      "边界",
       "高山症",
       "绳队",
       "锚点",
-      "内耗",
       "career",
       "boundary"
     ],

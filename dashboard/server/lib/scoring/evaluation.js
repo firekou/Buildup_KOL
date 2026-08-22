@@ -72,19 +72,43 @@ export function normalizeTargets(targets = {}) {
  * and is stored verbatim: heat drifts, and an honest before/after comparison
  * needs the numbers that were true at decision time.
  */
-export function buildPreEvaluation({ kol, topics, match, fourAxis = {}, targets = {}, plan = {}, author = null }) {
+export const PRIMARY_TASKS = [
+  { key: 'attention', label: '關注', hint: '目標是讓人看完。靠打破預期，而且那個意外要被化解掉。' },
+  { key: 'comment', label: '對話', hint: '目標是讓人回話。靠留下一個沒有被填滿的縫隙——跟「關注」的機制相反。' },
+  { key: 'share', label: '擴散', hint: '目標是讓人轉出去。靠實用價值或身分表態，多半發生在私訊而不是動態牆。' },
+  { key: 'identity', label: '身分', hint: '目標是讓人記得這個帳號是幹嘛的。短期數字通常不好看，這是刻意的。' },
+]
+
+export function buildPreEvaluation({
+  kol,
+  topics,
+  match,
+  fourAxis = {},
+  targets = {},
+  plan = {},
+  author = null,
+  primaryTask = null,
+  secondaryEffects = [],
+}) {
   const checklist = fourAxisChecklist(fourAxis)
   const normalizedTargets = normalizeTargets(targets)
 
-  const decision = match.blocked
-    ? { key: 'blocked', label: '紅線否決', reason: match.rationale }
+  // docs/11 §2.1 — the decision comes from the gates, not from a score
+  // threshold. v1 had `match.score < 50 → reassign`, which quietly guaranteed
+  // that low-fit pairs were never produced and therefore never measured — the
+  // survivorship bias this project criticised elsewhere and then repeated.
+  // The EXPERIMENT band now ships on purpose.
+  const decision = !match.gates?.passed
+    ? { key: 'veto', label: '否決', reason: match.decision?.detail ?? match.rationale }
     : match.needsBinding
       ? { key: 'unbound', label: '待綁定支柱', reason: '這個話題在該帳號上沒有內容支柱可以歸屬，先決定它屬於哪一根支柱' }
-      : match.score < 50
-        ? { key: 'reassign', label: '換人或換題', reason: `Match ${match.score} 低於 50` }
+      : !primaryTask
+        ? { key: 'needs_task', label: '待宣告主任務', reason: '每一支要先說清楚它主打關注、對話、擴散還是身分——這決定 hook 與 CTA 怎麼寫。' }
         : !normalizedTargets.views
-          ? { key: 'needs_target', label: '待填目標', reason: 'Match 過關，但還沒有人說出這支要達到什麼' }
-          : { key: 'go', label: '通過，可開工', reason: `Match ${match.score}，目標觀看 ${normalizedTargets.views}` }
+          ? { key: 'needs_target', label: '待填目標', reason: 'gate 過關，但還沒有人說出這支要達到什麼' }
+          : match.experimentBand
+            ? { key: 'go_experiment', label: '可開工（實驗帶）', reason: match.decision?.detail ?? '落在底線附近，刻意讓它上線以檢驗底線。' }
+            : { key: 'go', label: '通過，可開工', reason: `分帶 ${match.band?.label ?? '—'}，目標觀看 ${normalizedTargets.views}` }
 
   return {
     type: 'pre',
@@ -93,6 +117,11 @@ export function buildPreEvaluation({ kol, topics, match, fourAxis = {}, targets 
     topicIds: topics.map((t) => t.id),
     topicTags: topics.map((t) => t.tag),
     matchSnapshot: match,
+    /** docs/11 §8.1 — one primary task drives hook and CTA; side effects may not rewrite them. */
+    primaryTask,
+    secondaryEffects,
+    /** docs/11 §2.4 — carried into the post record so the band survives to analysis. */
+    experimentBand: Boolean(match.experimentBand),
     targets: normalizedTargets,
     fourAxisChecklist: checklist,
     plan,

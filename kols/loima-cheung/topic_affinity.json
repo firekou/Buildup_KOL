@@ -1,6 +1,26 @@
 {
   "kol_id": "loima-cheung",
-  "schema_version": 2,
+  "schema_version": 3,
+  "credibility_mode": "database",
+  "credibility_basis": [
+    {
+      "type": "public_work",
+      "desc": "影片、遊戲、動畫本身即公開可查的一手素材",
+      "verifiable": true
+    },
+    {
+      "type": "production_record",
+      "desc": "製作訪談、幕後紀錄、技術文件",
+      "verifiable": true
+    }
+  ],
+  "homophily": {
+    "score": 70,
+    "why": "和受眾都是重度數位內容使用者，語言、梗、觀看習慣幾乎同一套；差別只在他把感覺講成了框架。",
+    "audience_identity": "20–35 歲、看完一部作品會想知道「它為什麼有效」的人",
+    "shared_situation": "感覺得到好壞，但缺一套語言把感覺說清楚",
+    "language_register": "直接進正題，講得快但不跳步驟"
+  },
   "axes": {
     "analysis": {
       "score": 85,
