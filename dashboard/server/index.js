@@ -7,13 +7,14 @@ import * as store from './lib/store.js'
 import { DIMENSIONS } from './lib/scoring/match.js'
 import { getConfig } from './lib/scoring/gates.js'
 import { FOUR_AXES, DISPLAY_FIELDS, PRIMARY_TASKS } from './lib/scoring/evaluation.js'
-import { listNotes } from './lib/scoring/notes.js'
+import { listNotes, noteIndex } from './lib/scoring/notes.js'
 import { PLATFORMS } from './lib/topics/index.js'
 import kolsRouter from './routes/kols.js'
 import topicsRouter from './routes/topics.js'
 import workflowRouter from './routes/workflow.js'
 import evaluationsRouter from './routes/evaluations.js'
 import redlinesRouter from './routes/redlines.js'
+import guidedRouter from './routes/guided.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
@@ -39,7 +40,7 @@ app.get('/api/meta', (req, res) => {
     store: store.stats(),
     methodology: 'docs/11-system-redesign-spec.md',
     primaryTasks: PRIMARY_TASKS,
-    dimensionNotes: listNotes(),
+    dimensionNotes: noteIndex(),
     calibration: getConfig().calibration,
   })
 })
@@ -49,6 +50,7 @@ app.use('/api', topicsRouter)
 app.use('/api', workflowRouter)
 app.use('/api', evaluationsRouter)
 app.use('/api', redlinesRouter)
+app.use('/api', guidedRouter)
 
 app.use('/api', (req, res) => res.status(404).json({ error: `no such endpoint: ${req.method} ${req.originalUrl}` }))
 

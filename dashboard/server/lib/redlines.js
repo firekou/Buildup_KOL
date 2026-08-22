@@ -34,8 +34,18 @@ export const semanticOnlyRules = RULES.rules.filter((r) => r.semantic_prompt)
 export function checkContent({ scope = 'script', text = '', persona = null, profile = null } = {}) {
   const result = lint({ scope, text, persona, profile })
 
+  // `pendingSemantic` lists every semantic rule in scope, so combining several
+  // check results (match + plan text) multiplies the same rule ids. Deduping
+  // here keeps "3 things to look at" from rendering as 19.
+  const seen = new Set()
+  const dedupe = (rows) => rows.filter((r) => (seen.has(r.id) ? false : (seen.add(r.id), true)))
+  const needsReview = dedupe(result.needsReview)
+  const pendingSemantic = dedupe(result.pendingSemantic)
+
   return {
     ...result,
+    needsReview,
+    pendingSemantic,
     /**
      * The single field callers should branch on. `passed` only reports the
      * first layer; `resolved` says whether anything is still outstanding.
@@ -55,7 +65,15 @@ export function checkContent({ scope = 'script', text = '', persona = null, prof
  */
 export function redlineGate(input) {
   const r = checkContent(input)
-  const pending = [...r.needsReview, ...r.pendingSemantic].filter((x) => x.severity === 'block')
+
+  // Two different things, deliberately not merged:
+  //   lintHits  — this content tripped a keyword; specific, actionable
+  //   standing  — rules with no reliable keyword, so they need a semantic read
+  //               on EVERY piece of content, identical every time
+  // Merging them made a plan with one real hit look like it had eleven.
+  const lintHits = r.needsReview.filter((x) => x.severity === 'block')
+  const standing = r.pendingSemantic.filter((x) => x.severity === 'block')
+
   return {
     key: 'G1',
     label: '紅線',
@@ -63,8 +81,9 @@ export function redlineGate(input) {
     veto: r.blocked,
     blocks: r.blocks,
     warnings: r.warnings,
-    pending,
-    /** true when the gate's own answer is not yet knowable without the semantic layer. */
-    undecided: pending.length > 0,
+    lintHits,
+    standing,
+    /** true when this content's own answer is not yet knowable without the semantic layer. */
+    undecided: lintHits.length > 0,
   }
 }

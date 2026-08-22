@@ -341,7 +341,7 @@ export function matchKolToTopic(kol, topic, context = {}) {
       gateDimensions: { credibilityMode: withNote('credibilityMode', g2) },
       timing: buildTiming(topic),
       warnings: g1.warnings ?? [],
-      needsReview: [...(g1.pending ?? []), ...undecided],
+      needsReview: [...(g1.lintHits ?? []), ...undecided],
       decision: {
         key: 'veto',
         label: '否決',
@@ -395,7 +395,8 @@ export function matchKolToTopic(kol, topic, context = {}) {
     weakestDimension: shortest ? { key: shortest[0], label: shortest[1].note?.label ?? shortest[0], score: shortest[1].score } : null,
     needsBinding,
     warnings: g1.warnings ?? [],
-    needsReview: [...(g1.pending ?? []), ...undecided],
+    needsReview: [...(g1.lintHits ?? []), ...undecided],
+    standingChecks: g1.standing ?? [],
     dataIssues: kol.axisIssues ?? [],
     decision: needsBinding
       ? { key: 'unbound', label: '待綁定支柱', detail: '這個話題在該帳號上沒有內容支柱可以歸屬，先決定它屬於哪一根支柱再判。' }

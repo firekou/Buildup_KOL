@@ -154,8 +154,24 @@ export const DIMENSION_NOTES = {
 export const listNotes = () => Object.values(DIMENSION_NOTES)
 export const getNote = (key) => DIMENSION_NOTES[key] ?? null
 
-/** Attach the note to a computed dimension so the API never returns a bare number. */
+/**
+ * Attach the note to a computed dimension so the API never returns a bare
+ * number — but by reference, not by value.
+ *
+ * Embedding the full note in every dimension of every plan produced a 225KB
+ * response for six plans, almost all of it the same paragraphs repeated. The
+ * client fetches the note bodies once from `/api/notes` and joins on `noteKey`.
+ */
 export function withNote(key, payload) {
   const n = DIMENSION_NOTES[key]
-  return { ...payload, note: n ? { ...n, calibrationMeta: CALIBRATION[n.calibration] } : null }
+  if (!n) return { ...payload, noteKey: null }
+  return {
+    ...payload,
+    noteKey: key,
+    /** Just enough to render a row without a second request. */
+    noteSummary: { label: n.label, decisionRole: n.decisionRole, calibration: n.calibration, meaning: n.meaning },
+  }
 }
+
+export const noteIndex = () =>
+  Object.fromEntries(Object.entries(DIMENSION_NOTES).map(([k, n]) => [k, { ...n, calibrationMeta: CALIBRATION[n.calibration] }]))
