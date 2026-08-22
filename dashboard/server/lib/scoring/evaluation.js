@@ -50,13 +50,19 @@ export function fourAxisChecklist(scores = {}) {
   }
 }
 
-/** The two numbers the planner commits to before anything is generated. */
+/** The numbers the planner commits to before anything is generated. */
 export function normalizeTargets(targets = {}) {
-  const views = Number(targets.views)
-  const linkClicks = Number(targets.linkClicks)
+  const positive = (v) => {
+    const n = Number(v)
+    return Number.isFinite(n) && n > 0 ? Math.round(n) : null
+  }
   return {
-    views: Number.isFinite(views) && views > 0 ? Math.round(views) : null,
-    linkClicks: Number.isFinite(linkClicks) && linkClicks > 0 ? Math.round(linkClicks) : null,
+    views: positive(targets.views),
+    linkClicks: positive(targets.linkClicks),
+    // docs/11 §11 P1-5 — 互動 previously had no settable target, so it could
+    // never be judged. Comment and share outcomes were structurally excluded
+    // from every post-hoc review.
+    engagements: positive(targets.engagements),
     note: targets.note ?? null,
   }
 }
@@ -129,13 +135,63 @@ export const DISPLAY_FIELDS = [
   { key: 'linkClicks', label: '外連點擊' },
 ]
 
-export function buildPostEvaluation({ preEvaluation, actuals, fourAxisActual = {}, publishedAt = null, notes = null, matchRecordId = null }) {
+/**
+ * docs/11 §9.4-B — the observation windows a record can belong to.
+ * A backfill lands in a window only if its post age is within tolerance;
+ * anything else is stored but excluded from calibration.
+ */
+export const OBSERVATION_WINDOWS = [
+  { key: 'T+72h', targetHours: 72, toleranceHours: 12 },
+  { key: 'T+14d', targetHours: 336, toleranceHours: 12 },
+]
+
+export function resolveWindow(postAgeHours) {
+  if (!Number.isFinite(postAgeHours)) return null
+  return OBSERVATION_WINDOWS.find((w) => Math.abs(postAgeHours - w.targetHours) <= w.toleranceHours) ?? null
+}
+
+/**
+ * docs/11 §11 P1-2 — a performance number without a measurement time is not
+ * comparable to any other performance number. Views at 6 hours and views at
+ * 6 days are different quantities wearing the same label.
+ *
+ * This is the one gap that retroactively invalidates already-backfilled data,
+ * which is why it ships in the first batch and why `measuredAt` is required.
+ */
+export function buildPostEvaluation({
+  preEvaluation,
+  actuals,
+  fourAxisActual = {},
+  publishedAt = null,
+  measuredAt = null,
+  notes = null,
+  matchRecordId = null,
+}) {
+  const published = publishedAt ? Date.parse(publishedAt) : NaN
+  const measured = measuredAt ? Date.parse(measuredAt) : NaN
+  const postAgeHours =
+    Number.isFinite(published) && Number.isFinite(measured)
+      ? round((measured - published) / 3_600_000, 1)
+      : null
+
+  const window = resolveWindow(postAgeHours)
+
   return {
     type: 'post',
     preEvaluationId: preEvaluation?.id ?? null,
     kolId: preEvaluation?.kolId ?? actuals.kolId ?? null,
     matchRecordId,
     publishedAt,
+    measuredAt,
+    postAgeHours,
+    /** Which §9.4-B window this reading belongs to; null = outside every window. */
+    observationWindow: window?.key ?? null,
+    /** docs/11 §9.4-C — only windowed readings may enter calibration. */
+    eligibleForCalibration: Boolean(window) && Boolean(preEvaluation?.primaryTask),
+    /** docs/11 §2.4 — carried through from the pre-evaluation so the band survives to analysis. */
+    experimentBand: preEvaluation?.experimentBand ?? false,
+    primaryTask: preEvaluation?.primaryTask ?? null,
+    platform: actuals.platform ?? null,
     actuals: normalizeActuals(actuals),
     fourAxisActual: fourAxisChecklist(fourAxisActual),
     notes,
@@ -173,9 +229,12 @@ export function compare(pre, post) {
     }
   }
 
+  // docs/11 §11 P1-5 (review finding): v1 passed a literal `null` here, so the
+  // 互動 row could never be judged — comment and share outcomes were
+  // structurally excluded from every review. The target is now settable.
   const rows = [
     row('views', '觀看', targets.views),
-    row('engagements', '互動', null),
+    row('engagements', '互動', targets.engagements),
     row('linkClicks', '外連點擊', targets.linkClicks),
   ]
 
@@ -188,9 +247,12 @@ export function compare(pre, post) {
   if (reachOk == null || clicksOk == null) {
     attribution = { key: 'incomplete', label: '目標不完整', detail: '缺少目標值，無法判讀是選題問題還是素材問題。' }
   } else if (reachOk && !clicksOk) {
-    attribution = { key: 'material', label: '素材問題', detail: '觸及達標但外連點擊不足——題選對了，問題在素材的 CTA 與結尾設計。' }
+    // Descriptive, not causal. docs/11 §14 #—: Bakshy et al. 2011 found that
+    // which individual post spreads is relatively unpredictable, so reading a
+    // single miss as evidence about topic choice is reading noise as signal.
+    attribution = { key: 'material', label: '觸及達標、點擊未達標', detail: '這一支的觸及到了，點擊沒到。單一則的差異有很大一部分是隨機的——連續多則出現同樣形狀，才值得改素材的 CTA 與結尾。' }
   } else if (!reachOk) {
-    attribution = { key: 'selection', label: '選題或發布時機問題', detail: '觸及未達標——先檢查題材與發布時機，不是素材本身。' }
+    attribution = { key: 'selection', label: '觸及未達標', detail: '這一支的觸及沒到。不要據此斷定是選題問題——文獻上單則內容的擴散本來就不可靠預測。累積幾則同型的結果再判斷。' }
   } else {
     attribution = { key: 'onTarget', label: '符合預期', detail: '觸及與點擊都達標。' }
   }

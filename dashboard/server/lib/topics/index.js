@@ -1,7 +1,8 @@
 import { apify, isApifyConfigured } from '../../config.js'
 import { getAxes } from '../kols.js'
 import { classifyDomain, resolveAxisDemand } from './classify.js'
-import { fetchRegionTopics } from './apify.js'
+import { fetchRegionTopics, seedTermsFor } from './apify.js'
+import * as store from '../store.js'
 import { getFixtureTopics, FIXTURE_REGIONS } from './fixtures.js'
 
 export const PLATFORMS = ['threads', 'tiktok', 'instagram']
@@ -30,24 +31,27 @@ function mergeByTag(rows) {
   for (const row of rows) {
     const key = row.tag.toLowerCase().replace(/^#/, '')
     const existing = byTag.get(key)
+    // The apify path already emits a per-platform breakdown (docs/11 §11 P1-3);
+    // the fixture path has one flat `platform` per row. Accept both.
+    const platformsOf = (r) => r.platforms ?? [{ platform: r.platform, volume: r.volume }]
     if (!existing) {
       byTag.set(key, {
         ...row,
-        platforms: [{ platform: row.platform, volume: row.volume }],
+        platforms: platformsOf(row),
         postCount: row.postCount ?? null,
         tags: [row.tag],
-        _growths: Number.isFinite(row.growth7d) ? [{ v: row.growth7d, w: row.volume }] : [],
+        _growths: Number.isFinite(row.recencyRatio48h) ? [{ v: row.recencyRatio48h, w: row.volume }] : [],
         _rates: Number.isFinite(row.engagementRate) ? [{ v: row.engagementRate, w: row.volume }] : [],
       })
       continue
     }
     existing.volume += row.volume
     existing.postCount = (existing.postCount ?? 0) + (row.postCount ?? 0) || null
-    existing.platforms.push({ platform: row.platform, volume: row.volume })
+    existing.platforms.push(...platformsOf(row))
     // Collect, then average once at the end. Folding pairwise as we go
     // ((a+b)/2 then (…+c)/2) gives the LAST platform half the weight and makes
     // the result depend on merge order.
-    if (Number.isFinite(row.growth7d)) existing._growths.push({ v: row.growth7d, w: row.volume })
+    if (Number.isFinite(row.recencyRatio48h)) existing._growths.push({ v: row.recencyRatio48h, w: row.volume })
     if (Number.isFinite(row.engagementRate)) existing._rates.push({ v: row.engagementRate, w: row.volume })
     if (row.title && row.title.length > (existing.title?.length ?? 0)) existing.title = row.title
   }
@@ -59,7 +63,7 @@ function mergeByTag(rows) {
   }
   return [...byTag.values()].map(({ _growths, _rates, ...row }) => ({
     ...row,
-    growth7d: _growths.length ? weighted(_growths) : row.growth7d,
+    recencyRatio48h: _growths.length ? weighted(_growths) : row.recencyRatio48h,
     engagementRate: _rates.length ? weighted(_rates) : row.engagementRate,
   }))
 }
@@ -72,23 +76,96 @@ function mergeByTag(rows) {
  * 50 and contributes nothing — it only ever had values in the fixture set,
  * i.e. it was scoring on fake data (docs/10 第四刀).
  */
-function scoreHeat(rows) {
-  const logVolume = normalize(rows.map((r) => Math.log10(Math.max(r.volume, 1))))
-  const growth = normalize(rows.map((r) => r.growth7d))
+/**
+ * True when min–max normalization has nothing to separate — every value is the
+ * same, so `normalize()` returns the constant 50 for all of them.
+ *
+ * docs/11 §11 P1-4: in small samples this is the common case (every tag carried
+ * by exactly 2 accounts, every `recencyRatio48h` null). Heat then equals 50 for
+ * every row and `.sort()` degenerates to the incoming order — which the UI
+ * renders as a confident-looking ranking that carries no information at all.
+ */
+function isDegenerate(values) {
+  const finite = values.filter((v) => Number.isFinite(v))
+  if (finite.length < 2) return true
+  return Math.min(...finite) === Math.max(...finite)
+}
 
-  return rows.map((r) => {
-    const parts = {
-      volume: logVolume(Math.log10(Math.max(r.volume, 1))),
-      growth: growth(r.growth7d),
+/**
+ * Heat is always relative to the result set it was computed in (docs/09 §3.4).
+ *
+ * docs/11 §2.9 — normalization happens WITHIN a domain, not across all of them.
+ * Romero, Meeder & Kleinberg (2011) showed diffusion mechanics differ by topic:
+ * political hashtags spread by complex contagion (repeated exposure needed),
+ * idioms do not. Ranking the two on one scale compares different things.
+ */
+function scoreHeat(rows) {
+  const byDomain = new Map()
+  for (const r of rows) {
+    const d = r.domain ?? 'other'
+    if (!byDomain.has(d)) byDomain.set(d, [])
+    byDomain.get(d).push(r)
+  }
+
+  const out = []
+  for (const [domain, group] of byDomain) {
+    const logs = group.map((r) => Math.log10(Math.max(r.volume, 1)))
+    const growths = group.map((r) => r.recencyRatio48h)
+    const volumeFlat = isDegenerate(logs)
+    const growthFlat = isDegenerate(growths)
+
+    const logVolume = normalize(logs)
+    const growth = normalize(growths)
+
+    for (const r of group) {
+      const parts = {
+        volume: logVolume(Math.log10(Math.max(r.volume, 1))),
+        growth: growth(r.recencyRatio48h),
+      }
+      const heat = 0.6 * parts.volume + 0.4 * parts.growth
+      out.push({
+        ...r,
+        heat: Math.round(heat * 10) / 10,
+        heatParts: parts,
+        normalizedWithin: domain,
+        groupSize: group.length,
+        /**
+         * When both inputs are flat the heat number exists but orders nothing.
+         * Downstream must show "no discriminating power" instead of a rank.
+         */
+        heatDiscriminates: !(volumeFlat && growthFlat),
+      })
     }
-    const heat = 0.6 * parts.volume + 0.4 * parts.growth
-    return { ...r, heat: Math.round(heat * 10) / 10, heatParts: parts }
-  })
+  }
+  return out
+}
+
+/**
+ * docs/11 §2.8 — how much the heat number can be trusted.
+ *
+ * `none` is the honest answer without a stored time series: burst detection is
+ * defined against a term's own past (Kleinberg 2002) and we have one slice.
+ * There is deliberately no `high` — that would need platform-official APIs,
+ * not seed-term scraping.
+ */
+function heatConfidenceOf({ snapshotCount, discriminates }) {
+  if (!discriminates) return 'none'
+  if (!snapshotCount || snapshotCount < 2) return 'none'
+  return 'low'
+}
+
+/**
+ * docs/11 §2.9 — domain must be resolved BEFORE heat is scored, because heat is
+ * now normalized within a domain. In v1 `classifyDomain` ran inside `enrich`,
+ * i.e. after `scoreHeat`, so it could not have been used for this.
+ */
+function classify(rows) {
+  return rows.map((row) => ({ ...row, domain: classifyDomain(row) }))
 }
 
 function enrich(rows) {
   return rows.map((row) => {
-    const domain = classifyDomain(row)
+    const domain = row.domain ?? classifyDomain(row)
     const { demand, derivedFrom } = resolveAxisDemand({ ...row, domain })
     return {
       id: `${row.tag.toLowerCase().replace(/^#/, '').replace(/\s+/g, '-')}`,
@@ -99,11 +176,15 @@ function enrich(rows) {
       axisDerivedFrom: derivedFrom,
       volume: row.volume,
       postCount: row.postCount ?? null,
-      growth7d: row.growth7d,
+      recencyRatio48h: row.recencyRatio48h,
       engagementRate: row.engagementRate,
       platforms: row.platforms ?? [{ platform: row.platform, volume: row.volume }],
+      authorConcentration: row.authorConcentration ?? null,
       heat: row.heat,
       heatParts: row.heatParts,
+      heatDiscriminates: row.heatDiscriminates ?? true,
+      normalizedWithin: row.normalizedWithin ?? null,
+      groupSize: row.groupSize ?? null,
       samples: row.samples ?? [],
       sampleEngagement: row.sampleEngagement ?? null,
       sampleViews: row.sampleViews ?? null,
@@ -144,25 +225,112 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
     source = isApifyConfigured() ? 'fixtures_fallback' : 'fixtures'
   }
 
-  const ranked = enrich(scoreHeat(mergeByTag(raw)))
-    .sort((a, b) => b.heat - a.heat)
+  // docs/11 §2.9 — classify → score (within domain) → enrich.
+  const ranked = enrich(scoreHeat(classify(mergeByTag(raw)))).sort((a, b) => b.heat - a.heat)
+
+  const fetchedAt = new Date().toISOString()
+
+  // docs/11 §11 P1-1 — persist every real fetch. Without a stored history,
+  // heatConfidence can never leave `none` (Kleinberg 2002: a burst is defined
+  // relative to a term's own past). Fixtures are never snapshotted: they are
+  // hand-written placeholders and would poison the baseline.
+  let snapshotCount = 0
+  if (source.startsWith('apify')) {
+    try {
+      store.insert('topicSnapshots', {
+        capturedAt: fetchedAt,
+        region,
+        platforms,
+        source,
+        postsScraped,
+        seedTerms: seedTermsFor(region),
+        // Only what a future time series needs — not the whole payload.
+        tags: ranked.map((t) => ({
+          tag: t.tag,
+          domain: t.domain,
+          volume: t.volume,
+          postCount: t.postCount,
+          recencyRatio48h: t.recencyRatio48h,
+        })),
+      })
+    } catch (err) {
+      // A snapshot failure must never take the request down.
+      errors.push({ platform: 'store', message: `快照寫入失敗：${String(err.message).slice(0, 160)}` })
+    }
+    snapshotCount = store.list('topicSnapshots', { region }).length
+  }
+
+  const discriminates = ranked.some((t) => t.heatDiscriminates)
+  const heatConfidence = heatConfidenceOf({ snapshotCount, discriminates })
+
+  // Consequence of docs/11 §2.9 that has to be surfaced, not hidden: once heat
+  // is normalized WITHIN a domain, two topics from different domains no longer
+  // sit on the same scale. A flat cross-domain ranking would be exactly the
+  // "comparing different things" error §2.9 exists to remove — so the grouped
+  // view is the primary one and the flat list is explicitly marked.
+  const byDomain = [...new Map(
+    ranked.reduce((acc, t) => {
+      const d = t.domain ?? 'other'
+      if (!acc.has(d)) acc.set(d, [])
+      acc.get(d).push(t)
+      return acc
+    }, new Map()),
+  ).entries()]
+    .map(([domain, topics]) => ({
+      domain,
+      size: topics.length,
+      // A domain with one topic has nothing to rank against.
+      discriminates: topics.length > 1 && topics.some((t) => t.heatDiscriminates),
+      topics,
+    }))
+    .sort((a, b) => b.size - a.size)
 
   const value = {
     region,
     platforms,
     source,
     errors,
-    fetchedAt: new Date().toISOString(),
+    fetchedAt,
     total: ranked.length,
     postsScraped,
     /** volume 的語意隨來源而不同——UI 要據此改標籤，不能一律叫「量體」。 */
     volumeMeaning: source.startsWith('apify') ? 'sample_frequency' : 'platform_volume',
+    /** docs/11 §2.8 — 目前永遠不會是 high；沒有時間序列時是 none。 */
+    heatConfidence,
+    snapshotCount,
+    heatDiscriminates: discriminates,
+    heatCaveat: heatCaveatFor(heatConfidence, discriminates, source),
+    /**
+     * false, always, while heat is normalized within a domain (docs/11 §2.9).
+     * The UI must not present `topics` as a league table across domains.
+     */
+    crossDomainComparable: false,
+    crossDomainCaveat: '熱度是在「同一個題材類別內」比較出來的。不同類別之間的分數不能互相比大小——政治題與生活題的擴散機制本來就不同（Romero, Meeder & Kleinberg 2011）。要挑題請看分類別的清單。',
+    byDomain,
     topics: ranked.slice(0, limit),
     allTopics: ranked,
   }
 
   cache.set(key, { at: Date.now(), value })
   return { ...value, cached: false }
+}
+
+/**
+ * The sentence the UI must show next to any heat number. docs/11 §2.8 forbids
+ * the words 正在紅 / 新趨勢 / 爆紅 / 跨圈潛力 / 熱度上升 anywhere in the product;
+ * this is what goes there instead.
+ */
+function heatCaveatFor(confidence, discriminates, source) {
+  if (!source.startsWith('apify')) {
+    return '這一組是手寫的範例資料，不是抓到的。任何數字都不代表真實平台狀況。'
+  }
+  if (!discriminates) {
+    return '這批樣本裡每個標籤的數字都一樣，排序沒有區辨力——不要照這個順序選題。'
+  }
+  if (confidence === 'none') {
+    return '這是「樣本共現密度」，不是熱度。它說的是：在我們用種子詞抓到的樣本裡，有幾個不同帳號用了這個標籤。還沒有歷史快照，所以無法判定升溫。'
+  }
+  return '已有歷史快照可比較，但樣本仍小、且種子詞決定了能看到什麼。這個數字可以參考先後，不能當成平台熱度。'
 }
 
 export function listRegions() {
@@ -215,7 +383,7 @@ export function makeAdHocTopic(input) {
     title: input.title || tag,
     domain: input.domain,
     volume: input.volume ?? 0,
-    growth7d: input.growth7d ?? null,
+    recencyRatio48h: input.recencyRatio48h ?? null,
     engagementRate: input.engagementRate ?? null,
     samples: input.samples ?? [],
     platform: input.platform ?? 'manual',

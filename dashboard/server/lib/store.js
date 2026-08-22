@@ -16,6 +16,25 @@ const FILES = {
   pre: 'pre-evaluations.json',
   post: 'post-evaluations.json',
   matchRecords: 'match-records.json',
+  /**
+   * docs/11 §9.3 · P1-1 — one row per successful topic fetch.
+   *
+   * Burst detection is defined as "abnormal relative to this term's own past"
+   * (Kleinberg 2002). Without a stored history there is no past to compare to,
+   * so `heatConfidence` can never leave `none`. The Railway volume and this
+   * append-only store already existed; we were simply throwing the data away
+   * every time the in-memory cache expired.
+   */
+  topicSnapshots: 'topic-snapshots.json',
+  /**
+   * docs/11 §2.4 · P1-6 — every VETO, plus what a human thought of it.
+   *
+   * Without this the FLOOR can never be calibrated: vetoed pairs are never
+   * produced, so they generate no outcome data, so the line stays wherever we
+   * first guessed it. The human verdict is the only signal available for the
+   * region below the EXPERIMENT band.
+   */
+  vetoLog: 'veto-log.json',
 }
 
 function ensureDir() {

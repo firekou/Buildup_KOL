@@ -7,7 +7,7 @@
  * carries `source: "fixtures"`, and the UI badges it — never present these
  * numbers as real platform metrics.
  *
- * Tuple: [tag, title, domain, platform, volume, growth7dPercent, engagementRate]
+ * Tuple: [tag, title, domain, platform, volume, recencyRatio48hPercent, engagementRate]
  */
 
 const T = (rows) =>
@@ -17,7 +17,7 @@ const T = (rows) =>
     domain,
     platform,
     volume,
-    growth7d: growth,
+    recencyRatio48h: growth,
     engagementRate: engagement,
   }))
 

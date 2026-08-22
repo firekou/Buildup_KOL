@@ -43,6 +43,12 @@ const JUNK_TAGS = new Set([
   'berandafyp', 'masukberanda', 'fypシ', 'fypp', 'foryoupageofficiall',
 ])
 
+/** The seed terms a region's discovery space is bounded by. Recorded in every snapshot. */
+export function seedTermsFor(region) {
+  const seeds = REGION_SEEDS[region] ?? REGION_SEEDS.GLOBAL
+  return { tags: seeds.tags, keywords: seeds.keywords }
+}
+
 async function runActor(actorId, input, signal) {
   const url = `${API_BASE}/acts/${encodeURIComponent(actorId)}/run-sync-get-dataset-items?token=${encodeURIComponent(apify.token)}`
   const res = await fetch(url, {
@@ -165,9 +171,17 @@ export function aggregatePostsToTopics(posts, { now = Date.now(), minAuthors = 2
       const entry = byTag.get(tag) ?? {
         tag, postCount: 0, engagement: 0, views: 0, recentCount: 0,
         platforms: new Set(), authors: new Set(), samples: [],
+        // docs/11 §11 P1-3 — per-platform distinct authors. `mergeByTag`'s
+        // cross-platform branch is dead on this path (posts from all three
+        // platforms are flattened before aggregation, so every tag is already
+        // unique), which meant `platform` carried an arbitrary single platform
+        // while `volume` held the three-platform total.
+        byPlatform: new Map(),
       }
       entry.postCount += 1
       if (post.author) entry.authors.add(post.author)
+      if (!entry.byPlatform.has(post.platform)) entry.byPlatform.set(post.platform, new Set())
+      if (post.author) entry.byPlatform.get(post.platform).add(post.author)
       entry.engagement += post.engagement
       entry.views += post.views ?? 0
       const ts = post.timestamp ? Date.parse(post.timestamp) : NaN
@@ -187,22 +201,30 @@ export function aggregatePostsToTopics(posts, { now = Date.now(), minAuthors = 2
     rows.push({
       tag: `#${e.tag}`,
       title: e.samples[0]?.replace(/\s+/g, ' ').slice(0, 60) || `#${e.tag}`,
-      platform: [...e.platforms][0] ?? 'apify',
+      /** Every platform this tag was seen on, with that platform's own author count. */
+      platforms: [...e.byPlatform.entries()].map(([platform, authors]) => ({
+        platform,
+        volume: authors.size,
+      })),
       volume: authorCount,
       postCount: e.postCount,
       // A tag with 2 posts that both happen to be recent scores 100% and tops
       // the chart on pure noise. Below MIN_POSTS_FOR_GROWTH the ratio says
       // nothing, so report null — normalize() then treats it as neutral rather
       // than as a perfect score.
-      growth7d: e.postCount >= MIN_POSTS_FOR_GROWTH
+      // docs/11 §11 P1-5 — renamed from `growth7d`, which was a lie: this is
+      // the share of THIS tag's scraped posts published in the last 48h, not a
+      // week-over-week growth rate. No actor exposes one.
+      recencyRatio48h: e.postCount >= MIN_POSTS_FOR_GROWTH
         ? Math.round((e.recentCount / e.postCount) * 100)
         : null,
       engagementRate: null, // no reliable per-tag impression base; heat ignores it
       samples: e.samples,
+      /** How concentrated this tag is: 1.0 = every post from a different account. */
+      authorConcentration: e.postCount ? Math.round((authorCount / e.postCount) * 100) / 100 : null,
       /** Extra context the UI can show without pretending it is platform volume. */
       sampleEngagement: e.engagement,
       sampleViews: e.views || null,
-      platformsSeen: [...e.platforms],
     })
   }
   return rows.sort((a, b) => b.volume - a.volume || b.postCount - a.postCount)
