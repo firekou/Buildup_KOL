@@ -1,0 +1,193 @@
+{
+  "version": "1.0",
+  "updated": "2026-08-22",
+  "source": "docs/11-system-redesign-spec.md §5 · research/social-influence-theory/99-verification.md",
+  "note": "唯一真實來源。Dashboard 後端與 kol-redline-check skill 讀同一份，規則不會漂移。修改此檔即同時改變兩邊行為。",
+
+  "severities": {
+    "block": "一致認為不能做。命中即否決，不論其他維度分數多高。",
+    "warn": "有爭議或有明確代價。顯示警告，不阻擋，但必須被看見並記錄決定。"
+  },
+
+  "rules": [
+    {
+      "id": "R-EMBODIMENT",
+      "severity": "block",
+      "scope": ["persona", "plan", "script"],
+      "title": "具身主張紅線",
+      "rule": "AI KOL 不得主張「我親身在場／親身經歷／我的身體感受」且該主張不可查證。",
+      "why_plain": "這是一個 AI 生成的角色。「我爬過那座山」這句話對它來說是假的，而且是所有人都能一秒看穿的假。一旦被戳破，這個帳號之後講什麼都會被打折，救不回來。",
+      "evidence": [
+        {
+          "claim": "人會用「這是機器做的」當成判斷可信度的捷徑；這個捷徑對客觀分析是加分，對「我親身在場」是直接的反證。",
+          "source": "Sundar, S. S. (2008), The MAIN Model: A Heuristic Approach to Understanding Technology Effects on Credibility",
+          "url": "https://www.researchgate.net/publication/323990996",
+          "status": "verified"
+        },
+        {
+          "claim": "真誠（sincerity）與透明揭露（transparent endorsement）在具身人設上會互相衝突。",
+          "source": "Lee, J. A. & Eastin, M. S. (2021), Journal of Research in Interactive Marketing, 15(4), 822-841",
+          "url": "https://www.emerald.com/jrim/article-abstract/15/4/822/451011/Perceived-authenticity-of-social-media-influencers",
+          "status": "verified"
+        }
+      ],
+      "applies_when": { "credibility_mode": ["embodied", "hybrid", null] },
+      "patterns": {
+        "zh": ["我親身", "我亲身", "我走過", "我走过", "我爬過", "我爬过", "我當時在", "我当时在", "我去過現場", "我去过现场", "我體驗過", "我体验过", "我的身體", "我的身体", "當時我在場", "当时我在场", "我實際測試", "我实际测试"],
+        "en": ["i was there", "i personally", "i climbed", "i hiked", "i tested it myself", "when i was on site"]
+      },
+      "remedy": "改寫成可查證的形式：不要說「我走過」，要說「這條路線的紀錄顯示」／「根據三份事故報告」。"
+    },
+    {
+      "id": "R-CREDENTIAL",
+      "severity": "block",
+      "scope": ["persona"],
+      "title": "不可能憑證紅線",
+      "rule": "不得宣稱 AI 在結構上不可能取得的憑證——執照、國際認證、實地資歷、機構職位。",
+      "why_plain": "認證是要有一個真人去考、去登記、去被機構承認的。一個 AI 角色掛上「IFMGA 國際認證嚮導」，只要有人去查名冊就露餡了，而且這種東西是可以查的。",
+      "evidence": [
+        {
+          "claim": "同一條機器捷思對資料庫型主張是加分，對具身型主張是否定證據。",
+          "source": "Sundar, S. S. (2008), MAIN Model",
+          "url": "https://www.researchgate.net/publication/323990996",
+          "status": "verified"
+        }
+      ],
+      "patterns": {
+        "zh": ["認證嚮導", "认证向导", "持照", "執照", "执照", "國際認證", "国际认证", "註冊", "注册建築師", "注册建筑师", "取得資格", "取得资格", "考取"],
+        "en": ["ifmga", "uiagm", "certified guide", "licensed", "board-certified", "registered architect", "cfa charterholder"]
+      },
+      "remedy": "改為可查證的知識來源：「整理自 IFMGA 公開的路線標準」而不是「IFMGA 認證嚮導」。",
+      "note": "現行 validateAxes() 只檢查 why 的長度，抓不到這件事——這正是本規則存在的理由。"
+    },
+    {
+      "id": "R-NO-WHY",
+      "severity": "block",
+      "scope": ["persona"],
+      "title": "沒有理由的分數不得進入計算",
+      "rule": "任何軸分數必須附 why，長度 ≥ 10 字；否則該軸視為未定義，整條軸排除於計算之外（不得當成 0）。",
+      "why_plain": "填一個數字很快，但寫不出理由就代表這個數字是隨手打的。隨手打的數字進到公式裡，出來的還是隨手打的答案，只是看起來像有算過。",
+      "evidence": [
+        {
+          "claim": "docs/09 §0 原則二",
+          "source": "本專案方法論",
+          "url": null,
+          "status": "internal"
+        }
+      ],
+      "check": "axis_why_length",
+      "min_length": 10,
+      "remedy": "寫出這個分數的依據；寫不出來就把分數拿掉，不要填 0。"
+    },
+    {
+      "id": "R-FAKE-CERTAINTY",
+      "severity": "block",
+      "scope": ["plan", "script"],
+      "title": "絕對化保證",
+      "rule": "不得出現「絕對安全／零風險／保證成功／百分之百」這類無法成立的確定性宣稱。",
+      "why_plain": "沒有任何事情是百分之百的。講了就是騙，而且是會被抓的那種騙。",
+      "evidence": [{ "claim": "既有 KOL 紅線，沿用", "source": "kols/*/topic_affinity.json", "url": null, "status": "internal" }],
+      "patterns": {
+        "zh": ["絕對安全", "绝对安全", "零風險", "零风险", "保證成功", "保证成功", "百分百", "百分之百", "一定會", "一定会"],
+        "en": ["100% safe", "guaranteed", "zero risk", "risk-free"]
+      },
+      "remedy": "改成有條件的表述：「在這個天氣窗口下，風險降到⋯⋯」。"
+    },
+    {
+      "id": "R-STAGED-DANGER",
+      "severity": "block",
+      "scope": ["plan", "script"],
+      "title": "為互動率擺拍危險",
+      "rule": "不得為了互動率演出危險動作、誇大難度或美化冒險。",
+      "why_plain": "這會讓看的人去模仿，而他們沒有你設定裡那些條件。這是會出人命的那一類。",
+      "evidence": [{ "claim": "既有 KOL 紅線，沿用", "source": "kols/*/topic_affinity.json", "url": null, "status": "internal" }],
+      "patterns": {
+        "zh": ["作死", "極限挑戰", "极限挑战", "無保護", "无保护", "搏命", "玩命"],
+        "en": ["no safety gear", "death-defying"]
+      },
+      "remedy": "把危險留在敘述裡，不要留在畫面裡。"
+    },
+
+    {
+      "id": "W-ENGAGEMENT-BAIT",
+      "severity": "warn",
+      "scope": ["plan", "script"],
+      "title": "互動誘餌（刻意留破綻換留言）",
+      "rule": "刻意說錯、留破綻、擺反道具，誘發觀眾糾正欲以換取留言。",
+      "why_plain": "這招短期真的有用，但觀眾一旦看出「你是故意的」，扣分的不只是這一支影片，是他對這個帳號的整體評價。你等於用長期信任換一次留言數。",
+      "evidence": [
+        {
+          "claim": "人們會發展並運用「說服知識」來應對說服企圖，並據此同時修正對產品與對行銷者本身的態度。",
+          "source": "Friestad, M. & Wright, P. (1994), Journal of Consumer Research, 21(1), 1-31",
+          "url": "https://academic.oup.com/jcr/article-abstract/21/1/1/1853712",
+          "status": "verified"
+        }
+      ],
+      "model_disagreement": "Gemini 明確推薦此做法；GPT 與 Claude 反對。因模型間不一致，列為 warn 而非 block。",
+      "remedy": "改用「真心持有但反直覺」的立場——它一樣能引發討論，但被看穿也不傷信任，因為那本來就是你的想法。"
+    },
+    {
+      "id": "W-OUTGROUP",
+      "severity": "warn",
+      "scope": ["plan", "script"],
+      "title": "以外團體敵意換互動",
+      "rule": "用貶低某個群體（世代、性別、地域、政治立場、職業）來換取分享與留言。",
+      "why_plain": "這確實有效，效果大約是講自己人好話的兩倍。但你買到的是同溫層裡的更深，不是更廣——因為這種內容主要在「本來就同意你的人」之間傳。想觸及新的人，這招反而是反效果。",
+      "evidence": [
+        {
+          "claim": "提到政治外團體的貼文，其分享／轉發約為提到內團體的兩倍，且此效果強於情緒語言。",
+          "source": "Rathje, S., Van Bavel, J. J. & van der Linden, S. (2021), PNAS, 118(26)",
+          "url": "https://www.pnas.org/doi/10.1073/pnas.2024292118",
+          "status": "verified"
+        },
+        {
+          "claim": "每多一個道德—情緒詞，擴散增加約 20%；但道德傳染受群體成員身分限制，在群體內部放大，跨群體則不然。",
+          "source": "Brady, W. J. et al. (2017), PNAS, 114(28), 7313-7318",
+          "url": "https://www.pnas.org/doi/10.1073/pnas.1618923114",
+          "status": "verified"
+        }
+      ],
+      "remedy": "如果目標是跨圈觸達，換題。如果目標本來就是鞏固既有受眾，可以做，但要知道自己在做什麼並記錄下來。"
+    },
+    {
+      "id": "W-BLURRED-PILLAR",
+      "severity": "warn",
+      "scope": ["persona", "plan"],
+      "title": "人設邊界模糊",
+      "rule": "內容支柱超過 3 根，或某個支柱靠單一泛用關鍵字（人生／職場／內耗／邊界／決定／風險⋯⋯）就能命中任何題目。",
+      "why_plain": "支柱太多、關鍵字太泛，等於這個帳號什麼都能講。什麼都能講的帳號，觀眾會不知道要為了什麼追蹤你，市場會直接把你打折。",
+      "evidence": [
+        {
+          "claim": "未被所屬產業專門分析師覆蓋的公司，股價會被折價——身分歸類不清會被市場懲罰。",
+          "source": "Zuckerman, E. W. (1999), American Journal of Sociology, 104(5), 1398-1438",
+          "url": "https://www.jstor.org/stable/10.1086/210178",
+          "status": "verified"
+        }
+      ],
+      "generic_keywords": ["人生", "职场", "職場", "内耗", "內耗", "边界", "邊界", "决定", "決定", "风险", "風險", "选择", "選擇", "故事", "工具", "判断", "判斷", "成长", "成長", "改变", "改變"],
+      "max_pillars": 3,
+      "remedy": "收斂到 2–3 根，並把泛用關鍵字換成只有這根支柱會用的具體詞。"
+    },
+    {
+      "id": "W-NO-BASELINE",
+      "severity": "warn",
+      "scope": ["plan"],
+      "title": "沒有歷史基準就談時機",
+      "rule": "在 heatConfidence = none（沒有時間序列快照）時，做出任何與「正在升溫／趨勢／時機」有關的決策。",
+      "why_plain": "要說一個話題「正在紅」，你必須知道它「以前沒這麼紅」。我們現在只有今天這一張快照，所以講不出這句話——講了就是猜的。",
+      "evidence": [
+        {
+          "claim": "burst 的偵測建立在「相對於自身歷史基準的異常增加」，需要時間序列與狀態轉移成本。",
+          "source": "Kleinberg, J. (2002), Bursty and Hierarchical Structure in Streams, KDD '02",
+          "url": "https://www.cs.cornell.edu/home/kleinber/bhs.pdf",
+          "status": "verified"
+        }
+      ],
+      "forbidden_phrases": {
+        "zh": ["正在紅", "正在红", "新趨勢", "新趋势", "爆紅", "爆红", "跨圈潛力", "跨圈潜力", "熱度上升", "热度上升", "正在升溫", "正在升温"],
+        "en": ["trending now", "going viral", "breaking out"]
+      },
+      "remedy": "改稱「樣本共現密度」，並等 topicSnapshots 累積滿 7 天再談升溫。"
+    }
+  ]
+}
