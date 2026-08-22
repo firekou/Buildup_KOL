@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { api } from './api.js'
 import { Badge, Loading, Alert } from './components/ui.jsx'
 import KolProfileTab from './tabs/KolProfileTab.jsx'
+import CreateTab from './tabs/CreateTab.jsx'
+import ExploreTab from './tabs/ExploreTab.jsx'
+import PlansTab from './tabs/PlansTab.jsx'
 import TopicsTab from './tabs/TopicsTab.jsx'
 import EvaluationTab from './tabs/EvaluationTab.jsx'
 
 const TABS = [
-  { key: 'kol', label: '① KOL 屬性與人設' },
-  { key: 'topics', label: '② 地區話題與作業流程' },
-  { key: 'evaluation', label: '③ 導流素材前後評估' },
+  { key: 'create', label: '① 引導式建立 KOL' },
+  { key: 'kol', label: '② KOL 屬性與人設' },
+  { key: 'explore', label: '③ 話題探索' },
+  { key: 'plans', label: '④ 內容企劃' },
+  { key: 'topics', label: '⑤ 交叉查詢與作業流程' },
+  { key: 'evaluation', label: '⑥ 前後評估' },
 ]
 
 export default function App() {
@@ -16,14 +22,18 @@ export default function App() {
   const [kols, setKols] = useState([])
   const [error, setError] = useState(null)
   const [tab, setTab] = useState('kol')
+  const [notes, setNotes] = useState(null)
+  const [scoring, setScoring] = useState(null)
   const [selectedKolId, setSelectedKolId] = useState(null)
   const [evalRefresh, setEvalRefresh] = useState(0)
 
   useEffect(() => {
-    Promise.all([api.meta(), api.kols()])
-      .then(([m, k]) => {
+    Promise.all([api.meta(), api.kols(), api.notes(), api.scoringConfig()])
+      .then(([m, k, n, c]) => {
         setMeta(m)
         setKols(k.kols)
+        setNotes(n.byKey)
+        setScoring(c)
         setSelectedKolId(k.kols[0]?.id ?? null)
       })
       .catch((e) => setError(e.message))
@@ -47,6 +57,12 @@ export default function App() {
           <Badge tone={meta.store.persistent ? 'good' : 'warn'}>
             {meta.store.persistent ? '資料已持久化' : '資料為暫存（未掛載 volume）'}
           </Badge>
+          {/* docs/11 §3.3 — this belongs on the front page, not buried in a doc. */}
+          {scoring && (
+            <Badge tone={scoring.calibrationSummary.calibrated > 0 ? 'good' : 'warn'}>
+              {scoring.calibrationSummary.banner}
+            </Badge>
+          )}
         </div>
         <nav className="tabs">
           {TABS.map((t) => (
@@ -58,6 +74,9 @@ export default function App() {
       </header>
 
       <main className="page">
+        {tab === 'create' && <CreateTab />}
+        {tab === 'explore' && <ExploreTab regions={meta.regions} />}
+        {tab === 'plans' && <PlansTab kols={kols} regions={meta.regions} notes={notes} />}
         {tab === 'kol' && (
           <KolProfileTab meta={meta} kols={kols} selectedId={selectedKolId} onSelect={setSelectedKolId} />
         )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { api } from '../api.js'
-import { Card, Grade, Badge, Bar, Loading, Empty, Alert, Radar, RadarLegend, SERIES_KOL, SERIES_TOPIC, toneFor } from '../components/ui.jsx'
+import { Card, Band, Badge, Bar, Loading, Empty, Alert, Radar, RadarLegend, SERIES_KOL, SERIES_TOPIC, toneFor } from '../components/ui.jsx'
 
 export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
   const [detail, setDetail] = useState(null)
@@ -176,9 +176,9 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                       onClick={() => setOpenHook(hook.id === openHook ? null : hook.id)}
                     >
                       <div className="score sm" style={{ width: 52 }}>
-                        {hook.match.score}
+                        {hook.match.screeningScore ?? '—'}
                       </div>
-                      <Grade grade={hook.match.grade} />
+                      <Band band={hook.match.band} />
                       <div className="grow">
                         <div className="title">{hook.title}</div>
                         <div className="sub">
@@ -197,31 +197,33 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                             </span>
                           ))}
                         </div>
+                        {/* docs/11 §2 — 三維等權，熱度與地區已不在總分內 */}
                         <table>
                           <tbody>
                             {[
-                              ['人設契合', hook.match.dimensions.personaFit.score, '35%',
-                                `最弱軸：${hook.match.dimensions.personaFit.weakest?.label}（缺口 ${hook.match.dimensions.personaFit.weakest?.gap}）`],
-                              ['支柱覆蓋', hook.match.dimensions.pillarFit.score, '30%',
-                                hook.match.dimensions.pillarFit.pillar ?? '無支柱對應'],
-                              ['話題熱度', hook.match.dimensions.topicHeat.score, '20%',
-                                '連結點無平台熱度，取中性值 50；實際熱度由地區話題提供'],
-                              ['地區契合', hook.match.dimensions.regionFit.score, '15%',
-                                `${hook.match.dimensions.regionFit.detail.topicRegion} vs ${hook.match.dimensions.regionFit.detail.kolRegions.join('、')}`],
-                            ].map(([label, score, weight, note]) => (
+                              ['人設契合', hook.match.dimensions?.fit?.score,
+                                `最弱軸：${hook.match.dimensions?.fit?.weakest?.label ?? '—'}`],
+                              ['支柱契合', hook.match.dimensions?.pillar?.score,
+                                hook.match.dimensions?.pillar?.pillar ?? '無支柱對應'],
+                              ['相似性', hook.match.dimensions?.homophily?.score,
+                                hook.match.dimensions?.homophily?.explain ?? '尚未宣告'],
+                            ].map(([label, score, note]) => (
                               <tr key={label}>
                                 <td style={{ width: 80 }}>{label}</td>
-                                <td className="num" style={{ width: 46 }}>{score}</td>
-                                <td className="num muted" style={{ width: 40 }}>{weight}</td>
+                                <td className="num" style={{ width: 46 }}>{score ?? '—'}</td>
+                                <td className="num muted" style={{ width: 40 }}>1/3</td>
                                 <td className="small muted">{note}</td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
+                        <p className="small muted">
+                          時機（{hook.match.timing?.label}）：{hook.match.timing?.value ?? '—'}——不進總分。
+                        </p>
                         {hook.match.warnings?.length > 0 && (
                           <Alert tone="warn">
-                            紅線警告（不扣分，但要看見）：
-                            {hook.match.warnings.map((w) => w.keywords.join('／')).join('；')}
+                            紅線警示（不扣分，但要看見）：
+                            {hook.match.warnings.map((w) => `${w.id}｜${w.title}`).join('；')}
                           </Alert>
                         )}
                       </div>

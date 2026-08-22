@@ -12,6 +12,26 @@ const post = (path, payload) => request(path, { method: 'POST', body: JSON.strin
 
 export const api = {
   meta: () => request('/meta'),
+  notes: () => request('/notes'),
+  scoringConfig: () => request('/config/scoring'),
+
+  // docs/11 §6 — guided creation
+  createSteps: () => request('/create/steps'),
+  validateStep: (payload) => post('/create/validate', payload),
+  finalizeDraft: (payload) => post('/create/finalize', payload),
+
+  // docs/11 §7 — guided exploration
+  exploreTopics: ({ region, platforms = [], limit = 20, refresh = false }) =>
+    request(`/explore/topics?region=${region}&platforms=${platforms.join(',')}&limit=${limit}&refresh=${refresh}`),
+  crossDomain: ({ region }) => request(`/explore/cross-domain?region=${region}`),
+
+  // docs/11 §8 — plan generation
+  generatePlans: (payload) => post('/plans/generate', payload),
+
+  // docs/11 §5 — redlines
+  redlineRules: () => request('/redline/rules'),
+  redlineCheck: (payload) => post('/redline/check', payload),
+
   kols: () => request('/kols'),
   kol: (id, region) => request(`/kols/${id}${region ? `?region=${region}` : ''}`),
 

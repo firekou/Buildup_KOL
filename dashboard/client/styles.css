@@ -188,3 +188,115 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
 .scroll-x { overflow-x: auto; }
 
 .warn-text { color: var(--warn); }
+
+/* ─────────────────────────────────────────────────────────────
+   docs/11 · 重構後新增
+   ───────────────────────────────────────────────────────────── */
+
+/* 分帶取代字母等級（§2.5） */
+.grade.band-high { background: #1f6f3f; color: #d3f9d8 }
+.grade.band-mid { background: #4a4522; color: #f5e6a3 }
+.grade.band-low { background: #5a2d2d; color: #ffd7d7 }
+.grade.band-experiment { background: #2f4a6d; color: #cfe6ff }
+.grade.band-none { background: #30363d; color: #8b949e }
+
+/* 每個分數的備註（§3） */
+.score-row { border-top: 1px solid #21262d; padding: 6px 0 }
+.score-row:first-child { border-top: 0 }
+.score-head {
+  display: grid; grid-template-columns: minmax(90px, 1fr) 2fr auto auto;
+  gap: 10px; align-items: center; width: 100%;
+  background: none; border: 0; color: inherit; cursor: pointer; text-align: left; padding: 4px 0;
+}
+.score-head:hover { background: #161b22 }
+.score-label { display: flex; gap: 6px; align-items: center; font-size: 13px }
+.score-bar { height: 6px; background: #21262d; border-radius: 3px; overflow: hidden }
+.score-bar .fill { display: block; height: 100%; background: #58a6ff }
+.score-bar .fill.good { background: #3fb950 }
+.score-bar .fill.warn { background: #d29922 }
+.score-bar .fill.bad { background: #f85149 }
+.score-value { font-variant-numeric: tabular-nums; font-size: 13px; min-width: 36px; text-align: right }
+.score-toggle { font-size: 11px; color: #58a6ff }
+
+.note-body { padding: 10px 12px; background: #0d1117; border: 1px solid #21262d; border-radius: 6px; margin: 6px 0 10px }
+.note-plain { margin: 0 0 10px; font-size: 13px; color: #c9d1d9 }
+.note-grid { display: grid; grid-template-columns: 84px 1fr; gap: 6px 12px; margin: 0; font-size: 12px }
+.note-grid dt { color: #8b949e }
+.note-grid dd { margin: 0; color: #c9d1d9 }
+.evidence { margin: 0; padding-left: 16px }
+.evidence li { margin-bottom: 6px }
+.evidence small { color: #8b949e }
+
+/* 專家知識庫側欄（§6.2） */
+.create-body { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start }
+.expert { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 12px }
+.expert section { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 10px 12px }
+.expert h4 { margin: 0 0 6px; font-size: 13px }
+.expert p { margin: 0 0 6px; font-size: 12.5px; line-height: 1.6; color: #c9d1d9 }
+.expert .footnote { color: #8b949e; border-top: 1px solid #21262d; padding-top: 6px; margin-top: 8px }
+
+/* wizard 步驟列 */
+.steps { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 14px; flex-wrap: wrap }
+.steps button {
+  display: flex; gap: 6px; align-items: center; background: #0d1117;
+  border: 1px solid #21262d; border-radius: 999px; padding: 5px 12px; color: #8b949e; cursor: pointer; font-size: 12px;
+}
+.steps .on button { border-color: #58a6ff; color: #c9d1d9 }
+.steps .done button { color: #3fb950 }
+.steps .n { font-variant-numeric: tabular-nums; opacity: .7 }
+
+.field { margin-bottom: 12px }
+.field > label { display: block; font-size: 12px; color: #8b949e; margin-bottom: 4px }
+.field input, .field select { width: 100%; background: #0d1117; border: 1px solid #30363d; color: #c9d1d9; border-radius: 6px; padding: 7px 9px }
+.axes-editor .axis-row { display: grid; grid-template-columns: 90px 80px 1fr; gap: 8px; margin-bottom: 8px; align-items: center }
+.axes-editor label { font-size: 12px; color: #8b949e }
+.list-editor ul { list-style: none; padding: 0; margin: 0 0 6px }
+.list-editor li { display: flex; justify-content: space-between; gap: 8px; padding: 5px 8px; background: #0d1117; border: 1px solid #21262d; border-radius: 6px; margin-bottom: 4px; font-size: 13px }
+.problems { margin: 6px 0; padding-left: 18px; color: #f0883e; font-size: 13px }
+
+/* 紅線（§5） */
+.redlines { display: flex; flex-direction: column; gap: 8px; margin-top: 10px }
+.rl { border-radius: 6px; padding: 8px 10px; font-size: 12.5px; border: 1px solid }
+.rl strong { display: block; margin-bottom: 4px }
+.rl p { margin: 0 0 4px; line-height: 1.55 }
+.rl .remedy { color: #8b949e }
+.rl .hint { color: #d29922 }
+.rl.block { background: #2d1113; border-color: #6e2429; color: #ffd7d7 }
+.rl.warn { background: #2b2412; border-color: #6b5a1f; color: #f5e6a3 }
+.rl.review { background: #121d2f; border-color: #1f4068; color: #cfe6ff }
+.rl.standing { background: #0d1117; border-color: #21262d; color: #8b949e }
+.rl.standing button { background: none; border: 0; color: #58a6ff; cursor: pointer; padding: 0; font-size: 12.5px }
+.rl.standing ul { margin: 8px 0 0; padding-left: 16px }
+.rl.standing li { margin-bottom: 6px }
+
+/* 企劃卡（§8） */
+.plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(370px, 1fr)); gap: 14px; margin-top: 14px }
+.plan-task { margin-bottom: 10px }
+.plan-task .why { font-size: 12px; color: #8b949e; margin: 6px 0 0; line-height: 1.55 }
+.plan-shape { display: grid; grid-template-columns: 62px 1fr; gap: 5px 10px; font-size: 12.5px; margin: 0 0 10px }
+.plan-shape dt { color: #8b949e }
+.plan-shape dd { margin: 0 }
+.timing { margin-top: 10px; padding-top: 8px; border-top: 1px solid #21262d; font-size: 12px }
+.timing .caveat { color: #8b949e; margin: 6px 0 0; line-height: 1.5 }
+.weakest { font-size: 12px; color: #d29922; margin: 8px 0 0 }
+.standing-list { list-style: none; padding: 0; margin: 0 }
+.standing-list li { padding: 8px 0; border-top: 1px solid #21262d; font-size: 12.5px }
+.standing-list li:first-child { border-top: 0 }
+.standing-list p { margin: 4px 0 0; color: #8b949e }
+.rejected { font-size: 12.5px; color: #8b949e; padding-left: 18px }
+.rejected li { margin-bottom: 4px }
+
+/* 探索（§7） */
+.domain-group { margin-bottom: 18px }
+.domain-group h4 { display: flex; gap: 8px; align-items: center; margin: 0 0 6px; font-size: 13px }
+.domain-group .hint { font-size: 12px; color: #d29922; margin: 0 0 6px }
+.meta-grid { display: grid; grid-template-columns: 90px 1fr; gap: 6px 12px; font-size: 13px; margin: 0 }
+.meta-grid dt { color: #8b949e }
+.meta-grid dd { margin: 0 }
+.controls { flex-wrap: wrap; align-items: flex-end; gap: 10px }
+.controls label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #8b949e }
+
+@media (max-width: 980px) {
+  .create-body { grid-template-columns: 1fr }
+  .expert { position: static }
+}

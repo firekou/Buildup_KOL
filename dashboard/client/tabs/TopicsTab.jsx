@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { api } from '../api.js'
-import { Card, Grade, Badge, Bar, Loading, Empty, Alert, num, toneFor } from '../components/ui.jsx'
+import { Card, Band, Badge, Bar, Loading, Empty, Alert, num, toneFor } from '../components/ui.jsx'
 
 const SOURCE_LABEL = {
   apify: { tone: 'good', text: 'Apify 即時資料' },
@@ -224,7 +224,7 @@ export default function TopicsTab({ meta, kols, selectedKolId, onSelectKol, onPr
                       {num(t.volume)}
                       {t.postCount ? <span className="muted small"> /{t.postCount}</span> : null}
                     </td>
-                    <td className="num">{t.growth7d == null ? '—' : `${t.growth7d}%`}</td>
+                    <td className="num">{t.recencyRatio48h == null ? '—' : `${Math.round(t.recencyRatio48h)}%`}</td>
                     <td>
                       <div className="row" style={{ gap: 6 }}>
                         <span className="mono small" style={{ width: 30 }}>
@@ -431,9 +431,9 @@ function KolToTopics({ result, domainLabel }) {
       {result.recommended.map(({ topic, match }) => (
         <div key={topic.id} className="list-row" style={{ cursor: 'default' }}>
           <div className="score sm" style={{ width: 52 }}>
-            {match.score}
+            {match.screeningScore ?? '—'}
           </div>
-          <Grade grade={match.grade} />
+          <Band band={match.band} />
           <div className="grow">
             <div className="title mono">{topic.tag}</div>
             <div className="sub">{match.rationale}</div>
@@ -447,7 +447,7 @@ function KolToTopics({ result, domainLabel }) {
           <h4 style={{ marginTop: 16 }}>已排除（紅線命中）</h4>
           {result.excluded.map(({ topic, match }) => (
             <div key={topic.id} className="list-row" style={{ cursor: 'default', borderColor: '#6b2020' }}>
-              <Grade grade={match.grade} />
+              <Band band={match.band} />
               <div className="grow">
                 <div className="title mono">{topic.tag}</div>
                 <div className="sub">{match.rationale}</div>
@@ -461,9 +461,9 @@ function KolToTopics({ result, domainLabel }) {
       {result.hooks.map(({ hook, match }) => (
         <div key={hook.id} className="list-row" style={{ cursor: 'default' }}>
           <div className="score sm" style={{ width: 52 }}>
-            {match.score}
+            {match.screeningScore ?? '—'}
           </div>
-          <Grade grade={match.grade} />
+          <Band band={match.band} />
           <div className="grow">
             <div className="title">{hook.title}</div>
             <div className="sub">{hook.angle}</div>
@@ -486,9 +486,9 @@ function TopicToKols({ result }) {
       {result.recommended.map(({ kol, match }) => (
         <div key={kol.id} className="list-row" style={{ cursor: 'default' }}>
           <div className="score sm" style={{ width: 52 }}>
-            {match.score}
+            {match.screeningScore ?? '—'}
           </div>
-          <Grade grade={match.grade} />
+          <Band band={match.band} />
           <div className="grow">
             <div className="title">{kol.name}</div>
             <div className="sub">{match.rationale}</div>
@@ -500,7 +500,7 @@ function TopicToKols({ result }) {
           <h4 style={{ marginTop: 16 }}>已排除（紅線命中）</h4>
           {result.excluded.map(({ kol, match }) => (
             <div key={kol.id} className="list-row" style={{ cursor: 'default', borderColor: '#6b2020' }}>
-              <Grade grade={match.grade} />
+              <Band band={match.band} />
               <div className="grow">
                 <div className="title">{kol.name}</div>
                 <div className="sub">{match.rationale}</div>
@@ -559,16 +559,15 @@ function Combination({ result, onSave }) {
         <div>
           <h4>Match 分數卡</h4>
           <div className="row" style={{ marginBottom: 10 }}>
-            <span className="score">{match.score}</span>
-            <Grade grade={match.grade} />
+            <span className="score">{match.screeningScore ?? '—'}</span>
+            <Band band={match.band} />
           </div>
           <table>
             <tbody>
               {[
-                ['人設契合', match.dimensions.personaFit.score, '35%'],
-                ['支柱覆蓋', match.dimensions.pillarFit.score, '30%'],
-                ['話題熱度', match.dimensions.topicHeat.score, '20%'],
-                ['地區契合', match.dimensions.regionFit.score, '15%'],
+                ['人設契合', match.dimensions?.fit?.score, '1/3'],
+                ['支柱契合', match.dimensions?.pillar?.score, '1/3'],
+                ['相似性', match.dimensions?.homophily?.score, '1/3'],
               ].map(([label, score, weight]) => (
                 <tr key={label}>
                   <td style={{ width: 84 }}>{label}</td>
@@ -583,7 +582,7 @@ function Combination({ result, onSave }) {
           </table>
           {match.warnings?.length > 0 && (
             <Alert tone="warn">
-              紅線警告（不扣分）：{match.warnings.map((w) => w.keywords.join('／')).join('；')}
+              紅線警示（不扣分）：{match.warnings.map((w) => `${w.id}｜${w.title}`).join('；')}
             </Alert>
           )}
 

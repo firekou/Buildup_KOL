@@ -14,6 +14,14 @@ export const Card = ({ title, actions, note, children, className = '' }) => (
   </section>
 )
 
+/**
+ * docs/11 §2.5 — a band, never a precise number.
+ * The old <Grade> rendered "A｜強配 / 71.2", which reads as a forecast the
+ * data cannot support. This renders 高 / 中 / 低 / 實驗 with its own hint.
+ */
+export const Band = ({ band }) =>
+  band ? <span className={`grade band-${band.key}`} title={band.hint}>{band.label}</span> : null
+
 export const Grade = ({ grade }) =>
   grade ? <span className={`grade ${grade.key}`}>{grade.label}</span> : null
 

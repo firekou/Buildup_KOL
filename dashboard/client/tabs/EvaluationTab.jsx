@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { api } from '../api.js'
-import { Card, Grade, Badge, Bar, Loading, Empty, Alert, num, pct, toneFor } from '../components/ui.jsx'
+import { Card, Band, Badge, Bar, Loading, Empty, Alert, num, pct, toneFor } from '../components/ui.jsx'
 
 /**
  * Every field the platform gives us is stored; only the first three are the
@@ -162,7 +162,7 @@ function PreAndEntry({ pre, post, records, onSaved }) {
       actions={
         <div className="row">
           <span className="score sm">{m.score}</span>
-          <Grade grade={m.grade} />
+          <Band band={m.band} />
           <Badge tone={pre.decision.key === 'go' ? 'good' : pre.decision.key === 'blocked' ? 'bad' : 'warn'}>
             {pre.decision.label}
           </Badge>
@@ -176,10 +176,9 @@ function PreAndEntry({ pre, post, records, onSaved }) {
           <table>
             <tbody>
               {[
-                ['人設契合', m.dimensions.personaFit.score],
-                ['支柱覆蓋', m.dimensions.pillarFit.score],
-                ['話題熱度', m.dimensions.topicHeat.score],
-                ['地區契合', m.dimensions.regionFit.score],
+                ['人設契合', m.dimensions?.fit?.score],
+                ['支柱契合', m.dimensions?.pillar?.score],
+                ['相似性', m.dimensions?.homophily?.score],
               ].map(([label, score]) => (
                 <tr key={label}>
                   <td style={{ width: 84 }}>{label}</td>
