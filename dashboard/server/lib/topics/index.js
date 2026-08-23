@@ -3,11 +3,26 @@ import { getAxes } from '../kols.js'
 import { classifyDomain, resolveAxisDemand } from './classify.js'
 import { fetchRegionTopics, seedTermsFor } from './apify.js'
 import * as store from '../store.js'
+import { getConfig } from '../scoring/gates.js'
 import { getFixtureTopics, FIXTURE_REGIONS } from './fixtures.js'
 
 export const PLATFORMS = ['threads', 'tiktok', 'instagram']
 
 const cache = new Map() // key -> { at, value }
+
+/**
+ * docs/11 §4 B4 — Gemini's review: 7 days of history makes every ordinary
+ * weekend peak look like a burst. Whole weekly cycles, not elapsed days.
+ */
+const REQUIRED_WEEKLY_CYCLES = 3
+
+const getTimeSeriesConfig = () => {
+  try {
+    return getConfig().timeSeries ?? {}
+  } catch {
+    return {}
+  }
+}
 
 const cacheKey = (region, platforms) => `${region}::${[...platforms].sort().join(',')}`
 
@@ -148,10 +163,48 @@ function scoreHeat(rows) {
  * There is deliberately no `high` — that would need platform-official APIs,
  * not seed-term scraping.
  */
-function heatConfidenceOf({ snapshotCount, discriminates }) {
-  if (!discriminates) return 'none'
-  if (!snapshotCount || snapshotCount < 2) return 'none'
-  return 'low'
+function heatConfidenceOf({ snapshots = [], discriminates, approved = false } = {}) {
+  if (!discriminates) return { level: 'none', reason: '這批樣本沒有區辨力——數字全都一樣，排序沒有意義。' }
+  if (snapshots.length < 2) {
+    return { level: 'none', reason: '還沒有歷史快照可以比較，無法判定升溫。' }
+  }
+
+  // Span, not count. Two snapshots taken minutes apart is not a time series —
+  // and this is precisely the trap both spec reviewers named: Gemini pointed
+  // out that a 7-day baseline reads every ordinary weekend peak as a burst, so
+  // the bar is whole weekly cycles, not elapsed days and certainly not rows.
+  const times = snapshots.map((s) => Date.parse(s.capturedAt)).filter(Number.isFinite).sort((a, b) => a - b)
+  const spanDays = times.length >= 2 ? (times.at(-1) - times[0]) / 86_400_000 : 0
+  const weeklyCycles = Math.floor(spanDays / 7)
+
+  if (weeklyCycles < REQUIRED_WEEKLY_CYCLES) {
+    return {
+      level: 'none',
+      spanDays: Math.round(spanDays * 10) / 10,
+      weeklyCycles,
+      reason: `快照只涵蓋 ${Math.round(spanDays)} 天（${weeklyCycles} 個完整週週期）。社群流量有很強的平日／週末週期，週期數不足時，週末的正常高峰會被誤判成突發——需要 ${REQUIRED_WEEKLY_CYCLES} 個完整週週期。`,
+    }
+  }
+
+  // docs/11 §4 B4 — even with enough history, leaving the experimental zone is
+  // a human decision. The spec's first draft had this auto-enable; the review
+  // removed that, and the flag lives in scoring-config so the change is a
+  // reviewable commit rather than a silent threshold crossing.
+  if (!approved) {
+    return {
+      level: 'none',
+      spanDays: Math.round(spanDays * 10) / 10,
+      weeklyCycles,
+      reason: `快照已涵蓋 ${weeklyCycles} 個完整週週期，達到門檻——但出實驗區需要人工批准。批准後把 kols/scoring-config.json 的 timeSeries.approved 設為 true。`,
+    }
+  }
+
+  return {
+    level: 'low',
+    spanDays: Math.round(spanDays * 10) / 10,
+    weeklyCycles,
+    reason: `已有 ${weeklyCycles} 個完整週週期可比較，且經人工批准。仍是 low：樣本小、且種子詞決定了能看到什麼。`,
+  }
 }
 
 /**
@@ -235,6 +288,7 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
   // relative to a term's own past). Fixtures are never snapshotted: they are
   // hand-written placeholders and would poison the baseline.
   let snapshotCount = 0
+  let snapshotRows = []
   if (source.startsWith('apify')) {
     try {
       store.insert('topicSnapshots', {
@@ -257,11 +311,17 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
       // A snapshot failure must never take the request down.
       errors.push({ platform: 'store', message: `快照寫入失敗：${String(err.message).slice(0, 160)}` })
     }
-    snapshotCount = store.list('topicSnapshots', { region }).length
+    snapshotRows = store.list('topicSnapshots', { region })
+    snapshotCount = snapshotRows.length
   }
 
   const discriminates = ranked.some((t) => t.heatDiscriminates)
-  const heatConfidence = heatConfidenceOf({ snapshotCount, discriminates })
+  const confidence = heatConfidenceOf({
+    snapshots: snapshotRows,
+    discriminates,
+    approved: Boolean(getTimeSeriesConfig().approved),
+  })
+  const heatConfidence = confidence.level
 
   // Consequence of docs/11 §2.9 that has to be surfaced, not hidden: once heat
   // is normalized WITHIN a domain, two topics from different domains no longer
@@ -298,8 +358,11 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
     /** docs/11 §2.8 — 目前永遠不會是 high；沒有時間序列時是 none。 */
     heatConfidence,
     snapshotCount,
+    snapshotSpanDays: confidence.spanDays ?? 0,
+    weeklyCycles: confidence.weeklyCycles ?? 0,
+    requiredWeeklyCycles: REQUIRED_WEEKLY_CYCLES,
     heatDiscriminates: discriminates,
-    heatCaveat: heatCaveatFor(heatConfidence, discriminates, source),
+    heatCaveat: source.startsWith('apify') ? confidence.reason : heatCaveatFor(heatConfidence, discriminates, source),
     /**
      * false, always, while heat is normalized within a domain (docs/11 §2.9).
      * The UI must not present `topics` as a league table across domains.

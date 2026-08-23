@@ -3,27 +3,23 @@
   "updated": "2026-08-22",
   "spec": "docs/11-system-redesign-spec.md",
   "note": "所有先驗常數集中在這裡，不寫死在程式裡。每一個都標了 calibration 狀態——目前沒有任何一項是 calibrated。",
-
   "floor": {
     "value": 30,
     "calibration": "prior",
     "basis": "文獻（Mandler 1982）只確立『極度不契合無法被化解』這個質性結論，沒有給任何 0–100 尺度上的切點。這個數字是工程起點，唯一的正當性是 §2.4 的三段設計讓它可以被資料推翻。",
     "warning": "在 calibration.floor.status 變成 calibrated 之前，任何文件、UI 或對外說明都不得暗示這個數字有理論根據。"
   },
-
   "experimentBandWidth": {
     "value": 10,
     "calibration": "prior",
     "basis": "同 floor——無文獻依據。它存在的理由是：如果 fit < FLOOR 一律否決，這個區間的企劃永遠不會上線，就永遠收不到成效資料，FLOOR 也就永遠停在我們第一次猜的位置。這是倖存者偏差，docs/11 §0 紀律 5 禁止。"
   },
-
   "taskCoverage": {
     "minDistinctTasks": 3,
     "blocking": false,
     "calibration": "prior",
     "basis": "沒有文獻依據。它是一個提醒，不阻擋產出——真正通過 gate 的候選本來就可能自然偏向某一類，硬性配額只會逼系統為了填滿配額去硬拗不適合的切角。"
   },
-
   "statistics": {
     "note": "docs/11 §9.4-E。這些是校準判準，必須在開始收資料前寫定（§9.4-G）；資料收集開始後修改，必須留下 git 記錄與理由。",
     "alpha": 0.05,
@@ -35,23 +31,52 @@
     "preRegistered": true,
     "preRegisteredAt": "2026-08-22"
   },
-
   "calibration": {
-    "floor": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "p": null, "f2": null },
-    "weights": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "p": null, "f2": null },
-    "invertedU": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "p": null, "f2": null }
+    "floor": {
+      "status": "none",
+      "signedOffBy": null,
+      "signedOffAt": null,
+      "sampleSize": 0,
+      "p": null,
+      "f2": null
+    },
+    "weights": {
+      "status": "none",
+      "signedOffBy": null,
+      "signedOffAt": null,
+      "sampleSize": 0,
+      "p": null,
+      "f2": null
+    },
+    "invertedU": {
+      "status": "none",
+      "signedOffBy": null,
+      "signedOffAt": null,
+      "sampleSize": 0,
+      "p": null,
+      "f2": null
+    }
   },
-
   "dimensions": {
     "note": "三維等權。等權不是中性——它假設三者對排序同等重要——但我們沒有任何成效資料，任何非等權的權重都只是把 0.35 換成 0.4。等權至少宣告的是真話：我們不知道哪一維更重要。處理方式是把總分降格為分帶並把三根長條並列，讓短板看得見，而不是被平均掉。",
-    "weights": { "fit": 0.3333, "pillar": 0.3333, "homophily": 0.3333 },
+    "weights": {
+      "fit": 0.3333,
+      "pillar": 0.3333,
+      "homophily": 0.3333
+    },
     "calibration": "prior"
   },
-
   "bands": {
     "note": "screeningScore 內部保留數值供排序，UI 只顯示分帶——避免 71.2 這種精確預測感。切點同樣是 prior。",
     "high": 70,
     "mid": 50,
     "calibration": "prior"
+  },
+  "timeSeries": {
+    "requiredWeeklyCycles": 3,
+    "approved": false,
+    "calibration": "prior",
+    "basis": "Gemini 複審：7 天的歷史會讓每一個正常的週末高峰看起來像突發。所以門檻是完整的週週期數，不是經過幾天、更不是有幾筆快照。3 這個數字仍是先驗——文獻沒有給週期數，只給了「需要與自身歷史比較」這個要求。",
+    "approvalNote": "達到門檻後仍需人工批准才會離開實驗區。把 approved 設為 true 是一次可被審查的 commit，不是一個悄悄跨過的門檻。"
   }
 }
