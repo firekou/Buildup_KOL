@@ -5,7 +5,16 @@
     "updated_at": "2026-06-29",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["latina", "mexican-american", "los-angeles", "fashion", "beauty", "la-lifestyle", "gen-z", "bilingual"],
+    "tags": [
+      "latina",
+      "mexican-american",
+      "los-angeles",
+      "fashion",
+      "beauty",
+      "la-lifestyle",
+      "gen-z",
+      "bilingual"
+    ],
     "reference_profiles": [
       "@leanneford",
       "@devitabeauty",
@@ -21,7 +30,10 @@
     "ethnicity": "Latina (Mexican-American)",
     "origin": "East Los Angeles, California",
     "current_location": "Los Angeles, California",
-    "languages": ["English (native)", "Spanish (fluent)"],
+    "languages": [
+      "English (native)",
+      "Spanish (fluent)"
+    ],
     "appearance": {
       "height": "170cm",
       "hair": "Long, dark brown wavy hair — worn loose most of the time. Sometimes in a high ponytail or braided. Her hair has natural volume and movement.",
@@ -119,7 +131,13 @@
     ],
     "posting_frequency": "Instagram: 4–5x/week. Stories: daily. TikTok: 3–4x/week.",
     "aesthetic": {
-      "color_palette": ["warm terracotta", "golden hour orange", "deep burgundy", "cream", "rich brown"],
+      "color_palette": [
+        "warm terracotta",
+        "golden hour orange",
+        "deep burgundy",
+        "cream",
+        "rich brown"
+      ],
       "mood": "LA golden hour on a warm evening — warm light, full colour, everyone looks good. Feels like a good night. Saturated but real.",
       "editing_style": "Warm tones, slightly boosted contrast. Golden hour light is non-negotiable. Fast cuts on Reels with current sounds. Never over-edited — the point is that she actually looks like that."
     },
@@ -161,5 +179,38 @@
     "creator_category": "Fashion Model",
     "bio": "living loud, living mine 🔥",
     "account_username": "aaliyariv23"
+  },
+  "ai_assets": {
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "97f5c6cd-1c0c-4432-83d0-dd42210ecada",
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "身分參考圖為 Higgsfield Soul 訓練用的 face_reference 原始集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/ref_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/ref_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_02.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_03.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_04.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }

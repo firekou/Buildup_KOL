@@ -20,14 +20,54 @@
         "completed_at": "2026-07-31",
         "note": "先前兩次 session、共 12 次呼叫 show_characters(action='train') 皆為工具層級失敗（未取得 soul_id）。2026-07-31 使用者要求重試，改用先前已上傳確認的 12 個 media_id，本次第一次呼叫即成功受理，同日以 action='status' 確認 status: ready、raw_status: completed。可用 model: soul_2 + 此 soul_id 生成正式內容。"
       }
-    }
+    },
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "bdb1d879-da36-4c1a-bc63-9f5b49a3e94e",
+      "reference_element_id": "9f076fab-77ef-4c68-a146-f8060253c49a",
+      "anchor_image": "images/ref/anchor__v3_06_3q_fullbody.webp",
+      "anchor_source_in_studio": "images/face_reference/v3_06_3q_fullbody.png",
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "錨點 v3_06_3q_fullbody.png；v4_anchored_01–12 為以此錨點生成的訓練集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/anchor__v3_06_3q_fullbody.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/anchor__v3_06_3q_fullbody.webp",
+        "role": "anchor"
+      },
+      {
+        "file": "images/ref/v4_anchored_01_front_headshot.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/v4_anchored_06_3q_fullbody.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/v4_anchored_10_front_halfbody_rooftop.webp",
+        "role": "identity_ref"
+      }
+    ]
   },
   "meta": {
     "created_at": "2026-07-23",
     "updated_at": "2026-07-23",
     "status": "active",
     "category": "fitness",
-    "tags": ["fitness", "gym-girl", "weightlifting", "taiwanese", "kaohsiung", "body-positive", "strength-training", "gen-z"],
+    "tags": [
+      "fitness",
+      "gym-girl",
+      "weightlifting",
+      "taiwanese",
+      "kaohsiung",
+      "body-positive",
+      "strength-training",
+      "gen-z"
+    ],
     "reference_profiles": [
       "Taiwanese fitness content creators",
       "gym-girl aesthetic influencers",
@@ -43,7 +83,11 @@
     "ethnicity": "Taiwanese",
     "origin": "Kaohsiung, Taiwan (高雄)",
     "current_location": "Kaohsiung, Taiwan (高雄)",
-    "languages": ["Mandarin Chinese (native)", "English (conversational)", "Taiwanese Hokkien (basic)"],
+    "languages": [
+      "Mandarin Chinese (native)",
+      "English (conversational)",
+      "Taiwanese Hokkien (basic)"
+    ],
     "appearance": {
       "height": "170cm",
       "face_type": "Strikingly beautiful, warm, magnetic face — bright almond-shaped eyes, high soft cheekbones, a straight elegant nose, full lips with a natural, inviting smile. Gorgeous and approachable, not hard or stern — training gives her a glow and confidence, never a cold or aggressive expression. Idol/fitness-model tier good looks, never a stone-faced or intense default expression.",
@@ -134,7 +178,13 @@
     ],
     "posting_frequency": "Instagram: 5x/week + daily Stories. TikTok: 4–5x/week.",
     "aesthetic": {
-      "color_palette": ["charcoal black", "sun-tan bronze", "chalk white", "gym-mat grey", "energetic red accent"],
+      "color_palette": [
+        "charcoal black",
+        "sun-tan bronze",
+        "chalk white",
+        "gym-mat grey",
+        "energetic red accent"
+      ],
       "mood": "High-heat Kaohsiung gym energy — sweat, chalk dust, hard light through gym windows. Confident and a little defiant, never soft-focus or dreamy.",
       "editing_style": "Slightly high-contrast, true-to-skin color grading — no heavy filters that would erase muscle definition or sweat sheen. Gym lighting kept honest: fluorescent or hard daylight, not glamour lighting."
     },

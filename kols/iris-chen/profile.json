@@ -5,7 +5,15 @@
     "updated_at": "2026-06-30",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["lifestyle", "fashion", "taipei", "taiwanese", "gen-z", "street-style", "hot-girl"],
+    "tags": [
+      "lifestyle",
+      "fashion",
+      "taipei",
+      "taiwanese",
+      "gen-z",
+      "street-style",
+      "hot-girl"
+    ],
     "reference_profiles": [
       "@tzuyu_hair",
       "@lalaochh",
@@ -22,7 +30,11 @@
     "ethnicity": "Taiwanese",
     "origin": "Taipei, Taiwan",
     "current_location": "Taipei, Taiwan",
-    "languages": ["Mandarin Chinese (native)", "English (fluent)", "Japanese (basic)"],
+    "languages": [
+      "Mandarin Chinese (native)",
+      "English (fluent)",
+      "Japanese (basic)"
+    ],
     "appearance": {
       "height": "162cm",
       "face_type": "Round, sweet — 甜美型。參考臉型：熊熊（台灣藝人）。圓臉、大雙眼皮眼睛、精緻鼻梁、飽滿嘴唇、小下巴。",
@@ -111,7 +123,12 @@
     ],
     "posting_frequency": "Instagram: 4–5x/week + daily Stories. TikTok: 3x/week.",
     "aesthetic": {
-      "color_palette": ["warm off-white", "dusty beige", "soft warm grey", "faded denim blue"],
+      "color_palette": [
+        "warm off-white",
+        "dusty beige",
+        "soft warm grey",
+        "faded denim blue"
+      ],
       "mood": "台北的下午。自然光，有點曬，有點慵懶，有點捨不得離開。The kind of photo that makes you miss a city you've never been to.",
       "editing_style": "Warm and slightly faded. Film grain, natural tones, muted saturation. Photos look like they were taken on 35mm even when they weren't. No filters that look like filters."
     },
@@ -201,6 +218,37 @@
         "started_at": "2026-06-25",
         "completed_at": "2026-06-25"
       }
-    }
+    },
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "5fe3b6ba-1277-4822-9141-fb06eb3b93a0",
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "無 face_reference 目錄，Soul 直接以 images/training_v1/ 14 張訓練；此處取跨四個場景各一張。"
+    },
+    "avatar_image": {
+      "file": "images/ref/01_taipei_street_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/01_taipei_street_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/05_cafe_window_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/09_park_golden_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/13_car_selfie_01.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }

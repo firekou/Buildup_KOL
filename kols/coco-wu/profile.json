@@ -20,14 +20,54 @@
         "completed_at": "2026-07-31",
         "note": "show_characters(action='train') 於 2026-07-30 首次呼叫即成功受理，2026-07-31 透過 action='train'/'list' 回傳結果確認 status: ready、raw_status: completed。"
       }
-    }
+    },
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "cf7045dc-4e69-4c56-9621-aa8c40bf39b4",
+      "reference_element_id": "4b6c659c-786b-43de-87af-87cea3cc99dd",
+      "anchor_image": "images/ref/anchor__candidate_01.webp",
+      "anchor_source_in_studio": "images/face_reference/candidate_01.png",
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "round1_candidate_* 為早期候選，未採用；錨點為第二輪 candidate_01.png。"
+    },
+    "avatar_image": {
+      "file": "images/ref/anchor__candidate_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/anchor__candidate_01.webp",
+        "role": "anchor"
+      },
+      {
+        "file": "images/ref/01_morning_wake_selfie.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/04_outfit_mirror_selfie.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/08_home_hangout_laugh.webp",
+        "role": "identity_ref"
+      }
+    ]
   },
   "meta": {
     "created_at": "2026-07-23",
     "updated_at": "2026-07-23",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["lifestyle", "campus", "taichung", "taiwanese", "gen-z", "dorm-life", "university", "cute"],
+    "tags": [
+      "lifestyle",
+      "campus",
+      "taichung",
+      "taiwanese",
+      "gen-z",
+      "dorm-life",
+      "university",
+      "cute"
+    ],
     "reference_profiles": [
       "Taiwanese campus/dorm-life content creators",
       "university lifestyle vloggers (generic category, no specific individual)"
@@ -42,7 +82,10 @@
     "ethnicity": "Taiwanese",
     "origin": "Taichung, Taiwan",
     "current_location": "Taichung, Taiwan",
-    "languages": ["Mandarin Chinese (native)", "English (learning — uses cute broken phrases sometimes)"],
+    "languages": [
+      "Mandarin Chinese (native)",
+      "English (learning — uses cute broken phrases sometimes)"
+    ],
     "appearance": {
       "height": "158cm",
       "face_type": "Stunningly pretty, doll-like round face — every feature reads as beautiful and photogenic, the kind of face people call '校花' (school-beauty tier). Deep dimples when she smiles, a small delicate chin, big sweet eyes, fair, luminous porcelain-toned skin (NOT tanned, bronzed, olive, or deep golden/wheat-colored). Purely descriptive, no likeness to any real individual.",
@@ -132,7 +175,13 @@
     ],
     "posting_frequency": "Instagram：每週 4–5 次貼文＋每日限動。TikTok：每週 3–4 次。",
     "aesthetic": {
-      "color_palette": ["奶油白", "嬰兒粉", "薄荷綠", "淺紫丁香色", "宿舍燈的暖黃"],
+      "color_palette": [
+        "奶油白",
+        "嬰兒粉",
+        "薄荷綠",
+        "淺紫丁香色",
+        "宿舍燈的暖黃"
+      ],
       "mood": "大學宿舍的日常青春感——有點亂但很真實，手機直出的隨拍感，甜甜的、鬧鬧的、一點都不完美但很有生命力。",
       "editing_style": "手機直出質感為主，明亮清透的濾鏡（偏 VSCO 粉嫩色調），偶爾加可愛貼圖或手寫字，不刻意精修，保留自然瑕疵感。"
     },

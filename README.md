@@ -37,7 +37,8 @@ Buildup_KOL/
 
 人設與內容資料原樣複製自 `pennyhuang-oss/Virtual_KOL_Studio`；`topic_affinity.json` 為本 repo
 依 `kols/topic-axes.json` 的四軸重新分析後新增。匯入範圍與已知落差見
-[`docs/12-virtual-kol-studio-import.md`](docs/12-virtual-kol-studio-import.md)。
+[`docs/12-virtual-kol-studio-import.md`](docs/12-virtual-kol-studio-import.md)；
+身分錨點核對與站上帳號稽核見 [`docs/13`](docs/13-identity-anchor-and-site-account-audit.md)。
 
 | ID | 姓名 | 類型 | 族裔 | 狀態 |
 |----|------|------|------|------|
@@ -68,6 +69,7 @@ Buildup_KOL/
 | [09-kol-topic-match-and-evaluation-methodology](docs/09-kol-topic-match-and-evaluation-methodology.md) | **KOL × 話題 Match 公式**（四軸向量／四維加權／紅線與支柱兩道 gate）與**導流素材前後評估**、對照歸因 |
 | [10-dashboard-simplification-proposal](docs/10-dashboard-simplification-proposal.md) | 把 09 從八軸五維簡化成四軸四維的八刀提案，含外部 review 推翻的判斷紀錄 |
 | [12-virtual-kol-studio-import](docs/12-virtual-kol-studio-import.md) | **Virtual KOL Studio 11 位匯入紀錄**：四軸分數總表、三個結構性風險（具身主張／場景型支柱／相似性跨度）、schema v2→v3 與 fixture 補題 |
+| [13-identity-anchor-and-site-account-audit](docs/13-identity-anchor-and-site-account-audit.md) | **身分錨點核對**：對照 Higgsfield soul_id／Reference Element 修正選錯的參考圖（含「換錨點＝換臉」案例），與 demo.sofa-partner.com 站上 10 個帳號的稽核 |
 
 ---
 

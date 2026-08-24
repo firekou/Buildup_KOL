@@ -5,7 +5,16 @@
     "updated_at": "2026-06-29",
     "status": "active",
     "category": "wellness",
-    "tags": ["yoga", "wellness", "indian", "mumbai", "dance", "spirituality", "body-positive", "sensual-wellness"],
+    "tags": [
+      "yoga",
+      "wellness",
+      "indian",
+      "mumbai",
+      "dance",
+      "spirituality",
+      "body-positive",
+      "sensual-wellness"
+    ],
     "reference_profiles": [
       "@anshukayoga",
       "@yogasini",
@@ -22,7 +31,12 @@
     "ethnicity": "Indian (Punjabi)",
     "origin": "Mumbai, India",
     "current_location": "Mumbai, India",
-    "languages": ["Hindi (native)", "English (fluent)", "Marathi (conversational)", "Sanskrit (basic reading)"],
+    "languages": [
+      "Hindi (native)",
+      "English (fluent)",
+      "Marathi (conversational)",
+      "Sanskrit (basic reading)"
+    ],
     "appearance": {
       "height": "165cm",
       "hair": "Dark brown, long and naturally wavy-curly, usually loose or in a loose braid. Sometimes adorned with flowers or a thin gold chain.",
@@ -119,7 +133,13 @@
     ],
     "posting_frequency": "Instagram/TikTok: 6x/week. YouTube: 2x/month. Stories: daily.",
     "aesthetic": {
-      "color_palette": ["deep jewel teal", "warm terracotta", "marigold gold", "soft ivory", "rich magenta"],
+      "color_palette": [
+        "deep jewel teal",
+        "warm terracotta",
+        "marigold gold",
+        "soft ivory",
+        "rich magenta"
+      ],
       "mood": "Warm, vibrant, luminous. Mumbai golden hour. Feels like the air just before a monsoon. Beautiful without being sterile.",
       "editing_style": "Warm colour grading — rich saturation, golden tones. Movement videos often set to Hindi indie or classical fusion music. Natural light preferred but not exclusive. Skin is always glowing, never whitened or over-filtered."
     },
@@ -166,5 +186,38 @@
     },
     "engagement_style": "Warm and personal. Responds to body image struggles with care and without advice-dumping. Celebrates every follower who shares their own movement. Community feels like a studio, not a stage.",
     "community_name": "The Moving Temple"
+  },
+  "ai_assets": {
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "fac82296-8c69-4c34-b352-1b398c8b8e1c",
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "身分參考圖為 Higgsfield Soul 訓練用的 face_reference 原始集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/ref_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/ref_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_02.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_03.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_04.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }

@@ -5,7 +5,16 @@
     "updated_at": "2026-06-30",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["french", "paris", "food", "wine", "lifestyle", "effortless", "joie-de-vivre", "fashion"],
+    "tags": [
+      "french",
+      "paris",
+      "food",
+      "wine",
+      "lifestyle",
+      "effortless",
+      "joie-de-vivre",
+      "fashion"
+    ],
     "reference_profiles": [
       "@mimithorisson",
       "@food.frompariswithlove",
@@ -21,7 +30,11 @@
     "ethnicity": "French",
     "origin": "Lyon, France",
     "current_location": "Paris, France",
-    "languages": ["French (native)", "English (fluent)", "Italian (conversational)"],
+    "languages": [
+      "French (native)",
+      "English (fluent)",
+      "Italian (conversational)"
+    ],
     "appearance": {
       "height": "169cm",
       "hair": "Long, straight, natural honey golden blonde — always effortless, never styled. Sometimes a clip loosely pinned that's perpetually about to fall out.",
@@ -110,7 +123,13 @@
     ],
     "posting_frequency": "Instagram: 4x/week + daily Stories. TikTok: 3–4x/week. YouTube: 2x/month.",
     "aesthetic": {
-      "color_palette": ["warm cream", "dusty terracotta", "deep burgundy", "olive green", "soft gold"],
+      "color_palette": [
+        "warm cream",
+        "dusty terracotta",
+        "deep burgundy",
+        "olive green",
+        "soft gold"
+      ],
       "mood": "The golden hour of a Parisian kitchen in autumn. Warm, slightly imperfect, deeply inviting. The kind of image that makes you want to sit down at that table.",
       "editing_style": "Warm film-like colour grading. Natural light only — window light in the kitchen, late afternoon Paris light outdoors. Nothing over-produced. The food is never styled beyond how it actually looks. Props are things she owns: vintage glasses, old linen, chipped ceramics."
     },
@@ -158,5 +177,38 @@
     "creator_category": "Blogger",
     "bio": "paris.",
     "account_username": "camille.dpt"
+  },
+  "ai_assets": {
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": null,
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "身分參考圖為 Higgsfield Soul 訓練用的 face_reference 原始集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/ref_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/ref_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_02.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_03.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_04.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }

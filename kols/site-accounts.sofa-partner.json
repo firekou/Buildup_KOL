@@ -1,0 +1,340 @@
+{
+  "source": "https://demo.sofa-partner.com/newcomer",
+  "api": {
+    "list": "POST /api/search/artist-list {\"sort_type\":\"new\"}",
+    "detail": "POST /api/artist/info {\"artist_id\":N}"
+  },
+  "audited_at": "2026-08-24",
+  "note": "站上 10 個帳號全部對應到本 repo 自 Virtual KOL Studio 匯入的 KOL。頭像已逐一目視比對，身分皆正確。ananya-kapoor 在站上沒有帳號——但 stseng07（sophia-tseng）的 title 卻寫著 ananyakapoor9，兩者需一併釐清。should_be 的內容取自各 KOL profile.json 的 social 欄位，可直接套用。",
+  "kols_without_account": [
+    "ananya-kapoor"
+  ],
+  "accounts": [
+    {
+      "site_username": "linlinlin111",
+      "artist_id": 71470528,
+      "room_id": 9,
+      "kol_id": "vicky-lin",
+      "current": {
+        "title": "linlinlin111 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Vicky Lin 💪 高雄練咖 的直播間",
+        "about_us": "今天練了，所以今天算贏。💪",
+        "album_name": "Vicky Lin 💪 高雄練咖",
+        "creator_category": "Fitness Trainer",
+        "account_username": "vlin1225",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "bdb1d879-da36-4c1a-bc63-9f5b49a3e94e",
+        "anchor_image": "images/ref/anchor__v3_06_3q_fullbody.webp"
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 vlin1225）"
+      ]
+    },
+    {
+      "site_username": "stseng07",
+      "artist_id": 42379661,
+      "room_id": 7,
+      "kol_id": "sophia-tseng",
+      "current": {
+        "title": "ananyakapoor9 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Sophia Tseng · 曾詩妃 的直播間",
+        "about_us": "這本來就是我的生活。",
+        "album_name": "Sophia Tseng · 曾詩妃",
+        "creator_category": "Interior Design & Home Aesthetics Consultant",
+        "account_username": "s.tseng07",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "192562bb-ca64-4615-9515-13d34807857c",
+        "anchor_image": "images/ref/anchor__candidate_01.webp"
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 s.tseng07）",
+        "title 指向其他 KOL：ananyakapoor9 的直播間"
+      ]
+    },
+    {
+      "site_username": "rainie24",
+      "artist_id": 55643595,
+      "room_id": 8,
+      "kol_id": "rainie-hsu",
+      "current": {
+        "title": "rainie24 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Rainie Hsu 🍸 的直播間",
+        "about_us": "今晚，看我的。🍸",
+        "album_name": "Rainie Hsu 🍸",
+        "creator_category": "Digital creator",
+        "account_username": "hsurainie8",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "a4a000fe-fd96-4c36-97ff-0df9358a9b47",
+        "anchor_image": "images/ref/anchor__candidate_02.webp"
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 hsurainie8）"
+      ]
+    },
+    {
+      "site_username": "mia9188",
+      "artist_id": 34639394,
+      "room_id": 3,
+      "kol_id": "mia-huang",
+      "current": {
+        "title": "mia9188 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Mia 黃米亞 🎮🌙 的直播間",
+        "about_us": "chat, don't look at me like that 👀",
+        "album_name": "Mia 黃米亞 🎮🌙",
+        "creator_category": "Gamer / Video Creator",
+        "account_username": "mia_gg",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "e2f562ba-2c3f-4e50-b9be-f8854dcb6ab4",
+        "anchor_image": "images/ref/anchor__candidate_02.webp"
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 mia_gg）"
+      ]
+    },
+    {
+      "site_username": "dpnt22",
+      "artist_id": 39188066,
+      "room_id": 5,
+      "kol_id": "camille-dupont",
+      "current": {
+        "title": "dpnt22 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Camille Dupont 的直播間",
+        "about_us": "paris.",
+        "album_name": "Camille Dupont",
+        "creator_category": "Blogger",
+        "account_username": "camille.dpt",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": null,
+        "anchor_image": null
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 camille.dpt）"
+      ]
+    },
+    {
+      "site_username": "cocowu5",
+      "artist_id": 37254728,
+      "room_id": 4,
+      "kol_id": "coco-wu",
+      "current": {
+        "title": "cocowu5 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "可可Coco 🧋✨💕 的直播間",
+        "about_us": "早八前五分鐘，還在棉被裡🛏️",
+        "album_name": "可可Coco 🧋✨💕",
+        "creator_category": "Digital creator",
+        "account_username": "cocowu_tea",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "cf7045dc-4e69-4c56-9621-aa8c40bf39b4",
+        "anchor_image": "images/ref/anchor__candidate_01.webp"
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 cocowu_tea）"
+      ]
+    },
+    {
+      "site_username": "aaliyarivera4",
+      "artist_id": 90614974,
+      "room_id": 10,
+      "kol_id": "aaliya-okonkwo",
+      "current": {
+        "title": "aaliyarivera4 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Aaliya Rivera 🔥 的直播間",
+        "about_us": "living loud, living mine 🔥",
+        "album_name": "Aaliya Rivera 🔥",
+        "creator_category": "Fashion Model",
+        "account_username": "aaliyariv23",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "97f5c6cd-1c0c-4432-83d0-dd42210ecada",
+        "anchor_image": null
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 aaliyariv23）"
+      ]
+    },
+    {
+      "site_username": "yunakimbeauty11",
+      "artist_id": 19597659,
+      "room_id": 1,
+      "kol_id": "yuna-kim",
+      "current": {
+        "title": "yunakimbeauty11 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "김하은 Yuna 🍒 的直播間",
+        "about_us": "예쁘게 살기 🍒",
+        "album_name": "김하은 Yuna 🍒",
+        "creator_category": "Beauty, Cosmetic & Personal Care",
+        "account_username": "haeun.yuna",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "235794a5-2eff-45fb-91b4-3232910afefa",
+        "anchor_image": null
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 haeun.yuna）"
+      ]
+    },
+    {
+      "site_username": "luna855687",
+      "artist_id": 41418353,
+      "room_id": 6,
+      "kol_id": "luna-tanaka",
+      "current": {
+        "title": "luna855687 的直播間",
+        "about_us": null,
+        "album_name": null,
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 0,
+      "should_be": {
+        "title": "Luna Tanaka 🌙 的直播間",
+        "about_us": "今日も、きれいなものを見つけた。🌙",
+        "album_name": "Luna Tanaka 🌙",
+        "creator_category": "Photographer",
+        "account_username": "lunahina22",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "a3dc13ec-16e7-4990-89c6-9e0461db46ef",
+        "anchor_image": null
+      },
+      "gaps": [
+        "about_us 空白",
+        "album_name 空白",
+        "無封面圖",
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI",
+        "帳號名與人設不符（人設為 lunahina22）"
+      ]
+    },
+    {
+      "site_username": "Iris520520",
+      "artist_id": 26138655,
+      "room_id": 2,
+      "kol_id": "iris-chen",
+      "current": {
+        "title": "Iris520520 的直播間",
+        "about_us": "醒了拍，沒醒也拍",
+        "album_name": "Iris",
+        "is_ai_creator": "0"
+      },
+      "current_cover_count": 1,
+      "should_be": {
+        "title": "Iris Chen 的直播間",
+        "about_us": "剛睡醒。",
+        "album_name": "Iris Chen",
+        "creator_category": "Digital creator",
+        "account_username": "Iris520520",
+        "is_ai_creator": "1"
+      },
+      "identity_anchor": {
+        "soul_id": "5fe3b6ba-1277-4822-9141-fb06eb3b93a0",
+        "anchor_image": null
+      },
+      "gaps": [
+        "title 仍是預設值",
+        "is_ai_creator 未標記為 AI"
+      ]
+    }
+  ]
+}

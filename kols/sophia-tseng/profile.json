@@ -20,14 +20,55 @@
         "completed_at": "2026-07-31",
         "note": "使用者明確核准第三輪重新設計後的候選圖批次並指示直接送訓練（「你就直接拿去訓練吧」）。show_characters(action='train') 首次呼叫即成功受理，2026-07-31 以 action='status' 確認 status: ready、raw_status: completed。可用 model: soul_2 + 此 soul_id 生成正式內容。"
       }
-    }
+    },
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "192562bb-ca64-4615-9515-13d34807857c",
+      "reference_element_id": "980f8414-7709-47ff-9c88-fdc30b54d03d",
+      "anchor_image": "images/ref/anchor__candidate_01.webp",
+      "anchor_source_in_studio": "images/face_reference/candidate_01.png",
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "錨點為 2026-07-30 二次修正後的 candidate_01.png；round1–round3 為早期候選，未採用。"
+    },
+    "avatar_image": {
+      "file": "images/ref/anchor__candidate_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/anchor__candidate_01.webp",
+        "role": "anchor"
+      },
+      {
+        "file": "images/ref/01_morning_window_candid.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/04_outfit_mirror_selfie_tryon.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/11_hotel_candid_bed_window.webp",
+        "role": "identity_ref"
+      }
+    ]
   },
   "meta": {
     "created_at": "2026-07-23",
     "updated_at": "2026-07-23",
     "status": "active",
     "category": "luxury lifestyle",
-    "tags": ["luxury", "lifestyle", "taipei", "taiwanese", "socialite", "old-money", "hotel-travel", "mature", "quiet-luxury"],
+    "tags": [
+      "luxury",
+      "lifestyle",
+      "taipei",
+      "taiwanese",
+      "socialite",
+      "old-money",
+      "hotel-travel",
+      "mature",
+      "quiet-luxury"
+    ],
     "reference_profiles": [
       "Taiwanese luxury lifestyle content creators",
       "quiet-luxury / old-money aesthetic accounts",
@@ -43,7 +84,11 @@
     "ethnicity": "Taiwanese",
     "origin": "Taipei, Taiwan",
     "current_location": "Taipei, Taiwan (信義區)",
-    "languages": ["Mandarin Chinese (native)", "English (fluent, studied abroad)", "French (conversational)"],
+    "languages": [
+      "Mandarin Chinese (native)",
+      "English (fluent, studied abroad)",
+      "French (conversational)"
+    ],
     "appearance": {
       "height": "168cm",
       "face_type": "Breathtakingly warm, universally-recognized mainstream beauty — the kind of gorgeous face that turns heads instantly, unmistakably and conventionally pretty (not merely 'handsome,' 'striking,' or 'interesting'). A softly rounded face with full, plush cheeks and NO visible cheekbone definition (deliberately the OPPOSITE of an angular, high-cheekbone bone structure), a soft, gently-tapering jawline with no visible jaw angle or sculpted edge (deliberately NOT a sharp, defined, or sculpted jawline). Gentle almond-shaped eyes with a subtle, shallow single-fold/monolid-leaning eyelid (deliberately NOT a large, dramatic, double-eyelid 'big eyes' shape) — quieter and smaller than a striking glamour-model eye, calm and warm rather than bold or dramatic. A softly rounded nose with a gentle, unsculpted tip (not a sharp or high-bridge nose). Naturally fuller, softly rounded lips with a relaxed, warm curve and a genuine gentle smile (not a flat, distant, or languid expression). A small natural beauty mark just below the outer corner of her left eye — a subtle, memorable, distinguishing detail unique to her. Fair, luminous porcelain-toned glowing skin (NOT tanned, bronzed, olive, or deep golden/wheat-colored). Calm and composed in demeanor and posture, but her face itself reads as softly radiant, warm, and approachable — the sophistication lives in her styling, attitude, and poise, while her facial structure itself is gently mature and inviting rather than sharp or editorial. This is its OWN distinct beauty archetype — soft, warm, gently mature, approachable — not a plainer or less-attractive version of a sharp high-cheekbone look; softness and roundness here read as their own kind of universally appealing, high-end elegance, never cold, aloof, severe, or ordinary. Deliberately, structurally distinct (not merely different adjectives on the same bone structure) from an oval-faced, high-cheekbone, sculpted-jawline, large-striking-eyed glamour archetype. Purely descriptive, no likeness to any real individual.",
@@ -133,7 +178,13 @@
     ],
     "posting_frequency": "Instagram：每週 3–4 次貼文 + 不定期限動。不追求高頻率，寧可少發但每則都到位。",
     "aesthetic": {
-      "color_palette": ["ivory", "champagne beige", "deep charcoal", "muted gold", "soft marble grey"],
+      "color_palette": [
+        "ivory",
+        "champagne beige",
+        "deep charcoal",
+        "muted gold",
+        "soft marble grey"
+      ],
       "mood": "安靜的奢華感。不是張揚的炫富，是一種『這本來就是我的生活』的從容——五星飯店的挑高天花板、絲質布料垂墜的樣子、大理石反光的冷靜光澤。",
       "editing_style": "乾淨、低對比、色調偏暖米。不加誇張濾鏡，光線本身要夠好，後製只是讓質感更清楚，而不是製造氣氛。"
     },

@@ -40,7 +40,38 @@
         "completed_at": "2026-08-05",
         "note": "show_characters(action='train', name='Rainie Hsu v2') 第一次呼叫即成功受理，取得 soul_id，raw_status: queued。待後續 session 確認 status=ready 後，將此欄位 status 改為 ready、補上 completed_at，並把本角色所有後續生成改用此 soul_id，同時把 README.md / KOL_TRAINING_SOP.md 的 Soul ID 欄位更新為此值。 **2026-08-05 確認完成**：show_characters(action='status') 回傳 raw_status: completed, status: ready。可直接用 model: soul_2 + 此 soul_id 生成後續內容。"
       }
-    }
+    },
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "a4a000fe-fd96-4c36-97ff-0df9358a9b47",
+      "reference_element_id": "a469f98d-11ae-42f3-8580-220d94cd473a",
+      "anchor_image": "images/ref/anchor__candidate_02.webp",
+      "anchor_source_in_studio": "images/face_reference/candidate_02.png",
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "v2 錨點。generation_notes 2026-08-05 記載：v1 錨點 candidate_01 身材不符 94-59-92 設定，換為 candidate_02，並明載「換錨點＝換臉」——candidate_01 與 candidate_02 是兩個不同的人，round1–round3 批次皆已作廢。"
+    },
+    "avatar_image": {
+      "file": "images/ref/anchor__candidate_02.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/anchor__candidate_02.webp",
+        "role": "anchor"
+      },
+      {
+        "file": "images/ref/02_mirror_selfie_outfit_check.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/05_vanity_liner_candid.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/12_hotel_window_selfie.webp",
+        "role": "identity_ref"
+      }
+    ]
   },
   "meta": {
     "created_at": "2026-07-23",

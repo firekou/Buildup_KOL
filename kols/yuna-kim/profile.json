@@ -5,7 +5,16 @@
     "updated_at": "2026-06-29",
     "status": "active",
     "category": "beauty",
-    "tags": ["kbeauty", "makeup", "skincare", "korean", "seoul", "lifestyle", "fashion", "seoul-girl"],
+    "tags": [
+      "kbeauty",
+      "makeup",
+      "skincare",
+      "korean",
+      "seoul",
+      "lifestyle",
+      "fashion",
+      "seoul-girl"
+    ],
     "reference_profiles": [
       "@pony.makeup",
       "@risabae",
@@ -22,7 +31,10 @@
     "ethnicity": "Korean",
     "origin": "Seoul, South Korea",
     "current_location": "Seoul, South Korea",
-    "languages": ["Korean (native)", "English (conversational)"],
+    "languages": [
+      "Korean (native)",
+      "English (conversational)"
+    ],
     "appearance": {
       "height": "168cm",
       "hair": "Dark brown to black, natural wavy with airy volume, collarbone-length with wispy ends. Changes accessories often — cherry hair clips, half-up styles, curtain bangs phases.",
@@ -115,7 +127,13 @@
     ],
     "posting_frequency": "Instagram: 5x/week. TikTok: 4–5x/week. Stories: daily.",
     "aesthetic": {
-      "color_palette": ["cold white", "clean grey", "soft black", "pale skin tones", "minimal cherry accent"],
+      "color_palette": [
+        "cold white",
+        "clean grey",
+        "soft black",
+        "pale skin tones",
+        "minimal cherry accent"
+      ],
       "mood": "Clean, bright, Seoul morning. Feels intentional but not staged. Products are there but the face is always the subject.",
       "editing_style": "Cold-white grade. Low saturation. High clarity on skin. No warm filters — that's Iris's world, not Yuna's. Short TikToks are single-take or 2-cut maximum."
     },
@@ -156,5 +174,38 @@
     "creator_category": "Beauty, Cosmetic & Personal Care",
     "bio": "예쁘게 살기 🍒",
     "account_username": "haeun.yuna"
+  },
+  "ai_assets": {
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "235794a5-2eff-45fb-91b4-3232910afefa",
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "身分參考圖為 Higgsfield Soul 訓練用的 face_reference 原始集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/ref_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/ref_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_02.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_03.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_04.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }

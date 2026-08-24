@@ -5,7 +5,16 @@
     "updated_at": "2026-06-29",
     "status": "active",
     "category": "lifestyle",
-    "tags": ["japanese", "aesthetic", "photography", "minimalism", "kyoto", "film", "slow-life", "cute"],
+    "tags": [
+      "japanese",
+      "aesthetic",
+      "photography",
+      "minimalism",
+      "kyoto",
+      "film",
+      "slow-life",
+      "cute"
+    ],
     "reference_profiles": [
       "@muji_global",
       "@kinfolk",
@@ -22,7 +31,10 @@
     "ethnicity": "Japanese",
     "origin": "Kyoto, Japan",
     "current_location": "Kyoto, Japan",
-    "languages": ["Japanese (native)", "English (conversational)"],
+    "languages": [
+      "Japanese (native)",
+      "English (conversational)"
+    ],
     "appearance": {
       "height": "155cm",
       "hair": "Black, fine, straight — center-parted, chin-length. Perfectly still even in wind somehow.",
@@ -119,7 +131,13 @@
     ],
     "posting_frequency": "Instagram: 3–4x/week. Stories: daily. TikTok: 2–3x/week.",
     "aesthetic": {
-      "color_palette": ["soft white", "blush pink", "pale sage", "warm beige", "dusty lavender"],
+      "color_palette": [
+        "soft white",
+        "blush pink",
+        "pale sage",
+        "warm beige",
+        "dusty lavender"
+      ],
       "mood": "Like a memory of a perfect quiet day. Film grain, soft focus, natural window light. Everything slightly imperfect in a way that feels intentional.",
       "editing_style": "Minimal editing. Film emulation — Kodak Portra or Fujifilm look. Slightly lifted shadows, soft highlights. Never over-sharpened. Videos use ambient sound: rain, birds, paper, tea being poured."
     },
@@ -166,5 +184,38 @@
     "creator_category": "Photographer",
     "bio": "今日も、きれいなものを見つけた。🌙",
     "account_username": "lunahina22"
+  },
+  "ai_assets": {
+    "identity_anchor": {
+      "platform": "Higgsfield",
+      "soul_id": "a3dc13ec-16e7-4990-89c6-9e0461db46ef",
+      "reference_element_id": null,
+      "anchor_image": null,
+      "anchor_source_in_studio": null,
+      "verified_at": "2026-08-24",
+      "verified_how": "對照 Virtual_KOL_Studio generation_notes.md 宣告的 soul_id／Reference Element，並逐張目視核對是否符合 profile.identity.appearance 的設定。",
+      "note": "身分參考圖為 Higgsfield Soul 訓練用的 face_reference 原始集。"
+    },
+    "avatar_image": {
+      "file": "images/ref/ref_01.webp"
+    },
+    "seed_images": [
+      {
+        "file": "images/ref/ref_01.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_02.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_03.webp",
+        "role": "identity_ref"
+      },
+      {
+        "file": "images/ref/ref_04.webp",
+        "role": "identity_ref"
+      }
+    ]
   }
 }
