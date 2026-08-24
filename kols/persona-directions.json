@@ -1,0 +1,263 @@
+{
+  "version": "1.0",
+  "updated": "2026-08-24",
+  "spec": "docs/14-outlier-scan-spec.md",
+  "note": "人設方向層。docs/14 §2——使用者的作業第一步說的是「人設方向」（健康型／遊戲型／政治型／運動型），不是某一位具體 KOL，而系統原本只有 KOL 這一層。這個檔案補上中間那一層。",
+  "discipline": {
+    "seedTerms": "種子詞決定了掃描能看到什麼。這不是新限制——既有的 apify.js 早就承認過（seedTermsFor 會被寫進每一筆快照）。方向層讓它變成可設定、可被檢視的資料，而不是寫死在程式裡的常數。",
+    "noScores": "這個檔案裡沒有任何分數。方向不是一個維度，不進評分。它只決定「去哪裡找題目」與「找到之後要提醒什麼」。",
+    "emptyIsHonest": "memberKols 是空陣列時不擋掃描。掃描照跑、主題照列，但輸出標示 scored:false，明講「這個方向目前沒有可用人設，以下是題目盤點，不是可執行企劃」。先看到題目再決定要不要做人設，本來就是合理的順序。",
+    "newsQueriesUnverified": "newsQueries 的實際可用性尚未實機驗證——開發環境的 proxy 擋掉了 news.google.com 與 tw.news.yahoo.com。docs/14 §4.1 與 docs/15 批次 0 記著這件事。"
+  },
+
+  "regionSources": {
+    "note": "各地區的時事來源。使用者指示：打台灣市場就查 Google 新聞與 Yahoo 新聞；香港、新加坡、日本各有各自的時事議題。",
+    "TW": {
+      "googleNews": { "hl": "zh-TW", "gl": "TW", "ceid": "TW:zh-Hant" },
+      "yahoo": { "base": "https://tw.news.yahoo.com", "hasRss": "unverified" },
+      "language": "zh-Hant"
+    },
+    "HK": {
+      "googleNews": { "hl": "zh-HK", "gl": "HK", "ceid": "HK:zh-Hant" },
+      "yahoo": { "base": "https://hk.news.yahoo.com", "hasRss": "unverified" },
+      "language": "zh-Hant",
+      "note": "中文用詞與台灣差異大，查詢字串必須各自寫，不能共用 TW 的。"
+    },
+    "SG": {
+      "googleNews": { "hl": "en-SG", "gl": "SG", "ceid": "SG:en" },
+      "yahoo": { "base": "https://sg.news.yahoo.com", "hasRss": "unverified" },
+      "language": "en"
+    },
+    "MY": {
+      "googleNews": { "hl": "en-MY", "gl": "MY", "ceid": "MY:en" },
+      "yahoo": null,
+      "language": "en"
+    },
+    "JP": {
+      "googleNews": { "hl": "ja", "gl": "JP", "ceid": "JP:ja" },
+      "yahoo": { "base": "https://news.yahoo.co.jp", "hasRss": "unverified" },
+      "language": "ja"
+    },
+    "KR": {
+      "googleNews": { "hl": "ko", "gl": "KR", "ceid": "KR:ko" },
+      "yahoo": null,
+      "language": "ko"
+    },
+    "US": {
+      "googleNews": { "hl": "en-US", "gl": "US", "ceid": "US:en" },
+      "yahoo": { "base": "https://www.yahoo.com/news", "hasRss": "unverified" },
+      "language": "en"
+    },
+    "CN": {
+      "googleNews": null,
+      "yahoo": null,
+      "language": "zh-Hans",
+      "note": "Google News 與 Yahoo 在境內的可及性另議。這一區的 Track B 暫時無來源——寫成 null 而不是留白，是為了讓畫面能明確說「這一區沒有時事軌」，而不是靜默地少一半資料。"
+    },
+    "GLOBAL": {
+      "googleNews": { "hl": "en", "gl": "US", "ceid": "US:en" },
+      "yahoo": null,
+      "language": "en",
+      "note": "GLOBAL 實際上是英語世界，不是「全球」。命名沿用既有系統，但讀的時候要知道它偏什麼。"
+    }
+  },
+
+  "directions": [
+    {
+      "key": "health",
+      "label": "健康型",
+      "domains": ["health", "life", "sports"],
+      "domainNote": "health 這個 domain 目前不存在於 kols/topic-axes.json，需要新增（docs/14 §2.3）。在那之前健康題會落在 life 或 sports，比對結果會偏掉。",
+      "seedTerms": {
+        "TW": { "tags": ["健康", "養生", "營養", "睡眠"], "keywords": ["健康 習慣", "營養 迷思"] },
+        "HK": { "tags": ["健康", "養生", "營養"], "keywords": ["健康 習慣"] },
+        "SG": { "tags": ["health", "wellness", "nutrition"], "keywords": ["healthy habits", "nutrition myths"] },
+        "JP": { "tags": ["健康", "睡眠", "栄養"], "keywords": ["健康 習慣"] },
+        "US": { "tags": ["health", "wellness", "longevity", "nutrition"], "keywords": ["health myths", "longevity habits"] },
+        "GLOBAL": { "tags": ["health", "wellness", "nutrition"], "keywords": ["health habits"] }
+      },
+      "newsQueries": {
+        "TW": ["健康", "營養", "睡眠", "慢性病", "衛福部"],
+        "HK": ["健康", "營養", "衞生署"],
+        "SG": ["health", "nutrition", "MOH Singapore"],
+        "JP": ["健康", "栄養", "睡眠"],
+        "US": ["health", "nutrition", "wellness", "CDC"],
+        "GLOBAL": ["health", "nutrition", "wellness"]
+      },
+      "pillarKeywords": ["健康", "養生", "營養", "睡眠", "飲食", "運動習慣", "health", "wellness", "nutrition", "sleep"],
+      "redlineProfile": {
+        "high": ["R-HIGH-STAKES-ADVICE", "R-FAKE-CERTAINTY", "R-CREDENTIAL"],
+        "why": "健康題最容易滑進「個案指令」（你應該停藥／你這個症狀是⋯⋯）與「絕對化保證」（一定會瘦／完全無害）。而且營養師、醫師、教練這類身分對 AI 人設是不可能憑證（R-CREDENTIAL）。這三條都是 block 等級。"
+      },
+      "memberKols": ["ananya-kapoor", "sophia-tseng"],
+      "coverageNote": "覆蓋很薄。ananya-kapoor 是 hybrid，可查證的那一半（體式解剖）撐得住；sophia-tseng 只有一根「健身／Pilates」支柱，人設主體是生活風格。這個方向掃出來的題目，多半需要新的人設才做得起來。"
+    },
+    {
+      "key": "gaming",
+      "label": "遊戲型",
+      "domains": ["game", "tech", "pop"],
+      "seedTerms": {
+        "TW": { "tags": ["遊戲", "電競", "手遊", "steam"], "keywords": ["遊戲 討論", "電競 賽事"] },
+        "HK": { "tags": ["遊戲", "電競", "手遊"], "keywords": ["遊戲 討論"] },
+        "JP": { "tags": ["ゲーム", "eスポーツ", "ソシャゲ"], "keywords": ["ゲーム 話題"] },
+        "KR": { "tags": ["게임", "이스포츠"], "keywords": ["게임 이슈"] },
+        "US": { "tags": ["gaming", "esports", "indiegame"], "keywords": ["game discussion", "esports"] },
+        "GLOBAL": { "tags": ["gaming", "esports", "steam"], "keywords": ["game discussion"] }
+      },
+      "newsQueries": {
+        "TW": ["遊戲", "電競", "手遊", "Steam"],
+        "HK": ["遊戲", "電競"],
+        "JP": ["ゲーム", "eスポーツ"],
+        "KR": ["게임", "이스포츠"],
+        "US": ["gaming", "esports", "video games"],
+        "GLOBAL": ["gaming", "esports"]
+      },
+      "pillarKeywords": ["遊戲", "電競", "手遊", "主機", "抽卡", "關卡設計", "gaming", "esports", "game design"],
+      "redlineProfile": {
+        "high": ["R-EMBODIMENT", "W-ENGAGEMENT-BAIT"],
+        "why": "遊戲內容的核心是「我在玩」——實況、手把、反應。這對 AI 人設是具身主張（R-EMBODIMENT）。可行的形態是設計拆解、產業分析、劇情考據這類不需要主張「我剛剛打了三小時」的路。"
+      },
+      "memberKols": ["loima-cheung", "mia-huang"],
+      "coverageNote": "loima-cheung 是 database 型、支柱是數字娛樂設計，是這個方向唯一結構上站得住的人。mia-huang 的人設是每週開台 5–6 晚的直播主——docs/12 §3.1 已判定直播是即時、雙向、可被驗證的行為，AI 人設在結構上無法履行，要經營必須先把定位改成預錄。掃描結果送到她身上之前要先解決這件事。"
+    },
+    {
+      "key": "politics",
+      "label": "政治型",
+      "domains": ["news", "history"],
+      "seedTerms": {
+        "TW": { "tags": ["時事", "政策", "選舉"], "keywords": ["時事 討論", "政策 爭議"] },
+        "HK": { "tags": ["時事", "政策"], "keywords": ["時事 討論"] },
+        "SG": { "tags": ["singaporepolitics", "policy"], "keywords": ["policy debate"] },
+        "JP": { "tags": ["政治", "政策"], "keywords": ["政治 話題"] },
+        "US": { "tags": ["politics", "policy"], "keywords": ["policy debate"] },
+        "GLOBAL": { "tags": ["politics", "policy"], "keywords": ["policy debate"] }
+      },
+      "newsQueries": {
+        "TW": ["政策", "立法院", "選舉", "行政院"],
+        "HK": ["政策", "立法會"],
+        "SG": ["parliament", "policy", "Singapore government"],
+        "JP": ["政治", "国会", "政策"],
+        "US": ["politics", "congress", "policy"],
+        "GLOBAL": ["politics", "policy", "election"]
+      },
+      "pillarKeywords": ["時事", "政策", "選舉", "制度", "公共議題", "politics", "policy"],
+      "redlineProfile": {
+        "high": [
+          "R-REAL-PERSON-IMPERSONATION",
+          "R-HATE-HARASSMENT",
+          "R-FAKE-CERTAINTY",
+          "R-EMBODIMENT",
+          "W-OUTGROUP"
+        ],
+        "why": "命中既有規則的機率明顯高於其他方向：大量具名真實人物、立場性內容容易滑向貶低特定群體、政治判斷常被講成確定事實、「我在現場」對 AI 人設不成立、以外團體對立換互動是政治題的預設互動機制。",
+        "methodBias": "另有一層與題材無關的問題：離峰值排序本身就偏好衝突與道德情緒強的題材（Brady et al. 2017 已在本 repo 引用）。後果是——一個健康型人設的掃描結果，也可能被政治題掃光。docs/14 §7.3 的 domain 分層與 §8.1 的 W-POLITICAL-OUTLIER 都是為了這件事，警示要指向方法，不是指向題材。"
+      },
+      "memberKols": [],
+      "coverageNote": "目前 16 位 KOL 沒有任何一位落在這個方向。掃描跑得起來，輸出會是純題目盤點（scored:false）。要不要為這個方向做人設，是使用者的裁示，不是系統能代決的。"
+    },
+    {
+      "key": "sports",
+      "label": "運動型",
+      "domains": ["sports", "health", "life"],
+      "seedTerms": {
+        "TW": { "tags": ["運動", "健身", "馬拉松", "重訓"], "keywords": ["健身 課表", "運動 傷害"] },
+        "HK": { "tags": ["運動", "健身"], "keywords": ["健身 課表"] },
+        "SG": { "tags": ["fitness", "running", "gym"], "keywords": ["training plan"] },
+        "JP": { "tags": ["筋トレ", "ランニング", "スポーツ"], "keywords": ["トレーニング"] },
+        "US": { "tags": ["fitness", "gym", "running", "sports"], "keywords": ["training plan", "workout science"] },
+        "GLOBAL": { "tags": ["fitness", "sports", "training"], "keywords": ["training plan"] }
+      },
+      "newsQueries": {
+        "TW": ["運動", "健身", "體育署", "馬拉松"],
+        "HK": ["運動", "體育"],
+        "SG": ["sports", "fitness", "SportSG"],
+        "JP": ["スポーツ", "トレーニング"],
+        "US": ["sports", "fitness", "training"],
+        "GLOBAL": ["sports", "fitness", "training"]
+      },
+      "pillarKeywords": ["運動", "健身", "重訓", "課表", "動作", "傷害預防", "fitness", "training", "sports"],
+      "redlineProfile": {
+        "high": ["R-CREDENTIAL", "R-EMBODIMENT", "R-FAKE-CERTAINTY", "R-HIGH-STAKES-ADVICE"],
+        "why": "教練證照是不可能憑證；PR（個人紀錄）是可被量化追問、甚至可被要求現場重現的主張（docs/12 §3.1 已就 vicky-lin 標出）；訓練建議越具體越靠近個案指令。安全的角度是動作原理與課表結構，不主張本人成績。"
+      },
+      "memberKols": ["rafael-costa", "vicky-lin"],
+      "coverageNote": "rafael-costa 的支柱是「訓練結束以後／球場之外／冠軍思維」，重心已經在心態而不在成績，結構上比較穩。vicky-lin 的 PR 主張與私人教練身分同時命中兩條 block，改寫前不建議把運動類題目送到她身上。"
+    },
+    {
+      "key": "lifestyle-beauty",
+      "label": "生活風格與美妝型",
+      "domains": ["life", "city", "pop"],
+      "seedTerms": {
+        "TW": { "tags": ["穿搭", "保養", "美妝", "居家"], "keywords": ["穿搭 分享", "保養 成分"] },
+        "HK": { "tags": ["穿搭", "護膚", "美妝"], "keywords": ["穿搭 分享"] },
+        "JP": { "tags": ["コーデ", "スキンケア", "メイク"], "keywords": ["スキンケア"] },
+        "KR": { "tags": ["데일리룩", "스킨케어"], "keywords": ["데일리룩"] },
+        "US": { "tags": ["grwm", "skincare", "ootd"], "keywords": ["get ready with me", "skincare routine"] },
+        "GLOBAL": { "tags": ["grwm", "skincare", "ootd", "slowliving"], "keywords": ["skincare routine"] }
+      },
+      "newsQueries": {
+        "TW": ["美妝", "保養品", "時尚"],
+        "JP": ["コスメ", "スキンケア"],
+        "KR": ["뷰티", "화장품"],
+        "US": ["beauty", "skincare", "fashion"],
+        "GLOBAL": ["beauty", "skincare", "fashion"]
+      },
+      "pillarKeywords": ["穿搭", "保養", "美妝", "居家", "早晨", "飯店", "skincare", "outfit", "grwm"],
+      "redlineProfile": {
+        "high": ["R-EMBODIMENT", "R-FAKE-CERTAINTY", "W-BLURRED-PILLAR"],
+        "why": "這一群的內容本體就是「我的早晨／我的浴室／我住的飯店」，具身性最高；成分功效容易被講成保證。另外 docs/12 §3.2 已記錄：這批人設的六大支柱是為圖像生成設計的場景清單（早晨／穿搭／浴室／居家／飯店／健身），不是主題清單，11 位全部觸發 W-BLURRED-PILLAR。"
+      },
+      "memberKols": [
+        "iris-chen", "luna-tanaka", "yuna-kim", "aaliya-okonkwo",
+        "camille-dupont", "coco-wu", "sophia-tseng", "rainie-hsu"
+      ],
+      "coverageNote": "覆蓋最厚的一個方向（8 位）。也是最可能落在 docs/14 §5.2 第②格（只有影片離峰、沒有新聞熱議）的方向——她們的好題大多不會出現在新聞裡，所以 Track B 對這個方向的貢獻本來就低。這不是資料缺漏，是題材性質。"
+    },
+    {
+      "key": "knowledge-culture",
+      "label": "知識與文化型",
+      "domains": ["book", "history", "movie", "tv", "tech"],
+      "seedTerms": {
+        "TW": { "tags": ["閱讀", "歷史", "電影", "科普"], "keywords": ["書 推薦", "歷史 冷知識"] },
+        "MY": { "tags": ["閱讀", "歷史", "電影"], "keywords": ["書 推薦"] },
+        "SG": { "tags": ["books", "history", "film"], "keywords": ["book recommendation"] },
+        "GLOBAL": { "tags": ["books", "history", "film", "documentary"], "keywords": ["book recommendation"] }
+      },
+      "newsQueries": {
+        "TW": ["出版", "電影", "文化部"],
+        "SG": ["books", "film", "culture"],
+        "GLOBAL": ["books", "film", "documentary"]
+      },
+      "pillarKeywords": ["閱讀", "歷史", "電影", "紀錄片", "機率", "賽局", "books", "history", "film"],
+      "redlineProfile": {
+        "high": ["R-FABRICATED-SOURCE", "R-NO-WHY"],
+        "why": "知識型內容的風險不在具身，在來源。捏造引用、把記錯的資料講得斬釘截鐵，是這一類最容易犯也最傷帳號的錯。"
+      },
+      "memberKols": ["xiaoxiao-tan", "loima-cheung"],
+      "coverageNote": "兩位都是 database 型，是全部 16 位裡唯二不會在 G2 卡住的。這個方向的離峰值掃描收益可能最高——因為它是唯一一個「題目好就真的能做」的方向。"
+    },
+    {
+      "key": "travel-outdoor",
+      "label": "旅行與戶外型",
+      "domains": ["city", "life", "sports"],
+      "seedTerms": {
+        "TW": { "tags": ["登山", "旅行", "咖啡廳", "步道"], "keywords": ["登山 安全", "旅行 紀錄"] },
+        "SG": { "tags": ["travel", "hiking", "cityguide"], "keywords": ["travel guide"] },
+        "JP": { "tags": ["旅行", "登山", "建築"], "keywords": ["旅行 記録"] },
+        "GLOBAL": { "tags": ["travel", "hiking", "architecture"], "keywords": ["travel guide"] }
+      },
+      "newsQueries": {
+        "TW": ["觀光", "山難", "步道", "交通部觀光署"],
+        "JP": ["観光", "旅行"],
+        "GLOBAL": ["travel", "tourism"]
+      },
+      "pillarKeywords": ["登山", "步道", "旅行", "城市", "建築", "飯店", "travel", "hiking", "architecture"],
+      "redlineProfile": {
+        "high": ["R-EMBODIMENT", "R-STAGED-DANGER", "R-HIGH-STAKES-ADVICE"],
+        "why": "「我走過這條路線」是純具身主張。而且登山／戶外題材同時碰到 R-STAGED-DANGER（為互動率擺拍危險）與安全建議的個案指令風險——路線建議給錯，後果不可逆。"
+      },
+      "memberKols": ["faye-tan", "rachel-ong"],
+      "coverageNote": "faye-tan 是 hybrid，建築與歷史的那一半可查證；rachel-ong 是 embodied，山徑日誌全部依賴親身在場。這個方向的掃描結果要特別注意 §6.2 的可移植性分類——國外的戶外題目多半是「在地指涉」，搬不過來。"
+    }
+  ]
+}
