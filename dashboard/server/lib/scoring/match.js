@@ -415,15 +415,28 @@ export function matchKolToTopic(kol, topic, context = {}) {
  * It is not part of the score and not a gate.
  */
 function buildTiming(topic) {
+  const value = Number.isFinite(topic.heat) ? round(topic.heat) : null
+
   return {
-    value: Number.isFinite(topic.heat) ? round(topic.heat) : null,
+    value,
     label: '樣本共現密度',
+    /**
+     * docs/14 §7A — a null value means "this topic never came from a sampled
+     * fetch", which is a different statement from "its density is low". The two
+     * used to collapse together because the topic builders defaulted heat to
+     * 50; now they don't, so the distinction has to survive to the screen.
+     */
+    applicable: value !== null,
     confidence: topic.heatConfidence ?? 'none',
     discriminates: topic.heatDiscriminates ?? null,
     parts: topic.heatParts ?? null,
     normalizedWithin: topic.normalizedWithin ?? null,
-    caveat: topic.heatCaveat
-      ?? '這不是平台熱度。它說的是：在我們用種子詞抓到的樣本裡，有幾個不同帳號用了這個標籤。沒有歷史快照就無法判定升溫。',
+    caveat:
+      value === null
+        ? (topic.timingCaveat
+          ?? '這個題目沒有樣本共現密度資料——它不是從地區話題抓取來的。這一欄不適用，不是「低」。')
+        : (topic.heatCaveat
+          ?? '這不是平台熱度。它說的是：在我們用種子詞抓到的樣本裡，有幾個不同帳號用了這個標籤。沒有歷史快照就無法判定升溫。'),
     note: withNote('timing', {}).note,
   }
 }
@@ -440,8 +453,15 @@ function buildRationale({ persona, pillar, homophily, g1, screeningScore, experi
   return `篩選分 ${screeningScore}｜${parts.join('，')}`
 }
 
-/** Promote a KOL's own topic hook into a topic object the match engine accepts. */
-export function hookToTopic(hook, { region = null, heat = 50 } = {}) {
+/**
+ * Promote a KOL's own topic hook into a topic object the match engine accepts.
+ *
+ * docs/14 §7A — `heat` used to default to 50 here. A hook is a topic the KOL
+ * declared; it has no platform sample behind it at all, so 50 was not a neutral
+ * reading, it was a fabricated one rendered as a measurement. Null is the
+ * honest value and `buildTiming()` already renders it as "not applicable".
+ */
+export function hookToTopic(hook, { region = null, heat = null } = {}) {
   const { demand } = resolveAxisDemand({
     domain: hook.domain,
     title: hook.title,

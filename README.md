@@ -71,8 +71,9 @@ Buildup_KOL/
 | [11-system-redesign-spec](docs/11-system-redesign-spec.md) | **現行系統的上位規格 v1.2**（取代 09 §3 與 10 全部）：三區架構、gate 取代線性加權、維度備註、引導式流程、校準判準。§0 的五條紀律適用於之後所有規格 |
 | [12-virtual-kol-studio-import](docs/12-virtual-kol-studio-import.md) | **Virtual KOL Studio 11 位匯入紀錄**：四軸分數總表、三個結構性風險（具身主張／場景型支柱／相似性跨度）、schema v2→v3 與 fixture 補題 |
 | [13-identity-anchor-and-site-account-audit](docs/13-identity-anchor-and-site-account-audit.md) | **身分錨點核對**：對照 Higgsfield soul_id／Reference Element 修正選錯的參考圖（含「換錨點＝換臉」案例），與 demo.sofa-partner.com 站上 10 個帳號的稽核 |
-| [14-outlier-scan-spec](docs/14-outlier-scan-spec.md) | **每週兩次離峰值掃描規格**：人設方向層、影片離峰值（頻道相對 × 年齡匹配 × log-median/MAD）、地區時事（Google／Yahoo News，報導覆蓋度≠需求）、兩軌 2×2 交叉驗證、可移植性分類、Railway 排程 |
-| [15-outlier-scan-rewrite-plan](docs/15-outlier-scan-rewrite-plan.md) | **上述規格的改寫計畫**：六個批次、檔案清單、外部相依與成本、風險表，以及三件需要裁示的事 |
+| [14-outlier-scan-spec](docs/14-outlier-scan-spec.md) | **每週兩次離峰值掃描規格 v1.1**：人設方向層、影片離峰（頻道相對 × log-median/MAD × 序位證據）、主題身分層、地區時事（Google／Yahoo News，報導覆蓋度≠需求）、兩軌 2×2 檢視切面、scan-topic adapter 契約、durable runner、Railway 排程。§13 是 GPT-5.6 review 的逐條回應 |
+| [15-outlier-scan-rewrite-plan](docs/15-outlier-scan-rewrite-plan.md) | **上述規格的改寫計畫 v1.1**：R0/R1/R2 三階段、批次 0 的 10 項硬驗收、檔案清單、成本、風險表，以及五件需要裁示的事 |
+| [reviews/2026-08-24-gpt56-on-outlier-scan-spec](docs/reviews/2026-08-24-gpt56-on-outlier-scan-spec.md) | 對 docs/14 v1.0 的外部 review：6 個 P0、6 個 P1、5 個 P2，判定 NEEDS REVISION |
 
 ---
 
@@ -80,13 +81,14 @@ Buildup_KOL/
 
 作業流程：**① 定義人設方向 → ② 挑出半年內國內外的離峰值影片主題 → ③ 提出人設 × 主題的結合建議**。
 
-要點三句話：
+要點四句話：
 
-- **「相較於一般平均值」指的是頻道自己的中位數**，不是全域平均——全域平均只會選出大頻道（[`docs/14` §3.1](docs/14-outlier-scan-spec.md)）。
+- **「相較於一般平均值」指的是頻道自己的中位數**，不是全域平均——全域平均只會選出大頻道（[`docs/14` §3.1](docs/14-outlier-scan-spec.md)）。V1 的正式名稱是**「頻道相對候選」**：年齡偏誤還沒解決，所以不宣稱做了年齡校正，改成每次掃描把偏斜量出來（§3.2）。
+- **系統不宣稱哪支影片「是離峰值」。** 排名是連續的、切點是使用者可移動的檢視參數，永遠跟結果一起顯示（§3.4.2）。
 - **時事分地區查**：台灣查 Google 新聞與 Yahoo 新聞，香港／新加坡／日本各有各自的來源與查詢字串。但新聞量的是**媒體供給**，不是閱聽需求，所以欄位一律叫「報導覆蓋度」。
-- **每週兩次 × 3 週 = 3 個完整週週期**，正好是本系統第一次能合法離開 `heatConfidence: 'none'` 的條件。在那之前禁止任何「升溫／爆紅」語意。
+- **順利的話約三週後、第七次掃描前後**，才會累積到 3 個完整週週期——那是本系統第一次能合法離開 `heatConfidence: 'none'` 的條件。在那之前禁止任何「升溫／爆紅」語意。（v1.0 曾寫成「第六次」，那是算錯的：六次掃描只跨 17 天。）
 
-方向定義在 [`kols/persona-directions.json`](kols/persona-directions.json)，常數在 `kols/scoring-config.json` 的 `outlierScan`（全部標了 `prior`／`user_setting`／`verified`）。
+方向定義在 [`kols/persona-directions.json`](kols/persona-directions.json)，常數在 [`kols/discovery-config.json`](kols/discovery-config.json)（全部標了 `prior`／`user_setting`／`verified`／`view_default`）。**discovery 常數刻意不放在 `scoring-config.json`**——那是評分引擎的入口，混進去語意上就開始耦合了。
 
 ---
 

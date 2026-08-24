@@ -39,6 +39,15 @@ router.get('/kols/:id', (req, res) => {
         gatesPassed: match.gates?.passed ?? false,
         rationale: match.rationale,
         dimensions: match.dimensions,
+        /**
+         * The profile screen has always rendered this row, but the payload
+         * never carried it — so it read "時機（undefined）：—". Worth sending
+         * now that the value is honest: an evergreen hook has no platform
+         * sample behind it, so `applicable` is false and the screen says
+         * "不適用" instead of the fabricated 50 it would have shown before
+         * (docs/14 §7A).
+         */
+        timing: match.timing,
       },
     }
   }).sort((a, b) => (b.match.screeningScore ?? -1) - (a.match.screeningScore ?? -1))

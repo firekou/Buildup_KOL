@@ -218,7 +218,13 @@ export default function KolProfileTab({ meta, kols, selectedId, onSelect }) {
                           </tbody>
                         </table>
                         <p className="small muted">
-                          時機（{hook.match.timing?.label}）：{hook.match.timing?.value ?? '—'}——不進總分。
+                          {/* 常青 hook 沒有平台樣本，docs/14 §7A：顯示「不適用」而不是一個編出來的 50。 */}
+                          時機（{hook.match.timing?.label}）：
+                          {hook.match.timing?.applicable === false ? '不適用' : (hook.match.timing?.value ?? '—')}
+                          ——不進總分。
+                          {hook.match.timing?.applicable === false && (
+                            <> {hook.match.timing?.caveat}</>
+                          )}
                         </p>
                         {hook.match.warnings?.length > 0 && (
                           <Alert tone="warn">

@@ -146,7 +146,8 @@ function PlanCard({ plan, notes }) {
       </div>
 
       <div className="timing">
-        <span>{plan.timing?.label}：{plan.timing?.value ?? '—'}</span>
+        {/* docs/14 §7A — "not applicable" and "low" are different statements. */}
+        <span>{plan.timing?.label}：{plan.timing?.applicable === false ? '不適用' : (plan.timing?.value ?? '—')}</span>
         <CalibrationTag value="prior" />
         <p className="caveat">{plan.timing?.caveat}</p>
       </div>

@@ -1,0 +1,175 @@
+{
+  "version": "1.0",
+  "updated": "2026-08-24",
+  "spec": "docs/14-outlier-scan-spec.md v1.1",
+  "review": "docs/reviews/2026-08-24-gpt56-on-outlier-scan-spec.md（P1-2）",
+  "note": "發現層（discovery）的常數。v1.0 曾把這些放在 kols/scoring-config.json 的 outlierScan 區塊，但那份檔案是評分引擎的入口（getConfig()）——把 discovery 常數塞進去，語意上就已經開始耦合，遲早有人在評分路徑上讀到它。docs/14 §11 已改。",
+  "discipline": {
+    "notScoring": "這裡沒有任何一個值會進 screeningScore，也不會成為 gate。離峰排名與報導覆蓋度都只決定「端哪些題目出來」，不決定「這個 KOL 適不適合」。",
+    "priorWarning": "在對應的 calibration.*.status 變成 calibrated 之前，任何文件、UI 或對外說明都不得暗示這些數字有理論根據。逐字沿用 scoring-config.json 對 floor 的警語。",
+    "noBooleans": "docs/14 §3.4.2——不存 isOutlier 布林值。切點是檢視參數，存進資料就變成資料的性質了。"
+  },
+
+  "window": {
+    "windowMonths": {
+      "value": 6,
+      "calibration": "user_setting",
+      "basis": "使用者指定的作業範圍（半年內）。這是業務決定，不是對世界的宣稱，所以不需要文獻支持，也不需要校準。",
+      "unverified": "docs/14 §12-2：actor 到底抓不抓得到 180 天，尚未驗證。如果只回「近期熱門」而無法翻到 180 天，就沒有半年分母，也不能把這件事叫「半年內離峰值掃描」。Batch 0 硬驗收項。"
+    },
+    "baselineLookbackDays": {
+      "value": 180,
+      "calibration": "derived",
+      "basis": "對齊 windowMonths（6 個月），不是獨立的猜測。"
+    }
+  },
+
+  "selection": {
+    "topK": {
+      "min": 3,
+      "max": 10,
+      "calibration": "user_setting",
+      "basis": "使用者指定「列出約 3 到 5 個（或 5 到 10 個）主題」。這是要幾個的問題，不是幾倍算爆的問題。",
+      "warning": "docs/14 §3.4：不得因此推導出任何倍數門檻。系統取 top-K 並攤開整批的排名分布，永遠不宣稱「超過 N 倍就是爆款」。"
+    },
+    "defaultCutPercentile": {
+      "value": 0.10,
+      "calibration": "view_default",
+      "basis": "docs/14 §3.4.2。這不是門檻，是 2×2 與 channelsAboveCut 的預設檢視切點。它每次掃描依該批樣本重新推導、永遠與結果一起顯示、而且使用者可以當場移動並即時重算。",
+      "warning": "移動切點只重新渲染，不重新掃描——因為底層儲存的是連續的 robustZ / percentileInScan。任何把切點烤進資料的實作都違反 §3.4.2。"
+    },
+    "domainOverflow": {
+      "policy": "list_remaining",
+      "basis": "docs/14 §7.3.1。有候選的 domain 多於 K 時，「每個 domain 保底 1 名」在數學上不可能成立。超出名額的 domain 要列出來可展開，不得靜默丟掉——那是 docs/11 §0 紀律 5 禁止的事。"
+    }
+  },
+
+  "outlier": {
+    "maturityDays": {
+      "value": 14,
+      "calibration": "prior",
+      "basis": "沒有文獻依據，是編的。它擋掉的是「太新所以還沒開始累積」。",
+      "doesNotSolve": "docs/14 §3.2：它不解決年齡偏誤。15 天與 170 天的影片都算「成熟」，但曝光時間差 11 倍以上。V1 因此不宣稱做了年齡匹配，正式名稱是「頻道相對候選」。",
+      "delay": "總延遲 = maturityDays（至少 14 天）+ 最多一個掃描間隔（3–4 天）≈ 至多約 18 天。v1.0 曾寫成「3–4 天」，那只是掃描間隔，不是總延遲。",
+      "howToRefute": "每次掃描把同一支影片當下的觀看數寫進 videoObservations；累積數週後就有「同一支影片在第 14 / 21 / 28 天的觀看」，那才是能推出成長曲線、也才能取代 14 這個猜測的原料。"
+    },
+    "minBaselineVideos": {
+      "value": 8,
+      "calibration": "prior",
+      "basis": "沒有文獻依據，是編的。中位數需要足夠樣本才穩定，但「足夠」在這裡沒有現成的切點。",
+      "howToRefute": "用留存的 videoSamples 回算：頻道樣本數多少時，中位數對再多抓幾支影片不再敏感。",
+      "onInsufficient": "低於門檻時回報 baseline:'insufficient'，不回傳排名。docs/14 §3.3——沒有基準就說沒有基準，不給一個看起來有信心的數字。"
+    },
+    "madNormalConstant": {
+      "value": 1.4826,
+      "calibration": "verified",
+      "basis": "MAD 的常態一致化常數（1 / Φ⁻¹(0.75) ≈ 1.4826），穩健統計的標準慣例：Rousseeuw & Croux (1993), JASA 88(424), 1273–1283。與 scoring-config.json 對 Cohen f² 的處理方式相同——用具名可查的慣例，不用自創數字。",
+      "note": "這一項不需要校準。MAD 為 0（頻道影片少、觀看數接近）時回報 baseline:'degenerate'，不回傳 Infinity。"
+    },
+    "maxChannelFetches": {
+      "value": null,
+      "calibration": "pending",
+      "basis": "成本上限，要等 Batch 0 實測「一次掃描會碰到幾個不同作者」與每次 actor run 的成本後才能定。",
+      "accounting": "docs/14 §8.2.1：只記「有幾個沒抓」不夠。必須記 authorsDiscovered / authorsEligibleForBaseline / authorsFetched / authorsSkippedByCap / selectionOrder / skippedProfile。誰先進候選是由 actor 的 relevance 排序決定的，那不是隨機抽樣。"
+    }
+  },
+
+  "news": {
+    "newsWindowDays": {
+      "value": 7,
+      "calibration": "query_parameter",
+      "basis": "docs/14 §4.4-2。它已從「寫進資料的常數」降級為「讀取時的查詢參數」——因為 newsArticles 改存 article-level（publishedAt / outletDomain / canonicalTopicId），日聚合在讀取時計算。",
+      "why": "每週掃兩次、視窗 7 天，相鄰兩次會重疊 3–4 天，造成強自相關：今天看到的「上升」很可能只是上一個視窗的同一批文章還在裡面。存聚合值會把這個常數烤進歷史資料，之後就無法回頭換視窗長度來檢驗這件事。"
+    },
+    "outletDedupe": {
+      "by": "domain",
+      "basis": "docs/14 §4.4-3。outletCount 以媒體網域去重，不是數文章。與 aggregatePostsToTopics 用 distinct authors 而非 post count 是同一個道理。"
+    },
+    "coverageMeaning": {
+      "value": "media_supply",
+      "basis": "docs/14 §4.2。新聞沒有觀看數，Google News 的排序是編輯與演算法選擇。outletCount / articleCount / daysCovered 量的是媒體供給，不是閱聽需求。欄位一律叫 coverage*，禁止出現「熱度」「熱門度」。"
+    }
+  },
+
+  "schedule": {
+    "asia": {
+      "cron": "0 22 * * 0,3",
+      "cronTimezone": "UTC",
+      "regions": ["TW", "HK", "SG", "MY", "JP", "KR", "CN"],
+      "localEquivalent": "台北／香港／新加坡 週一、週四 06:00；東京 07:00",
+      "calibration": "user_setting",
+      "basis": "使用者要每週兩次。挑週一與週四是為了兩次採樣都落在平日——媒體產量週末明顯下降。",
+      "warning": "Railway cron 一律以 UTC 判讀。0 22 * * 0,3 的日欄位跟著往前挪了一天（週日 22:00 UTC = 週一 06:00 台北）。這一格最容易寫錯。"
+    },
+    "americas": {
+      "cron": null,
+      "regions": ["US", "GLOBAL"],
+      "calibration": "pending",
+      "basis": "docs/14 §1.3.1：同一個 0 22 * * 0,3 UTC 在美東是週日 18:00 與週三 18:00——第一次採樣落在週末，與挑這個時段的理由完全相反。所以美洲區需要自己的 cron，而不是共用亞洲那組。",
+      "note": "沒有一個 UTC 時段能讓亞洲與美洲同時落在平日早晨（亞洲平日早晨 = 美洲前一天下午）。所以是兩組 cron，不是找一個折衷時段。在這一組定下來之前，US / GLOBAL 的 Track B 結果要標明採樣日落在週末，不得與亞洲區並列比較。"
+    },
+    "weekdayTimezone": {
+      "policy": "region_local",
+      "basis": "docs/14 §4.4-1。weekday 一律以該地區當地時區計算並存進快照（localWeekday / localCapturedAt），不是 server 時區、也不是台北時區。"
+    }
+  },
+
+  "timeSeries": {
+    "requiredWeeklyCycles": {
+      "value": 3,
+      "calibration": "prior",
+      "singleSourceOfTruth": true,
+      "basis": "沿用 scoring-config.json 既有的 timeSeries.requiredWeeklyCycles，不另立門檻。Gemini 複審：7 天的歷史會讓每一個正常的週末高峰看起來像突發，所以門檻是完整的週週期數。3 這個數字仍是先驗——文獻沒有給週期數，只給了「需要與自身歷史比較」這個要求。",
+      "measurement": "只讀實際的 spanDays / weeklyCycles，禁止 snapshotCount >= N 這類捷徑——包含文件裡的口語說法。實作在 dashboard/server/lib/time-series.js，兩軌共用同一支。",
+      "correctedArithmetic": "docs/14 §1.1：固定週一／週四的話，第 6 次掃描距第 1 次只有 17 天（floor(17/7)=2），第 7 次才是 21 天／3 週期。N 次掃描涵蓋的是 N−1 個間隔。v1.0 寫成「6 次 = 21 天」是算錯的。"
+    },
+    "topicHeat": {
+      "approved": false,
+      "approvalNote": "既有的 hashtag 樣本共現密度。達到週期門檻後仍需人工批准才會離開實驗區。"
+    },
+    "newsCoverage": {
+      "approved": false,
+      "approvalNote": "新聞報導覆蓋度。docs/14 §4.3——週期門檻可以與 topicHeat 共用，人工批准不行：批准「hashtag 樣本共現密度的歷史可以離開實驗區」，不等於批准「新聞覆蓋度基準也已經可靠」。兩者的資料源、偏誤、窗長都不同。"
+    }
+  },
+
+  "topicIdentity": {
+    "note": "docs/14 §3A。沒有這一層，跨頻道重現與跨週基準都只是字串分組的幻覺。",
+    "method": "deterministic",
+    "rules": [
+      "1. 正規化字串完全相同 → 同一題（identityMethod: 'exact'）",
+      "2. 命中已登記的 alias → 同一題（'alias'）",
+      "3. 命名實體集合有交集且同 region → 標為候選合併，needsReview: true，不自動合併",
+      "4. 其餘 → 各自獨立"
+    ],
+    "noEmbedding": "V1 不做 embedding 或 LLM clustering。相似度模型會產生一個看起來精確、實際上沒有校準資料可以檢驗的分數，而且它的判斷不可重播。",
+    "whyRule3IsManual": "實體交集會把「Ozempic 減重」和「Ozempic 缺貨」誤併成一題。候選合併進人工佇列，人決定之後寫入 aliases 與 mergeHistory——下一次掃描就自動走第 2 條。這條路徑可重播、可審查，而且隨使用累積變準。",
+    "replayable": "任何一次 merge/split 都要能重建合併前的數列。否則無法解釋「為什麼上週的覆蓋度突然翻倍」——那可能只是合併造成的。",
+    "crossRegion": "身分在地區內成立，不跨地區合併（理由同 docs/14 §6.1）。"
+  },
+
+  "runner": {
+    "note": "docs/14 §1.5。背景 Promise 不是 job system——Railway redeploy、crash、OOM 都會讓 detached task 直接消失。而掛了 volume 的 service 每次重新部署本來就有停機，所以「部署時剛好有 run 在跑」不是例外，是每次部署都會遇到。",
+    "leaseFields": ["status", "stage", "leaseOwner", "leaseUntil", "heartbeatAt", "retryCount", "lastError"],
+    "recovery": "process 啟動時掃一次：status:'running' 但 leaseUntil 已過 → 改回 'queued'。",
+    "maxActiveRuns": 1,
+    "maxActiveRunsBasis": "手動與 cron 不得無限堆疊。1 是保守起點，等實際耗時量測出來再談要不要放寬。",
+    "checkpoint": "每個 stage 完成先持久化，再進下一個 stage。",
+    "atomicWrites": "store.js 的 writeAll() 已改為 temp file + rename（本次 commit）。原本是裸 fs.writeFileSync，process 寫到一半被中斷會截斷整個 store 檔。",
+    "runKeys": {
+      "scheduled": "${direction}:${region}:${slot}:${configHash}",
+      "manual": "UUID",
+      "retryOf": "可選，指向被重試的 runId",
+      "configHashCovers": ["seedTerms", "newsQueries", "actorIds", "actorVersions", "discovery-config.json"],
+      "why": "docs/14 §1.3.2。剛改完種子詞或 actor 按「立刻掃描」，若 key 沒變會拿回舊結果；手動掃描共用排程鍵，等於「把舊 run 打開」而不是「立刻重抓」。"
+    }
+  },
+
+  "calibration": {
+    "note": "docs/14 §11——逐項，不是一個總 status。三者的校準證據完全不同：maturityDays 靠影片觀看軌跡、minBaselineVideos 靠回算中位數穩定性、newsWindowDays 靠 article-level 重算。共用一個 status 會讓其中一項被校準時，看起來三項都被校準了。",
+    "maturityDays": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "evidence": "videoObservations" },
+    "minBaselineVideos": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "evidence": "videoSamples" },
+    "newsWindowDays": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "evidence": "newsArticles" },
+    "maxChannelFetches": { "status": "none", "signedOffBy": null, "signedOffAt": null, "sampleSize": 0, "evidence": "Batch 0 cost probe" }
+  }
+}

@@ -70,9 +70,36 @@ function readAll(kind) {
   }
 }
 
+/**
+ * docs/14 §1.5 / §9.3 — write to a temp file in the same directory, then
+ * `rename` over the target.
+ *
+ * This was a plain `fs.writeFileSync`. A process killed part-way through that
+ * call leaves a truncated file, and `readAll()` then logs "unreadable" and
+ * returns `[]` — every record silently gone. That is not a hypothetical on
+ * Railway: a service with a volume attached has real downtime on every
+ * redeploy, so "interrupted while writing" is a normal event, not an edge case.
+ *
+ * `rename` within one filesystem is atomic, so a reader sees either the old
+ * file or the new one — never a half-written one. The temp file must live in
+ * the same directory for that guarantee to hold, hence the sibling path.
+ */
 function writeAll(kind, rows) {
   ensureDir()
-  fs.writeFileSync(filePath(kind), JSON.stringify(rows, null, 2))
+  const target = filePath(kind)
+  const tmp = `${target}.${process.pid}.${crypto.randomUUID().slice(0, 8)}.tmp`
+  try {
+    fs.writeFileSync(tmp, JSON.stringify(rows, null, 2))
+    fs.renameSync(tmp, target)
+  } catch (err) {
+    // Never leave the temp file behind to accumulate on the volume.
+    try {
+      fs.unlinkSync(tmp)
+    } catch {
+      /* already gone, or never created */
+    }
+    throw err
+  }
 }
 
 export function list(kind, filter = {}) {

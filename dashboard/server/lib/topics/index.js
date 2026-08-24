@@ -3,7 +3,8 @@ import { getAxes } from '../kols.js'
 import { classifyDomain, resolveAxisDemand } from './classify.js'
 import { fetchRegionTopics, seedTermsFor } from './apify.js'
 import * as store from '../store.js'
-import { getConfig } from '../scoring/gates.js'
+import { getDiscoveryConfig } from '../discovery-config.js'
+import { baselineStatus } from '../time-series.js'
 import { getFixtureTopics, FIXTURE_REGIONS } from './fixtures.js'
 
 export const PLATFORMS = ['threads', 'tiktok', 'instagram']
@@ -13,16 +14,20 @@ const cache = new Map() // key -> { at, value }
 /**
  * docs/11 §4 B4 — Gemini's review: 7 days of history makes every ordinary
  * weekend peak look like a burst. Whole weekly cycles, not elapsed days.
+ *
+ * docs/14 §11 — the value itself now has a single source of truth in
+ * `discovery-config.json`, because Track B needs the same threshold. The
+ * literal here is only the fallback for a missing/unreadable config.
  */
-const REQUIRED_WEEKLY_CYCLES = 3
+const REQUIRED_WEEKLY_CYCLES = getDiscoveryConfig().timeSeries?.requiredWeeklyCycles?.value ?? 3
 
-const getTimeSeriesConfig = () => {
-  try {
-    return getConfig().timeSeries ?? {}
-  } catch {
-    return {}
-  }
-}
+/**
+ * docs/14 §4.3 — the weekly-cycle threshold is shared between the two tracks;
+ * the human sign-off is NOT. This reads `topicHeat.approved` specifically.
+ * Approving hashtag co-occurrence history says nothing about whether news
+ * coverage baselines are reliable — different sources, biases and windows.
+ */
+const isTopicHeatApproved = () => Boolean(getDiscoveryConfig().timeSeries?.topicHeat?.approved)
 
 const cacheKey = (region, platforms) => `${region}::${[...platforms].sort().join(',')}`
 
@@ -165,45 +170,38 @@ function scoreHeat(rows) {
  */
 function heatConfidenceOf({ snapshots = [], discriminates, approved = false } = {}) {
   if (!discriminates) return { level: 'none', reason: '這批樣本沒有區辨力——數字全都一樣，排序沒有意義。' }
-  if (snapshots.length < 2) {
-    return { level: 'none', reason: '還沒有歷史快照可以比較，無法判定升溫。' }
-  }
 
-  // Span, not count. Two snapshots taken minutes apart is not a time series —
-  // and this is precisely the trap both spec reviewers named: Gemini pointed
-  // out that a 7-day baseline reads every ordinary weekend peak as a burst, so
-  // the bar is whole weekly cycles, not elapsed days and certainly not rows.
-  const times = snapshots.map((s) => Date.parse(s.capturedAt)).filter(Number.isFinite).sort((a, b) => a - b)
-  const spanDays = times.length >= 2 ? (times.at(-1) - times[0]) / 86_400_000 : 0
-  const weeklyCycles = Math.floor(spanDays / 7)
+  // Span, not count — and the measurement itself now lives in one place
+  // (docs/14 §1.1.1). Track B will call the same function rather than growing a
+  // second copy of this arithmetic; the spec's "6th scan = 3 weekly cycles"
+  // error came from exactly that kind of duplication.
+  const status = baselineStatus(snapshots, {
+    requiredWeeklyCycles: REQUIRED_WEEKLY_CYCLES,
+    approved,
+    label: '樣本共現密度',
+  })
 
-  if (weeklyCycles < REQUIRED_WEEKLY_CYCLES) {
+  const { spanDays, weeklyCycles } = status
+
+  if (!status.ready) {
     return {
       level: 'none',
-      spanDays: Math.round(spanDays * 10) / 10,
+      spanDays,
       weeklyCycles,
-      reason: `快照只涵蓋 ${Math.round(spanDays)} 天（${weeklyCycles} 個完整週週期）。社群流量有很強的平日／週末週期，週期數不足時，週末的正常高峰會被誤判成突發——需要 ${REQUIRED_WEEKLY_CYCLES} 個完整週週期。`,
-    }
-  }
-
-  // docs/11 §4 B4 — even with enough history, leaving the experimental zone is
-  // a human decision. The spec's first draft had this auto-enable; the review
-  // removed that, and the flag lives in scoring-config so the change is a
-  // reviewable commit rather than a silent threshold crossing.
-  if (!approved) {
-    return {
-      level: 'none',
-      spanDays: Math.round(spanDays * 10) / 10,
-      weeklyCycles,
-      reason: `快照已涵蓋 ${weeklyCycles} 個完整週週期，達到門檻——但出實驗區需要人工批准。批准後把 kols/scoring-config.json 的 timeSeries.approved 設為 true。`,
+      reason:
+        status.count < 2
+          ? '還沒有歷史快照可以比較，無法判定升溫。'
+          : status.approved === false && weeklyCycles >= REQUIRED_WEEKLY_CYCLES
+            ? `${status.reason}批准後把 kols/discovery-config.json 的 timeSeries.topicHeat.approved 設為 true。`
+            : status.reason,
     }
   }
 
   return {
     level: 'low',
-    spanDays: Math.round(spanDays * 10) / 10,
+    spanDays,
     weeklyCycles,
-    reason: `已有 ${weeklyCycles} 個完整週週期可比較，且經人工批准。仍是 low：樣本小、且種子詞決定了能看到什麼。`,
+    reason: `${status.reason}仍是 low：樣本小、且種子詞決定了能看到什麼。`,
   }
 }
 
@@ -253,7 +251,12 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
   const key = cacheKey(region, platforms)
   const hit = cache.get(key)
   if (!refresh && hit && (Date.now() - hit.at) / 1000 < apify.cacheTtl) {
-    return { ...hit.value, cached: true }
+    // docs/12 §5 — the cache key is (region, platforms) and deliberately does
+    // NOT include `limit`; a fetch is expensive and `limit` only decides how
+    // many of the same ranked rows to show. But the cached object had `topics`
+    // pre-sliced, so a caller that asked for 10 after someone asked for 1 got
+    // back 1. Re-slice from `allTopics`, which the cached value already holds.
+    return { ...hit.value, topics: hit.value.allTopics.slice(0, limit), cached: true }
   }
 
   let raw = []
@@ -319,7 +322,7 @@ export async function getRegionTopics(region, { platforms = PLATFORMS, limit = 1
   const confidence = heatConfidenceOf({
     snapshots: snapshotRows,
     discriminates,
-    approved: Boolean(getTimeSeriesConfig().approved),
+    approved: isTopicHeatApproved(),
   })
   const heatConfidence = confidence.level
 
@@ -438,7 +441,19 @@ export async function crossQuery(region, tags, { mode = 'intersection', platform
   }
 }
 
-/** Build a synthetic topic object from a free-form tag, for ad-hoc matching. */
+/**
+ * Build a synthetic topic object from a free-form tag, for ad-hoc matching.
+ *
+ * docs/14 §7A — this used to end with `heat: input.heat ?? 50`, which meant a
+ * topic with no sample data at all arrived at `buildTiming()` carrying a 50 and
+ * got rendered as a "sample co-occurrence density" of 50. That number was never
+ * measured; it was a default. `match.js` already handles a null heat correctly
+ * (`Number.isFinite(topic.heat) ? … : null`) — it simply never received one.
+ *
+ * The same defect was in `hookToTopic()`; both are fixed, and the scan pipeline
+ * depends on it: the whole point of separating discovery from scoring is lost
+ * if discovery topics acquire a fabricated heat on the way in.
+ */
 export function makeAdHocTopic(input) {
   const tag = input.tag?.startsWith('#') ? input.tag : `#${input.tag ?? 'adhoc'}`
   const base = {
@@ -453,15 +468,30 @@ export function makeAdHocTopic(input) {
   }
   const domain = classifyDomain(base)
   const { demand, derivedFrom } = resolveAxisDemand({ ...base, domain, axis_demand: input.axisDemand })
+
+  /** No sample co-occurrence data means null, not a neutral-looking 50. */
+  const heat = Number.isFinite(input.heat) ? input.heat : null
+
   return {
-    id: `adhoc-${tag.replace(/^#/, '').replace(/\s+/g, '-').toLowerCase()}`,
+    id: input.canonicalTopicId ?? `adhoc-${tag.replace(/^#/, '').replace(/\s+/g, '-').toLowerCase()}`,
     ...base,
     domain,
     axisDemand: demand,
     axisDerivedFrom: derivedFrom,
     platforms: [{ platform: base.platform, volume: base.volume }],
-    heat: input.heat ?? 50,
+    heat,
     heatParts: null,
+    heatConfidence: 'none',
+    /** docs/14 §7A — the scan-topic adapter contract. Carried through, not dropped. */
+    source: input.source ?? 'manual',
+    canonicalTopicId: input.canonicalTopicId ?? null,
+    region: input.region ?? null,
+    language: input.language ?? null,
+    discoveryEvidence: input.discoveryEvidence ?? null,
+    timingCaveat:
+      heat === null
+        ? '這個題目沒有樣本共現密度資料——它不是從地區話題抓取來的。旁邊的「時機」欄位不適用，不是「低」。'
+        : null,
     adHoc: true,
   }
 }

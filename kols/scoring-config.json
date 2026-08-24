@@ -1,8 +1,8 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "updated": "2026-08-24",
   "spec": "docs/11-system-redesign-spec.md",
-  "specAdditional": "docs/14-outlier-scan-spec.md（outlierScan 區塊）",
+  "specAdditional": "docs/14-outlier-scan-spec.md — 發現層常數已移至 kols/discovery-config.json（review P1-2：這份檔案是評分引擎入口，不該混入 discovery 常數）",
   "note": "所有先驗常數集中在這裡，不寫死在程式裡。每一個都標了 calibration 狀態——目前沒有任何一項是 calibrated。",
   "floor": {
     "value": 30,
@@ -32,74 +32,7 @@
     "preRegistered": true,
     "preRegisteredAt": "2026-08-22"
   },
-  "outlierScan": {
-    "note": "docs/14 §11。每週兩次離峰值掃描的常數。與上面同一條紀律：每一個都標了 calibration，目前沒有任何一項是 calibrated。規格已定、尚未實作（docs/15）。",
-    "windowMonths": {
-      "value": 6,
-      "calibration": "user_setting",
-      "basis": "使用者指定的作業範圍（半年內）。這是業務決定，不是對世界的宣稱，所以不需要文獻支持，也不需要校準。"
-    },
-    "topK": {
-      "min": 3,
-      "max": 10,
-      "calibration": "user_setting",
-      "basis": "使用者指定「列出約 3 到 5 個（或 5 到 10 個）主題」。同上——這是要幾個的問題，不是幾倍算爆的問題。",
-      "warning": "docs/14 §3.4：不得因此推導出任何倍數門檻。系統取 top-K 並攤開整批的倍數分布，永遠不宣稱「超過 N 倍就是爆款」。"
-    },
-    "maturityDays": {
-      "value": 14,
-      "calibration": "prior",
-      "basis": "沒有文獻依據，是編的。它存在的理由是觀看數會累積：半年窗內，5 個月前的影片自然比上週的影片多，直接比會系統性地選出舊影片。",
-      "cost": "代價是最新的影片在成熟期內無法被判定為離峰值。這是延遲不是盲區——每週兩次的節奏把延遲上限壓在 3–4 天，而且未滿期的影片會進 provisional 清單（標 provisional:true、不進主清單、不進推薦、不進統計）。",
-      "howToRefute": "每次掃描留存同一支影片的觀看軌跡；累積數週後可看出成長曲線在第幾天轉平，用那個天數取代 14。"
-    },
-    "minBaselineVideos": {
-      "value": 8,
-      "calibration": "prior",
-      "basis": "沒有文獻依據，是編的。中位數需要足夠樣本才穩定，但「足夠」在這裡沒有現成的切點。",
-      "howToRefute": "用留存的 videoSamples 回算：頻道樣本數多少時，中位數對再多抓幾支影片不再敏感。",
-      "onInsufficient": "低於門檻時回報 baseline:'insufficient'，不回傳離峰倍數。docs/14 §3.3——沒有基準就說沒有基準，不給一個看起來有信心的數字。"
-    },
-    "baselineLookbackDays": {
-      "value": 180,
-      "calibration": "derived",
-      "basis": "對齊 windowMonths（6 個月），不是獨立的猜測。"
-    },
-    "madNormalConstant": {
-      "value": 1.4826,
-      "calibration": "verified",
-      "basis": "MAD 的常態一致化常數（1 / Φ⁻¹(0.75) ≈ 1.4826），穩健統計的標準慣例：Rousseeuw & Croux (1993), JASA 88(424), 1273–1283。與本檔對 Cohen f² 的處理方式相同——用具名可查的慣例，不用自創數字。",
-      "note": "這一項不需要校準。MAD 為 0（頻道影片少、觀看數接近）時回報 baseline:'degenerate'，不回傳 Infinity。"
-    },
-    "newsWindowDays": {
-      "value": 7,
-      "calibration": "prior",
-      "basis": "沒有文獻依據，是編的。報導覆蓋度要在一個窗內累計，7 天是為了對齊週週期、避開平日／週末的媒體產量差異。",
-      "howToRefute": "累積 newsSnapshots 後，檢驗不同窗長對議題排名的影響。"
-    },
-    "scanWeekdays": {
-      "value": ["Mon", "Thu"],
-      "cron": "0 22 * * 0,3",
-      "cronTimezone": "UTC",
-      "calibration": "user_setting",
-      "basis": "使用者要每週兩次。挑週一與週四是為了兩次採樣都落在平日——媒體產量週末明顯下降，一次抓週末、一次抓平日會製造假波動（docs/14 §4.4）。",
-      "warning": "Railway cron 一律以 UTC 判讀。0 22 * * 0,3 是台北時間週一、週四 06:00——日欄位跟著往前挪了一天。這一格最容易寫錯。"
-    },
-    "requiredWeeklyCycles": {
-      "value": 3,
-      "calibration": "prior",
-      "basis": "沿用本檔既有的 timeSeries.requiredWeeklyCycles，不另立門檻。",
-      "note": "每週兩次 × 3 週 = 6 次快照、21 天、3 個完整週週期。這正好是本系統第一次能合法離開 heatConfidence:'none' 的條件。在那之前，Track B 的縱斷面比較一律回報 spikeBaseline:'none'，且禁止任何升溫語意（docs/11 §2.8 的用詞禁令照舊適用）。"
-    }
-  },
   "calibration": {
-    "outlierScan": {
-      "status": "none",
-      "signedOffBy": null,
-      "signedOffAt": null,
-      "sampleSize": 0,
-      "note": "在這一項變成 calibrated 之前，任何文件、UI 或對外說明都不得暗示 maturityDays / minBaselineVideos / newsWindowDays 有理論根據。"
-    },
     "floor": {
       "status": "none",
       "signedOffBy": null,
@@ -145,6 +78,8 @@
     "approved": false,
     "calibration": "prior",
     "basis": "Gemini 複審：7 天的歷史會讓每一個正常的週末高峰看起來像突發。所以門檻是完整的週週期數，不是經過幾天、更不是有幾筆快照。3 這個數字仍是先驗——文獻沒有給週期數，只給了「需要與自身歷史比較」這個要求。",
-    "approvalNote": "達到門檻後仍需人工批准才會離開實驗區。把 approved 設為 true 是一次可被審查的 commit，不是一個悄悄跨過的門檻。"
+    "approvalNote": "達到門檻後仍需人工批准才會離開實驗區。把 approved 設為 true 是一次可被審查的 commit，不是一個悄悄跨過的門檻。",
+    "singleSourceOfTruth": "kols/discovery-config.json > timeSeries.requiredWeeklyCycles",
+    "approvalScope": "這個 approved 只管 hashtag 樣本共現密度（heatConfidence）。新聞覆蓋度有自己的旗標：discovery-config.json > timeSeries.newsCoverage.approved。docs/14 §4.3——週期門檻可共用，人工批准不可共用。"
   }
 }
