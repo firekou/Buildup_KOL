@@ -1,13 +1,49 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "KOL Topic Affinity Schema (v2)",
-  "description": "每個 KOL 的『可發揮屬性』與『時事話題連結點』。由 profile.json / character.md / content_style.md / kols/keywords.md 導出，供 Dashboard 計算人設與話題的 Match 分數。軸與領域詞彙見 kols/topic-axes.json。v2 由 v1 精簡而來（docs/10）：四軸取代八軸、拿掉 baseline_funnel 與逐 hook 的 affinity/axis_demand，新增一位 KOL 要填的數字從約 60 個降到約 20 個。",
+  "title": "KOL Topic Affinity Schema (v3)",
+  "description": "每個 KOL 的『可發揮屬性』與『時事話題連結點』。由 profile.json / character.md / content_style.md / kols/keywords.md 導出，供 Dashboard 計算人設與話題的 Match 分數。軸與領域詞彙見 kols/topic-axes.json。v2 由 v1 精簡而來（docs/10）：四軸取代八軸、拿掉 baseline_funnel 與逐 hook 的 affinity/axis_demand。v3 依 docs/11 補上三個 gate 與計分實際會讀、但 v2 沒有定義的欄位：credibility_mode（G2 的前提，缺了就擋在 validation 的 V2）、credibility_basis、homophily（三維計分的其中一維）、credibility_risk。這份檔案先前停留在 v2 而 repo 內所有資料早已是 v3——schema 落後於資料本身就是一種未被執行的規格，故一併校正。",
   "type": "object",
-  "required": ["kol_id", "schema_version", "axes", "pillar_keywords", "topic_hooks", "reach"],
+  "required": ["kol_id", "schema_version", "credibility_mode", "axes", "homophily", "pillar_keywords", "topic_hooks", "reach"],
   "additionalProperties": false,
   "properties": {
     "kol_id": { "type": "string", "description": "對應 kols/index.json 的 id" },
-    "schema_version": { "const": 2 },
+    "schema_version": { "const": 3 },
+    "credibility_mode": {
+      "type": "string",
+      "enum": ["embodied", "hybrid", "database"],
+      "description": "可信度型態。**這是 G2 gate 的前提，不可省略**（缺少時 dashboard 的 validation 會以 V2 擋下，不進計分）。embodied＝可信度來自親身經歷；database＝來自整理可查證資料；hybrid＝兩者兼有。注意：本 repo 所有人設都是 AI 生成，宣告 embodied／hybrid 等於留下一個帳號無法背書的長期主張，Dashboard 會標為需人工逐題覆核。"
+    },
+    "credibility_basis": {
+      "type": "array",
+      "description": "可信度的來源逐項拆開，並標明哪些可查證。把不可查證的那些寫出來，是為了讓它們在被寫進腳本前就先被看見。",
+      "items": {
+        "type": "object",
+        "required": ["type", "desc", "verifiable"],
+        "additionalProperties": false,
+        "properties": {
+          "type": { "type": "string", "description": "來源類型，例如 public_data / certification_claim / field_claim" },
+          "desc": { "type": "string" },
+          "verifiable": { "type": "boolean", "description": "第三方能否查證。AI 人設的第一人稱現場敘述一律 false。" }
+        }
+      }
+    },
+    "credibility_risk": {
+      "type": "string",
+      "description": "選填。這個人設在具身主張／不可能憑證上的最大風險，用白話寫出來。留白代表『沒有風險』，所以有風險就要寫。"
+    },
+    "homophily": {
+      "type": "object",
+      "description": "相似性。**Match 三維之一**（fit / pillar / homophily 等權），缺少或 why 過短則該維不計入平均。",
+      "required": ["score", "why", "audience_identity", "shared_situation", "language_register"],
+      "additionalProperties": false,
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "why": { "type": "string", "minLength": 10, "description": "這個分數從 profile.json 的哪一句推出來。沒有 why 的分數視為未定義。" },
+        "audience_identity": { "type": "string", "description": "受眾是誰" },
+        "shared_situation": { "type": "string", "description": "KOL 與受眾共同的處境" },
+        "language_register": { "type": "string", "description": "說話的層級與方式" }
+      }
+    },
     "axes": {
       "type": "object",
       "description": "四軸屬性向量。鍵必須是 kols/topic-axes.json 的 axes[].key。",

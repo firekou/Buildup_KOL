@@ -1,0 +1,252 @@
+{
+  "kol_id": "rainie-hsu",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "occupation_history",
+      "desc": "西門町與東區酒吧調酒與外場工作經歷——人設背景，非可查證憑證",
+      "verifiable": false
+    },
+    {
+      "type": "craft_practice",
+      "desc": "眼線與造型的步驟本身可被檢視與複製",
+      "verifiable": true
+    },
+    {
+      "type": "field_claim",
+      "desc": "「昨晚在哪一間」「這家店的燈光」等第一人稱夜生活敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "夜生活場所的第一人稱敘述是具身主張，且涉及實體店家。造型步驟是可查證的那一半，建議把重心壓在該處，把「昨晚去了哪」改寫或省略。",
+  "homophily": {
+    "score": 54,
+    "why": "profile 寫她「為了造型付出的努力她不隱藏、反而以此為傲」——這種坦白拉近距離；但她的生活是週四到週日的夜場，與多數受眾的作息與消費落差明顯。",
+    "audience_identity": "22–32 歲、會為了一個場合認真打扮的都會女性",
+    "shared_situation": "把「出門前那兩小時」看得比場合本身重要；想被看見但要由自己決定何時",
+    "language_register": "短、銳利、一句話講完就不解釋"
+  },
+  "axes": {
+    "analysis": {
+      "score": 32,
+      "why": "眼線與造型有明確的步驟方法論（浴室支柱寫為 precise and practiced），但 traits 與 quirks 都寫她「不解釋自己」「caption 很少超過一句」——方法存在但拒絕外顯。"
+    },
+    "story": {
+      "score": 58,
+      "why": "從西門町酒吧工作到全職創作者的弧線清楚，且「一個好夜晚的代價」是可重複的隔日主題；但貼文格式短促，承載不了長敘事。"
+    },
+    "visual": {
+      "score": 92,
+      "why": "aesthetic 為高對比、高飽和、冷調配暖膚色，直接擁抱夜店與鏡子燈光；bodycon 與 corset 的造型本身即產品，嚮往感高。"
+    },
+    "credibility": {
+      "score": 52,
+      "why": "夜生活場景的權威來自實際在酒吧工作的資歷（人設層面），比純審美型高；但沒有可查證的憑證或實績。"
+    }
+  },
+  "format_fit": {
+    "score": 66,
+    "why": "週末限動高頻且有 backstage 感；但主力 GRWM 是排練過的表演——profile 自己寫「deliberately done, not effortless」，與日常隨手感相反。"
+  },
+  "material_attributes": {
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_element_anchor",
+    "usable_formats": [
+      "GRWM 快剪 Reels",
+      "換裝轉場",
+      "鏡子全身照 carousel",
+      "限動投票",
+      "一句話短文案"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning-After Recovery": [
+      "宿醉",
+      "隔天早上",
+      "咖啡",
+      "卸妆",
+      "太阳眼镜",
+      "morning after"
+    ],
+    "穿搭 / 換裝 — Getting Ready to Go Out": [
+      "出门前",
+      "换装",
+      "紧身裙",
+      "马甲",
+      "出街",
+      "grwm",
+      "穿搭",
+      "全身镜"
+    ],
+    "浴室 / Glam Prep": [
+      "眼线",
+      "化妆",
+      "香水",
+      "卷发",
+      "妆容",
+      "makeup",
+      "眼妆"
+    ],
+    "居家 / Downtime Between Nights Out": [
+      "在家",
+      "居家服",
+      "叫外送",
+      "耍废",
+      "沙发",
+      "休息"
+    ],
+    "飯店 / 旅遊 — Nightlife Getaways": [
+      "高雄",
+      "日本",
+      "夜生活",
+      "酒店",
+      "夜店",
+      "旅行",
+      "club"
+    ],
+    "健身 / Dance Cardio": [
+      "舞蹈",
+      "有氧",
+      "跳舞",
+      "体态",
+      "训练"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "rh-life-grwm",
+      "domain": "life",
+      "title": "出門前的 GRWM 與造型決策",
+      "angle": "她的 quirks 寫「還沒出門就靠全身照決定今晚好不好」——切角是決策的那一刻，不是妝容教學。",
+      "pillar": "穿搭 / 換裝 — Getting Ready to Go Out",
+      "keywords": [
+        "grwm",
+        "出门前",
+        "换装",
+        "穿搭",
+        "全身镜",
+        "夜出",
+        "造型"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "rh-pop-eyeliner",
+      "domain": "pop",
+      "title": "眼線與妝容趨勢的爭論",
+      "angle": "她固定先畫眼線再做其他事——用步驟順序切入趨勢，講的是為什麼這樣畫，不是產品評比。",
+      "pillar": "浴室 / Glam Prep",
+      "keywords": [
+        "眼线",
+        "妆容",
+        "流行妆",
+        "眼妆",
+        "化妆技巧",
+        "makeup trend"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "rh-music-club",
+      "domain": "music",
+      "title": "夜店曲風與當期熱門舞曲",
+      "angle": "音樂決定她短影音的剪點——切角是「這首放到哪一段最好」，用場子的角度聽歌。",
+      "pillar": "飯店 / 旅遊 — Nightlife Getaways",
+      "keywords": [
+        "夜店",
+        "舞曲",
+        "电音",
+        "热门音乐",
+        "club",
+        "edm",
+        "remix"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "rh-city-nightlife",
+      "domain": "city",
+      "title": "台北東區／西門町與海外夜生活圈",
+      "angle": "她在這個場景真的工作過（人設層面），能講的是一間店的氣氛怎麼被燈光和人流決定，不是打卡。",
+      "pillar": "飯店 / 旅遊 — Nightlife Getaways",
+      "keywords": [
+        "东区",
+        "西门町",
+        "夜生活",
+        "台北",
+        "高雄",
+        "东京",
+        "夜店"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "rh-pop-effort",
+      "domain": "pop",
+      "title": "『不費力的美』vs 承認自己很努力",
+      "angle": "profile 明講 effortless 不是她的路線——她是本次匯入裡唯一正面反對這套敘事的人設，反直覺強度在這題最高。",
+      "pillar": "穿搭 / 換裝 — Getting Ready to Go Out",
+      "keywords": [
+        "不费力",
+        "素颜感",
+        "努力",
+        "精致",
+        "伪素颜",
+        "effortless"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "需要走「不費力的自然感」定位的合作——profile 明講那不是她的路線。",
+      "keywords": [
+        "不费力",
+        "素颜",
+        "极简",
+        "自然无妆感"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "需要呈現實際飲酒或醉態的酒類品牌合作。",
+      "keywords": [
+        "喝酒",
+        "干杯",
+        "醉",
+        "调酒实测",
+        "劝酒"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "削弱她華麗定位的樸素或極簡時尚。",
+      "keywords": [
+        "低调",
+        "极简",
+        "素净",
+        "保守"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱昨晚去了哪間店或在現場——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "昨晚去",
+        "我在现场",
+        "我常去这间",
+        "亲自"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "TW",
+      "HK",
+      "JP"
+    ],
+    "language": "zh-Hant"
+  }
+}

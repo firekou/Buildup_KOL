@@ -1,0 +1,247 @@
+{
+  "kol_id": "iris-chen",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "taste_authority",
+      "desc": "台北大安區咖啡廳與街區的審美選擇——她的唯一權威來源",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我常去這三家」「今天下午在這裡」等第一人稱在地敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "咖啡廳與店家推薦是具身主張。她的題材沒有專業風險，但「我常去」這類敘述在 AI 人設上無法履行，探店題材要改寫。",
+  "homophily": {
+    "score": 74,
+    "why": "profile 寫她「不覺得自己是網紅，只是剛好很好看的人」，內容是咖啡廳、散步、下午變成傍晚——受眾的生活場景與她高度重疊，落差只在外貌與審美。",
+    "audience_identity": "20–30 歲、住在台北或嚮往台北生活的年輕女性",
+    "shared_situation": "在同一座城市裡找好看的角落；朋友約出門的下午",
+    "language_register": "十個字以內的短 caption，不解釋、不多話"
+  },
+  "axes": {
+    "analysis": {
+      "score": 15,
+      "why": "quirks 寫死了「caption 十個字以內」，brand_dont 也排除任何需要解釋的產品——她的格式在物理上裝不下拆解型內容，是 11 位裡最低。"
+    },
+    "story": {
+      "score": 42,
+      "why": "profile 明講她「沒有策略，只是今天有東西好看就發」；backstory 沒有轉折事件，敘事結構被刻意留白。"
+    },
+    "visual": {
+      "score": 90,
+      "why": "aesthetic 為 35mm 底片顆粒、暖而略褪色的台北午後光；她的內容本體就是畫面，profile 形容為「就是很耐看的人」，嚮往感高。"
+    },
+    "credibility": {
+      "score": 28,
+      "why": "沒有職業身分或實績；權威僅來自審美一致性——她自己也不主張任何專業性。"
+    }
+  },
+  "format_fit": {
+    "score": 90,
+    "why": "每日限動固定就是一張照片、無貼圖無文字，貼文在咖啡廳之間隨手拍——隨手感就是她的產品本身。"
+  },
+  "material_attributes": {
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_element_anchor",
+    "usable_formats": [
+      "單張與 carousel 圖文",
+      "穿搭轉場短影音",
+      "街拍散步片段",
+      "限動單張",
+      "無口白 B-roll"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "起床",
+      "晨光",
+      "赖床",
+      "床上",
+      "素颜",
+      "morning"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "穿搭",
+      "抹胸",
+      "短版上衣",
+      "短裙",
+      "帽T",
+      "试穿",
+      "outfit",
+      "ootd"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "洗完澡",
+      "浴室",
+      "浴巾",
+      "湿发",
+      "素颜",
+      "镜子"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "沙发",
+      "居家服",
+      "午后",
+      "台北公寓",
+      "耍废"
+    ],
+    "飯店 / Hotel & Travel": [
+      "酒店",
+      "日本",
+      "旅行",
+      "落地窗",
+      "住宿",
+      "hotel",
+      "japan"
+    ],
+    "健身 / Fitness & Active": [
+      "健身",
+      "运动",
+      "流汗",
+      "运动服",
+      "gym"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "ic-city-taipei",
+      "domain": "city",
+      "title": "台北大安區咖啡廳與街區散步",
+      "angle": "她的 quirks 寫「就固定去那三家，不會道歉」——切角是重複去同一個地方的偏執，不是探店清單。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "台北",
+        "大安区",
+        "咖啡厅",
+        "散步",
+        "街拍",
+        "下午",
+        "台北日常"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ic-life-outfit",
+      "domain": "life",
+      "title": "台北街頭的隨手穿搭",
+      "angle": "不是教學，是她站在鏡子前決定的過程——profile 明講「不是 tutorial，就是她在選」。",
+      "pillar": "穿搭 / Outfit & Changing",
+      "keywords": [
+        "穿搭",
+        "台北",
+        "街头",
+        "ootd",
+        "短版",
+        "试穿",
+        "日常穿搭"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ic-city-japan",
+      "domain": "city",
+      "title": "日本旅行與飯店落地窗",
+      "angle": "她拍的是「在一個不是家的地方」那種特定感覺，不是行程——對上她 hotel 支柱的原始描述。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "日本",
+        "东京",
+        "旅行",
+        "酒店",
+        "落地窗",
+        "japan",
+        "travel"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ic-pop-filmphoto",
+      "domain": "pop",
+      "title": "底片感／35mm 風格的照片審美",
+      "angle": "她的照片被設計成「看起來像底片拍的，即使不是」——可以直接講這個審美選擇本身。",
+      "pillar": "早晨 / Morning & Waking Up",
+      "keywords": [
+        "底片",
+        "胶片感",
+        "film",
+        "35mm",
+        "调色",
+        "复古",
+        "摄影"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ic-life-friends",
+      "domain": "life",
+      "title": "跟朋友出門的下午",
+      "angle": "profile 寫她「的生活從來不是一個人的表演」——朋友入鏡是結構性設定，不是偶爾的客串。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "朋友",
+        "聚会",
+        "出门",
+        "下午",
+        "闺蜜",
+        "日常"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "3C 或任何需要解釋的產品——profile 明列為 brand_dont。",
+      "keywords": [
+        "3C",
+        "开箱",
+        "规格",
+        "评测",
+        "教学",
+        "深度解析"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "需要照腳本口播或產品示範的合作。",
+      "keywords": [
+        "逐字稿",
+        "指定台词",
+        "产品示范",
+        "口播"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "與她的審美不符的快時尚品牌。",
+      "keywords": [
+        "快时尚",
+        "大量生产",
+        "廉价"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱常去某家店或某次旅行——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我常去",
+        "我上次去",
+        "亲自",
+        "实地"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "TW",
+      "HK",
+      "JP"
+    ],
+    "language": "zh-Hant"
+  }
+}

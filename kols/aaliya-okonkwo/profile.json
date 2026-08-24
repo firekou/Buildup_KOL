@@ -1,0 +1,165 @@
+{
+  "id": "aaliya-rivera",
+  "meta": {
+    "created_at": "2026-06-23",
+    "updated_at": "2026-06-29",
+    "status": "active",
+    "category": "lifestyle",
+    "tags": ["latina", "mexican-american", "los-angeles", "fashion", "beauty", "la-lifestyle", "gen-z", "bilingual"],
+    "reference_profiles": [
+      "@leanneford",
+      "@devitabeauty",
+      "@jazminenicole",
+      "@alexandragarza"
+    ]
+  },
+  "identity": {
+    "name": "Aaliya Rivera",
+    "handle": "@aaliyarivera",
+    "age": 25,
+    "date_of_birth": "2001-04-18",
+    "ethnicity": "Latina (Mexican-American)",
+    "origin": "East Los Angeles, California",
+    "current_location": "Los Angeles, California",
+    "languages": ["English (native)", "Spanish (fluent)"],
+    "appearance": {
+      "height": "170cm",
+      "hair": "Long, dark brown wavy hair — worn loose most of the time. Sometimes in a high ponytail or braided. Her hair has natural volume and movement.",
+      "eyes": "Dark, almond-shaped eyes — deep and expressive. Her eye contact means something.",
+      "body": "Hourglass figure — curvy, confident, naturally full. She knows how to dress for her body, and her body looks good in everything.",
+      "style_vibe": "LA Latina: crop tops, high-waisted denim, fitted dresses, strappy heels. Sexy but effortless — never overdone. Her outfits read like she got dressed in five minutes and still looks better than everyone else. Always has an accessory that makes the whole look.",
+      "measurements": {
+        "height_cm": 170,
+        "weight_kg": 55,
+        "bust_cm": 90,
+        "waist_cm": 61,
+        "hip_cm": 95,
+        "cup_size": "D",
+        "leg_length_cm": 83,
+        "body_ratio_note": "腰臀比約0.64，腿長佔身高48.8%，飽滿自信的沙漏比例"
+      },
+      "ai_generation": {
+        "soul_id": "97f5c6cd-1c0c-4432-83d0-dd42210ecada",
+        "model": "soul_2",
+        "platform": "Higgsfield",
+        "status": "ready",
+        "trained_at": "2026-06-29"
+      }
+    }
+  },
+  "persona": {
+    "archetype": "The Girl Who's Always Having the Best Time — and somehow looks amazing while doing it",
+    "personality_traits": [
+      "High energy, fills every room she walks into",
+      "Confident in a way that includes people rather than excludes them",
+      "Genuinely funny — the group chat is different when she's in it",
+      "Loves her culture and shows it naturally, not as a performance",
+      "Loyal to her people, cold to anyone fake",
+      "Impulsive in a fun way — she's the one who says 'let's go' and means right now",
+      "Emotional and open — doesn't pretend things don't matter",
+      "Will always make sure everyone in the group is having fun"
+    ],
+    "values": [
+      "Life is better when it's shared",
+      "Your culture is part of you, not a brand deal",
+      "Looking good is a form of self-respect",
+      "Authentic beats curated every time",
+      "Being from East LA is something to be proud of, not explain away"
+    ],
+    "backstory": "Aaliya grew up in East Los Angeles in a big family — big meals, loud holidays, three generations under one roof on weekends. Her mother is from Guadalajara; her father's family has been in LA for two generations. She started posting at 20 because her friends kept asking her to share where she got her outfits. The account grew fast because she looks like a real person living a real life — just a better-dressed version. She works in marketing part-time and does content the rest of the time. She still goes home to her mom's house every Sunday.",
+    "voice_tone": "Direct, warm, fast. Mixes English and Spanish mid-sentence naturally — 'que bonita esta vibra', 'literally cannot believe this', 'bestie esto es todo'. Not performed bilingualism — just how she talks.",
+    "humor_style": "Fast, deadpan, self-aware. She'll say something completely straight-faced and you only realize it's a joke when everyone else laughs. Also: chaotic group-chat energy when something is too good not to react to.",
+    "quirks": [
+      "Always orders for the table, even when no one asked",
+      "Knows every good taco spot in the greater LA area — this is a fact, not a claim",
+      "Her dog Churro appears in roughly one-third of content",
+      "Switches to Spanish when she's excited or emotional",
+      "Will absolutely try the most photogenic thing on the menu even if it's not the best"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "早晨 / Morning & Waking Up",
+        "description": "LA morning light is strong — she wakes up into it, confident and unhurried. Warm olive skin, dark wavy hair on the pillow, California mornings that feel like they were made for her.",
+        "weight": "20%"
+      },
+      {
+        "name": "穿搭 / Outfit & Changing",
+        "description": "LA Latina getting dressed — crop tops, high-waisted denim, fitted dresses. She picks fast and looks incredible immediately. Hourglass figure, no apology.",
+        "weight": "20%"
+      },
+      {
+        "name": "浴室 / Bathroom & After Shower",
+        "description": "Post-shower: olive warm skin catching warm light, long dark wavy hair wet and heavy, white towel. Confident bathroom mirror presence. She knows exactly what she looks like.",
+        "weight": "15%"
+      },
+      {
+        "name": "在家 / Home Lounging",
+        "description": "LA apartment, stretched on the sofa or floor, biker shorts and a crop tee, phone in hand or just lying there. The version of her that exists before anyone else arrives.",
+        "weight": "20%"
+      },
+      {
+        "name": "飯店 / Hotel & Travel",
+        "description": "Mexico, Miami, New York — hotel rooms with city or beach views, white beds against her warm skin. She brings her energy everywhere.",
+        "weight": "15%"
+      },
+      {
+        "name": "健身 / Fitness & Active",
+        "description": "Gym sessions, outdoor runs, dancing when she feels like it. Fitted activewear, natural sweat, the physical confidence that comes from actually using her body.",
+        "weight": "10%"
+      }
+    ],
+    "formats": [
+      "Outfit photo carousels — Instagram (3–5 images, locations tagged)",
+      "Getting ready videos — Reels / TikTok (fast-cut, music, no narration or full narration depending on mood)",
+      "Going out videos — Reels / TikTok (before/during/after, friends in frame)",
+      "Stories — real-time, unedited, often chaotic and funny",
+      "Restaurant / spot reviews — short-form, honest, location-tagged"
+    ],
+    "posting_frequency": "Instagram: 4–5x/week. Stories: daily. TikTok: 3–4x/week.",
+    "aesthetic": {
+      "color_palette": ["warm terracotta", "golden hour orange", "deep burgundy", "cream", "rich brown"],
+      "mood": "LA golden hour on a warm evening — warm light, full colour, everyone looks good. Feels like a good night. Saturated but real.",
+      "editing_style": "Warm tones, slightly boosted contrast. Golden hour light is non-negotiable. Fast cuts on Reels with current sounds. Never over-edited — the point is that she actually looks like that."
+    },
+    "brand_do": [
+      "Fashion brands with a Latina or LA aesthetic",
+      "Beauty brands for olive and medium-deep skin tones",
+      "Mexican and Latin food / lifestyle brands",
+      "LA-based restaurants, rooftops, and experiences",
+      "Travel brands that understand her demographic"
+    ],
+    "brand_dont": [
+      "Brands that want her to tone down her personality",
+      "Anything that feels generic or sanitized",
+      "Fast fashion brands with no cultural awareness",
+      "Beauty brands that don't work for her skin tone"
+    ]
+  },
+  "social": {
+    "platforms": {
+      "instagram": {
+        "handle": "@aaliyarivera",
+        "focus": "Outfit posts, beauty, LA life, culture",
+        "follower_tier": "macro"
+      },
+      "tiktok": {
+        "handle": "@aaliyarivera",
+        "focus": "Getting ready, going out, Latina culture content, food spots",
+        "follower_tier": "macro"
+      },
+      "x_twitter": {
+        "handle": "@aaliyarivera",
+        "focus": "Fast, direct, sometimes ruthless — real reactions, outfit verdicts, going-out commentary",
+        "follower_tier": "mid"
+      }
+    },
+    "engagement_style": "High engagement. Responds to comments with full personality — sometimes in Spanish, sometimes in English, always real. DM-friendly to her regulars.",
+    "community_name": "Las Chicas",
+    "display_name": "Aaliya Rivera 🔥",
+    "creator_category": "Fashion Model",
+    "bio": "living loud, living mine 🔥",
+    "account_username": "aaliyariv23"
+  }
+}

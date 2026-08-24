@@ -1,0 +1,271 @@
+{
+  "kol_id": "mia-huang",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "domain_knowledge",
+      "desc": "遊戲版本更新、機制與周邊設備規格——可查證的公開資料",
+      "verifiable": true
+    },
+    {
+      "type": "occupation_claim",
+      "desc": "全職直播主身分、每週 5–6 晚開台——AI 人設在結構上無法履行",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「剛剛那把」「昨天有人在彈幕說」等即時互動敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "本次匯入 11 位裡具身風險最高。直播是即時、雙向、可被驗證的行為——一個 AI 人設宣稱每晚開台，被追問一次就會崩。若要經營，直播主張必須改為預錄內容的明示定位，否則整個人設不成立。",
+  "homophily": {
+    "score": 78,
+    "why": "profile 寫她「從來不是機械最強的玩家，大家回來看的是她的吐槽」，並把彈幕當家人——她與受眾共享的是「打不好但很愛玩」的處境，不是技術落差。",
+    "audience_identity": "18–28 歲、每天在線的遊戲玩家與深夜族群",
+    "shared_situation": "熬夜、排位掉分、看迷因長大的網路原生世代",
+    "language_register": "英文遊戲術語混中文、講很快、對彈幕說話而不是對觀眾發表"
+  },
+  "axes": {
+    "analysis": {
+      "score": 58,
+      "why": "遊戲題材天生需要拆解機率與機制，profile 也寫她「在彈幕打出來之前先吐槽自己的爛操作」——她確實在做即時判斷分析，只是包在玩笑裡。"
+    },
+    "story": {
+      "score": 60,
+      "why": "輟學轉全職直播是完整的轉折弧線；與固定訂閱者長期的假想敵 bit 提供跨集連續性，這在本次 11 位裡少見。"
+    },
+    "visual": {
+      "score": 72,
+      "why": "aesthetic 為 RGB 燈光、螢幕藍光、高飽和 glow，視覺語言強烈且可辨識；但場景幾乎只有一個房間，空間資訊量與嚮往感受限。"
+    },
+    "credibility": {
+      "score": 48,
+      "why": "全職創作者身分本身是可信度來源，且遊戲知識可查證；但 profile 自述她不是技術最強的玩家，權威不建立在戰績上。"
+    }
+  },
+  "format_fit": {
+    "score": 82,
+    "why": "TikTok 幾乎每天從直播 VOD 剪片、開台前限動也是日常——隨手感高，但素材源頭是直播而非隨手拍。"
+  },
+  "material_attributes": {
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_element_anchor",
+    "usable_formats": [
+      "直播切片短影音",
+      "換裝／穿搭轉場",
+      "反應臉迷因短片",
+      "開台前限動",
+      "設備開箱圖文"
+    ]
+  },
+  "pillar_keywords": {
+    "下午甦醒 / Afternoon Wake-Up (Her \"Morning\")": [
+      "下午起床",
+      "作息",
+      "日夜颠倒",
+      "熬夜",
+      "刚醒",
+      "电竞椅"
+    ],
+    "穿搭 / 換裝 — Cosplay-Lite & Stream Fits": [
+      "换装",
+      "cos",
+      "猫耳",
+      "过膝袜",
+      "帽T",
+      "直播穿搭",
+      "cosplay"
+    ],
+    "浴室 / 深夜保養 — Late-Night Skincare Before Going Live": [
+      "保养",
+      "护肤",
+      "卸妆",
+      "深夜",
+      "开台前",
+      "skincare"
+    ],
+    "居家 / 直播間 — Streaming Room Life": [
+      "直播",
+      "开台",
+      "弹幕",
+      "实况",
+      "游戏",
+      "RGB",
+      "直播间",
+      "订阅"
+    ],
+    "飯店 / 旅遊 — Convention & Meetup Trips": [
+      "漫展",
+      "签名会",
+      "见面会",
+      "展场",
+      "酒店",
+      "convention"
+    ],
+    "健身 / Stretch Breaks": [
+      "拉伸",
+      "肩颈",
+      "久坐",
+      "腰酸",
+      "伸展"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "mh-game-patch",
+      "domain": "game",
+      "title": "新版本更新與角色強度改動",
+      "angle": "她讀 patch notes 像在讀鄰居八卦——用吐槽的語氣講機制改動，把硬資訊包在反應裡。",
+      "pillar": "居家 / 直播間 — Streaming Room Life",
+      "keywords": [
+        "版本更新",
+        "改动",
+        "削弱",
+        "加强",
+        "赛季",
+        "patch",
+        "meta",
+        "英雄联盟",
+        "手游"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "mh-game-rankgrind",
+      "domain": "game",
+      "title": "排位掉分與「打不好但不下播」",
+      "angle": "profile 的價值觀寫「輸了可以哭鬧可以嘴硬，但絕對不會下播」——這是她最可轉譯的一句話，能對上任何挫折題材。",
+      "pillar": "居家 / 直播間 — Streaming Room Life",
+      "keywords": [
+        "排位",
+        "掉分",
+        "上分",
+        "连败",
+        "菜",
+        "手残",
+        "rank"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "mh-pop-memes",
+      "domain": "pop",
+      "title": "網路迷因與當期直播圈事件",
+      "angle": "她的 traits 寫她把迷因與推特風波當成鄰里八卦——切角是「這件事今天在網路上長怎樣」，不是評論。",
+      "pillar": "居家 / 直播間 — Streaming Room Life",
+      "keywords": [
+        "迷因",
+        "梗图",
+        "网络热议",
+        "直播圈",
+        "meme",
+        "热搜"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "mh-tech-gear",
+      "domain": "tech",
+      "title": "遊戲週邊與直播設備",
+      "angle": "耳機、鍵盤、擷取卡是她 brand_do 的第一類——設備題可以走規格與實用，是她少數能認真講的內容。",
+      "pillar": "居家 / 直播間 — Streaming Room Life",
+      "keywords": [
+        "耳机",
+        "键盘",
+        "电竞椅",
+        "麦克风",
+        "撷取卡",
+        "外设",
+        "gaming gear"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "mh-life-nightowl",
+      "domain": "life",
+      "title": "日夜顛倒的作息與深夜族群",
+      "angle": "她的價值觀第一條是「白天是留給睡覺的」——把作息當身分認同，而不是當健康問題來檢討。",
+      "pillar": "下午甦醒 / Afternoon Wake-Up (Her \"Morning\")",
+      "keywords": [
+        "熬夜",
+        "日夜颠倒",
+        "作息",
+        "深夜",
+        "凌晨",
+        "夜猫子",
+        "night owl"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "mh-tv-anime",
+      "domain": "tv",
+      "title": "當季動畫與遊戲改編作品",
+      "angle": "她的日文是從動畫與遊戲學來的——用玩家視角看改編，關心的是還原度不是劇評。",
+      "pillar": "穿搭 / 換裝 — Cosplay-Lite & Stream Fits",
+      "keywords": [
+        "新番",
+        "动画",
+        "改编",
+        "还原度",
+        "声优",
+        "anime",
+        "二次元"
+      ],
+      "evergreen": false
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "正式或商務感的服裝品牌——profile 明列完全不在她的守備範圍。",
+      "keywords": [
+        "正装",
+        "商务",
+        "西装",
+        "职场穿搭"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "需要白天戶外拍攝的合作——她的品牌identity 是夜行性。",
+      "keywords": [
+        "白天外拍",
+        "户外拍摄",
+        "晨间",
+        "日出"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "超出主流 SFW 遊戲創作者範圍的露骨或剝削性要求。",
+      "keywords": [
+        "露骨",
+        "情色",
+        "擦边",
+        "裸露",
+        "性暗示"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "宣稱正在直播、與彈幕即時互動或每晚開台——AI 人設在結構上無法履行的具身主張。",
+      "keywords": [
+        "我在直播",
+        "今晚开台",
+        "刚刚那把",
+        "弹幕说",
+        "live now"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "TW",
+      "HK"
+    ],
+    "language": "zh-Hant"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "kol_id": "sophia-tseng",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "occupation_claim",
+      "desc": "自營居家美學／生活顧問工作室、海外商學院學歷——人設背景，非可查證憑證",
+      "verifiable": false
+    },
+    {
+      "type": "product_knowledge",
+      "desc": "飯店房型、材質、保養品成分與工藝——可查證的公開資料",
+      "verifiable": true
+    },
+    {
+      "type": "field_claim",
+      "desc": "「這間套房的床墊」「我住過」等第一人稱住宿敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "飯店與商務艙體驗是徹底的具身主張，而那正是她的主場支柱（20%）。這一塊無法靠改寫救回全部——要嘛把飯店內容改為公開資訊與材質分析的角度，要嘛接受這是需要逐則人工覆核的高風險區。",
+  "homophily": {
+    "score": 38,
+    "why": "profile 的社群名稱直接叫「懂的人自然懂」，且她不做抽獎、不做互動衝流量——人設刻意設計成有距離感。她的可親近感來自「自己的事業自己做到位」，不是生活型態的相似。",
+    "audience_identity": "28–45 歲、有可支配所得、對質感有要求的都會專業工作者",
+    "shared_situation": "工作是為了讓自己選的生活可以繼續；不想再為不喜歡的東西假裝喜歡",
+    "language_register": "極簡、乾、少驚嘆號，偶爾中文句中夾一個英文詞點題"
+  },
+  "axes": {
+    "analysis": {
+      "score": 52,
+      "why": "profile 寫她對房型、床墊硬度、葡萄酒年份有明確偏好，且「不解釋原因」——判準確實存在且成體系，但被刻意設計成不外顯，所以拆解型內容要重新包裝才成立。"
+    },
+    "story": {
+      "score": 60,
+      "why": "商學院畢業後不進家族事業、自己開工作室是清楚的選擇弧線；但 voice_tone 明訂疏離、少驚嘆號，情緒濃度被主動壓低。"
+    },
+    "visual": {
+      "score": 90,
+      "why": "aesthetic 為五星套房挑高、大理石反光、絲質垂墜、低對比暖米調；飯店旅遊是她的主場支柱，嚮往感是本次匯入 11 位裡最高的之一。"
+    },
+    "credibility": {
+      "score": 66,
+      "why": "自營工作室的經營者身分＋海外商學院背景，是本次匯入 11 位裡最高；profile 也強調她的事業是自己做的，不是嫁得好或繼承來的。"
+    }
+  },
+  "format_fit": {
+    "score": 45,
+    "why": "posting_frequency 明訂「不追求高頻率，寧可少發但每則都到位」，主力是精修 carousel——明確反日常隨手感，是本次匯入裡最低的一位。"
+  },
+  "material_attributes": {
+    "generation_model": "seedream_v4_5",
+    "consistency": "reference_element_anchor",
+    "usable_formats": [
+      "精修單張與 carousel",
+      "飯店房間 walkthrough Reels",
+      "換裝片段",
+      "低頻限動",
+      "材質特寫 B-roll"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Slow Morning": [
+      "晨间",
+      "手冲",
+      "咖啡",
+      "落地窗",
+      "安静",
+      "信义区",
+      "slow morning"
+    ],
+    "穿搭 / 換裝": [
+      "穿搭",
+      "西装外套",
+      "喀什米尔",
+      "丝质衬衫",
+      "宽裤",
+      "剪裁",
+      "质感穿搭"
+    ],
+    "浴室 / 保養儀式": [
+      "保养",
+      "护肤",
+      "大理石",
+      "精华",
+      "身体乳",
+      "仪式",
+      "skincare"
+    ],
+    "居家 / 信義區公寓": [
+      "在家",
+      "公寓",
+      "家居服",
+      "红酒",
+      "沙发",
+      "居家美学",
+      "信义区",
+      "quietluxury"
+    ],
+    "飯店旅遊 / Hotel & Travel": [
+      "五星酒店",
+      "套房",
+      "商务舱",
+      "东京",
+      "巴黎",
+      "巴厘岛",
+      "住宿",
+      "hotel",
+      "suite",
+      "businessclass"
+    ],
+    "健身 / Pilates & Reformer": [
+      "普拉提",
+      "pilates",
+      "reformer",
+      "体态",
+      "核心",
+      "线条"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "st-city-hotels",
+      "domain": "city",
+      "title": "五星飯店套房與商務艙的旅程",
+      "angle": "她拍的是入住後第一個鏡頭與材質細節，不是行程——這是她 20% 主場支柱最直接的延伸。",
+      "pillar": "飯店旅遊 / Hotel & Travel",
+      "keywords": [
+        "五星酒店",
+        "套房",
+        "商务舱",
+        "东京",
+        "巴黎",
+        "巴厘岛",
+        "住宿体验",
+        "hotel"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "st-life-quietluxury",
+      "domain": "life",
+      "title": "Quiet luxury 與「質感是底線不是加分項」",
+      "angle": "她的價值觀第一條就是這句——用來反炫富敘事，語氣是平的不是說教，這是她最可轉譯的立場。",
+      "pillar": "居家 / 信義區公寓",
+      "keywords": [
+        "quiet luxury",
+        "低调奢华",
+        "老钱风",
+        "质感",
+        "极简",
+        "炫富"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "st-life-materialcraft",
+      "domain": "life",
+      "title": "布料、剪裁與工藝的判準",
+      "angle": "她會為了「這個 texture 不行」否決一件衣服——把主觀偏好講成可辨識的材質判準，這是她可查證的那一半。",
+      "pillar": "穿搭 / 換裝",
+      "keywords": [
+        "面料",
+        "剪裁",
+        "喀什米尔",
+        "丝质",
+        "工艺",
+        "版型",
+        "定制"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "st-book-career",
+      "domain": "book",
+      "title": "自己開工作室與「少而精」的選擇",
+      "angle": "她只接自己真心喜歡的案子——把商業選擇講成性格的縮影，能承接職涯與創業類的長文案。",
+      "pillar": "居家 / 信義區公寓",
+      "keywords": [
+        "创业",
+        "工作室",
+        "职涯",
+        "选择",
+        "少而精",
+        "接案",
+        "自雇"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "st-life-pilates",
+      "domain": "life",
+      "title": "Pilates／reformer 與安靜的自律",
+      "angle": "她的健身支柱明訂是線條與姿態的維持，不是強度展示——切角是自律的安靜版本，對上她整體的不費力氣質。",
+      "pillar": "健身 / Pilates & Reformer",
+      "keywords": [
+        "普拉提",
+        "pilates",
+        "reformer",
+        "体态",
+        "自律",
+        "线条"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "任何需要她過度熱情推銷或喊口號的合作——profile 明列為 brand_dont。",
+      "keywords": [
+        "快抢",
+        "限时",
+        "手刀",
+        "冲一波",
+        "喊话"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "快時尚或大眾平價品牌。",
+      "keywords": [
+        "快时尚",
+        "平价",
+        "均一价",
+        "大众品牌"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "需要她講逐字稿、扮演專家教學角色的業配。",
+      "keywords": [
+        "逐字稿",
+        "教学",
+        "专家讲解",
+        "指定台词"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "以第一人稱宣稱住過某間飯店或搭過某段航班——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我住过",
+        "这次入住",
+        "我搭的",
+        "亲自体验",
+        "实住"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "TW",
+      "HK",
+      "JP"
+    ],
+    "language": "zh-Hant"
+  }
+}

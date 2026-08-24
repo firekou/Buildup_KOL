@@ -1,0 +1,290 @@
+{
+  "kol_id": "luna-tanaka",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "craft_practice",
+      "desc": "底片攝影、構圖與京都四季的觀察——作品本身即證據，可被檢視",
+      "verifiable": true
+    },
+    {
+      "type": "education_claim",
+      "desc": "京都精華大學藝術系在學——人設背景，非可查證憑證",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「等了 45 分鐘讓雲移開」「這個地方我這個月拍過了」等第一人稱現場敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "攝影是少數作品本身可被檢視的領域，具身風險相對低；但「我在現場等了 45 分鐘」這類敘述仍是無法履行的主張，建議把重心放在畫面而非拍攝過程的自述。",
+  "homophily": {
+    "score": 48,
+    "why": "profile 寫她「本人害羞，在鏡頭後才完全是自己」，這一點拉近距離；但「等一朵雲移開 45 分鐘」與繼承自祖母的構圖訓練，是受眾欣賞而非共享的能力。",
+    "audience_identity": "20–35 歲、喜歡攝影與慢生活美學的人，日本與東亞為主",
+    "shared_situation": "想把日常過得慢一點，但生活節奏不允許；用照片留住東西的衝動",
+    "language_register": "像日記，短、感官描述優先，寫的是感覺不是事實"
+  },
+  "axes": {
+    "analysis": {
+      "score": 38,
+      "why": "她對「什麼好看、什麼不好看」有非常精準的判準（profile 原文），構圖與光線知識是成體系的；但 traits 同時寫她「用畫面溝通多過用文字」，拆解從不外顯。"
+    },
+    "story": {
+      "score": 70,
+      "why": "祖母的花藝教室、17 歲開始拍照是為了記住事情——傳承弧線完整；caption 被形容為日記，且固定以季節或時刻收尾，是可重複的情緒錨點。"
+    },
+    "visual": {
+      "score": 95,
+      "why": "本次匯入 11 位裡視覺最高。aesthetic 指定 Portra／Fujifilm 模擬、提亮陰影、柔化高光；她的內容本體就是攝影作品，京都四季本身即高資訊量畫面。"
+    },
+    "credibility": {
+      "score": 45,
+      "why": "藝術系在學＋靠賣印刷品補貼收入，創作者身分有實績支撐；但沒有職業憑證，profile 也寫她開帳號不是為了追蹤數。"
+    }
+  },
+  "format_fit": {
+    "score": 62,
+    "why": "限動是隨手的，但主力是 5–8 張精心排序的 carousel、每月一次底片集，且 profile 明講她「想發才發，不照表操課」——刻意反日常高頻。"
+  },
+  "material_attributes": {
+    "generation_model": "higgsfield_soul_2",
+    "consistency": "soul_model_trained",
+    "usable_formats": [
+      "精排 carousel",
+      "無口白氛圍短影音",
+      "底片風格圖文",
+      "限動單張",
+      "季節主題系列"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "晨间",
+      "起床",
+      "障子",
+      "晨光",
+      "白色床品",
+      "morning",
+      "京都",
+      "朝",
+      "目覚め",
+      "光",
+      "リネン",
+      "静か",
+      "filmphotography",
+      "filmgrain"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "穿搭",
+      "蕾丝",
+      "针织",
+      "碎花",
+      "复古",
+      "娃娃鞋",
+      "outfit",
+      "コーデ",
+      "レース",
+      "ニット",
+      "古着",
+      "ワンピース",
+      "服"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "洗完澡",
+      "浴室",
+      "湿发",
+      "浴巾",
+      "水汽",
+      "镜子",
+      "お風呂",
+      "スキンケア",
+      "湯気",
+      "鏡"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "榻榻米",
+      "木地板",
+      "猫",
+      "午后",
+      "公寓",
+      "home",
+      "暮らし",
+      "部屋",
+      "畳",
+      "午後",
+      "丁寧な暮らし",
+      "日常",
+      "slowliving",
+      "slowness"
+    ],
+    "飯店 / Hotel & Travel": [
+      "东京",
+      "大阪",
+      "酒店",
+      "旅行",
+      "一个人",
+      "hotel",
+      "travel",
+      "京都",
+      "東京",
+      "散歩",
+      "旅",
+      "ホテル",
+      "路地",
+      "四季"
+    ],
+    "健身 / Fitness & Active": [
+      "瑜伽",
+      "拉伸",
+      "散步",
+      "呼吸",
+      "慢走",
+      "stretching",
+      "ヨガ",
+      "ストレッチ",
+      "散歩"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "lt-city-kyoto",
+      "domain": "city",
+      "title": "京都四季與同一地點的不同角度",
+      "angle": "她的 quirks 寫「同一個月不重複拍同一個地點，她會找新角度」——切角是角度本身，不是景點介紹。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "京都",
+        "四季",
+        "樱花",
+        "红叶",
+        "神社",
+        "kyoto",
+        "japan",
+        "旅行"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "lt-life-slowliving",
+      "domain": "life",
+      "title": "慢生活與「慢不是懶」",
+      "angle": "她的價值觀第一條就是「慢不是懶惰，是注意力」——這是她單一最可轉譯的想法，能直接對上倦怠與效率焦慮的話題。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "慢生活",
+        "日常",
+        "注意力",
+        "倦怠",
+        "效率",
+        "slow living",
+        "极简"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "lt-pop-filmphotography",
+      "domain": "pop",
+      "title": "底片攝影與器材美學",
+      "angle": "她隨身帶底片機，且照片刻意不重度後製——可以直接講底片與數位的取捨，這是她少數會外顯知識的題目。",
+      "pillar": "早晨 / Morning & Waking Up",
+      "keywords": [
+        "胶片",
+        "底片",
+        "菲林",
+        "portra",
+        "富士",
+        "相机",
+        "film photography"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "lt-music-ambient",
+      "domain": "music",
+      "title": "環境音與氛圍音樂當畫面的底噪",
+      "angle": "她的短影音無口白、只有畫面與聲音——音樂的功能是延長畫面的停留時間，不是主題。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "环境音",
+        "白噪音",
+        "氛围音乐",
+        "ambient",
+        "lofi",
+        "助眠"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "lt-history-kyototradition",
+      "domain": "history",
+      "title": "京都的傳統工藝與花道",
+      "angle": "祖母的花藝教室是她的構圖來源——講傳統時她講的是它怎麼影響一個人看東西的方式，不是文化介紹。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "花道",
+        "传统工艺",
+        "京都",
+        "手作",
+        "职人",
+        "ikebana",
+        "craft"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "喧鬧或極繁風格的品牌美學——profile 明列為 brand_dont。",
+      "keywords": [
+        "浮夸",
+        "高饱和",
+        "大logo",
+        "喧闹",
+        "maximalist"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "快時尚與大量生產的商品。",
+      "keywords": [
+        "快时尚",
+        "量产",
+        "廉价",
+        "fast fashion"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "需要大量腳本化推銷的合作。",
+      "keywords": [
+        "逐字稿",
+        "指定台词",
+        "口播",
+        "促销话术"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱親自到訪某地或拍攝過程——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我等了",
+        "我拍的时候",
+        "亲自到",
+        "现场"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "JP",
+      "TW",
+      "GLOBAL"
+    ],
+    "language": "ja"
+  }
+}

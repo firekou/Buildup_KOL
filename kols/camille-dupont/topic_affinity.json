@@ -1,0 +1,296 @@
+{
+  "kol_id": "camille-dupont",
+  "schema_version": 3,
+  "credibility_mode": "hybrid",
+  "credibility_basis": [
+    {
+      "type": "public_knowledge",
+      "desc": "產區、風土、法國飲食傳統與食譜源流——可查證的公開資料",
+      "verifiable": true
+    },
+    {
+      "type": "family_background",
+      "desc": "里昂酒商父親、每日下廚的母親——人設背景，非可查證憑證",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我今天在市場買到」「這是我媽的做法」等第一人稱現場敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "市場探訪與試吃是具身主張。可查證的那一半（產區、風土、食譜源流）足以撐起大部分內容，建議把重心壓在該處，把「我今天買到」改寫為知識性切角。",
+  "homophily": {
+    "score": 58,
+    "why": "profile 寫她「一個人吃飯也會好好擺餐具」，這種對日常的講究是受眾嚮往但做得到的；但里昂酒商家庭＋索邦文學系的背景，離多數受眾仍有距離。",
+    "audience_identity": "25–40 歲、對飲食與生活質感有要求的都會工作者",
+    "shared_situation": "在小廚房裡想把一頓飯吃得像樣；覺得「好好吃飯」愈來愈難但不想放棄",
+    "language_register": "像日記，慢、完整句、偶爾岔題——不是食譜口播"
+  },
+  "axes": {
+    "analysis": {
+      "score": 45,
+      "why": "她對麵包與產區有明確且成體系的判準（profile：對麵包的意見可以寫成一本書），但 traits 同時寫她「把意見講得很輕」——有結構性知識，表達刻意不做拆解。"
+    },
+    "story": {
+      "score": 78,
+      "why": "「從不分享一道食譜卻不講它從哪裡來」是寫死在 quirks 裡的敘事機制；里昂→巴黎、想念家鄉食物的搬遷弧線完整，caption 語氣被形容為日記。"
+    },
+    "visual": {
+      "score": 86,
+      "why": "aesthetic 為秋天巴黎廚房的金色時刻、只用自然光、film-like 調色；餐桌與市場是高資訊量畫面，嚮往感來自「想坐到那張桌子旁」。"
+    },
+    "credibility": {
+      "score": 55,
+      "why": "出身法國美食之都里昂、父親是酒商——味覺權威有來源；但她沒有廚師或侍酒師憑證，profile 也刻意寫她不把自己當專家。"
+    }
+  },
+  "format_fit": {
+    "score": 70,
+    "why": "每日限動常常就是一張今天吃什麼的照片，隨手感存在；但主力的烹飪影片與餐桌 carousel 是有構圖意識的作品，不是純記錄。"
+  },
+  "material_attributes": {
+    "generation_model": "higgsfield_soul_2",
+    "consistency": "soul_model_trained",
+    "usable_formats": [
+      "單手拍攝烹飪短影音",
+      "餐桌與市場 carousel",
+      "長版市場／街區 vlog",
+      "限動隨拍",
+      "圖文長文案"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "晨间",
+      "起床",
+      "亚麻",
+      "晨光",
+      "咖啡",
+      "morning",
+      "linen",
+      "breakfast",
+      "coffee",
+      "window light",
+      "slow morning"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "穿搭",
+      "法式",
+      "衬衫",
+      "乐福鞋",
+      "丝巾",
+      "french style",
+      "outfit",
+      "parisian",
+      "loafers",
+      "silk scarf",
+      "effortless"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "洗完澡",
+      "浴室",
+      "复古瓷砖",
+      "护肤",
+      "bathroom",
+      "skincare",
+      "steam",
+      "mirror"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "沙发",
+      "午后",
+      "阅读",
+      "公寓",
+      "home",
+      "reading",
+      "home cooking",
+      "recipe",
+      "kitchen",
+      "wine",
+      "french table",
+      "terroir",
+      "provenance",
+      "dinner",
+      "bread",
+      "slow living",
+      "diet culture",
+      "guilt free",
+      "literature",
+      "frenchtable",
+      "slowliving",
+      "slowness",
+      "dietculture",
+      "homecooking",
+      "eating",
+      "table",
+      "guilt"
+    ],
+    "飯店 / Hotel & Travel": [
+      "里昂",
+      "尼斯",
+      "罗马",
+      "酒店",
+      "旅行",
+      "lyon",
+      "nice",
+      "rome",
+      "market",
+      "paris",
+      "travel",
+      "hotel",
+      "neighbourhood",
+      "citywalk",
+      "slowtravel"
+    ],
+    "健身 / Fitness & Active": [
+      "散步",
+      "骑车",
+      "拉伸",
+      "走路",
+      "walk",
+      "stretching",
+      "walking",
+      "cycling"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "cd-life-frenchtable",
+      "domain": "life",
+      "title": "法式餐桌與「好好吃一頓飯」",
+      "angle": "她的價值觀第一條是「好好吃完的一餐從來不是浪費時間」——講的是儀式的實用性，不是精緻生活的表演。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "法式",
+        "餐桌",
+        "摆盘",
+        "好好吃饭",
+        "仪式感",
+        "french table",
+        "home cooking"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "cd-history-terroir",
+      "domain": "history",
+      "title": "產區、風土與一道菜的來歷",
+      "angle": "每道食譜都先講它從哪裡來——把地理與歷史當成味道的解釋，這是她可查證的那一半內容。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "产区",
+        "风土",
+        "葡萄酒",
+        "食谱来源",
+        "地方菜",
+        "terroir",
+        "wine region"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "cd-city-paris",
+      "domain": "city",
+      "title": "巴黎街區、市場與里昂返鄉",
+      "angle": "她拍城市的方式是拍光線與人怎麼過日子，不是拍地標——對上她只用自然光的規則。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "巴黎",
+        "里昂",
+        "市集",
+        "街区",
+        "旅行",
+        "paris",
+        "lyon",
+        "market"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "cd-book-literature",
+      "domain": "book",
+      "title": "文學系背景與「慢」這件事",
+      "angle": "索邦文學系是她少數能自然承接閱讀題材的入口——用一段引文帶出一頓飯，而不是做書評。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "文学",
+        "阅读",
+        "书",
+        "慢生活",
+        "sorbonne",
+        "literature",
+        "slow living"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "cd-pop-dietculture",
+      "domain": "pop",
+      "title": "對節食文化的困惑",
+      "angle": "profile 寫她「這輩子沒有節過食，並認為這是一種人格特質」——她的反節食立場是輕描淡寫的困惑，不是對抗。",
+      "pillar": "早晨 / Morning & Waking Up",
+      "keywords": [
+        "节食",
+        "减肥",
+        "热量",
+        "罪恶感",
+        "diet culture",
+        "guilt free"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "節食或減重產品——profile 明列她覺得這類東西莫名其妙。",
+      "keywords": [
+        "减肥",
+        "代餐",
+        "断食",
+        "热量控制",
+        "diet",
+        "weight loss"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "沒有真實產地來源的速食或食品品牌。",
+      "keywords": [
+        "速食",
+        "快餐",
+        "工业化生产",
+        "调味包"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "要求完美置入擺拍的品牌合作。",
+      "keywords": [
+        "产品正面朝上",
+        "logo 露出",
+        "标准置入",
+        "指定台词"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱親自走訪市場或試吃——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我今天买到",
+        "亲自试吃",
+        "实地走访",
+        "我尝了"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "GLOBAL",
+      "US"
+    ],
+    "language": "en"
+  }
+}

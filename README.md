@@ -33,6 +33,26 @@ Buildup_KOL/
 | [rachel-ong](kols/rachel-ong/) | Rachel Ong（王瑞秋） | 邊界感型高海拔登山向導（B01） | 新加坡華裔 | draft |
 | [rafael-costa](kols/rafael-costa/) | Rafael Costa / Captain（拉斐爾·科斯塔） | 現役足球運動員 × 長期主義成長陪伴型 IP（B02） | 巴西人 | draft |
 
+### 自 Virtual KOL Studio 匯入（V01–V11）
+
+人設與內容資料原樣複製自 `pennyhuang-oss/Virtual_KOL_Studio`；`topic_affinity.json` 為本 repo
+依 `kols/topic-axes.json` 的四軸重新分析後新增。匯入範圍與已知落差見
+[`docs/12-virtual-kol-studio-import.md`](docs/12-virtual-kol-studio-import.md)。
+
+| ID | 姓名 | 類型 | 族裔 | 狀態 |
+|----|------|------|------|------|
+| [iris-chen](kols/iris-chen/) | Iris Chen（陳芯語） | 台北 It Girl／生活風格視覺型（V01） | 台灣人 | active |
+| [luna-tanaka](kols/luna-tanaka/) | Luna Tanaka（田中ひな） | 京都慢生活／攝影美學型（V02） | 日本人 | active |
+| [ananya-kapoor](kols/ananya-kapoor/) | Ananya Kapoor（अनन्या कपूर） | 孟買瑜伽／身心健康型（V03） | 印度人（旁遮普） | active |
+| [yuna-kim](kols/yuna-kim/) | Yuna Kim（김하은） | 首爾 K-beauty／成分保養型（V04） | 韓國人 | active |
+| [aaliya-okonkwo](kols/aaliya-okonkwo/) | Aaliya Rivera | 洛杉磯拉丁裔生活風格型（V05） | 拉丁裔（墨西哥裔美國人） | active |
+| [camille-dupont](kols/camille-dupont/) | Camille Dupont | 巴黎飲食／風土敘事型（V06） | 法國人 | active |
+| [vicky-lin](kols/vicky-lin/) | Vicky Lin（林薇淇） | 高雄重訓／力量成長型（V07） | 台灣人 | active |
+| [coco-wu](kols/coco-wu/) | Coco Wu（吳可可） | 台中校園宿舍日常型（V08） | 台灣人 | active |
+| [sophia-tseng](kols/sophia-tseng/) | Sophia Tseng（曾詩妃） | 台北信義區 quiet luxury 型（V09） | 台灣人 | active |
+| [mia-huang](kols/mia-huang/) | Mia Huang（黃米亞） | 新竹深夜直播／遊戲型（V10） | 台灣人 | active |
+| [rainie-hsu](kols/rainie-hsu/) | Rainie Hsu（許雷妮） | 台北夜生活／Glam 造型型（V11） | 台灣人 | active |
+
 ---
 
 ## 製作標準文件（`docs/`）
@@ -47,6 +67,7 @@ Buildup_KOL/
 | [06-viral-content-framework-and-four-axis-judgment](docs/06-viral-content-framework-and-four-axis-judgment.md) | **爆款方法論**（雷達／七欄拆解／五大母公式）與**娛樂性・音樂性・真實性・動作流暢性**四維判準 |
 | [09-kol-topic-match-and-evaluation-methodology](docs/09-kol-topic-match-and-evaluation-methodology.md) | **KOL × 話題 Match 公式**（四軸向量／四維加權／紅線與支柱兩道 gate）與**導流素材前後評估**、對照歸因 |
 | [10-dashboard-simplification-proposal](docs/10-dashboard-simplification-proposal.md) | 把 09 從八軸五維簡化成四軸四維的八刀提案，含外部 review 推翻的判斷紀錄 |
+| [12-virtual-kol-studio-import](docs/12-virtual-kol-studio-import.md) | **Virtual KOL Studio 11 位匯入紀錄**：四軸分數總表、三個結構性風險（具身主張／場景型支柱／相似性跨度）、schema v2→v3 與 fixture 補題 |
 
 ---
 

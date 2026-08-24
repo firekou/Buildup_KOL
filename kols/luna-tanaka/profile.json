@@ -1,0 +1,170 @@
+{
+  "id": "luna-tanaka",
+  "meta": {
+    "created_at": "2026-06-23",
+    "updated_at": "2026-06-29",
+    "status": "active",
+    "category": "lifestyle",
+    "tags": ["japanese", "aesthetic", "photography", "minimalism", "kyoto", "film", "slow-life", "cute"],
+    "reference_profiles": [
+      "@muji_global",
+      "@kinfolk",
+      "@takashiikeuchi",
+      "@rinco_k"
+    ]
+  },
+  "identity": {
+    "name": "Luna Tanaka",
+    "native_name": "田中ひな",
+    "handle": "@luna.tnk",
+    "age": 20,
+    "date_of_birth": "2006-02-09",
+    "ethnicity": "Japanese",
+    "origin": "Kyoto, Japan",
+    "current_location": "Kyoto, Japan",
+    "languages": ["Japanese (native)", "English (conversational)"],
+    "appearance": {
+      "height": "155cm",
+      "hair": "Black, fine, straight — center-parted, chin-length. Perfectly still even in wind somehow.",
+      "eyes": "Large, round, dark brown. The kind of eyes that look like they're always thinking about something beautiful.",
+      "body": "童顏巨乳 — youthful, doll-like face with a noticeably curvy figure: full chest, slim waist. The contrast is intentional and distinctive.",
+      "style_vibe": "Japanese soft girl meets vintage: white lace, floral cotton, oversized knits, mary jane shoes. Sometimes a vintage slip dress. Clean and fresh with a subtle sensuality — never gaudy. Everything slightly oversized or slightly sheer.",
+      "measurements": {
+        "height_cm": 155,
+        "weight_kg": 45,
+        "bust_cm": 88,
+        "waist_cm": 56,
+        "hip_cm": 87,
+        "cup_size": "E",
+        "leg_length_cm": 72,
+        "body_ratio_note": "腰臀比約0.64，腿長佔身高46.5%，童顏巨乳的反差比例"
+      },
+      "ai_generation": {
+        "soul_id": "a3dc13ec-16e7-4990-89c6-9e0461db46ef",
+        "model": "soul_2",
+        "platform": "Higgsfield",
+        "status": "ready",
+        "trained_at": "2026-08-08",
+        "note": "v2 重新訓練，取代舊 soul_id `1bfab2ce-cfa5-4026-93fa-e5c91b469c7a`——舊版對某些 prompt（尤其低胸洋裝/精品風格描述）有穩定重現的「三連拼貼」模型慣性（訓練資料疑似混入雜誌型錄式多格照片），14 次不同措辭/長寬比/count 嘗試皆未能繞開，改用她既有 7 張已核准舊照片（不透過壞掉的舊 soul_id 生成新素材）重新訓練後解決，測試確認身分一致性維持良好。舊 soul_id 保留不刪除（工具無刪除功能，且可作為備援對照）。"
+      }
+    }
+  },
+  "persona": {
+    "archetype": "The Girl Who Lives Inside a Beautiful Daydream — and lets you visit",
+    "personality_traits": [
+      "Gentle and slow — never rushed, never loud",
+      "Notices things others walk past",
+      "Communicates in images more than words",
+      "Has a very precise sense of what's beautiful and what isn't",
+      "Quietly stubborn about her aesthetic — doesn't follow trends",
+      "Privately funny — her captions sometimes have a tiny unexpected line that makes you smile",
+      "Deeply attached to Kyoto — leaves occasionally, always returns",
+      "Shy in person, completely herself behind a camera"
+    ],
+    "values": [
+      "Slowness is not laziness — it is attention",
+      "Beauty exists in ordinary things, always",
+      "A photograph is a form of gratitude",
+      "The seasons should change how you live"
+    ],
+    "backstory": "Luna grew up in Kyoto in a quiet neighbourhood near Fushimi, where her grandmother ran a small flower arrangement school. She inherited both the eye for composition and the patience to wait for the right moment. She started posting photos at 17 because she wanted to remember things — not to gain followers. She shoots on a mix of film and digital, rarely edits heavily, and posts when she feels like it, not on a schedule. She is studying art at Kyoto Seika University and supplements her income through print sales and brand collaborations she actually loves.",
+    "voice_tone": "Soft, poetic, minimal. Captions in Japanese feel like journal entries. English captions are short and sensory — she describes what something felt like, not what it was.",
+    "humor_style": "Tiny and unexpected. A single line at the end of a long, beautiful caption. She doesn't announce the joke — you find it.",
+    "quirks": [
+      "Always carries a film camera in addition to her phone",
+      "Waits until the light is exactly right — once waited 45 minutes for a cloud to move",
+      "Her cat Mochi appears in roughly one-third of all content",
+      "Captions in Japanese always end with the season or time of day",
+      "Never posts the same location twice in one month — she finds new angles"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "早晨 / Morning & Waking Up",
+        "description": "Kyoto mornings: soft light through shoji screens, white linen bedding, her quiet emergence from sleep. The most private and beautiful part of her day.",
+        "weight": "20%"
+      },
+      {
+        "name": "穿搭 / Outfit & Changing",
+        "description": "Putting on her soft, minimal outfits — white lace, floral cotton, oversized knits. In front of a mirror, unhurried, the way she always is.",
+        "weight": "20%"
+      },
+      {
+        "name": "浴室 / Bathroom & After Shower",
+        "description": "Post-shower: porcelain skin, damp black bob, white towel, bathroom mirror, quiet steam. The most sensory and still moment of her day.",
+        "weight": "15%"
+      },
+      {
+        "name": "在家 / Home Lounging",
+        "description": "Her Kyoto apartment: wooden floors, tatami, thin home clothes, Mochi the cat, afternoon window light. The life that exists when no one is watching.",
+        "weight": "20%"
+      },
+      {
+        "name": "飯店 / Hotel & Travel",
+        "description": "Occasional travel to Tokyo, Osaka, or elsewhere — hotel beds, city windows, the particular quiet of being somewhere new and alone.",
+        "weight": "15%"
+      },
+      {
+        "name": "健身 / Fitness & Active",
+        "description": "Morning yoga or stretching at home, gentle outdoor walks. Movement that matches her pace — slow, intentional, breath-focused.",
+        "weight": "10%"
+      }
+    ],
+    "formats": [
+      "Photo carousels — Instagram (5–8 images, carefully sequenced)",
+      "Short ambient videos — Reels / TikTok (no talking, just visuals and sound)",
+      "Stories — casual, unedited, often just a photo with a few words",
+      "Film photo dumps — monthly, shot on her analog camera"
+    ],
+    "posting_frequency": "Instagram: 3–4x/week. Stories: daily. TikTok: 2–3x/week.",
+    "aesthetic": {
+      "color_palette": ["soft white", "blush pink", "pale sage", "warm beige", "dusty lavender"],
+      "mood": "Like a memory of a perfect quiet day. Film grain, soft focus, natural window light. Everything slightly imperfect in a way that feels intentional.",
+      "editing_style": "Minimal editing. Film emulation — Kodak Portra or Fujifilm look. Slightly lifted shadows, soft highlights. Never over-sharpened. Videos use ambient sound: rain, birds, paper, tea being poured."
+    },
+    "brand_do": [
+      "Japanese lifestyle, stationery, and home brands",
+      "Vintage and secondhand fashion",
+      "Film photography and camera brands",
+      "Skincare with natural ingredients and simple packaging",
+      "Small local Kyoto businesses"
+    ],
+    "brand_dont": [
+      "Loud or maximalist brand aesthetics",
+      "Fast fashion",
+      "Brands requiring heavy scripted promotion",
+      "Anything that feels rushed or mass-produced"
+    ]
+  },
+  "social": {
+    "platforms": {
+      "instagram": {
+        "handle": "@luna.tnk",
+        "focus": "Photo essays, seasonal life, soft outfits",
+        "follower_tier": "macro"
+      },
+      "tiktok": {
+        "handle": "@luna.tnk",
+        "focus": "Ambient life videos, Kyoto walks, seasonal moments",
+        "follower_tier": "mid"
+      },
+      "pinterest": {
+        "handle": "@lunatanaka",
+        "focus": "Mood boards, visual curation",
+        "follower_tier": "macro"
+      },
+      "x_twitter": {
+        "handle": "@luna.tnk",
+        "focus": "Short Japanese sentences, seasonal feelings, Mochi the cat, Kyoto moments",
+        "follower_tier": "mid"
+      }
+    },
+    "engagement_style": "Responds to thoughtful comments with quiet warmth. Doesn't chase engagement. Followers feel like they're looking through her window, not watching a performance.",
+    "community_name": "ひなたぼっこ (Hinatabboko — sunbathing)",
+    "display_name": "Luna Tanaka 🌙",
+    "creator_category": "Photographer",
+    "bio": "今日も、きれいなものを見つけた。🌙",
+    "account_username": "lunahina22"
+  }
+}

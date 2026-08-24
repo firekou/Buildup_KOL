@@ -1,0 +1,284 @@
+{
+  "kol_id": "yuna-kim",
+  "schema_version": 3,
+  "credibility_mode": "hybrid",
+  "credibility_basis": [
+    {
+      "type": "public_knowledge",
+      "desc": "保養成分、濃度與作用機轉——可查證的公開資料",
+      "verifiable": true
+    },
+    {
+      "type": "family_background",
+      "desc": "母親在皮膚科診所工作、自小接觸成分知識——人設背景，非可查證憑證",
+      "verifiable": false
+    },
+    {
+      "type": "usage_claim",
+      "desc": "「我用了至少一個月」這條她自訂的推薦門檻——AI 人設無法履行",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "她的推薦門檻寫死了「用滿一個月才推薦」，那是一個直接的具身主張。所幸成分知識這一半可查證，建議把心得改寫為成分與適用膚況的分析，不主張親自試用。",
+  "homophily": {
+    "score": 68,
+    "why": "profile 明講她「不是美妝專家也不是評測者，只是一個認真對待自己皮膚的女生」——這句話刻意拒絕專家位置，把她放回受眾同一層。",
+    "audience_identity": "18–30 歲、對保養有興趣但被成分行銷搞混的女性",
+    "shared_situation": "分不清哪些是有效成分哪些是行銷話術；想把皮膚顧好但不想變成一門功課",
+    "language_register": "短句、平鋪直述，像傳訊息給朋友，不解釋理由"
+  },
+  "axes": {
+    "analysis": {
+      "score": 55,
+      "why": "quirks 寫她「用滿一個月才推薦」，且從小就知道哪些成分有用、哪些是行銷——她確實有成分層級的判準，只是輸出時被壓縮成一句結論。"
+    },
+    "story": {
+      "score": 48,
+      "why": "江南成長與母親的皮膚科背景提供了來源，但 profile 明講她不是評測者、發文沒有企圖——敘事被刻意留白，是本次匯入裡偏低的一位。"
+    },
+    "visual": {
+      "score": 84,
+      "why": "aesthetic 為冷白調、低飽和、皮膚高清晰度，且明訂「產品在畫面裡但臉永遠是主體」——視覺語言精確且可辨識。"
+    },
+    "credibility": {
+      "score": 58,
+      "why": "成分辨識能力有明確來源（母親在皮膚科診所），高於純審美型；但 profile 同時明講她不是專家，權威被人設本身設了上限。"
+    }
+  },
+  "format_fit": {
+    "score": 80,
+    "why": "每日限動、短影音多為單鏡或兩刀剪，貼文是「今天穿什麼、今天在哪」——隨手感高且與她的極簡語氣一致。"
+  },
+  "material_attributes": {
+    "generation_model": "higgsfield_soul_2",
+    "consistency": "soul_model_trained",
+    "usable_formats": [
+      "臉部特寫圖文",
+      "保養 carousel",
+      "單鏡日常短影音",
+      "穿搭單張",
+      "一句話結論限動"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "早上",
+      "起床",
+      "白色床品",
+      "晨间",
+      "首尔",
+      "morning",
+      "아침",
+      "기상",
+      "침대",
+      "햇살",
+      "서울"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "穿搭",
+      "短裙",
+      "开襟外套",
+      "厚底鞋",
+      "y2k",
+      "韩系穿搭",
+      "outfit",
+      "데일리룩",
+      "코디",
+      "미니스커트",
+      "가디건",
+      "패션"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "护肤",
+      "保养",
+      "化妆水",
+      "精华",
+      "面膜",
+      "洗完澡",
+      "skincare",
+      "toner",
+      "스킨케어",
+      "성분",
+      "토너",
+      "에센스",
+      "피부",
+      "유리피부",
+      "올리브영",
+      "성분논란",
+      "ingredients"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "沙发",
+      "针织外套",
+      "午后",
+      "首尔公寓",
+      "耍废",
+      "집",
+      "소파",
+      "오후",
+      "휴식",
+      "일상"
+    ],
+    "飯店 / Hotel & Travel": [
+      "东京",
+      "上海",
+      "酒店",
+      "旅行",
+      "城市景观",
+      "hotel",
+      "travel",
+      "호텔",
+      "여행",
+      "도쿄",
+      "상하이",
+      "뷰"
+    ],
+    "健身 / Fitness & Active": [
+      "健身",
+      "散步",
+      "运动服",
+      "轻运动",
+      "gym",
+      "홈트",
+      "운동",
+      "산책",
+      "헬스"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "yk-life-skincare",
+      "domain": "life",
+      "title": "保養成分與「哪些只是行銷」",
+      "angle": "她從小就知道哪些成分有用——切角是把行銷話術與成分分開，這是她可查證的那一半內容。",
+      "pillar": "浴室 / Bathroom & After Shower",
+      "keywords": [
+        "护肤",
+        "成分",
+        "精华",
+        "烟酰胺",
+        "视黄醇",
+        "保湿",
+        "敏感肌",
+        "skincare"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "yk-pop-kbeauty",
+      "domain": "pop",
+      "title": "K-beauty 趨勢與韓系妝容",
+      "angle": "她的價值觀寫「韓國保養是日常的一部分，不是趨勢」——用日常的角度看趨勢，反而是最有說服力的切角。",
+      "pillar": "浴室 / Bathroom & After Shower",
+      "keywords": [
+        "韩系",
+        "kbeauty",
+        "韩妆",
+        "玻璃肌",
+        "流行妆容",
+        "韩国美妆"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "yk-city-seoul",
+      "domain": "city",
+      "title": "首爾江南的咖啡廳與街區日常",
+      "angle": "她的生活場景就是首爾——切角是「住在這座城市的人怎麼過日常」，不是旅遊攻略。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "首尔",
+        "江南",
+        "咖啡厅",
+        "韩国",
+        "街拍",
+        "seoul",
+        "旅行"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "yk-life-outfit",
+      "domain": "life",
+      "title": "K-sweet 混 Y2K 的穿搭",
+      "angle": "profile 寫她的造型「總有一個意料之外的元素」——切角是那一個元素的選擇，不是全身搭配教學。",
+      "pillar": "穿搭 / Outfit & Changing",
+      "keywords": [
+        "韩系穿搭",
+        "y2k",
+        "短裙",
+        "厚底鞋",
+        "开襟外套",
+        "ootd",
+        "穿搭"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "yk-news-ingredient",
+      "domain": "news",
+      "title": "保養品成分爭議與下架事件",
+      "angle": "當期成分爭議一出就是她的主場：不評論品牌，只講這個成分在什麼濃度下做什麼——對上她的成分知識來源。",
+      "pillar": "浴室 / Bathroom & After Shower",
+      "keywords": [
+        "成分争议",
+        "下架",
+        "过敏",
+        "监管",
+        "浓度",
+        "护肤争议"
+      ],
+      "evergreen": false
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "要求只能使用正面用語的品牌——profile 明列為 brand_dont。",
+      "keywords": [
+        "只能好评",
+        "不能提缺点",
+        "正面用语",
+        "统一好评"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "她沒有實際用過的產品。",
+      "keywords": [
+        "未使用",
+        "照稿推荐",
+        "样品即发文"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "需要大幅前後對比或教學型式的合作。",
+      "keywords": [
+        "前后对比",
+        "变身",
+        "教学",
+        "改造"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱親自試用滿一個月——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我用了一个月",
+        "亲自试用",
+        "实测",
+        "我的肤况"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "KR",
+      "TW",
+      "JP"
+    ],
+    "language": "ko"
+  }
+}

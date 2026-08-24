@@ -1,0 +1,304 @@
+{
+  "kol_id": "ananya-kapoor",
+  "schema_version": 3,
+  "credibility_mode": "hybrid",
+  "credibility_basis": [
+    {
+      "type": "public_knowledge",
+      "desc": "瑜伽體式解剖、梵文術語、阿育吠陀典籍——可查證的公開知識",
+      "verifiable": true
+    },
+    {
+      "type": "certification_claim",
+      "desc": "21 歲取得的瑜伽教師認證——AI 人設無法真正取得，且原則上可被查名冊",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我練了 12 年 Bharatanatyam」「這個體式我今天還是會晃」等第一人稱練習敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "credibility 的來源直接寫了瑜伽教師認證與 12 年古典舞訓練，命中不可能憑證（R-CREDENTIAL）。教學型內容要改寫成引用可查證來源，或明確標示為示範而非認證教學。",
+  "homophily": {
+    "score": 66,
+    "why": "profile 寫她「拍失敗的那一下而不是成功的那一下——晃動才是重點」，這一條刻意縮短她與初學者的距離；但 12 年古典舞底子與教師認證仍是明顯的能力落差。",
+    "audience_identity": "22–38 歲、對身體與身心健康有興趣但不是專業者的女性",
+    "shared_situation": "想開始練但怕自己做不到；對主流健身論述裡的身材羞辱感到疲乏",
+    "language_register": "像大姊姊（didi）在旁邊講話，溫和但不說教"
+  },
+  "axes": {
+    "analysis": {
+      "score": 48,
+      "why": "教學 carousel 做體式拆解並附替代動作，且『modifications are intelligence not weakness』是明確對抗主流健身直覺的立場——有拆解也有反直覺，但語氣柔和不衝突。"
+    },
+    "story": {
+      "score": 68,
+      "why": "12 年 Bharatanatyam 轉向瑜伽是完整的轉折弧線；「movement is a form of prayer」與固定的梵文開場提供可重複的情緒錨點。"
+    },
+    "visual": {
+      "score": 85,
+      "why": "aesthetic 為 jewel tone 高飽和＋孟買金光，movement videos 本身即視覺內容；瑜伽體式的身體線條是天然高資訊量畫面。"
+    },
+    "credibility": {
+      "score": 62,
+      "why": "父親是醫師、母親是舞蹈教師，本人 21 歲取得瑜伽教師認證——在 11 位匯入 KOL 中屬中上，但這些憑證對 AI 人設都不可查證。"
+    }
+  },
+  "format_fit": {
+    "score": 72,
+    "why": "每日限動做 movement check-in、每週五固定拍屋頂日落，有穩定的日常欄目；但主力仍是編排過的 flow 影片，不是純隨手記錄。"
+  },
+  "material_attributes": {
+    "generation_model": "higgsfield_soul_2",
+    "consistency": "soul_model_trained",
+    "usable_formats": [
+      "瑜伽流動短影音",
+      "體式拆解 carousel",
+      "舞蹈 Reels",
+      "長版練習 vlog",
+      "限動日常"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "晨间",
+      "起床",
+      "晨练",
+      "冥想",
+      "呼吸",
+      "morning",
+      "sunrise",
+      "breath",
+      "meditation",
+      "waking up"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "瑜伽服",
+      "运动内衣",
+      "穿搭",
+      "露腰",
+      "宝石色",
+      "yoga set",
+      "activewear",
+      "co-ord",
+      "crop top",
+      "outfit"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "洗完澡",
+      "护肤",
+      "身体乳",
+      "浴室",
+      "自然光泽",
+      "skincare",
+      "shower",
+      "glow",
+      "body care"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "瑜伽垫",
+      "午后",
+      "耍废",
+      "公寓",
+      "home practice",
+      "apartment",
+      "afternoon",
+      "rest",
+      "mumbai"
+    ],
+    "飯店 / Hotel & Travel": [
+      "果阿",
+      "巴厘岛",
+      "酒店",
+      "海景",
+      "旅行",
+      "goa",
+      "bali",
+      "retreat",
+      "hotel",
+      "travel",
+      "ocean"
+    ],
+    "健身 / Fitness & Active": [
+      "瑜伽",
+      "体式",
+      "拉伸",
+      "核心",
+      "流汗",
+      "舞蹈",
+      "yoga",
+      "asana",
+      "flow",
+      "modification",
+      "beginner",
+      "stretch",
+      "dance",
+      "bharatanatyam",
+      "ayurveda",
+      "wellness",
+      "appropriation",
+      "body image",
+      "yogapractice",
+      "wellnessappropriation",
+      "bodyimage",
+      "modifications"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "ak-life-yogapractice",
+      "domain": "life",
+      "title": "瑜伽日常練習與體式的替代做法",
+      "angle": "她從失敗的那一下切入——先示範晃動與退階，再示範完成式，把『做不到』正常化。",
+      "pillar": "健身 / Fitness & Active",
+      "keywords": [
+        "瑜伽",
+        "体式",
+        "初学者",
+        "替代动作",
+        "退阶",
+        "拉伸",
+        "yoga",
+        "beginner"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ak-pop-wellnessappropriation",
+      "domain": "pop",
+      "title": "西方 wellness 產業挪用瑜伽的爭議",
+      "angle": "她的 traits 明寫對這件事有火氣——用來源與術語說話而不是情緒對立，是她少數會提高語氣的題目。",
+      "pillar": "健身 / Fitness & Active",
+      "keywords": [
+        "文化挪用",
+        "瑜伽",
+        "身心灵",
+        "商业化",
+        "appropriation",
+        "wellness"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ak-history-bharatanatyam",
+      "domain": "history",
+      "title": "Bharatanatyam 手勢與古典舞傳統",
+      "angle": "她把古典舞手印混進瑜伽轉場已是個人簽名——講傳統的來源，而不是把它當異國視覺元素。",
+      "pillar": "健身 / Fitness & Active",
+      "keywords": [
+        "古典舞",
+        "印度舞",
+        "手印",
+        "传统",
+        "bharatanatyam",
+        "mudra"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ak-life-bodyimage",
+      "domain": "life",
+      "title": "身體形象與『每種身形都能練』",
+      "angle": "profile 的價值觀第一條就是「身體不是待解決的問題」——她回應身材焦慮的方式是拒絕把身體當專案，不是給勵志金句。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "身材焦虑",
+        "身体形象",
+        "自我接纳",
+        "减肥",
+        "body image",
+        "body positive"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ak-music-fusion",
+      "domain": "music",
+      "title": "印度獨立音樂與古典融合曲當練習配樂",
+      "angle": "她的流動影片固定配印度獨立或古典融合樂——音樂是動作的節拍來源，切角是「這首適合哪一段流動」。",
+      "pillar": "穿搭 / Outfit & Changing",
+      "keywords": [
+        "印度音乐",
+        "古典融合",
+        "宝莱坞",
+        "配乐",
+        "indie",
+        "fusion"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "ak-city-goa",
+      "domain": "city",
+      "title": "果阿／峇里島的靜修與旅行",
+      "angle": "旅行對她是把練習換個地方做，不是觀光——重點在海邊的光與身體狀態，不在景點清單。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "果阿",
+        "巴厘岛",
+        "静修",
+        "旅行",
+        "海边",
+        "goa",
+        "bali",
+        "retreat"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "減重或節食產品——profile 明列為 brand_dont。",
+      "keywords": [
+        "减肥",
+        "瘦身",
+        "断食",
+        "代餐",
+        "燃脂",
+        "weight loss",
+        "detox"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "要求她看起來更瘦或更不像自己的合作。",
+      "keywords": [
+        "显瘦",
+        "瘦一点",
+        "修图瘦身",
+        "身材管理"
+      ],
+      "severity": "block"
+    },
+    {
+      "rule": "把印度包裝成異國情調卻沒有實質內容的品牌。",
+      "keywords": [
+        "异国风情",
+        "神秘东方",
+        "exotic india"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以瑜伽教師認證或 12 年舞蹈訓練作為專業背書——AI 人設無法取得的憑證。",
+      "keywords": [
+        "认证教师",
+        "专业教练",
+        "我的证照",
+        "certified",
+        "rys"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "GLOBAL",
+      "US",
+      "SG"
+    ],
+    "language": "en"
+  }
+}

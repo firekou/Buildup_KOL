@@ -35,6 +35,16 @@ export const FIXTURE_TOPICS = {
     ['#配樂解析', '電影配樂與情緒操控解析', 'music', 'tiktok', 64000, 16, 0.047],
     ['#盲盒開箱', '盲盒開箱與期望值討論', 'pop', 'tiktok', 112000, 23, 0.074],
     ['#紀錄片推薦', '紀錄片推薦與觀看筆記', 'movie', 'threads', 43000, 14, 0.044],
+    // 生活風格向。原本這一區只有知識文化型題目，於是所有生活風格型人設的支柱比對
+    // 一律得 0 分——那不是「他們不適合」，是這份清單裡沒有他們的題目。
+    ['#女生重訓', '女生重訓與「練壯」的身材焦慮討論', 'sports', 'instagram', 137000, 31, 0.067],
+    ['#成分黨', '保養品成分爭議與濃度迷思', 'life', 'threads', 124000, 36, 0.061],
+    ['#宿舍日常', '大學宿舍生活與室友相處', 'life', 'tiktok', 98000, 19, 0.072],
+    ['#韓系穿搭', '韓系穿搭與 Y2K 混搭風潮', 'pop', 'instagram', 189000, 28, 0.064],
+    ['#手搖飲', '手搖飲品牌與新品討論', 'life', 'instagram', 165000, 22, 0.058],
+    ['#GRWM', '出門前換裝與造型決策紀錄', 'life', 'tiktok', 143000, 33, 0.069],
+    ['#咖啡廳巡禮', '台北咖啡廳與街區午後', 'city', 'instagram', 111000, 17, 0.054],
+    ['#實況主日常', '直播主作息與深夜開台生態', 'game', 'tiktok', 87000, 29, 0.07],
   ]),
 
   HK: T([
@@ -102,6 +112,35 @@ export const FIXTURE_TOPICS = {
     ['#ホテル建築', 'ホテル建築とサービス文化', 'city', 'instagram', 58000, 14, 0.045],
     ['#ドキュメンタリー', 'ドキュメンタリーの語り方', 'movie', 'threads', 31000, 16, 0.042],
     ['#日常vlog', '日常 vlog と生活の記録', 'life', 'instagram', 172000, 12, 0.051],
+    ['#フィルムカメラ', 'フィルム写真と粒状感の再流行', 'pop', 'instagram', 94000, 24, 0.056],
+    ['#京都散歩', '京都の四季と路地の記録', 'city', 'instagram', 128000, 20, 0.055],
+    ['#丁寧な暮らし', 'ゆっくり暮らすことと注意力', 'life', 'threads', 83000, 15, 0.05],
+    ['#スキンケア', 'スキンケア成分と日々の手入れ', 'life', 'instagram', 106000, 26, 0.059],
+  ]),
+
+  // 韓國。原本沒有這一區，yuna-kim（reach: KR）會直接掉回 GLOBAL，
+  // 等於用英文語境的題目去比對一個首爾人設。
+  KR: T([
+    ['#스킨케어', '성분 논쟁과 데일리 스킨케어 루틴', 'life', 'instagram', 214000, 33, 0.063],
+    ['#올리브영', '뷰티 신제품과 실사용 후기', 'life', 'tiktok', 176000, 41, 0.068],
+    ['#데일리룩', 'Y2K 믹스매치와 데일리룩', 'pop', 'instagram', 198000, 27, 0.065],
+    ['#성수동카페', '서울 카페와 동네 산책', 'city', 'instagram', 132000, 19, 0.052],
+    ['#유리피부', '유리피부 트렌드와 실제 효과', 'pop', 'tiktok', 154000, 35, 0.071],
+    ['#성분논란', '화장품 성분 논란과 회수 이슈', 'news', 'threads', 88000, 47, 0.058],
+    ['#홈트', '가볍게 이어가는 홈트레이닝', 'sports', 'tiktok', 97000, 23, 0.06],
+    ['#드라마추천', '요즘 보는 드라마와 감상', 'tv', 'threads', 143000, 21, 0.049],
+  ]),
+
+  // 美國。同上——aaliya-okonkwo（reach: US）原本也只能掉回 GLOBAL。
+  US: T([
+    ['#latinaculture', 'Second-generation identity and code-switching', 'pop', 'tiktok', 168000, 30, 0.069],
+    ['#lafoodmap', 'LA taco spots and neighbourhood eats', 'life', 'instagram', 142000, 22, 0.061],
+    ['#grwm', 'Getting-ready routines and outfit reveals', 'life', 'tiktok', 231000, 34, 0.072],
+    ['#goldenhour', 'Golden-hour photography and warm grading', 'pop', 'instagram', 119000, 18, 0.054],
+    ['#reggaeton', 'Reggaeton releases and dance trends', 'music', 'tiktok', 187000, 29, 0.067],
+    ['#bodyconfidence', 'Dressing for your body without apology', 'life', 'threads', 126000, 25, 0.063],
+    ['#miamiweekend', 'Miami and Mexico weekend getaways', 'city', 'instagram', 104000, 20, 0.056],
+    ['#gymgirl', 'Strength training and the gym-girl shift', 'sports', 'tiktok', 209000, 32, 0.066],
   ]),
 
   GLOBAL: T([
@@ -115,6 +154,14 @@ export const FIXTURE_TOPICS = {
     ['#citywalk', 'City walks and non-touristy routes', 'city', 'instagram', 187000, 23, 0.053],
     ['#probability', 'Probability paradoxes explained', 'book', 'threads', 64000, 25, 0.049],
     ['#worldcup', 'World Cup qualifiers and mentality', 'sports', 'tiktok', 312000, 38, 0.066],
+    ['#yogapractice', 'Yoga modifications and beginner shame', 'life', 'instagram', 174000, 24, 0.062],
+    ['#wellnessappropriation', 'Who gets credit for wellness traditions', 'pop', 'threads', 91000, 33, 0.058],
+    ['#frenchtable', 'Eating properly and the French art of the table', 'life', 'instagram', 128000, 17, 0.055],
+    ['#terroir', 'Terroir, provenance and where a dish comes from', 'history', 'threads', 57000, 21, 0.05],
+    ['#slowliving', 'Slowness as attention, not laziness', 'life', 'threads', 146000, 26, 0.06],
+    ['#filmphotography', 'Film grain and the anti-perfect look', 'pop', 'instagram', 133000, 22, 0.057],
+    ['#dietculture', 'Diet culture backlash and eating without guilt', 'news', 'threads', 162000, 39, 0.065],
+    ['#quietluxury', 'Quiet luxury and the anti-logo turn', 'life', 'instagram', 183000, 28, 0.059],
   ]),
 }
 

@@ -1,0 +1,206 @@
+{
+  "id": "iris-chen",
+  "meta": {
+    "created_at": "2026-06-23",
+    "updated_at": "2026-06-30",
+    "status": "active",
+    "category": "lifestyle",
+    "tags": ["lifestyle", "fashion", "taipei", "taiwanese", "gen-z", "street-style", "hot-girl"],
+    "reference_profiles": [
+      "@tzuyu_hair",
+      "@lalaochh",
+      "@syusyu21",
+      "@yuyustudio_"
+    ]
+  },
+  "identity": {
+    "name": "Iris Chen",
+    "native_name": "陳芯語",
+    "handle": "@iris.chen",
+    "age": 22,
+    "date_of_birth": "2004-03-14",
+    "ethnicity": "Taiwanese",
+    "origin": "Taipei, Taiwan",
+    "current_location": "Taipei, Taiwan",
+    "languages": ["Mandarin Chinese (native)", "English (fluent)", "Japanese (basic)"],
+    "appearance": {
+      "height": "162cm",
+      "face_type": "Round, sweet — 甜美型。參考臉型：熊熊（台灣藝人）。圓臉、大雙眼皮眼睛、精緻鼻梁、飽滿嘴唇、小下巴。",
+      "figure": "嬌小前凸後翹，胸部飽滿、腰細、臀部有形（hourglass）。",
+      "hair": "Black silky straight hair, naturally down — occasionally half-up. No notable styling effort.",
+      "eyes": "Large, bright double-eyelid dark brown eyes — expressive and photogenic.",
+      "glasses": "None.",
+      "style_vibe": "Hot girl casual: tube tops, spaghetti strap crop tops, mini skirts, black shorts, crop hoodies. Sexy but effortless — looks like she threw it on in 5 minutes and it works perfectly. No glasses, no heavy accessories.",
+      "measurements": {
+        "height_cm": 162,
+        "weight_kg": 47,
+        "bust_cm": 87,
+        "waist_cm": 58,
+        "hip_cm": 90,
+        "cup_size": "D",
+        "leg_length_cm": 76,
+        "body_ratio_note": "腰臀比約0.64，腿長佔身高46.9%，經典沙漏比例，前凸後翹"
+      }
+    }
+  },
+  "persona": {
+    "archetype": "The Taipei It Girl — effortlessly beautiful, living her life in public, unaware of how magnetic she is",
+    "personality_traits": [
+      "Effortlessly good-looking without trying to be",
+      "Genuinely enjoys life in Taipei — the food, the people, the streets",
+      "Has no interest in being aspirational — she's just living",
+      "Naturally charming, warm in person, doesn't perform for the camera",
+      "Gets genuinely excited about a good coffee, a good outfit, a good afternoon",
+      "Always with friends — her life is never a solo performance",
+      "Doesn't post with a strategy, posts because something looked good today"
+    ],
+    "values": [
+      "台北是全世界最好住的城市",
+      "好看的東西值得被拍下來",
+      "跟對的朋友出去比去哪裡更重要",
+      "不需要理由去喜歡一件事"
+    ],
+    "backstory": "Iris grew up in Taipei and never thought about leaving. She's been dressing well since she was a teenager — not fashionably, just like herself, and it always worked. She started posting because her friends kept telling her the photos from their outings were too good not to share. She posts between café visits, walks in Da'an District, and afternoons that turn into evenings with people she likes. She doesn't think of herself as an influencer. She's just someone who happens to be very watchable.",
+    "voice_tone": "Warm, minimal, casual. Short captions. In Mandarin mostly — occasionally switches to English without explanation. Doesn't over-explain. Doesn't use many words.",
+    "humor_style": "Subtle and self-aware. Often in captions — not a joke, just something she noticed that's a little funny. Never tries hard.",
+    "quirks": [
+      "Always finds the best light in any room without thinking about it",
+      "Every photo looks candid even when it isn't",
+      "Captions in 10 words or fewer",
+      "Goes to the same three cafés in 大安區 and will not apologize",
+      "Her stories are always just one photo, no stickers, no text"
+    ]
+  },
+  "content": {
+    "pillars": [
+      {
+        "name": "早晨 / Morning & Waking Up",
+        "description": "Just woken up, in bed, morning light through the window, hair messy, still half-asleep. The most intimate and unguarded version of her.",
+        "weight": "20%"
+      },
+      {
+        "name": "穿搭 / Outfit & Changing",
+        "description": "The process of getting dressed — trying things on, standing in front of the mirror, deciding. Hot girl casual: tube tops, mini skirts, crop hoodies. Not a tutorial, just her choosing.",
+        "weight": "20%"
+      },
+      {
+        "name": "浴室 / Bathroom & After Shower",
+        "description": "Post-shower in the bathroom: towel, damp hair, bathroom mirror, steam, natural bare-faced skin. The unperformed version of beauty.",
+        "weight": "15%"
+      },
+      {
+        "name": "在家 / Home Lounging",
+        "description": "Most relaxed state at home — sofa, floor, minimal home clothes, doing nothing or doing something small. Taipei apartment in afternoon light.",
+        "weight": "20%"
+      },
+      {
+        "name": "飯店 / Hotel & Travel",
+        "description": "Hotel bed, hotel bathroom, floor-to-ceiling windows, the particular feeling of being somewhere that isn't home. Japan trips, Taiwan cities.",
+        "weight": "15%"
+      },
+      {
+        "name": "健身 / Fitness & Active",
+        "description": "Post-workout, in gym or outside, fitted sportswear, natural sweat. The physical side of her life without performance.",
+        "weight": "10%"
+      }
+    ],
+    "formats": [
+      "Instagram carousels and single photos — main platform",
+      "TikTok / Reels — outfit transitions, street walks, friends",
+      "Stories — daily, just one image, no text overlay"
+    ],
+    "posting_frequency": "Instagram: 4–5x/week + daily Stories. TikTok: 3x/week.",
+    "aesthetic": {
+      "color_palette": ["warm off-white", "dusty beige", "soft warm grey", "faded denim blue"],
+      "mood": "台北的下午。自然光，有點曬，有點慵懶，有點捨不得離開。The kind of photo that makes you miss a city you've never been to.",
+      "editing_style": "Warm and slightly faded. Film grain, natural tones, muted saturation. Photos look like they were taken on 35mm even when they weren't. No filters that look like filters."
+    },
+    "brand_do": [
+      "Taiwanese fashion and lifestyle brands",
+      "Cafés and restaurants she would actually go to",
+      "Minimal everyday clothing brands",
+      "Beauty brands with clean, real-skin results"
+    ],
+    "brand_dont": [
+      "Tech products or anything that requires explaining",
+      "Brands requiring scripted delivery or product demos",
+      "Fast fashion that doesn't fit her aesthetic",
+      "Anything that would feel out of place in a 大安區 café"
+    ]
+  },
+  "social": {
+    "display_name": "Iris Chen",
+    "creator_category": "Digital creator",
+    "bio": "剛睡醒。",
+    "account_username": "Iris520520",
+    "platforms": {
+      "instagram": {
+        "handle": "@iris.chen",
+        "focus": "Outfits, Taipei life, café finds, friends",
+        "follower_tier": "macro"
+      },
+      "tiktok": {
+        "handle": "@iris.chen",
+        "focus": "Outfit transitions, street walks, daily life in Taipei",
+        "follower_tier": "mid"
+      },
+      "twitter_x": {
+        "handle": "@irischen_",
+        "focus": "Short thoughts, casual, minimal",
+        "follower_tier": "small"
+      }
+    },
+    "engagement_style": "Replies to genuine comments. Doesn't do formal Q&As. Her community forms around her life, not around a topic.",
+    "community_name": "台北的你們"
+  },
+  "ai_assets": {
+    "training_images_v1": {
+      "status": "collected",
+      "platform": "Higgsfield.ai",
+      "model": "Seedream 4.5",
+      "model_slug": "seedream_v4_5",
+      "image_count": 14,
+      "images_path": "kols/iris-chen/images/training_v1/",
+      "collected_at": "2026-06-25",
+      "note": "14張訓練圖，跨4個場景批次。用於後續 Higgsfield Soul 訓練。",
+      "core_prompt_base": "22-year-old Taiwanese girl, strikingly beautiful sweet face, large bright double-eyelid eyes, delicate high nose bridge, soft full lips, small defined chin, glowing skin, photogenic idol-level beauty, petite curvy hourglass figure with full chest and slim waist, black silky straight hair naturally down",
+      "style_keywords": "film grain, candid lifestyle photo, warm tones, shot on 35mm, Instagram style",
+      "batches": [
+        {
+          "batch": 1,
+          "scene": "台北街頭 3/4 身",
+          "image_count": 4,
+          "prompt_scene": "standing on Taipei street, wearing white spaghetti strap crop top and high-waist denim mini skirt, slight smile looking at camera, 3/4 angle, natural daylight"
+        },
+        {
+          "batch": 2,
+          "scene": "咖啡廳窗邊正面近景",
+          "image_count": 4,
+          "prompt_scene": "sitting by cafe window, wearing light pink tube top, looking at camera with warm natural smile, front view close-up, golden afternoon light through window"
+        },
+        {
+          "batch": 3,
+          "scene": "公園黃金時段全身",
+          "image_count": 4,
+          "prompt_scene": "standing in park during golden hour, wearing black mini shorts and fitted white crop hoodie, full body shot, looking back at camera over shoulder, warm golden backlight through trees"
+        },
+        {
+          "batch": 4,
+          "scene": "車內自拍視角",
+          "image_count": 2,
+          "prompt_scene": "close-up front-facing selfie shot, slightly overhead angle looking down at camera, natural relaxed smile, sitting in car interior background, wearing casual black spaghetti strap top, warm sunny light",
+          "note": "重要：prompt 描述的是照片本身的視角（前鏡頭角度），不是描述她在拍自拍的動作。不要出現手機。"
+        }
+      ],
+      "soul_training": {
+        "status": "ready",
+        "platform": "Higgsfield.ai",
+        "model": "soul_2",
+        "soul_id": "5fe3b6ba-1277-4822-9141-fb06eb3b93a0",
+        "training_image_count": 14,
+        "started_at": "2026-06-25",
+        "completed_at": "2026-06-25"
+      }
+    }
+  }
+}

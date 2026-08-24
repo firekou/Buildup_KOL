@@ -1,6 +1,6 @@
 {
-  "version": "1.0.0",
-  "description": "Master index of all KOL profiles in this database",
+  "version": "1.1.0",
+  "description": "Master index of all KOL profiles in this database（含自 Virtual KOL Studio 匯入的 11 位）",
   "kols": [
     {
       "id": "xiaoxiao-tan",
@@ -66,6 +66,215 @@
       "path": "kols/rafael-costa/",
       "project_code": "Project B02",
       "flavor": "Captain — 現役足球運動員 × 長期主義成長陪伴型 IP"
+    },
+    {
+      "id": "iris-chen",
+      "name": "Iris Chen (陳芯語)",
+      "handle": "@iris.chen",
+      "category": "lifestyle",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/iris-chen/",
+      "project_code": "Project V01",
+      "flavor": "Virtual KOL Studio 匯入 — 台北 It Girl／生活風格視覺型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/iris-chen/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "luna-tanaka",
+      "name": "Luna Tanaka (田中ひな)",
+      "handle": "@luna.tnk",
+      "category": "lifestyle",
+      "gender": "female",
+      "ethnicity": "Japanese",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/luna-tanaka/",
+      "project_code": "Project V02",
+      "flavor": "Virtual KOL Studio 匯入 — 京都慢生活／攝影美學型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/luna-tanaka/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "ananya-kapoor",
+      "name": "Ananya Kapoor (अनन्या कपूर)",
+      "handle": "@ananyakapoor",
+      "category": "wellness",
+      "gender": "female",
+      "ethnicity": "Indian (Punjabi)",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/ananya-kapoor/",
+      "project_code": "Project V03",
+      "flavor": "Virtual KOL Studio 匯入 — 孟買瑜伽／身心健康型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/ananya-kapoor/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "yuna-kim",
+      "name": "Yuna Kim (김하은)",
+      "handle": "@yunakim.beauty",
+      "category": "beauty",
+      "gender": "female",
+      "ethnicity": "Korean",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/yuna-kim/",
+      "project_code": "Project V04",
+      "flavor": "Virtual KOL Studio 匯入 — 首爾 K-beauty／成分保養型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/yuna-kim/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "aaliya-okonkwo",
+      "name": "Aaliya Rivera",
+      "handle": "@aaliyarivera",
+      "category": "lifestyle",
+      "gender": "female",
+      "ethnicity": "Latina (Mexican-American)",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/aaliya-okonkwo/",
+      "project_code": "Project V05",
+      "flavor": "Virtual KOL Studio 匯入 — 洛杉磯拉丁裔生活風格型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/aaliya-okonkwo/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "camille-dupont",
+      "name": "Camille Dupont",
+      "handle": "@camille.dpnt",
+      "category": "lifestyle",
+      "gender": "female",
+      "ethnicity": "French",
+      "status": "active",
+      "created_at": "2026-06-23",
+      "path": "kols/camille-dupont/",
+      "project_code": "Project V06",
+      "flavor": "Virtual KOL Studio 匯入 — 巴黎飲食／風土敘事型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/camille-dupont/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "vicky-lin",
+      "name": "Vicky Lin (林薇淇)",
+      "handle": "@vicky.lin",
+      "category": "fitness",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-07-23",
+      "path": "kols/vicky-lin/",
+      "project_code": "Project V07",
+      "flavor": "Virtual KOL Studio 匯入 — 高雄重訓／力量成長型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/vicky-lin/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "coco-wu",
+      "name": "Coco Wu (吳可可)",
+      "handle": "@coco.wu",
+      "category": "lifestyle",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-07-23",
+      "path": "kols/coco-wu/",
+      "project_code": "Project V08",
+      "flavor": "Virtual KOL Studio 匯入 — 台中校園宿舍日常型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/coco-wu/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "sophia-tseng",
+      "name": "Sophia Tseng (曾詩妃)",
+      "handle": "@sophia.tseng",
+      "category": "luxury lifestyle",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-07-23",
+      "path": "kols/sophia-tseng/",
+      "project_code": "Project V09",
+      "flavor": "Virtual KOL Studio 匯入 — 台北信義區 quiet luxury 型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/sophia-tseng/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "mia-huang",
+      "name": "Mia Huang (黃米亞)",
+      "handle": "@mia.huang",
+      "category": "gaming",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-07-23",
+      "path": "kols/mia-huang/",
+      "project_code": "Project V10",
+      "flavor": "Virtual KOL Studio 匯入 — 新竹深夜直播／遊戲型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/mia-huang/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
+    },
+    {
+      "id": "rainie-hsu",
+      "name": "Rainie Hsu (許雷妮)",
+      "handle": "@rainie.hsu",
+      "category": "nightlife",
+      "gender": "female",
+      "ethnicity": "Taiwanese",
+      "status": "active",
+      "created_at": "2026-07-23",
+      "path": "kols/rainie-hsu/",
+      "project_code": "Project V11",
+      "flavor": "Virtual KOL Studio 匯入 — 台北夜生活／Glam 造型型 IP",
+      "source": {
+        "repo": "pennyhuang-oss/Virtual_KOL_Studio",
+        "path": "kols/rainie-hsu/",
+        "imported_at": "2026-08-24",
+        "note": "人設與內容資料為原樣複製；topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸重新分析後新增。影片與完整訓練圖集未隨附，僅帶入身分參考圖。"
+      }
     }
   ]
 }

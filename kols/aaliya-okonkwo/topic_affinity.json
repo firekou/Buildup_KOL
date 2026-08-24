@@ -1,0 +1,295 @@
+{
+  "kol_id": "aaliya-okonkwo",
+  "schema_version": 3,
+  "credibility_mode": "embodied",
+  "credibility_basis": [
+    {
+      "type": "local_knowledge",
+      "desc": "東洛杉磯在地餐廳、taco 攤、rooftop 的第一手清單",
+      "verifiable": false
+    },
+    {
+      "type": "cultural_identity",
+      "desc": "墨西哥裔家庭背景與雙語切換——可被受眾辨認，但不是可查證的憑證",
+      "verifiable": false
+    },
+    {
+      "type": "field_claim",
+      "desc": "「我去了這家店」「這是我媽的做法」等第一人稱現場敘述",
+      "verifiable": false
+    }
+  ],
+  "credibility_risk": "在地美食推薦天然是具身主張——『我吃過』無法由 AI 人設履行。餐廳題材要改寫成可查證的公開資訊角度，或改為明示未親訪。",
+  "homophily": {
+    "score": 72,
+    "why": "profile 寫她「看起來就是一個真實生活的人，只是穿得比較好」，而且兼職做行銷、週日回媽媽家——受眾的生活型態與她高度重疊，差距只在打扮。",
+    "audience_identity": "20–30 歲、都會拉丁裔或多元文化背景的女性上班族與學生",
+    "shared_situation": "在兩種語言與兩種文化之間切換；想把自己打理好但沒有無限的時間與預算",
+    "language_register": "英語西語混用、語速快、像在群組裡講話，不是對粉絲發表"
+  },
+  "axes": {
+    "analysis": {
+      "score": 22,
+      "why": "六大支柱沒有任何一項是解釋型；formats 全部是 outfit carousel、GRWM 與 going out 影片，brand_dont 也排除「需要腳本化示範」的合作。"
+    },
+    "story": {
+      "score": 62,
+      "why": "backstory 有清楚的地緣與家庭弧線（東洛杉磯三代同堂、母親來自瓜達拉哈拉、每週日回家），quirks『激動時切換成西語』提供可重複的情緒錨點；但貼文本身是生活片段而非有起承轉合的敘事。"
+    },
+    "visual": {
+      "score": 88,
+      "why": "aesthetic 明訂 golden hour 光線是 non-negotiable、暖色高飽和；六大支柱全部是視覺場景，且 LA／邁阿密／墨西哥的生活型態本身就是嚮往感來源。"
+    },
+    "credibility": {
+      "score": 38,
+      "why": "沒有任何職業憑證或實績；權威只來自「大洛杉磯每一家好吃的 taco 店我都知道」這類在地知識，profile 自稱這是事實而非主張，但無法查證。"
+    }
+  },
+  "format_fit": {
+    "score": 88,
+    "why": "限時動態每日更新且 profile 形容為 real-time、unedited、often chaotic——隨手感是她的原生格式，不是刻意做出來的切角。"
+  },
+  "material_attributes": {
+    "generation_model": "higgsfield_soul_2",
+    "consistency": "soul_model_trained",
+    "usable_formats": [
+      "穿搭 carousel",
+      "GRWM 快剪短影音",
+      "外出實錄 Reels",
+      "限動隨拍",
+      "店家短評"
+    ]
+  },
+  "pillar_keywords": {
+    "早晨 / Morning & Waking Up": [
+      "晨间",
+      "起床",
+      "早安",
+      "赖床",
+      "晨光",
+      "morning routine",
+      "golden hour",
+      "waking up",
+      "morning",
+      "sunlight",
+      "bed",
+      "goldenhour"
+    ],
+    "穿搭 / Outfit & Changing": [
+      "穿搭",
+      "OOTD",
+      "牛仔裤",
+      "短版上衣",
+      "连身裙",
+      "拉丁风",
+      "outfit",
+      "denim",
+      "crop top",
+      "ootd",
+      "dress",
+      "heels",
+      "grwm",
+      "getting ready",
+      "gettingready"
+    ],
+    "浴室 / Bathroom & After Shower": [
+      "洗完澡",
+      "护肤",
+      "浴室",
+      "浴巾",
+      "素颜",
+      "skincare",
+      "shower",
+      "towel",
+      "bathroom",
+      "bare face"
+    ],
+    "在家 / Home Lounging": [
+      "在家",
+      "耍废",
+      "沙发",
+      "居家服",
+      "狗狗",
+      "lounging",
+      "home",
+      "sofa",
+      "dog",
+      "latina",
+      "culture",
+      "code switching",
+      "body confidence",
+      "east la",
+      "latinaculture",
+      "bodyconfidence",
+      "codeswitching"
+    ],
+    "飯店 / Hotel & Travel": [
+      "酒店",
+      "旅行",
+      "迈阿密",
+      "墨西哥",
+      "纽约",
+      "海景房",
+      "hotel",
+      "travel",
+      "miami",
+      "mexico",
+      "new york",
+      "beach",
+      "weekend",
+      "tacos",
+      "food",
+      "miamiweekend",
+      "lafoodmap"
+    ],
+    "健身 / Fitness & Active": [
+      "健身",
+      "跑步",
+      "跳舞",
+      "运动服",
+      "流汗",
+      "gym",
+      "workout",
+      "running",
+      "dance",
+      "activewear",
+      "sweat"
+    ]
+  },
+  "topic_hooks": [
+    {
+      "id": "ar-pop-spanglish",
+      "domain": "pop",
+      "title": "雙語切換（Spanglish）與第二代移民身分認同",
+      "angle": "她不解釋文化，直接在句子中間換語言——把「切換」本身當成內容，而不是把文化當成賣點來介紹。",
+      "pillar": "在家 / Home Lounging",
+      "keywords": [
+        "双语",
+        "移民二代",
+        "文化认同",
+        "西班牙语",
+        "spanglish",
+        "latina",
+        "code switching"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ar-life-tacos",
+      "domain": "life",
+      "title": "洛杉磯在地小吃與家常菜的日常清單",
+      "angle": "從家裡的餐桌講起再延伸到街邊攤——她的權威是在地人而非美食評論家，語氣是推薦給朋友不是評分。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "洛杉矶",
+        "墨西哥菜",
+        "taco",
+        "小吃",
+        "家常菜",
+        "美食地图",
+        "la food"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ar-city-weekend",
+      "domain": "city",
+      "title": "邁阿密／墨西哥週末旅行的飯店與海景",
+      "angle": "她把旅行拍成「把自己的能量帶到別的城市」，重點是狀態不是景點——對上她 hotel 支柱的白床單對比暖膚色。",
+      "pillar": "飯店 / Hotel & Travel",
+      "keywords": [
+        "迈阿密",
+        "墨西哥",
+        "海景",
+        "度假",
+        "酒店",
+        "周末旅行",
+        "miami",
+        "resort"
+      ],
+      "evergreen": true
+    },
+    {
+      "id": "ar-music-reggaeton",
+      "domain": "music",
+      "title": "Reggaeton 與拉丁流行樂當日常配樂",
+      "angle": "音樂是她內容的節奏來源而非主題——用當期熱門拉丁曲目帶穿搭與外出片段，不做歌曲解析。",
+      "pillar": "穿搭 / Outfit & Changing",
+      "keywords": [
+        "雷鬼顿",
+        "拉丁音乐",
+        "热门音乐",
+        "舞曲",
+        "reggaeton",
+        "latin music"
+      ],
+      "evergreen": false
+    },
+    {
+      "id": "ar-life-bodyconfidence",
+      "domain": "life",
+      "title": "曲線身材的穿搭選擇與自在感",
+      "angle": "profile 寫她「知道怎麼為自己的身材穿衣服」——講的是選擇方法，不是身材焦慮的勵志話術。",
+      "pillar": "穿搭 / Outfit & Changing",
+      "keywords": [
+        "身材",
+        "曲线",
+        "自信",
+        "穿搭技巧",
+        "沙漏型",
+        "body confidence"
+      ],
+      "evergreen": true
+    }
+  ],
+  "redlines": [
+    {
+      "rule": "要求她收斂個性、把表達變得平淡的合作（brand_dont 第一條）。",
+      "keywords": [
+        "低调一点",
+        "收敛",
+        "标准话术",
+        "统一口径"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "沒有文化理解的快時尚品牌，或把拉丁文化當異國情調消費。",
+      "keywords": [
+        "快时尚",
+        "异国情调",
+        "民族风元素",
+        "exotic"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "不適合她膚色的美妝品牌——profile 明列為 brand_dont。",
+      "keywords": [
+        "美白",
+        "提亮肤色",
+        "单一色号",
+        "whitening"
+      ],
+      "severity": "warn"
+    },
+    {
+      "rule": "以第一人稱宣稱親自造訪某家店或某趟旅程——AI 人設無法履行的具身主張。",
+      "keywords": [
+        "我去过",
+        "亲自试吃",
+        "实地探店",
+        "我住过",
+        "i tried"
+      ],
+      "severity": "block"
+    }
+  ],
+  "reach": {
+    "regions": [
+      "US",
+      "GLOBAL"
+    ],
+    "language": "en"
+  }
+}
