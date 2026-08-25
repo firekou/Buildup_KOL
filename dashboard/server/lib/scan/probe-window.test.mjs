@@ -78,6 +78,33 @@ check('single dated post has no span and no comparable pairs', () => {
   assert.equal(r.returnOrderDescendingRatio, null)
 })
 
+check('age percentiles survive the stray-old-post trap that oldestAgeDays fell for', () => {
+  // The shape the Instagram actor actually returned: 99% this month, a handful
+  // of pinned top posts from years ago. `oldestAgeDays` says twelve years;
+  // `ageP90Days` says what the body of the sample really covers.
+  const body = Array.from({ length: 99 }, (_, i) => ({ timestamp: ago(i % 25) }))
+  const strays = posts(4339, 2600, 1000)
+  const r = describeAges([...body, ...strays], { now: NOW })
+
+  assert.equal(r.oldestAgeDays, 4339, 'the maximum is still reported, unchanged')
+  assert.ok(r.ageP90Days < 60, `p90 should describe the body, got ${r.ageP90Days}`)
+  assert.ok(r.ageP50Days < 30, `p50 should describe the body, got ${r.ageP50Days}`)
+})
+
+check('percentiles on a genuinely wide spread stay wide', () => {
+  // The counterpart: TikTok's real shape. The percentiles must not flatten a
+  // distribution that truly does reach back.
+  const wide = Array.from({ length: 100 }, (_, i) => ({ timestamp: ago(i * 6) }))
+  const r = describeAges(wide, { now: NOW })
+  assert.ok(r.ageP90Days > 400, `p90 should stay wide, got ${r.ageP90Days}`)
+})
+
+check('percentiles are null when nothing is dated', () => {
+  const r = describeAges([{ timestamp: null }], { now: NOW })
+  assert.equal(r.ageP50Days, null)
+  assert.equal(r.ageP90Days, null)
+})
+
 check('monthly histogram is sorted and complete', () => {
   const r = describeAges(posts(200, 10, 150, 45, 3, 175, 90), { now: NOW })
   const keys = Object.keys(r.monthlyHistogram)

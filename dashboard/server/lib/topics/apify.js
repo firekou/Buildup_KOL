@@ -92,6 +92,40 @@ function tagsFromText(text) {
 const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0)
 
 /**
+ * Normalise whatever an actor calls a timestamp into an ISO string.
+ *
+ * Found by the Batch 0 probe (docs/reviews/2026-08-25-scan-source-probe.md):
+ * the Threads actor returns `created_at` as a Unix epoch **integer in
+ * seconds** (e.g. 1787631594), not an ISO string. `Date.parse(1787631594)`
+ * coerces the number to the string "1787631594", which is not a date, and
+ * yields NaN — so every Threads post has been counted as undated since this
+ * connector shipped, and `recencyRatio48h` for any tag carried by Threads has
+ * silently been computed as "none of these are recent".
+ *
+ * The probe found it only because it reported `undated` as its own number
+ * instead of letting missing dates disappear into a zero.
+ */
+function toIso(value) {
+  if (value == null) return null
+  if (typeof value === 'string') {
+    const parsed = Date.parse(value)
+    if (Number.isFinite(parsed)) return new Date(parsed).toISOString()
+    // Some actors hand back a numeric epoch inside a string.
+    const asNumber = Number(value)
+    return Number.isFinite(asNumber) ? toIso(asNumber) : null
+  }
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    // Seconds vs milliseconds: anything below ~year 2001 in ms is really
+    // seconds. Picking the boundary this way rather than by digit count keeps
+    // it correct for both past and future dates.
+    const ms = value < 1e11 ? value * 1000 : value
+    const d = new Date(ms)
+    return Number.isNaN(d.getTime()) ? null : d.toISOString()
+  }
+  return null
+}
+
+/**
  * Reduce one raw dataset item to the fields the aggregator needs.
  * Field names differ per actor; verified against live runs.
  */
@@ -104,7 +138,7 @@ export function toPost(item, platform) {
         tags: [...(item.hashtags ?? []), ...tagsFromText(text)],
         engagement: num(item.likesCount) + num(item.commentsCount),
         views: null,
-        timestamp: item.timestamp ?? null,
+        timestamp: toIso(item.timestamp),
         author: item.ownerUsername ?? item.ownerId ?? null,
         text,
       }
@@ -115,7 +149,7 @@ export function toPost(item, platform) {
         tags: [...(item.hashtags ?? []).map((h) => h?.name).filter(Boolean), ...tagsFromText(text)],
         engagement: num(item.diggCount) + num(item.commentCount) + num(item.shareCount) + num(item.collectCount),
         views: num(item.playCount) || null,
-        timestamp: item.createTimeISO ?? (item.createTime ? new Date(item.createTime * 1000).toISOString() : null),
+        timestamp: toIso(item.createTimeISO ?? item.createTime),
         author: item.authorMeta?.name ?? item.authorMeta?.id ?? null,
         text,
       }
@@ -126,7 +160,7 @@ export function toPost(item, platform) {
         tags: [...(item.hashtags ?? []), ...tagsFromText(text)],
         engagement: num(item.like_count) + num(item.reply_count) + num(item.repost_count) + num(item.quote_count),
         views: num(item.view_count) || null,
-        timestamp: item.created_at ?? null,
+        timestamp: toIso(item.created_at),
         author: item.author ?? item.author_id ?? null,
         text,
       }

@@ -58,6 +58,26 @@ export function describeAges(posts, { now = Date.now(), windowDays = 180 } = {})
   const oldest = sorted.length ? sorted[0] : null
   const newest = sorted.length ? sorted.at(-1) : null
 
+  /**
+   * Age percentiles, because `oldestAgeDays` is a maximum and a maximum is one
+   * stray row away from lying.
+   *
+   * The first probe run demonstrated this exactly: the Instagram actor returned
+   * `oldestAgeDays = 4339` (a post from 2014) while 99.1% of the 900 results
+   * were from the current month. Eight pinned "top posts" made a 25-day slice
+   * look like a twelve-year reach — and the pre-registered pass/fail criterion,
+   * which keyed on `oldestAgeDays`, would have scored that as a PASS.
+   *
+   * Percentiles are the same choice the outlier model already makes for view
+   * counts (median/MAD over mean/SD): in a heavy-tailed distribution the
+   * extremes describe the tail, not the body.
+   */
+  const pct = (p) => {
+    if (!sorted.length) return null
+    const idx = Math.min(sorted.length - 1, Math.max(0, Math.ceil((p / 100) * sorted.length) - 1))
+    return Math.round(((now - sorted[sorted.length - 1 - idx]) / DAY_MS) * 10) / 10
+  }
+
   return {
     returned: posts.length,
     dated: dated.length,
@@ -67,6 +87,14 @@ export function describeAges(posts, { now = Date.now(), windowDays = 180 } = {})
     /** How far back the returned set actually reaches, in days from now. */
     oldestAgeDays: oldest === null ? null : Math.round(((now - oldest) / DAY_MS) * 10) / 10,
     newestAgeDays: newest === null ? null : Math.round(((now - newest) / DAY_MS) * 10) / 10,
+    /**
+     * Age in days at the 50th / 90th / 99th percentile of the returned set.
+     * `ageP90` is the honest answer to "how far back does this actually go" —
+     * it survives a handful of pinned outliers, `oldestAgeDays` does not.
+     */
+    ageP50Days: pct(50),
+    ageP90Days: pct(90),
+    ageP99Days: pct(99),
     /** The span the results themselves cover — not the same as reach. */
     spanDays: sorted.length >= 2 ? Math.round(((newest - oldest) / DAY_MS) * 10) / 10 : 0,
     withinWindow: dated.filter((t) => t >= cutoff).length,
