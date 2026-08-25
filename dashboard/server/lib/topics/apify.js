@@ -49,7 +49,7 @@ export function seedTermsFor(region) {
   return { tags: seeds.tags, keywords: seeds.keywords }
 }
 
-async function runActor(actorId, input, signal) {
+export async function runActor(actorId, input, signal) {
   const url = `${API_BASE}/acts/${encodeURIComponent(actorId)}/run-sync-get-dataset-items?token=${encodeURIComponent(apify.token)}`
   const res = await fetch(url, {
     method: 'POST',
@@ -64,7 +64,7 @@ async function runActor(actorId, input, signal) {
   return Array.isArray(items) ? items : []
 }
 
-function buildInput(platform, seeds, limit) {
+export function buildInput(platform, seeds, limit) {
   switch (platform) {
     case 'instagram':
       // required: hashtags
@@ -95,7 +95,7 @@ const num = (v) => (Number.isFinite(Number(v)) ? Number(v) : 0)
  * Reduce one raw dataset item to the fields the aggregator needs.
  * Field names differ per actor; verified against live runs.
  */
-function toPost(item, platform) {
+export function toPost(item, platform) {
   if (!item || typeof item !== 'object') return null
   switch (platform) {
     case 'instagram': {

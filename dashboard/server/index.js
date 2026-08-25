@@ -15,6 +15,7 @@ import workflowRouter from './routes/workflow.js'
 import evaluationsRouter from './routes/evaluations.js'
 import redlinesRouter from './routes/redlines.js'
 import guidedRouter from './routes/guided.js'
+import scanProbeRouter from './routes/scan-probe.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
@@ -51,6 +52,7 @@ app.use('/api', workflowRouter)
 app.use('/api', evaluationsRouter)
 app.use('/api', redlinesRouter)
 app.use('/api', guidedRouter)
+app.use('/api', scanProbeRouter)
 
 app.use('/api', (req, res) => res.status(404).json({ error: `no such endpoint: ${req.method} ${req.originalUrl}` }))
 
