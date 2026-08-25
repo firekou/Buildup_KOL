@@ -100,8 +100,22 @@ export async function probeProfile({ platform = 'tiktok', profile, requested = 3
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), timeoutMs)
   const startedAt = Date.now()
+  let usedInput = input
+  let fellBackToMinimal = false
   try {
-    const items = await runActor(actorId, input, controller.signal)
+    let items
+    try {
+      items = await runActor(actorId, input, controller.signal)
+    } catch (err) {
+      // Some actors validate their input schema strictly and reject unknown
+      // fields. Which shape this one accepts is itself part of 0-3, so retry
+      // with the smallest plausible input rather than reporting "cannot list an
+      // account's videos" when the real answer is "not with those options".
+      if (controller.signal.aborted) throw err
+      usedInput = { profiles: [profile], resultsPerPage: requested }
+      fellBackToMinimal = true
+      items = await runActor(actorId, usedInput, controller.signal)
+    }
     const elapsedMs = Date.now() - startedAt
     const posts = items.map((i) => toPost(i, platform)).filter(Boolean)
     const views = posts.map((p) => p.views).filter(Number.isFinite)
@@ -114,7 +128,11 @@ export async function probeProfile({ platform = 'tiktok', profile, requested = 3
     const authors = [...new Set(posts.map((p) => p.author).filter(Boolean))]
 
     return {
-      ok: true, platform, profile, actorId, requested, input, elapsedMs,
+      ok: true, platform, profile, actorId, requested,
+      input: usedInput,
+      /** 0-3 also answers "what input shape does this actor accept". */
+      fellBackToMinimal,
+      elapsedMs,
       rawItems: items.length,
       posts: posts.length,
       /** 0-3 · the field the whole outlier model depends on. */
@@ -133,7 +151,7 @@ export async function probeProfile({ platform = 'tiktok', profile, requested = 3
       flagKeys,
     }
   } catch (err) {
-    return { ok: false, platform, profile, actorId, requested, input, elapsedMs: Date.now() - startedAt, error: String(err?.message ?? err).slice(0, 400) }
+    return { ok: false, platform, profile, actorId, requested, input: usedInput, fellBackToMinimal, elapsedMs: Date.now() - startedAt, error: String(err?.message ?? err).slice(0, 400) }
   } finally {
     clearTimeout(timer)
   }
