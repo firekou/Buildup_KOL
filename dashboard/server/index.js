@@ -16,6 +16,7 @@ import evaluationsRouter from './routes/evaluations.js'
 import redlinesRouter from './routes/redlines.js'
 import guidedRouter from './routes/guided.js'
 import scanProbeRouter from './routes/scan-probe.js'
+import { startBootProbe } from './lib/scan/probe-on-boot.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
@@ -91,4 +92,10 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`  KOLs loaded: ${listKols().length}`)
   console.log(`  Topic source: ${isApifyConfigured() ? 'Apify' : 'fixtures (APIFY_TOKEN not set)'}`)
   console.log(`  Data dir: ${store.stats().dataDir}${store.stats().persistent ? '' : ' (ephemeral — set DATA_DIR to a Railway volume)'}`)
+
+  // Batch 0 only, and only when SCAN_PROBE_ON_BOOT is set. Started here rather
+  // than before listen() so a multi-minute actor run cannot delay the
+  // healthcheck. See lib/scan/probe-on-boot.js for why the log stream is the
+  // channel and why the variable must be removed afterwards.
+  startBootProbe()
 })

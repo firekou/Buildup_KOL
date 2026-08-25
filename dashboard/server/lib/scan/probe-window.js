@@ -33,7 +33,7 @@ const iso = (ms) => (Number.isFinite(ms) ? new Date(ms).toISOString() : null)
  * N" slice hands back a monotonically decreasing date sequence. One that
  * genuinely searches a window does not have to.
  */
-function describeAges(posts, { now = Date.now(), windowDays = 180 } = {}) {
+export function describeAges(posts, { now = Date.now(), windowDays = 180 } = {}) {
   const times = posts.map((p) => (p.timestamp ? Date.parse(p.timestamp) : NaN))
   const dated = times.filter(Number.isFinite)
   const sorted = [...dated].sort((a, b) => a - b)
