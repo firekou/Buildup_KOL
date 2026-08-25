@@ -15,7 +15,7 @@
     "start": "node dashboard/server/index.js",
     "smoke": "node dashboard/server/smoke.js",
     "test:redlines": "node .claude/skills/kol-redline-check/test.mjs",
-    "test:probe": "node dashboard/server/lib/scan/probe-window.test.mjs"
+    "test:probe": "node dashboard/server/lib/scan/probe-window.test.mjs && node dashboard/server/lib/scan/probe-actor.test.mjs"
   },
   "dependencies": {
     "express": "^4.21.2",

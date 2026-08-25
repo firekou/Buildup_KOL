@@ -81,6 +81,30 @@ export function buildInput(platform, seeds, limit) {
   }
 }
 
+/**
+ * Input for scraping ONE account's recent posts, as opposed to a hashtag search.
+ *
+ * docs/14 §3.7 — this is the stage the channel-relative baseline needs and the
+ * connector never had: without a list of an account's own recent videos there
+ * is no channel median, and without a median there is no outlier.
+ */
+export function buildProfileInput(platform, profiles, limit) {
+  switch (platform) {
+    case 'tiktok':
+      return {
+        profiles,
+        resultsPerPage: limit,
+        shouldDownloadVideos: false,
+        shouldDownloadCovers: false,
+        // Ask for the account's own posts rather than anything it was tagged in.
+        profileScrapeSections: ['videos'],
+        profileSorting: 'latest',
+      }
+    default:
+      throw new Error(`no profile input defined for platform "${platform}"`)
+  }
+}
+
 const HASHTAG_IN_TEXT = /#([\p{L}\p{N}_]{2,40})/gu
 
 /** Pull hashtags out of free text — Threads posts frequently have an empty hashtags array. */
@@ -135,6 +159,7 @@ export function toPost(item, platform) {
     case 'instagram': {
       const text = item.caption ?? ''
       return {
+        id: item.id ?? item.shortCode ?? item.url ?? null,
         tags: [...(item.hashtags ?? []), ...tagsFromText(text)],
         engagement: num(item.likesCount) + num(item.commentsCount),
         views: null,
@@ -146,6 +171,7 @@ export function toPost(item, platform) {
     case 'tiktok': {
       const text = item.text ?? ''
       return {
+        id: item.id ?? item.webVideoUrl ?? null,
         tags: [...(item.hashtags ?? []).map((h) => h?.name).filter(Boolean), ...tagsFromText(text)],
         engagement: num(item.diggCount) + num(item.commentCount) + num(item.shareCount) + num(item.collectCount),
         views: num(item.playCount) || null,
@@ -157,6 +183,7 @@ export function toPost(item, platform) {
     case 'threads': {
       const text = item.text ?? ''
       return {
+        id: item.id ?? item.pk ?? item.code ?? null,
         tags: [...(item.hashtags ?? []), ...tagsFromText(text)],
         engagement: num(item.like_count) + num(item.reply_count) + num(item.repost_count) + num(item.quote_count),
         views: num(item.view_count) || null,
