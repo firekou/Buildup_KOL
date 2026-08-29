@@ -118,6 +118,15 @@ r.get('/growth/signals/:id', h((req, res) => {
 r.get('/growth/opportunities', h((req, res) =>
   res.json({ opportunities: opportunities.listOpportunities({ productId: req.query.productId, status: req.query.status, campaignId: req.query.campaignId }) })))
 r.post('/growth/opportunities', h((req, res) => res.status(201).json(opportunities.createOpportunity(req.body, actor(req)))))
+/**
+ * Must stay above `/:id` — Express matches in registration order, so with the
+ * param route first this literal is swallowed as `id === 'draft'` and the
+ * endpoint 404s. Nothing in the module-level tests catches that, because they
+ * call `draftFromSignal()` directly; the smoke test now covers the HTTP path.
+ */
+r.get('/growth/opportunities/draft', h((req, res) =>
+  res.json(opportunities.draftFromSignal(req.query.signalId, req.query.productId))))
+
 r.get('/growth/opportunities/:id', h((req, res) => {
   const o = opportunities.getOpportunity(req.params.id)
   if (!o) return res.status(404).json({ error: 'opportunity not found' })
@@ -125,8 +134,6 @@ r.get('/growth/opportunities/:id', h((req, res) => {
 }))
 r.patch('/growth/opportunities/:id/status', h((req, res) =>
   res.json(opportunities.setOpportunityStatus(req.params.id, req.body.status, actor(req), req.body.reason))))
-r.get('/growth/opportunities/draft', h((req, res) =>
-  res.json(opportunities.draftFromSignal(req.query.signalId, req.query.productId))))
 r.get('/growth/opportunities/:id/route', h((req, res) =>
   res.json(router_.route(req.params.id, { limit: Number(req.query.limit) || 8 }))))
 

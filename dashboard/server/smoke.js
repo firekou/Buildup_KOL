@@ -252,6 +252,19 @@ async function main() {
     return c.says
   })
 
+  await check('Opportunity draft 端點沒有被 /:id 吃掉', async () => {
+    // Registration-order bug class: a literal path declared after `/:id` is
+    // swallowed by it and 404s. Module-level tests miss this entirely because
+    // they call the function, not the route — so it has to be checked here.
+    const signals = await json('/api/growth/signals?limit=1')
+    const products = await json('/api/growth/products')
+    if (!signals.signals.length || !products.products.length) return 'skipped — 尚無 signal 或 product'
+    const b = await json(`/api/growth/opportunities/draft?signalId=${signals.signals[0].id}&productId=${products.products[0].id}`)
+    assert(b.prompts?.whyNow, 'draft 必須回傳待人工填寫的提示，而不是 opportunity not found')
+    assert(b.caveat?.includes('草稿'), 'draft 必須標明自己是草稿而非評分')
+    return `draft ok，${b.suggestedAnchors.length} 個產品錨點`
+  })
+
   await check('實驗契約缺欄位時不得建立', async () => {
     const res = await fetch(`${BASE}/api/growth/experiments`, {
       method: 'POST',
