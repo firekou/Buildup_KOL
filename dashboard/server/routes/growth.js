@@ -125,7 +125,8 @@ r.post('/growth/opportunities', h((req, res) => res.status(201).json(opportuniti
  * call `draftFromSignal()` directly; the smoke test now covers the HTTP path.
  */
 r.get('/growth/opportunities/draft', h((req, res) =>
-  res.json(opportunities.draftFromSignal(req.query.signalId, req.query.productId))))
+  // No signalId → a manual draft built from the product analysis alone.
+  res.json(opportunities.draftFromSignal(req.query.signalId || null, req.query.productId))))
 
 r.get('/growth/opportunities/:id', h((req, res) => {
   const o = opportunities.getOpportunity(req.params.id)

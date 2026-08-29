@@ -205,6 +205,36 @@ await test('closed loop: 從 Winner 建立 child experiment 且 lineage 不遺�
   assert.equal(tree.decision, 'WINNER')
 })
 
+await test('opportunity: 沒有 signal 也能建題目（FR-P0-03 人工建立）', () => {
+  const draft = opportunities.draftFromSignal(null, fixture.product.id)
+  assert.equal(draft.signalId, null)
+  assert.ok(draft.suggestedAnchors.length > 0, '手動草稿應列出產品分析算出的所有切角')
+  assert.equal(draft.freshness.key, 'unknown', '沒有事件就不得宣稱時效性')
+  assert.ok(draft.prompts.whyNow.includes('行銷排程'), 'whyNow 提示要擋掉「我們現在想推」這種答案')
+
+  const created = opportunities.createOpportunity({
+    productId: fixture.product.id,
+    topic: '手動建立的題目',
+    whyNow: '受眾這個月正在重新評估要不要續訂，這是他們自己會問的問題',
+    tension: '一邊認為整合平台省事，一邊認為多一層中介就是多一層風險',
+    productRelevance: '正面回應已登記的反對意見，用可回放的紀錄當證據',
+    relevanceAnchor: 'known_objection',
+  }, 'test')
+  assert.equal(created.signalId, null)
+  assert.equal(created.status, 'new')
+})
+
+await test('router: 未指派平台角色不阻擋實驗規劃，但會列為注意事項', () => {
+  const opportunity = opportunities.listOpportunities({ productId: fixture.product.id })[0]
+  const routed = router.route(opportunity.id)
+  assert.ok(routed.candidates.some((c) => c.eligible), '全新安裝時至少要有一個人設可用，否則第一個實驗永遠建不起來')
+  const unassigned = routed.candidates.find((c) => !Object.keys(c.overlay?.platformRoles ?? {}).length)
+  if (unassigned) {
+    assert.ok(!unassigned.failedGates.includes('platform_assigned'), 'platform_assigned 不得是硬 gate')
+    assert.ok(unassigned.cautions.some((c) => c.type === 'no_platform_role'), '但必須列為注意事項')
+  }
+})
+
 await test('completeness: 觀測窗未結束時實驗不可評估', () => {
   const exp = experiments.requireExperiment(fixture.experiment.id)
   const future = { ...exp, observationEndsAt: new Date(Date.now() + 3600e3).toISOString() }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { growth } from '../api.js'
 import { Card, Badge, Loading, Empty } from '../../components/ui.jsx'
 import { Field, useAsyncAction, ErrorNote } from '../components.jsx'
@@ -17,6 +17,7 @@ export default function OpportunityRadar({ meta, productId, products, refresh })
   const [draft, setDraft] = useState(null)
   const [scanning, setScanning] = useState(false)
   const [scanResult, setScanResult] = useState(null)
+  const [query, setQuery] = useState('')
   const { busy, error, run, setError } = useAsyncAction()
 
   const load = () => {
@@ -28,10 +29,22 @@ export default function OpportunityRadar({ meta, productId, products, refresh })
   // effect that returns a promise crashes the whole tree on unmount.
   useEffect(() => { load() }, [productId])
 
+  /**
+   * With a keyword, search news only. The regional trend scan returns whatever
+   * is hot in that region — which for a consumer product is the point, and for
+   * a B2B or developer product is a list of unrelated lifestyle hashtags. The
+   * keyword path is how a niche product finds events it can actually carry.
+   */
   const scan = (region) => run(async () => {
     setScanning(true)
     try {
-      const result = await growth.scanSignals({ region, sources: ['news', 'social_trend'], limit: 20 })
+      const q = query.trim()
+      const result = await growth.scanSignals({
+        region,
+        sources: q ? ['news'] : ['news', 'social_trend'],
+        limit: 20,
+        query: q || null,
+      })
       setScanResult(result)
       load()
     } finally {
@@ -46,6 +59,13 @@ export default function OpportunityRadar({ meta, productId, products, refresh })
         note="新聞 RSS 與社群趨勢會被正規化成同一種 Signal，並依標題去重——同一則新聞被五家轉載時只會出現一次，但會累積來源數。"
         actions={
           <div className="row">
+            <input
+              style={{ width: 200 }}
+              placeholder="關鍵字（選填）"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              title="填了關鍵字就只搜新聞，不抓地區熱門標籤。利基型產品幾乎一定要用這個。"
+            />
             {['TW', 'HK', 'SG', 'JP', 'US'].map((r) => (
               <button key={r} disabled={scanning} onClick={() => scan(r)}>{scanning ? '掃描中…' : `掃描 ${r}`}</button>
             ))}
@@ -111,7 +131,21 @@ export default function OpportunityRadar({ meta, productId, products, refresh })
         />
       )}
 
-      <Card title="Opportunity queue" note="沒有 why_now、對立與產品相關性就不是可測題目。此處不顯示任何綜合分數——在有校準資料之前，那只是虛構的精準感。">
+
+      <Card
+        title="Opportunity queue"
+        note="沒有 why_now、對立與產品相關性就不是可測題目。此處不顯示任何綜合分數——在有校準資料之前，那只是虛構的精準感。"
+        actions={
+          <button
+            className="primary"
+            disabled={!productId}
+            title={productId ? '不綁任何事件，直接從產品自己的差異點與已知反對意見出題' : '請先在上方選一個產品'}
+            onClick={() => run(async () => setDraft(await growth.draftOpportunity(null, productId)))}
+          >
+            手動建立題目
+          </button>
+        }
+      >
         {!opportunities ? <Loading /> : opportunities.length === 0 ? (
           <Empty>還沒有任何 Opportunity。</Empty>
         ) : (
@@ -294,7 +328,63 @@ function PlanExperiment({ opportunity, candidate, meta, onDone }) {
 }
 
 /** The human-written opportunity form. The three judgement fields are required. */
+/**
+ * The anchor list is every angle the product analysis derived — for a product
+ * with a long objections/differentiators list that is easily 40+ rows, which
+ * buries the three fields the operator actually has to write. Grouped by
+ * family, collapsed by default, and capped in height so the form stays usable.
+ */
+function AnchorPicker({ draft }) {
+  const [open, setOpen] = useState(null)
+  const groups = draft.suggestedAnchors.reduce((acc, a) => {
+    (acc[a.family] ??= []).push(a)
+    return acc
+  }, {})
+  const LABEL = {
+    objection_reversal: '從已知反對意見出題',
+    differentiator_demo: '從差異點出題',
+    audience_situation: '從受眾情境出題',
+    evidence_led: '從可引用的證據出題',
+  }
+
+  return (
+    <div className="small" style={{ marginBottom: 10 }}>
+      <strong>
+        {draft.signalId
+          ? '系統找到的產品錨點：'
+          : `這個產品可用的切角，共 ${draft.suggestedAnchors.length} 個（沒有排序——沒有事件文字可比對時，任何排名都是編的）：`}
+      </strong>
+      <div className="row" style={{ marginTop: 6 }}>
+        {Object.entries(groups).map(([family, rows]) => (
+          <span
+            key={family}
+            className={`chip selectable ${open === family ? 'on' : ''}`}
+            onClick={() => setOpen(open === family ? null : family)}
+          >
+            {LABEL[family] ?? family}（{rows.length}）
+          </span>
+        ))}
+      </div>
+      {open && (
+        <ul className="ghos-list" style={{ maxHeight: 260, overflowY: 'auto', marginTop: 8 }}>
+          {groups[open].map((a, i) => (
+            <li key={i}>
+              <Badge tone="accent">{a.anchor}</Badge> {a.seed}
+              {a.matchedTokens?.length > 0 && <span className="muted">（命中：{a.matchedTokens.join('、')}）</span>}
+              <div className="muted">{a.hint}</div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 function OpportunityForm({ draft, meta, onCancel, onDone }) {
+  const ref = useRef(null)
+  // The form renders below the signal table; without this the operator clicks
+  // 手動建立題目 and nothing appears to happen because it is 40 rows down.
+  useEffect(() => { ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, [])
   const [form, setForm] = useState({
     topic: draft.topic,
     whyNow: '',
@@ -308,18 +398,10 @@ function OpportunityForm({ draft, meta, onCancel, onDone }) {
   const toggle = (key, value) => setForm((f) => ({ ...f, [key]: f[key].includes(value) ? f[key].filter((x) => x !== value) : [...f[key], value] }))
 
   return (
-    <Card title="建立 Opportunity" note={draft.caveat}>
-      <div className="alert info small">{draft.whyNowDraft}</div>
-      {draft.suggestedAnchors.length > 0 && (
-        <div className="small" style={{ marginBottom: 8 }}>
-          <strong>系統找到的產品錨點：</strong>
-          <ul className="ghos-list">
-            {draft.suggestedAnchors.map((a, i) => (
-              <li key={i}><Badge tone="accent">{a.anchor}</Badge> {a.seed}（命中：{a.matchedTokens.join('、')}）<div className="muted">{a.hint}</div></li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <div ref={ref}>
+    <Card title={draft.signalId ? '從事件建立 Opportunity' : '手動建立 Opportunity'} note={draft.caveat}>
+      <div className={`alert ${draft.signalId ? 'info' : 'warn'} small`}>{draft.whyNowDraft}</div>
+      {draft.suggestedAnchors.length > 0 && <AnchorPicker draft={draft} />}
       <Field label="題目"><input value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} /></Field>
       <Field label="Why now" hint={draft.prompts.whyNow}><textarea rows={2} value={form.whyNow} onChange={(e) => setForm({ ...form, whyNow: e.target.value })} /></Field>
       <Field label="對立／張力" hint={draft.prompts.tension}><textarea rows={2} value={form.tension} onChange={(e) => setForm({ ...form, tension: e.target.value })} /></Field>
@@ -352,5 +434,6 @@ function OpportunityForm({ draft, meta, onCancel, onDone }) {
         <button onClick={onCancel}>取消</button>
       </div>
     </Card>
+    </div>
   )
 }

@@ -228,12 +228,23 @@ export function personaGates(persona, { product = null, claimDomains = [] } = {}
       : '題目未涉及高風險 claim',
   })
 
+  // Platform assignment is deliberately NOT a gate.
+  //
+  // It was one, and it made every persona ineligible on a fresh install —
+  // nobody can plan a first experiment before any overlay exists, which is the
+  // wrong order: you decide what to test, then decide where it goes out. The
+  // constraint that actually matters is enforced where it belongs, at publish
+  // (publish.js refuses a publication whose account platform does not match the
+  // arm, and refuses an unapproved asset). Here it stays a caution, raised by
+  // the router as `no_platform_role`.
   if (product) {
-    const allowed = persona.overlay?.platformRoles ?? {}
+    const allowed = Object.keys(persona.overlay?.platformRoles ?? {})
     gates.push({
       gate: 'platform_assigned',
-      passed: Object.keys(allowed).length > 0,
-      message: Object.keys(allowed).length ? `已指派平台：${Object.keys(allowed).join('/')}` : '尚未為此人設指派任何平台角色',
+      passed: true,
+      message: allowed.length
+        ? `已指派平台：${allowed.join('/')}`
+        : '尚未指派平台角色。可以先規劃實驗，但發布前必須先為此人設登記對應平台的帳號。',
     })
   }
 

@@ -108,6 +108,12 @@ export function createOpportunity(input, actor = 'system') {
  * tension is exactly the fabricated precision the spec forbids.
  */
 export function draftFromSignal(signalId, productId) {
+  // FR-P0-03 requires manual creation to work in v1. A product-only draft is
+  // that path: for a B2B or developer product, the regional trend scan mostly
+  // returns consumer hashtags with nothing to do with it, and the operator
+  // already knows the argument they want to test. The draft then hangs off the
+  // product analysis instead of a signal.
+  if (!signalId) return draftFromProduct(productId)
   const signal = getSignal(signalId)
   if (!signal) throw notFound(`Signal ${signalId}`)
   const product = requireProduct(productId)
@@ -150,6 +156,41 @@ export function draftFromSignal(signalId, productId) {
     evidence: signal.evidenceRefs ?? [],
     freshness,
     // Said plainly so nobody mistakes the draft for an assessment.
+    caveat: '這是草稿，不是評分。whyNow / tension / productRelevance 三欄必須由人填寫後才能建立 Opportunity。',
+  }
+}
+
+/**
+ * A draft with no signal behind it. Every angle family the product analysis
+ * produced becomes a candidate anchor, because without signal text there is
+ * nothing to match against — and picking a subset would be an unfounded
+ * ranking, which §4 of the Dashboard spec forbids.
+ */
+export function draftFromProduct(productId) {
+  const product = requireProduct(productId)
+  const analysis = product.analysis ?? null
+
+  return {
+    productId,
+    signalId: null,
+    topic: '',
+    whyNowDraft: '這是人工建立的題目，沒有對應的外部事件。「為什麼是現在」要由你說明——如果答案只是「我們現在想推」，那它就不具時效性，不要在內容裡宣稱它有。',
+    prompts: {
+      whyNow: '受眾此刻在爭論什麼、擔心什麼、想確認什麼？沒有外部事件時，這一欄要說的是受眾當下的處境，而不是我們的行銷排程。',
+      tension: '這題的兩邊各是誰、各主張什麼？沒有真正的對立就沒有討論入口。',
+      productRelevance: '產品憑什麼接住這題？指出是價值主張、差異點、已知反對意見還是受眾情境。',
+    },
+    suggestedAnchors: (analysis?.angleFamilies ?? []).map((a) => ({
+      anchor: anchorFor(a.from),
+      family: a.family,
+      seed: a.seed,
+      matchedTokens: [],
+      hint: a.hint,
+    })),
+    suggestedRiskFlags: (analysis?.claimSurface?.domains ?? []).length ? ['regulated_domain'] : [],
+    suggestedClaimDomains: (analysis?.claimSurface?.domains ?? []).map((d) => d.domain),
+    evidence: [],
+    freshness: { key: 'unknown', label: '無對應事件', hint: '人工建立的題目沒有事件時間戳，不得宣稱時效性。' },
     caveat: '這是草稿，不是評分。whyNow / tension / productRelevance 三欄必須由人填寫後才能建立 Opportunity。',
   }
 }

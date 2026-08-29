@@ -42,6 +42,7 @@ export const growth = {
   opportunities: (params) => request(`/opportunities${qs(params)}`),
   opportunity: (id) => request(`/opportunities/${id}`),
   createOpportunity: (payload) => post('/opportunities', payload),
+  // signalId omitted → a manual draft built from the product analysis alone.
   draftOpportunity: (signalId, productId) => request(`/opportunities/draft${qs({ signalId, productId })}`),
   setOpportunityStatus: (id, status, reason) => patch(`/opportunities/${id}/status`, { status, reason }),
   route: (id) => request(`/opportunities/${id}/route`),
