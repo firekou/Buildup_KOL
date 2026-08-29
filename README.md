@@ -110,8 +110,14 @@ npm run build && npm start   # 單一服務，http://localhost:8080
 ```
 
 **已部署：** https://dashboard-production-010e.up.railway.app
-（Apify 已接上，地區話題為真實抓取；Volume 尚未掛載，評估記錄仍為暫存——見
+（追蹤 `main`；Apify 已接上，地區話題為真實抓取；Volume `dashboard-data` 掛在 `/data`
+且 `DATA_DIR` 指向它，評估記錄與 Growth OS 資料都會持久化——見
 [`dashboard/README.md`](dashboard/README.md)）
+
+> 這一行先前寫的是「Volume 尚未掛載」，與 `dashboard/README.md` 記載的實測結果相反。
+> 已於 2026-08-29 對照 Railway 實際設定更正：volume 早就掛好了。兩份文件對同一件事
+> 給出相反答案，會讓人照著錯的那份動手——這次就差點因此建立了第二個掛在 `/data`
+> 的 volume，把原本的資料遮蔽掉。
 
 部署與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。
 **Root Directory 要留在 repo 根目錄**，否則後端讀不到 `kols/`。

@@ -63,13 +63,20 @@ source 為本 repo 的 `claude/kol-evaluation-dashboard-7e7hxh` 分支）
 
 | 項目 | 值 | 說明 |
 |------|-----|------|
-| Volume `dashboard-data` | 掛載於 `/data` | 評估記錄與 Match 庫的持久化位置。已實測：寫入一筆記錄後強制重新部署，記錄存活 |
+| Volume `dashboard-data` | 掛載於 `/data` | 評估記錄、Match 庫與 Growth OS（`/data/growth/`）的持久化位置。已實測：寫入一筆記錄後強制重新部署，記錄存活 |
 | `DATA_DIR` | `/data` | 指向上面的掛載點。**沒設它的話 Volume 等於白掛**——app 會寫到 `/app/data`，那是容器內的暫存目錄 |
 
-> **踩過的坑：** Railway MCP 的 `railway-agent` 回報「DATA_DIR 已設 ✓」，但 `list-variables`
+> **踩過的坑（一）：** Railway MCP 的 `railway-agent` 回報「DATA_DIR 已設 ✓」，但 `list-variables`
 > 查不到這個變數，容器裡的 `dataDir` 仍是 `/app/data`。**agent 的回報不能當驗證**——
 > 用 `list-variables` 確認變數存在，再用「寫一筆 → 重新部署 → 看還在不在」確認 Volume 真的生效。
 > 這兩步都做過才算數。
+>
+> **踩過的坑（二）：** `get-service-config` 與 `list-variables` 都**不會列出 volume**，
+> 所以看起來像「沒掛 volume」。2026-08-29 因此誤建了第二個掛在 `/data` 的 volume——
+> Railway 允許這樣做，不會報錯，但後掛的會遮蔽先掛的，等於原本的資料整批消失。
+> 要確認 volume 現況，用 `railway-agent` 問 `volumeMounts`，或直接看 Railway UI 的
+> Volumes 分頁；`/api/meta` 的 `store.persistent` 只反映 `DATA_DIR` 有沒有設，
+> **不代表真的掛了 volume**。
 
 ### 其他變數
 

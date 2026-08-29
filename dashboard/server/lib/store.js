@@ -249,6 +249,17 @@ export function createStore(baseDir, fileMap, { idPrefix = (kind) => kind } = {}
 
     stats: () => ({
       dataDir: baseDir,
+      /**
+       * `DATA_DIR` is set — which is necessary for persistence but NOT
+       * sufficient: it says nothing about whether a volume is actually
+       * mounted there. A container with DATA_DIR=/data and no volume writes
+       * happily to an ephemeral directory and loses everything on redeploy.
+       *
+       * Named for what it actually observes, because the previous name
+       * (`persistent`) was rendered in the UI as 「資料已持久化」 — a claim
+       * this process cannot make. See dashboard/README.md 踩過的坑（二）.
+       */
+      dataDirConfigured: Boolean(process.env.DATA_DIR),
       persistent: Boolean(process.env.DATA_DIR),
       counts: Object.fromEntries(Object.keys(fileMap).map((k) => [k, readAll(k).length])),
     }),

@@ -56,8 +56,21 @@ export default function App() {
           <Badge tone={meta.topicSource === 'apify' ? 'good' : 'warn'}>
             話題來源：{meta.topicSource === 'apify' ? 'Apify' : '範例資料'}
           </Badge>
-          <Badge tone={meta.store.persistent ? 'good' : 'warn'}>
-            {meta.store.persistent ? '資料已持久化' : '資料為暫存（未掛載 volume）'}
+          {/*
+            DATA_DIR being set does not prove a volume is mounted there, so the
+            badge reports the thing the server can actually observe. Claiming
+            「已持久化」 from an env var is how a redeploy silently eats a
+            week of records — see dashboard/README.md 踩過的坑（二）.
+          */}
+          <Badge
+            tone={meta.store.dataDirConfigured ?? meta.store.persistent ? 'good' : 'warn'}
+            title={
+              meta.store.dataDirConfigured ?? meta.store.persistent
+                ? `寫入 ${meta.store.dataDir}。這只代表 DATA_DIR 已設定——是否真的掛了 volume 要到 Railway 的 Volumes 分頁確認。`
+                : '未設定 DATA_DIR，資料寫在容器內，重新部署就會清空。'
+            }
+          >
+            {meta.store.dataDirConfigured ?? meta.store.persistent ? `DATA_DIR → ${meta.store.dataDir}` : '資料為暫存（未設 DATA_DIR）'}
           </Badge>
           {/* docs/11 §3.3 — this belongs on the front page, not buried in a doc. */}
           {scoring && (
