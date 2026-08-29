@@ -82,32 +82,70 @@ register({
   envKey: 'AITOKENKING_API_KEY',
   label: 'AI Token King（OpenAI 相容 gateway）',
   note: '文案／腳本生成。usage 由回應的 token 數換算成本，不用固定單價估。',
-  async generate({ prompt, model = 'gpt-5', timeoutMs = 60_000 }) {
+  async generate({ prompt, model = null, timeoutMs = 90_000 }) {
     const key = process.env.AITOKENKING_API_KEY
     if (!key) return { ok: false, error: 'not_configured', errorMessage: 'AITOKENKING_API_KEY 未設定' }
+
+    // Base is `/api/v1`, not `/v1`. Probed rather than assumed: `/v1/…`
+    // answers 404 (no such route) while `/api/v1/…` answers 401 (route exists,
+    // key rejected), and 404-vs-401 is how you tell a wrong path from a wrong
+    // key. Overridable so a gateway move needs a variable, not a deploy.
+    const base = process.env.AITOKENKING_BASE_URL || 'https://api.aitokenking.com.tw/api/v1'
+    const chosen = model || process.env.AITOKENKING_MODEL || 'claude-sonnet-5'
 
     const startedAt = Date.now()
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), timeoutMs)
     try {
-      const res = await fetch('https://api.aitokenking.com.tw/v1/chat/completions', {
+      const res = await fetch(`${base}/chat/completions`, {
         method: 'POST',
         signal: controller.signal,
-        headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-        body: JSON.stringify({ model, messages: [{ role: 'user', content: prompt }] }),
+        headers: {
+          'content-type': 'application/json',
+          // Both schemes are sent because an unauthenticated probe cannot tell
+          // them apart — the gateway returns the same 401 for either. Sending
+          // both costs one header and removes a guess.
+          authorization: `Bearer ${key}`,
+          'X-AItokenKing-Api-Key': key,
+        },
+        body: JSON.stringify({ model: chosen, messages: [{ role: 'user', content: prompt }] }),
       })
-      const body = await res.json().catch(() => ({}))
-      if (!res.ok) {
-        return { ok: false, error: `http_${res.status}`, errorMessage: body?.error?.message ?? res.statusText, latencyMs: Date.now() - startedAt }
+      const raw = await res.text()
+      let body = {}
+      try {
+        body = JSON.parse(raw)
+      } catch {
+        /* non-JSON error page; `raw` is still reported below */
       }
-      const text = body?.choices?.[0]?.message?.content ?? ''
+
+      if (!res.ok) {
+        return {
+          ok: false,
+          error: `http_${res.status}`,
+          // This gateway reports `{code, message}` rather than OpenAI's
+          // `{error:{message}}`. Reading only the OpenAI shape produced an
+          // empty error string, which is the worst possible failure report —
+          // it says something broke and refuses to say what.
+          errorMessage: body?.message ?? body?.error?.message ?? raw.slice(0, 300) ?? res.statusText,
+          latencyMs: Date.now() - startedAt,
+        }
+      }
+
+      // Accept both the plain OpenAI shape and this gateway's `{code, data}` wrapper.
+      const payload = body?.choices ? body : (body?.data ?? {})
+      const text = payload?.choices?.[0]?.message?.content ?? ''
+      if (!text) {
+        return { ok: false, error: 'empty_response', errorMessage: `回應沒有可用的內容：${raw.slice(0, 300)}`, latencyMs: Date.now() - startedAt }
+      }
+
+      const usage = payload?.usage ?? body?.usage ?? {}
       return {
         ok: true,
         output: { kind: 'text', text, mimeType: 'text/plain', contentHash: crypto.createHash('sha256').update(text).digest('hex') },
-        usage: { inputTokens: body?.usage?.prompt_tokens ?? 0, outputTokens: body?.usage?.completion_tokens ?? 0 },
+        usage: { inputTokens: usage.prompt_tokens ?? 0, outputTokens: usage.completion_tokens ?? 0 },
         latencyMs: Date.now() - startedAt,
-        providerRef: body?.id ?? null,
-        model,
+        providerRef: payload?.id ?? null,
+        model: payload?.model ?? chosen,
       }
     } catch (err) {
       return { ok: false, error: controller.signal.aborted ? 'timeout' : 'network', errorMessage: String(err?.message ?? err).slice(0, 300), latencyMs: Date.now() - startedAt }
