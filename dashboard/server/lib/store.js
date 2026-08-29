@@ -10,6 +10,11 @@ import { DATA_DIR } from '../config.js'
  * On Railway the container filesystem is ephemeral — mount a volume and set
  * DATA_DIR to it, or records vanish on redeploy. Swapping this module for a
  * Postgres-backed one is the intended upgrade path; nothing else imports fs.
+ *
+ * `createStore()` exists because Growth OS needs ~25 more collections of its
+ * own (projects/growth-hack-os/DATA_MODEL.md §2). Those live in a sibling
+ * directory with the same durability guarantees rather than a second copy of
+ * the atomic-write dance below — one implementation, two collection sets.
  */
 
 const FILES = {
@@ -46,28 +51,8 @@ const FILES = {
   judgementLog: 'judgement-log.json',
 }
 
-function ensureDir() {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true })
-}
-
-function filePath(kind) {
-  const name = FILES[kind]
-  if (!name) throw new Error(`unknown store "${kind}"`)
-  return path.join(DATA_DIR, name)
-}
-
-function readAll(kind) {
-  ensureDir()
-  const file = filePath(kind)
-  if (!fs.existsSync(file)) return []
-  try {
-    const parsed = JSON.parse(fs.readFileSync(file, 'utf8'))
-    return Array.isArray(parsed) ? parsed : []
-  } catch (err) {
-    // A corrupt store must not take the API down; surface it and keep serving.
-    console.error(`[store] ${file} unreadable: ${err.message}`)
-    return []
-  }
+function ensureDir(dir) {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
 }
 
 /**
@@ -84,9 +69,8 @@ function readAll(kind) {
  * file or the new one — never a half-written one. The temp file must live in
  * the same directory for that guarantee to hold, hence the sibling path.
  */
-function writeAll(kind, rows) {
-  ensureDir()
-  const target = filePath(kind)
+function atomicWrite(target, rows) {
+  ensureDir(path.dirname(target))
   const tmp = `${target}.${process.pid}.${crypto.randomUUID().slice(0, 8)}.tmp`
   try {
     fs.writeFileSync(tmp, JSON.stringify(rows, null, 2))
@@ -102,50 +86,192 @@ function writeAll(kind, rows) {
   }
 }
 
-export function list(kind, filter = {}) {
-  let rows = readAll(kind)
-  for (const [key, value] of Object.entries(filter)) {
-    if (value == null || value === '') continue
-    rows = rows.filter((r) => r[key] === value)
+/**
+ * Build a store over `baseDir` holding the collections named in `fileMap`
+ * (`{ kind: 'file-name.json' }`).
+ *
+ * `idPrefix` controls the generated `id` for collections whose caller does not
+ * supply one; Growth OS always supplies its own (growth/ids.js), the legacy
+ * collections do not.
+ */
+export function createStore(baseDir, fileMap, { idPrefix = (kind) => kind } = {}) {
+  const filePath = (kind) => {
+    const name = fileMap[kind]
+    if (!name) throw new Error(`unknown store "${kind}"`)
+    return path.join(baseDir, name)
   }
-  return rows.sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
-}
 
-export function get(kind, id) {
-  return readAll(kind).find((r) => r.id === id) ?? null
-}
+  /**
+   * Rows are cached per collection and invalidated by mtime, so a hot read
+   * path (the dashboard read model touches a dozen collections per request)
+   * does not re-parse every JSON file on every call. mtime rather than a
+   * write-through cache because a sibling process — the seed script, a
+   * `node -e` one-off — can write the same file.
+   */
+  const cache = new Map()
 
-export function insert(kind, record) {
-  const rows = readAll(kind)
-  const row = {
-    id: record.id ?? `${kind}_${crypto.randomUUID().slice(0, 8)}`,
-    createdAt: new Date().toISOString(),
-    ...record,
+  function readAll(kind) {
+    const file = filePath(kind)
+    if (!fs.existsSync(file)) return []
+    let mtimeMs
+    try {
+      mtimeMs = fs.statSync(file).mtimeMs
+    } catch {
+      return []
+    }
+    const hit = cache.get(kind)
+    if (hit && hit.mtimeMs === mtimeMs) return hit.rows
+    try {
+      const parsed = JSON.parse(fs.readFileSync(file, 'utf8'))
+      const rows = Array.isArray(parsed) ? parsed : []
+      cache.set(kind, { mtimeMs, rows })
+      return rows
+    } catch (err) {
+      // A corrupt store must not take the API down; surface it and keep serving.
+      console.error(`[store] ${file} unreadable: ${err.message}`)
+      return []
+    }
   }
-  rows.push(row)
-  writeAll(kind, rows)
-  return row
+
+  function writeAll(kind, rows) {
+    atomicWrite(filePath(kind), rows)
+    cache.delete(kind)
+  }
+
+  /** Filter by exact match on every key given a non-empty value. */
+  function matches(row, filter) {
+    for (const [key, value] of Object.entries(filter)) {
+      if (value == null || value === '') continue
+      if (Array.isArray(value)) {
+        if (!value.includes(row[key])) return false
+      } else if (row[key] !== value) return false
+    }
+    return true
+  }
+
+  const api = {
+    kinds: () => Object.keys(fileMap),
+
+    list(kind, filter = {}) {
+      return readAll(kind)
+        .filter((r) => matches(r, filter))
+        .slice()
+        .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))
+    },
+
+    /** Insertion order — lineage walks and timelines need oldest-first. */
+    listAsc(kind, filter = {}) {
+      return readAll(kind).filter((r) => matches(r, filter))
+    },
+
+    get(kind, id) {
+      return readAll(kind).find((r) => r.id === id) ?? null
+    },
+
+    find(kind, predicate) {
+      return readAll(kind).find(predicate) ?? null
+    },
+
+    filter(kind, predicate) {
+      return readAll(kind).filter(predicate)
+    },
+
+    count(kind, filter = {}) {
+      return readAll(kind).filter((r) => matches(r, filter)).length
+    },
+
+    insert(kind, record) {
+      const rows = readAll(kind).slice()
+      const row = {
+        id: record.id ?? `${idPrefix(kind)}_${crypto.randomUUID().slice(0, 8)}`,
+        createdAt: record.createdAt ?? new Date().toISOString(),
+        ...record,
+      }
+      rows.push(row)
+      writeAll(kind, rows)
+      return row
+    },
+
+    /**
+     * Insert unless a row already satisfies `predicate`; returns
+     * `{ row, inserted }`.
+     *
+     * SYSTEM_ARCHITECTURE.md §2.5 — telemetry syncs, conversion webhooks and
+     * publish callbacks all get re-delivered. Every one of those write paths
+     * goes through here so a redelivery does not double-count a conversion.
+     */
+    upsert(kind, predicate, record, patch = null) {
+      const rows = readAll(kind).slice()
+      const idx = rows.findIndex(predicate)
+      if (idx === -1) return { row: api.insert(kind, record), inserted: true }
+      if (patch) {
+        rows[idx] = { ...rows[idx], ...patch, updatedAt: new Date().toISOString() }
+        writeAll(kind, rows)
+      }
+      return { row: rows[idx], inserted: false }
+    },
+
+    update(kind, id, patch) {
+      const rows = readAll(kind).slice()
+      const idx = rows.findIndex((r) => r.id === id)
+      if (idx === -1) return null
+      rows[idx] = { ...rows[idx], ...patch, updatedAt: new Date().toISOString() }
+      writeAll(kind, rows)
+      return rows[idx]
+    },
+
+    /** Apply `patch` to every row matching `predicate`. Returns rows changed. */
+    updateWhere(kind, predicate, patch) {
+      const rows = readAll(kind).slice()
+      let changed = 0
+      for (let i = 0; i < rows.length; i += 1) {
+        if (!predicate(rows[i])) continue
+        rows[i] = { ...rows[i], ...patch, updatedAt: new Date().toISOString() }
+        changed += 1
+      }
+      if (changed) writeAll(kind, rows)
+      return changed
+    },
+
+    remove(kind, id) {
+      const rows = readAll(kind)
+      const next = rows.filter((r) => r.id !== id)
+      if (next.length === rows.length) return false
+      writeAll(kind, next)
+      return true
+    },
+
+    /** Replace a whole collection. Only the seed script should need this. */
+    replaceAll(kind, rows) {
+      writeAll(kind, rows)
+      return rows.length
+    },
+
+    stats: () => ({
+      dataDir: baseDir,
+      persistent: Boolean(process.env.DATA_DIR),
+      counts: Object.fromEntries(Object.keys(fileMap).map((k) => [k, readAll(k).length])),
+    }),
+
+    /** Newest `createdAt`/`updatedAt` across a collection — data freshness (GHOS-X05). */
+    lastWriteAt(kind) {
+      let latest = null
+      for (const row of readAll(kind)) {
+        const at = row.updatedAt ?? row.createdAt
+        if (at && (latest == null || at > latest)) latest = at
+      }
+      return latest
+    },
+  }
+
+  return api
 }
 
-export function update(kind, id, patch) {
-  const rows = readAll(kind)
-  const idx = rows.findIndex((r) => r.id === id)
-  if (idx === -1) return null
-  rows[idx] = { ...rows[idx], ...patch, updatedAt: new Date().toISOString() }
-  writeAll(kind, rows)
-  return rows[idx]
-}
+const legacy = createStore(DATA_DIR, FILES)
 
-export function remove(kind, id) {
-  const rows = readAll(kind)
-  const next = rows.filter((r) => r.id !== id)
-  if (next.length === rows.length) return false
-  writeAll(kind, next)
-  return true
-}
-
-export const stats = () => ({
-  dataDir: DATA_DIR,
-  persistent: Boolean(process.env.DATA_DIR),
-  counts: Object.fromEntries(Object.keys(FILES).map((k) => [k, readAll(k).length])),
-})
+export const list = legacy.list
+export const get = legacy.get
+export const insert = legacy.insert
+export const update = legacy.update
+export const remove = legacy.remove
+export const stats = legacy.stats

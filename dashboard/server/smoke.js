@@ -217,6 +217,51 @@ async function main() {
     return `${unbound.length} 位待綁定`
   })
 
+  /* ------------------------------------------------ Growth OS (projects/growth-hack-os) */
+
+  await check('Growth OS meta 端點提供完整詞彙表', async () => {
+    const b = await json('/api/growth/meta')
+    assert(b.stages?.length === 10, `expected 10 pipeline stages, got ${b.stages?.length}`)
+    assert(b.evaluator?.version, 'evaluator version must be reported')
+    assert(b.policyProfiles?.length > 0, 'policy profiles must be seeded at boot')
+    assert(b.generationAdapters?.some((a) => a.id === 'template' && a.configured), 'template adapter must always be usable')
+    return `${b.stages.length} 階段 · evaluator v${b.evaluator.version} · ${b.policyProfiles.length} policy profiles`
+  })
+
+  await check('Growth OS 產品看板可回答每個產品走到哪一格', async () => {
+    const b = await json('/api/growth/dashboard/board')
+    assert(Array.isArray(b.board), 'board must be an array')
+    for (const row of b.board) {
+      assert(row.stage && row.reached?.includes(row.stage), `${row.name} 的 stage 必須在 reached 之內`)
+      assert(row.stage === 'compounding' ? true : Boolean(row.blockedBy), `${row.name} 未完成閉環時必須說出卡在哪`)
+    }
+    return `${b.board.length} 個產品`
+  })
+
+  await check('Winner yield 不會超過 1', async () => {
+    const b = await json('/api/growth/dashboard/overview')
+    assert(b.winners.yield == null || b.winners.yield <= 1, `yield=${b.winners.yield}`)
+    return b.winners.yieldBasis
+  })
+
+  await check('歸因覆蓋率把直接量測／模型／無法歸因分開', async () => {
+    const b = await json('/api/growth/attribution')
+    const c = b.coverage
+    assert(c.direct + c.modeled + c.unattributed === c.total, '三類相加必須等於總數')
+    assert(typeof c.says === 'string' && c.says.length > 0, 'coverage 必須有可讀的說明句')
+    return c.says
+  })
+
+  await check('實驗契約缺欄位時不得建立', async () => {
+    const res = await fetch(`${BASE}/api/growth/experiments`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ productId: 'prd_nope', hypothesis: '太短' }),
+    })
+    assert(res.status === 400 || res.status === 404, `expected rejection, got ${res.status}`)
+    return `${res.status} as expected`
+  })
+
   console.log(`\nSmoke test against ${BASE}\n${results.join('\n')}\n`)
   if (failures) {
     console.error(`${failures} check(s) failed`)

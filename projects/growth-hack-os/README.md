@@ -1,6 +1,6 @@
 # Growth Hack OS — Media House Growth OS
 
-> **Project status:** SPEC / architecture ready for implementation planning  
+> **Project status:** P0 閉環已實作（見 [`IMPLEMENTATION.md`](./IMPLEMENTATION.md)）；尚未在真實 Pilot 產品上跑過一輪 planning  
 > **Project type:** AI-native Customized Acquisition Infrastructure  
 > **Repository:** `firekou/Buildup_KOL`  
 > **Primary goal:** 把 Media House 從「AIGC 內容製作團隊」升級成「可量測、可自動化、可複製、可持續優化的 AI-native Customer Acquisition Infrastructure」。
@@ -160,6 +160,7 @@ GHOS 不預設一組沒有資料依據的魔法權重。第一階段先完整觀
 - [`DATA_MODEL.md`](./DATA_MODEL.md) — 核心資料模型、事件模型、Cost / Attribution / lineage
 - [`ROADMAP.md`](./ROADMAP.md) — 優先序、Phase / Sprint、dependency、exit criteria
 - [`IMPLEMENTATION_BACKLOG.md`](./IMPLEMENTATION_BACKLOG.md) — 可直接交給開發 Agent 拆工的 Epic / Ticket backlog
+- [`IMPLEMENTATION.md`](./IMPLEMENTATION.md) — **實作對照**：每個 ticket 落在哪個檔案、哪些部分刻意沒有做完、以及為什麼
 
 ---
 

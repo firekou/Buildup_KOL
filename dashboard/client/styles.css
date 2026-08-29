@@ -300,3 +300,112 @@ td.num, th.num { text-align: right; font-family: var(--mono); }
   .create-body { grid-template-columns: 1fr }
   .expert { position: static }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Growth Hack OS — projects/growth-hack-os/DASHBOARD_SPEC.md
+   ───────────────────────────────────────────────────────────── */
+
+.ghos { display: flex; flex-direction: column; gap: 14px }
+.ghos-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap }
+.ghos-head h2 { margin: 0 }
+
+.ghos-nav { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 8px }
+.ghos-navitem {
+  background: none; border: 1px solid transparent; color: var(--text-dim);
+  padding: 6px 11px; border-radius: 7px; font-size: 12.5px; white-space: nowrap;
+}
+.ghos-navitem:hover { color: var(--text); background: #1c2430 }
+.ghos-navitem.on { color: var(--text); background: #1c2430; border-color: var(--border-strong) }
+
+.ghos-body { display: flex; flex-direction: column; gap: 14px }
+
+/* metrics row — a dash is a first-class value here, so it needs a hint slot */
+.ghos-metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px }
+.ghos-metric { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; background: var(--bg-sunken); border: 1px solid var(--border); border-radius: 8px }
+.ghos-metric-label { font-size: 11.5px; color: var(--text-faint) }
+.ghos-metric-value { font-family: var(--mono); font-size: 19px; font-weight: 700 }
+.ghos-metric-value.good { color: var(--good) }
+.ghos-metric-value.warn { color: var(--warn) }
+.ghos-metric-value.bad { color: var(--bad) }
+.ghos-metric-hint { font-size: 11px; color: var(--text-faint); line-height: 1.45 }
+
+/* product board */
+.ghos-board th.ghos-stage-head { text-align: center; font-size: 11px; white-space: nowrap; writing-mode: horizontal-tb }
+.ghos-board td.ghos-cell { text-align: center; color: var(--text-faint); font-size: 14px; width: 44px }
+.ghos-board td.ghos-cell.reached { color: var(--accent) }
+.ghos-board td.ghos-cell.current { color: var(--good); font-size: 17px }
+.ghos-board tr { cursor: pointer }
+.ghos-board tr:hover td { background: #161b22 }
+.ghos-board tr.on td { background: #101c2c }
+
+/* panels & lists */
+.ghos-panel { background: var(--bg-sunken); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-top: 10px }
+.ghos-list { list-style: none; padding: 0; margin: 0 }
+.ghos-list li { padding: 6px 0; border-top: 1px solid var(--border) }
+.ghos-list li:first-child { border-top: 0 }
+.ghos-link { background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; font-size: 12.5px }
+.ghos-pre {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; margin: 8px 0; line-height: 1.65;
+}
+
+/* gates — the reason must be as visible as the verdict */
+.ghos-gates { display: flex; flex-direction: column; gap: 6px; margin-top: 8px }
+.ghos-gate { border-left: 3px solid var(--border-strong); padding: 6px 10px; background: var(--bg-sunken); border-radius: 0 6px 6px 0 }
+.ghos-gate p { margin: 3px 0 0; font-size: 12.5px; color: var(--text-dim); line-height: 1.55 }
+.ghos-gate.pass { border-left-color: var(--good) }
+.ghos-gate.warning { border-left-color: var(--warn) }
+.ghos-gate.blocking { border-left-color: var(--bad) }
+.ghos-gate.needs_human { border-left-color: var(--accent) }
+
+.ghos-reco { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap }
+.ghos-caveats { border: 1px solid #58471a; background: #251d09; border-radius: 8px; padding: 8px 12px; margin-top: 8px; font-size: 12.5px }
+.ghos-caveats strong { color: var(--warn) }
+.ghos-caveats ul { margin: 4px 0 0; padding-left: 18px; color: var(--text-dim) }
+.ghos-caveats li { margin-bottom: 3px; line-height: 1.55 }
+
+/* attribution — three colours, never merged into one "attributed" number */
+.ghos-attr { display: flex; flex-direction: column; gap: 8px }
+.ghos-attr-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-sunken) }
+.ghos-attr-bar .direct { background: var(--good) }
+.ghos-attr-bar .modeled { background: var(--warn) }
+.ghos-attr-bar .unknown { background: #4a5058 }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px }
+.dot.direct { background: var(--good) }
+.dot.modeled { background: var(--warn) }
+.dot.unknown { background: #4a5058 }
+
+/* funnel */
+.ghos-funnel { display: flex; flex-direction: column; gap: 12px }
+.ghos-funnel-step { display: flex; flex-direction: column; gap: 4px }
+
+/* opportunity / candidate cards */
+.ghos-oppo { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--bg-sunken) }
+.ghos-oppo + .ghos-oppo { margin-top: 8px }
+.ghos-candidate { border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; background: var(--bg) }
+.ghos-candidate.blocked { opacity: 0.68 }
+.ghos-avatar { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-strong) }
+
+.ghos-roles { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px }
+.ghos-role { border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; background: var(--bg-sunken) }
+.ghos-role.declared_unsupported { border-color: #6b2020 }
+.ghos-role.declared { border-color: #24532e }
+.ghos-role p { margin: 5px 0 0; line-height: 1.55 }
+
+/* lineage */
+.ghos-lineage { border-left: 2px solid var(--border-strong); padding: 6px 0 6px 12px; margin-bottom: 6px }
+.ghos-gen { font-family: var(--mono); font-size: 11px; color: var(--text-faint); background: var(--bg-sunken); padding: 1px 6px; border-radius: 4px }
+
+.ghos-timeline { list-style: none; padding: 0; margin: 0 }
+.ghos-timeline li { display: flex; gap: 10px; align-items: center; padding: 5px 0; border-top: 1px solid var(--border); font-size: 12.5px; flex-wrap: wrap }
+.ghos-timeline li:first-child { border-top: 0 }
+
+.ghos-armdetail { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 12px }
+.ghos-asset { margin-top: 8px }
+
+.ghos-ladder { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px }
+.ghos-tier { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--bg-sunken) }
+.ghos-tier p { margin: 6px 0 0; line-height: 1.55 }
+
+.ghos-chain { margin: 8px 0 0; padding-left: 20px; font-size: 13px }
+.ghos-chain li { margin-bottom: 5px; line-height: 1.6 }
