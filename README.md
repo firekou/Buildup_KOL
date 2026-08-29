@@ -98,8 +98,10 @@ Buildup_KOL/
 
 ## 評估儀表板（`dashboard/`）
 
-三個頁簽：**① KOL 屬性與人設 · ② 地區話題與作業流程 · ③ 導流素材前後評估**。
-計算全部依 [`docs/09`](docs/09-kol-topic-match-and-evaluation-methodology.md)，資料直接讀 `kols/`。
+七個頁簽：**① 引導式建立 KOL · ② KOL 屬性與人設 · ③ 話題探索 · ④ 內容企劃 ·
+⑤ 交叉查詢與作業流程 · ⑥ 前後評估 · ⑦ Growth OS**。
+①–⑥ 的計算全部依 [`docs/09`](docs/09-kol-topic-match-and-evaluation-methodology.md)，
+資料直接讀 `kols/`；⑦ 見下一節。
 
 ```bash
 npm install
@@ -113,6 +115,40 @@ npm run build && npm start   # 單一服務，http://localhost:8080
 
 部署與環境變數說明見 [`dashboard/README.md`](dashboard/README.md) 與 [`.env.example`](.env.example)。
 **Root Directory 要留在 repo 根目錄**，否則後端讀不到 `kols/`。
+
+---
+
+## Growth Hack OS（`projects/growth-hack-os/` + Dashboard ⑦）
+
+把 Media House 從「AIGC 內容製作」升級成可量測的獲客基礎建設：
+每一則內容都是某個假設的實驗 arm，帶著 `experiment_id` 一路走到產品端轉換與成本。
+
+```text
+產品特性分析 → 事件查找 → 議題 → 人設路由 → 實驗規劃 → AIGC 生成
+→ 檢查鏈 → 下發 → 成效 → 轉換與歸因 → 成本 → 判定 → Winner 變異 ↺
+```
+
+Dashboard 的「⑦ Growth OS」有 11 個分頁，第一頁 **00 產品狀態**
+就是這個系統的主看板：每個產品走到閉環的哪一格、卡在哪、下一步是什麼。
+
+```bash
+npm run seed:growth   # 建立一個示範產品並走完整條閉環
+npm run test:growth   # 23 個測試，含完整閉環 fixture
+```
+
+規格見 [`projects/growth-hack-os/`](projects/growth-hack-os/)，
+實作對照與**刻意沒有做的事**見
+[`IMPLEMENTATION.md`](projects/growth-hack-os/IMPLEMENTATION.md)。
+
+三件事值得先知道，因為它們決定了你會在畫面上看到什麼：
+
+- **沒有綜合分數。** 人設路由給的是證據與注意事項，evaluator 給的是雙比例
+  z 檢定加一個公開的最低採用門檻。在有校準資料前不製造精準感。
+- **影片／圖片 adapter 尚未接上，所有平台都是「人工發布後登錄」。**
+  內建的 `template` adapter 可離線跑完整條閉環（成本 0），外部生成的素材
+  用 API 登錄。假素材與假發布會同時污染審查、成本與判定，所以寧可留空。
+- **「—」不等於 0。** 平台沒回報的指標顯示為「—」，成本為 0 時 ROAS 顯示
+  「無定義」而不是無限大。
 
 ---
 

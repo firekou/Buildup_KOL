@@ -16,13 +16,25 @@ import evaluationsRouter from './routes/evaluations.js'
 import redlinesRouter from './routes/redlines.js'
 import guidedRouter from './routes/guided.js'
 import scanProbeRouter from './routes/scan-probe.js'
+import growthRouter from './routes/growth.js'
+import { bootstrapGrowthOs } from './growth/bootstrap.js'
+import { freshness as growthFreshness } from './growth/store.js'
+import * as growthPipeline from './growth/pipeline.js'
 import { startBootProbe } from './lib/scan/probe-on-boot.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
 
 app.get('/api/health', (req, res) => {
-  res.json({ ok: true, kols: listKols().length, apify: isApifyConfigured(), uptime: process.uptime() })
+  res.json({
+    ok: true,
+    kols: listKols().length,
+    apify: isApifyConfigured(),
+    uptime: process.uptime(),
+    // Growth OS is part of the same service, so its readiness belongs in the
+    // same healthcheck Railway polls.
+    growthOs: { products: growthPipeline.overview().products.total, persistent: Boolean(process.env.DATA_DIR) },
+  })
 })
 
 /** Everything the client needs to render labels and explain the model. */
@@ -44,6 +56,7 @@ app.get('/api/meta', (req, res) => {
     primaryTasks: PRIMARY_TASKS,
     dimensionNotes: noteIndex(),
     calibration: getConfig().calibration,
+    growthOs: { enabled: true, stages: growthPipeline.STAGES.length, store: growthFreshness() },
   })
 })
 
@@ -54,6 +67,7 @@ app.use('/api', evaluationsRouter)
 app.use('/api', redlinesRouter)
 app.use('/api', guidedRouter)
 app.use('/api', scanProbeRouter)
+app.use('/api', growthRouter)
 
 app.use('/api', (req, res) => res.status(404).json({ error: `no such endpoint: ${req.method} ${req.originalUrl}` }))
 
@@ -87,11 +101,13 @@ if (fs.existsSync(CLIENT_DIST)) {
 }
 
 getData() // fail fast at boot if the KOL data cannot be read
+const growthBoot = bootstrapGrowthOs()
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Buildup KOL Dashboard listening on :${PORT}`)
   console.log(`  KOLs loaded: ${listKols().length}`)
   console.log(`  Topic source: ${isApifyConfigured() ? 'Apify' : 'fixtures (APIFY_TOKEN not set)'}`)
   console.log(`  Data dir: ${store.stats().dataDir}${store.stats().persistent ? '' : ' (ephemeral — set DATA_DIR to a Railway volume)'}`)
+  console.log(`  Growth OS: ${growthBoot.policyProfiles} policy profiles, ${growthBoot.promptTemplates} prompt templates, ${growthBoot.personas} personas synced`)
 
   // Batch 0 only, and only when SCAN_PROBE_ON_BOOT is set. Started here rather
   // than before listen() so a multi-minute actor run cannot delay the

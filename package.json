@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "KOL 屬性評估、地區話題交叉查詢與導流素材前後評估儀表板",
+  "description": "KOL 屬性評估、地區話題交叉查詢、導流素材前後評估，以及 Growth Hack OS 獲客實驗閉環儀表板",
   "engines": {
     "node": ">=20"
   },
@@ -15,7 +15,10 @@
     "start": "node dashboard/server/index.js",
     "smoke": "node dashboard/server/smoke.js",
     "test:redlines": "node .claude/skills/kol-redline-check/test.mjs",
-    "test:probe": "node dashboard/server/lib/scan/probe-window.test.mjs && node dashboard/server/lib/scan/probe-actor.test.mjs"
+    "test:probe": "node dashboard/server/lib/scan/probe-window.test.mjs && node dashboard/server/lib/scan/probe-actor.test.mjs",
+    "test:growth": "node dashboard/server/growth/growth.test.mjs",
+    "test": "npm run test:redlines && npm run test:probe && npm run test:growth",
+    "seed:growth": "node dashboard/server/growth/seed.mjs"
   },
   "dependencies": {
     "express": "^4.21.2",

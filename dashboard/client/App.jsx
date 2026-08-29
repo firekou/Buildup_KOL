@@ -7,6 +7,7 @@ import ExploreTab from './tabs/ExploreTab.jsx'
 import PlansTab from './tabs/PlansTab.jsx'
 import TopicsTab from './tabs/TopicsTab.jsx'
 import EvaluationTab from './tabs/EvaluationTab.jsx'
+import GrowthTab from './growth/GrowthTab.jsx'
 
 const TABS = [
   { key: 'create', label: '① 引導式建立 KOL' },
@@ -15,6 +16,7 @@ const TABS = [
   { key: 'plans', label: '④ 內容企劃' },
   { key: 'topics', label: '⑤ 交叉查詢與作業流程' },
   { key: 'evaluation', label: '⑥ 前後評估' },
+  { key: 'growth', label: '⑦ Growth OS' },
 ]
 
 export default function App() {
@@ -90,6 +92,7 @@ export default function App() {
           />
         )}
         {tab === 'evaluation' && <EvaluationTab kols={kols} refreshToken={evalRefresh} />}
+        {tab === 'growth' && <GrowthTab />}
       </main>
     </div>
   )
