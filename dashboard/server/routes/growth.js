@@ -193,7 +193,14 @@ r.get('/growth/experiments/:id', h((req, res) => {
 
 r.post('/growth/experiments/:id/arms', h((req, res) => res.status(201).json(experiments.addArm(req.params.id, req.body, actor(req)))))
 r.post('/growth/experiments/:id/generate', h(async (req, res) =>
-  res.json(await generation.generateExperiment(req.params.id, { adapterId: req.body?.adapterId ?? 'template', taskType: req.body?.taskType ?? 'caption', actor: actor(req) }))))
+  res.json(await generation.generateExperiment(req.params.id, {
+    adapterId: req.body?.adapterId ?? 'template',
+    taskType: req.body?.taskType ?? 'caption',
+    // Which model to use is an operator choice, not a deploy-time constant —
+    // gateways differ in what a given key is entitled to call.
+    model: req.body?.model ?? null,
+    actor: actor(req),
+  }))))
 r.post('/growth/experiments/:id/evaluate', h((req, res) => res.json(evaluator.evaluate(req.params.id, { actor: actor(req) }))))
 r.get('/growth/experiments/:id/completeness', h((req, res) => res.json(completeness.assess(experiments.requireExperiment(req.params.id)))))
 r.patch('/growth/experiments/:id/status', h((req, res) =>
@@ -204,6 +211,7 @@ r.post('/growth/experiments/:id/clone', h((req, res) =>
 /* ------------------------------------------------------- generation/AIGC */
 
 r.get('/growth/adapters', h((req, res) => res.json({ generation: generation.listAdapters(), publish: publish.listPublishAdapters() })))
+r.get('/growth/adapters/aitokenking/models', h(async (req, res) => res.json(await generation.listAitokenkingModels())))
 r.get('/growth/prompt-templates', h((req, res) => res.json({ templates: generation.listTemplates() })))
 r.post('/growth/arms/:id/brief', h((req, res) => {
   const { concept, brief } = generation.buildBrief(req.params.id, { actor: actor(req), beats: req.body?.beats ?? null })

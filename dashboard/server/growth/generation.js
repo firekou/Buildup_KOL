@@ -27,6 +27,7 @@ import { estimateCost, tierForFormat } from './cost-model.js'
  */
 
 export { listAdapters }
+export { listAitokenkingModels } from './adapters/generation.js'
 
 /* ------------------------------------------------------- prompt templates */
 

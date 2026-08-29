@@ -181,6 +181,37 @@ for (const [id, spec] of Object.entries({
   })
 }
 
+/**
+ * Ask the gateway which models this key may actually call.
+ *
+ * Worth an endpoint rather than a guess: the first real call failed with an
+ * upstream "not authorized to perform bedrock:InvokeModel" for the default
+ * model, and there is no way to tell an unavailable model from a broken
+ * adapter without the list.
+ */
+export async function listAitokenkingModels() {
+  const key = process.env.AITOKENKING_API_KEY
+  if (!key) return { ok: false, error: 'not_configured', errorMessage: 'AITOKENKING_API_KEY 未設定' }
+  const base = process.env.AITOKENKING_BASE_URL || 'https://api.aitokenking.com.tw/api/v1'
+  try {
+    const res = await fetch(`${base}/models`, {
+      headers: { authorization: `Bearer ${key}`, 'X-AItokenKing-Api-Key': key },
+    })
+    const raw = await res.text()
+    let body = {}
+    try {
+      body = JSON.parse(raw)
+    } catch {
+      return { ok: false, error: `http_${res.status}`, errorMessage: raw.slice(0, 400) }
+    }
+    if (!res.ok) return { ok: false, error: `http_${res.status}`, errorMessage: body?.message ?? raw.slice(0, 400) }
+    const rows = body?.data ?? body?.models ?? body
+    return { ok: true, models: Array.isArray(rows) ? rows : [], raw: Array.isArray(rows) ? undefined : body }
+  } catch (err) {
+    return { ok: false, error: 'network', errorMessage: String(err?.message ?? err).slice(0, 300) }
+  }
+}
+
 export const listAdapters = () =>
   Object.values(ADAPTERS).map((a) => ({
     id: a.id,
