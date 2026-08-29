@@ -185,6 +185,36 @@ await test('closed loop: 產品 → 題目 → 實驗 → 生成 → 審查 → 
   fixture = { product, experiment, armA, armB, account, personaId, pubs }
 })
 
+await test('產品特性分析: 受眾所屬產業不會被當成產品的 claim', async () => {
+  const { analyseProduct } = await import('./product-analysis.js')
+  const profile = { key: 'standard-consumer', version: '1.0.0', autoApproveAllowed: true, minAge: 13, disclosure: {} }
+
+  // Who uses it is not what it claims. An API gateway whose users include
+  // doctors, lawyers and quants makes no medical, legal or financial claim.
+  const gateway = analyseProduct({
+    name: 'API 閘道',
+    businessModel: 'subscription',
+    valueProposition: '一站式 API，跨模型使用並統一計費',
+    differentiators: ['統一 Token 計費'],
+    knownObjections: ['多一層中介會更貴'],
+    targetAudience: ['金融交易演算法分析師', '醫療診斷輔助系統使用者', '法律與合規文件審閱人員'],
+  }, { conversions: [], profile })
+  assert.deepEqual(gateway.claimSurface.domains.map((d) => d.domain), [],
+    '受眾清單裡的產業名稱不得產生 claim 領域——否則每一則素材都會被強制人工審查')
+  assert.equal(gateway.claimSurface.requiresHumanReview, false)
+
+  // A product that genuinely operates in a regulated domain is still caught.
+  const casino = analyseProduct({
+    name: '博弈平台',
+    businessModel: 'content_platform',
+    valueProposition: '把每一局博弈變成可回放的內容',
+    targetAudience: [],
+  }, { conversions: [], profile })
+  assert.deepEqual(casino.claimSurface.domains.map((d) => d.domain), ['gambling'],
+    '真的做博弈的產品仍必須被標出來')
+  assert.equal(casino.claimSurface.requiresHumanReview, true)
+})
+
 await test('closed loop: 從 Winner 建立 child experiment 且 lineage 不遺失', () => {
   assert.ok(fixture, '前一個測試未通過，無法繼續')
   const { childExperiment, arms } = evolution.cloneWinner({

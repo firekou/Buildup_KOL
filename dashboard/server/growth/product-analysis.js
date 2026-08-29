@@ -54,9 +54,38 @@ const textOf = (product) =>
     .join(' ')
     .toLowerCase()
 
+/**
+ * The text the product uses to *assert things about itself* — which is what a
+ * claim domain is derived from.
+ *
+ * `targetAudience` is deliberately excluded. Who uses a product is not what a
+ * product claims: an API gateway whose users include doctors, lawyers and
+ * quantitative analysts makes no medical, legal or financial claim by saying
+ * so. Including the audience list flagged exactly that product as health +
+ * finance + legal, which forced every asset it would ever produce into
+ * mandatory human review (policy.ALWAYS_HUMAN_REVIEW) for no reason — an
+ * over-inclusive rule that fires on everything stops being a signal.
+ *
+ * `knownObjections` stays in: an objection is about the product's own domain
+ * ("線上博弈都作弊" belongs to a gambling product), so it is still a statement
+ * about what this product is, not about who buys it.
+ */
+const claimTextOf = (product) =>
+  [
+    product.name,
+    product.description,
+    product.valueProposition,
+    ...(product.differentiators ?? []),
+    ...(product.proofPoints ?? []),
+    ...(product.knownObjections ?? []),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+
 /** Claim domains this product's own copy already walks into. */
 function detectClaimDomains(product) {
-  const haystack = textOf(product)
+  const haystack = claimTextOf(product)
   const hits = []
   for (const domain of CLAIM_DOMAINS) {
     const matched = (CLAIM_MARKERS[domain] ?? []).filter((m) => haystack.includes(m.toLowerCase()))
