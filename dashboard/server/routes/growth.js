@@ -100,7 +100,7 @@ r.post('/growth/campaigns', h((req, res) => res.status(201).json(products.create
 /* --------------------------------------------------------------- signals */
 
 r.get('/growth/signals', h((req, res) =>
-  res.json({ signals: signals.listSignals({ sourceType: req.query.sourceType, region: req.query.region, status: req.query.status, limit: Number(req.query.limit) || 100 }) })))
+  res.json({ signals: signals.listSignals({ sourceType: req.query.sourceType, region: req.query.region, status: req.query.status, limit: Number(req.query.limit) || 100, productId: req.query.productId ?? null }) })))
 r.post('/growth/signals', h((req, res) => res.status(201).json(signals.createManualSignal(req.body))))
 r.post('/growth/signals/scan', h(async (req, res) => {
   const { region = 'TW', sources = ['news', 'social_trend'], limit = 20, query = null } = req.body ?? {}

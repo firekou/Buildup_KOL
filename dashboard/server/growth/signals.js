@@ -4,6 +4,8 @@ import { emit, dedupeKey } from './events.js'
 import { validator, badRequest } from './validate.js'
 import { fetchNewsSignals, fetchSocialSignals, normaliseManualSignal, SOURCE_TYPES } from './adapters/signal-sources.js'
 import { runJob } from './jobs.js'
+import { relevanceOf } from './relevance.js'
+import { getProduct } from './products.js'
 
 /**
  * Signal intake — 事件查找與尋找最新事件. GHOS-021 / 080 / 081 / 082.
@@ -113,8 +115,13 @@ export function createManualSignal(input) {
   return ingest(normaliseManualSignal(input))
 }
 
-export function listSignals({ sourceType = null, region = null, status = null, limit = 100, since = null } = {}) {
+export function listSignals({ sourceType = null, region = null, status = null, limit = 100, since = null, productId = null } = {}) {
   const now = Date.now()
+  // With a product in scope, every row says up front whether this product can
+  // actually carry it. Scrolling 40 events to discover none of them connect is
+  // the operator doing the machine's job.
+  const product = productId ? getProduct(productId) : null
+
   return db
     .list('signals', { sourceType, region, status })
     .filter((s) => (since ? String(s.ingestedAt) >= since : true))
@@ -124,7 +131,14 @@ export function listSignals({ sourceType = null, region = null, status = null, l
       freshness: freshnessOf(s.occurredAt ?? s.ingestedAt, now),
       corroboration: (s.evidenceRefs ?? []).length,
       opportunityCount: db.count('opportunities', { signalId: s.id }),
+      relevance: product ? relevanceOf(s, product) : null,
     }))
+    .sort((a, b) => {
+      if (!product) return 0
+      // Connectable events first; among those, freshest first.
+      if (a.relevance.connects !== b.relevance.connects) return a.relevance.connects ? -1 : 1
+      return (a.freshness.ageHours ?? 1e9) - (b.freshness.ageHours ?? 1e9)
+    })
 }
 
 export const getSignal = (id) => {

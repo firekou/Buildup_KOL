@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { growth } from './api.js'
 import { Loading, Alert, Badge } from '../components/ui.jsx'
+import RunFlow from './sections/RunFlow.jsx'
 import CommandCenter from './sections/CommandCenter.jsx'
 import ProductBoard from './sections/ProductBoard.jsx'
 import OpportunityRadar from './sections/OpportunityRadar.jsx'
@@ -23,6 +24,9 @@ import SystemOps from './sections/SystemOps.jsx'
  */
 
 const SECTIONS = [
+  // The first entry is the operator's path; everything after it is the
+  // instrument panel. Default landing is 開始一輪, not the dashboard.
+  { key: 'run', label: '▶ 開始一輪', hint: '找事件 → 確認切入點 → 生素材 → 檢查 → 發布' },
   { key: 'products', label: '00 產品狀態', hint: '每個產品走到 Growth OS 的哪一格' },
   { key: 'command', label: '01 指揮中心', hint: '整體狀態與待處理事項' },
   { key: 'radar', label: '02 議題雷達', hint: '事件、訊號與可測題目' },
@@ -40,7 +44,7 @@ export default function GrowthTab() {
   const [meta, setMeta] = useState(null)
   const [overview, setOverview] = useState(null)
   const [error, setError] = useState(null)
-  const [section, setSection] = useState('products')
+  const [section, setSection] = useState('run')
   const [productId, setProductId] = useState('')
   const [refreshToken, setRefreshToken] = useState(0)
 
@@ -59,7 +63,9 @@ export default function GrowthTab() {
   if (!meta || !overview) return <Loading>載入 Growth OS…</Loading>
 
   const products = overview.board ?? []
-  const scoped = productId || null
+  // With exactly one product there is nothing to choose; making the operator
+  // pick it before anything works is friction for its own sake.
+  const scoped = productId || (products.length === 1 ? products[0].productId : null)
   const shared = { meta, overview, productId: scoped, refresh, products }
 
   return (
@@ -98,6 +104,7 @@ export default function GrowthTab() {
       </nav>
 
       <div className="ghos-body">
+        {section === 'run' && <RunFlow {...shared} onGoto={setSection} />}
         {section === 'products' && <ProductBoard {...shared} />}
         {section === 'command' && <CommandCenter {...shared} onGoto={setSection} />}
         {section === 'radar' && <OpportunityRadar {...shared} />}

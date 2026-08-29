@@ -238,9 +238,10 @@ await test('closed loop: 從 Winner 建立 child experiment 且 lineage 不遺�
 await test('opportunity: 沒有 signal 也能建題目（FR-P0-03 人工建立）', () => {
   const draft = opportunities.draftFromSignal(null, fixture.product.id)
   assert.equal(draft.signalId, null)
-  assert.ok(draft.suggestedAnchors.length > 0, '手動草稿應列出產品分析算出的所有切角')
+  assert.ok(draft.allAnchors.length > 0, '手動草稿應列出產品分析算出的所有切角')
   assert.equal(draft.freshness.key, 'unknown', '沒有事件就不得宣稱時效性')
-  assert.ok(draft.prompts.whyNow.includes('行銷排程'), 'whyNow 提示要擋掉「我們現在想推」這種答案')
+  assert.ok(draft.whyNow.includes('行銷排程'), '沒有事件時，whyNow 草稿要擋掉「我們現在想推」這種答案')
+  assert.equal(draft.needsEdit.whyNow, true, '沒有事件的 whyNow 必須標記成需要人工改寫')
 
   const created = opportunities.createOpportunity({
     productId: fixture.product.id,
@@ -252,6 +253,38 @@ await test('opportunity: 沒有 signal 也能建題目（FR-P0-03 人工建立�
   }, 'test')
   assert.equal(created.signalId, null)
   assert.equal(created.status, 'new')
+})
+
+await test('draft: 有事件時，三欄由系統草擬且指出用哪一條產品事實去接', () => {
+  const { signal } = signals.createManualSignal({
+    title: 'DeepSeek 宣布 API 定價全面調漲，開發者social上炸鍋',
+    summary: '多家媒體報導，開發者社群開始重算成本',
+    sourceType: 'news',
+  })
+  const draft = opportunities.draftFromSignal(signal.id, fixture.product.id)
+
+  // The three contract fields must arrive written, not blank.
+  for (const f of ['whyNow', 'tension', 'productRelevance']) {
+    assert.ok(draft[f] && draft[f].length > 20, `${f} 必須是草擬好的句子，不是空白欄位`)
+  }
+  assert.ok(draft.hooks.length >= 1, '應提供可直接當 arm 的開場草稿')
+  assert.ok(draft.caveat.includes('草擬'), '必須明說這是草稿而非結論')
+  // And it must never claim to have settled the argument for the operator.
+  assert.ok(draft.caveat.includes('對立'), 'caveat 要點名「對立」這一欄仍需人工下判斷')
+})
+
+await test('relevance: 詞邊界比對，不得用子字串誤判', async () => {
+  const { relevanceOf } = await import('./relevance.js')
+  const product = products.requireProduct(fixture.product.id)
+
+  // "ai" must not match inside "taiwan" — the false positive that reported
+  // Taipei travel clips as relevant to an AI API product.
+  const irrelevant = relevanceOf({ title: 'TAIPEI #taiwan travel #jiufen', summary: '' }, product)
+  assert.equal(irrelevant.connects, false, '拉丁字必須以詞邊界比對，ai 不得命中 taiwan')
+
+  const relevant = relevanceOf({ title: '線上平台的紀錄到底能不能查證，玩家吵翻', summary: '' }, product)
+  assert.equal(typeof relevant.verdict, 'string')
+  assert.ok(relevant.verdict.length > 10, 'verdict 必須是一句人看得懂的話')
 })
 
 await test('router: 未指派平台角色不阻擋實驗規劃，但會列為注意事項', () => {

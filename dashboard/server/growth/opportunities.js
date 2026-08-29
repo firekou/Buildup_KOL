@@ -6,6 +6,7 @@ import * as audit from './audit.js'
 import { getSignal, freshnessOf } from './signals.js'
 import { requireProduct } from './products.js'
 import { CLAIM_DOMAINS } from './policy.js'
+import { relevanceOf, draftFields } from './relevance.js'
 
 /**
  * Opportunity & Controversy Engine — FR-P0-03, GHOS-020.
@@ -108,90 +109,50 @@ export function createOpportunity(input, actor = 'system') {
  * tension is exactly the fabricated precision the spec forbids.
  */
 export function draftFromSignal(signalId, productId) {
-  // FR-P0-03 requires manual creation to work in v1. A product-only draft is
-  // that path: for a B2B or developer product, the regional trend scan mostly
-  // returns consumer hashtags with nothing to do with it, and the operator
-  // already knows the argument they want to test. The draft then hangs off the
-  // product analysis instead of a signal.
-  if (!signalId) return draftFromProduct(productId)
-  const signal = getSignal(signalId)
-  if (!signal) throw notFound(`Signal ${signalId}`)
   const product = requireProduct(productId)
+  const signal = signalId ? getSignal(signalId) : null
+  if (signalId && !signal) throw notFound(`Signal ${signalId}`)
+
+  const freshness = signal ? freshnessOf(signal.occurredAt ?? signal.ingestedAt) : { key: 'unknown', label: '無對應事件', hint: '人工建立的題目沒有事件時間戳，不得宣稱時效性。' }
+  const relevance = signal
+    ? relevanceOf(signal, product)
+    : { connects: false, best: null, matches: [], verdict: '人工建立的題目：由你指定要用產品的哪一個切角。', familyLabel: null }
+
+  const fields = draftFields({ signal, product, relevance, freshness })
   const analysis = product.analysis ?? null
-
-  const haystack = `${signal.title} ${signal.summary}`.toLowerCase()
-
-  // Angle families come from the product analysis, so the suggestion always
-  // points back at a declared product fact rather than a generic template.
-  const angleMatches = (analysis?.angleFamilies ?? [])
-    .map((a) => {
-      const tokens = String(a.seed).toLowerCase().split(/[\s,、，。;；/]+/).filter((t) => t.length >= 2)
-      const hits = tokens.filter((t) => haystack.includes(t))
-      return { ...a, matchedTokens: hits }
-    })
-    .filter((a) => a.matchedTokens.length > 0)
 
   const suggestedRisk = []
-  if (/死|亡|災|罹難|意外|失蹤/.test(signal.title)) suggestedRisk.push('tragedy_adjacent')
-  if (/選舉|政黨|候選人|議員|市長/.test(signal.title)) suggestedRisk.push('regulated_domain')
+  if (signal && /死|亡|災|罹難|意外|失蹤|槍擊|地震/.test(signal.title)) suggestedRisk.push('tragedy_adjacent')
+  if (signal && /選舉|政黨|候選人|議員|市長|總統/.test(signal.title)) suggestedRisk.push('regulated_domain')
   if ((analysis?.claimSurface?.domains ?? []).length) suggestedRisk.push('regulated_domain')
-  if (signal.sourceType === 'news') suggestedRisk.push('fast_moving_story')
-
-  const freshness = freshnessOf(signal.occurredAt ?? signal.ingestedAt)
+  if (signal?.sourceType === 'news') suggestedRisk.push('fast_moving_story')
 
   return {
     productId,
-    signalId,
-    topic: signal.title,
-    // Only the part that is actually derivable is filled in.
-    whyNowDraft: `${freshness.label}：${freshness.hint}${signal.evidenceRefs?.length > 1 ? `（已有 ${signal.evidenceRefs.length} 個來源提及）` : ''}`,
-    prompts: {
-      whyNow: '除了「它剛發生」以外，為什麼是現在？受眾此刻在爭論什麼、擔心什麼、想確認什麼？',
-      tension: '這題的兩邊各是誰、各主張什麼？沒有真正的對立就沒有討論入口。',
-      productRelevance: '產品憑什麼接住這題？指出是價值主張、差異點、已知反對意見還是受眾情境。',
-    },
-    suggestedAnchors: angleMatches.map((a) => ({ anchor: anchorFor(a.from), family: a.family, seed: a.seed, matchedTokens: a.matchedTokens, hint: a.hint })),
+    signalId: signal?.id ?? null,
+    signalTitle: signal?.title ?? null,
+    signalUrl: signal?.url ?? null,
+
+    // 系統草擬的三欄。操作者是在改字，不是在填空白。
+    topic: fields.topic,
+    whyNow: fields.whyNow,
+    tension: fields.tension,
+    productRelevance: fields.productRelevance,
+    relevanceAnchor: fields.relevanceAnchor,
+    hooks: fields.hooks,
+    suggestedProductRole: fields.suggestedProductRole,
+    needsEdit: fields.needsEdit,
+
+    relevance,
+    freshness,
     suggestedRiskFlags: [...new Set(suggestedRisk)],
     suggestedClaimDomains: (analysis?.claimSurface?.domains ?? []).map((d) => d.domain),
-    evidence: signal.evidenceRefs ?? [],
-    freshness,
-    // Said plainly so nobody mistakes the draft for an assessment.
-    caveat: '這是草稿，不是評分。whyNow / tension / productRelevance 三欄必須由人填寫後才能建立 Opportunity。',
-  }
-}
+    evidence: signal?.evidenceRefs ?? [],
 
-/**
- * A draft with no signal behind it. Every angle family the product analysis
- * produced becomes a candidate anchor, because without signal text there is
- * nothing to match against — and picking a subset would be an unfounded
- * ranking, which §4 of the Dashboard spec forbids.
- */
-export function draftFromProduct(productId) {
-  const product = requireProduct(productId)
-  const analysis = product.analysis ?? null
+    // 全部切角仍然提供，但不再是操作者唯一的依靠。
+    allAnchors: (analysis?.angleFamilies ?? []).map((a) => ({ anchor: anchorFor(a.from), family: a.family, seed: a.seed, hint: a.hint })),
 
-  return {
-    productId,
-    signalId: null,
-    topic: '',
-    whyNowDraft: '這是人工建立的題目，沒有對應的外部事件。「為什麼是現在」要由你說明——如果答案只是「我們現在想推」，那它就不具時效性，不要在內容裡宣稱它有。',
-    prompts: {
-      whyNow: '受眾此刻在爭論什麼、擔心什麼、想確認什麼？沒有外部事件時，這一欄要說的是受眾當下的處境，而不是我們的行銷排程。',
-      tension: '這題的兩邊各是誰、各主張什麼？沒有真正的對立就沒有討論入口。',
-      productRelevance: '產品憑什麼接住這題？指出是價值主張、差異點、已知反對意見還是受眾情境。',
-    },
-    suggestedAnchors: (analysis?.angleFamilies ?? []).map((a) => ({
-      anchor: anchorFor(a.from),
-      family: a.family,
-      seed: a.seed,
-      matchedTokens: [],
-      hint: a.hint,
-    })),
-    suggestedRiskFlags: (analysis?.claimSurface?.domains ?? []).length ? ['regulated_domain'] : [],
-    suggestedClaimDomains: (analysis?.claimSurface?.domains ?? []).map((d) => d.domain),
-    evidence: [],
-    freshness: { key: 'unknown', label: '無對應事件', hint: '人工建立的題目沒有事件時間戳，不得宣稱時效性。' },
-    caveat: '這是草稿，不是評分。whyNow / tension / productRelevance 三欄必須由人填寫後才能建立 Opportunity。',
+    caveat: '以下三欄是系統依你登記的產品事實草擬的，不是評分也不是結論。送出前請逐欄確認——特別是「對立」，機器只能給形狀，論點要你自己下。',
   }
 }
 
