@@ -279,7 +279,9 @@ function StepAngle({ signal, productId, meta, onBack, onDone }) {
 function StepMake({ opportunity, meta, onDone }) {
   const [routed, setRouted] = useState(null)
   const [picked, setPicked] = useState(null)
-  const [hooks, setHooks] = useState(opportunity.hooks ?? ['', ''])
+  const [hooks, setHooks] = useState(['', ''])
+  const [suggested, setSuggested] = useState([])
+  const [hookState, setHookState] = useState('idle')
   const [platform, setPlatform] = useState('threads')
   const [narrative, setNarrative] = useState(meta.defaultNarrative ?? 'framework')
   const [cta, setCta] = useState('到站上用同一組 key 直接比一次')
@@ -291,6 +293,30 @@ function StepMake({ opportunity, meta, onDone }) {
       setPicked(r.candidates.find((c) => c.eligible)?.personaId ?? null)
     })
   }, [opportunity.id])
+
+  /**
+   * Hooks are written for this specific event, by the model, in the picked
+   * persona's voice — so they are re-written whenever the persona or the
+   * narrative shape changes. Template-filled hooks made every post open with
+   * the same sentence regardless of the news.
+   */
+  const writeHooks = async () => {
+    if (!picked) return
+    setHookState('writing')
+    try {
+      const r = await growth.draftHooks(opportunity.id, { personaId: picked, narrative, count: 3 })
+      if (r.ok && r.hooks.length >= 2) {
+        setSuggested(r.hooks)
+        setHooks([r.hooks[0], r.hooks[1]])
+        setHookState('ready')
+      } else {
+        setHookState('failed')
+      }
+    } catch {
+      setHookState('failed')
+    }
+  }
+  useEffect(() => { if (picked) writeHooks() }, [picked, narrative])
 
   if (!routed) return <Loading>正在挑適合這題的人設…</Loading>
   const eligible = routed.candidates.filter((c) => c.eligible)
@@ -327,8 +353,32 @@ function StepMake({ opportunity, meta, onDone }) {
             </Field>
             <Field label="CTA（兩支相同）"><input value={cta} onChange={(e) => setCta(e.target.value)} /></Field>
           </div>
-          <Field label="開場 A" hint="系統依你的反對意見草擬"><input value={hooks[0] ?? ''} onChange={(e) => setHooks([e.target.value, hooks[1]])} /></Field>
-          <Field label="開場 B" hint="系統依你的差異點草擬"><input value={hooks[1] ?? ''} onChange={(e) => setHooks([hooks[0], e.target.value])} /></Field>
+          <div className="row" style={{ marginBottom: 6 }}>
+            <strong className="small">開場句</strong>
+            <span className="muted small">
+              {hookState === 'writing' ? '正在針對這則新聞寫…'
+                : hookState === 'failed' ? '模型沒回傳可用的開場句，請自己填或換一個人設'
+                : '由模型針對這一則新聞、用這個人設的語氣寫的。兩支只差這一句。'}
+            </span>
+            <button style={{ marginLeft: 'auto' }} disabled={hookState === 'writing' || !picked} onClick={writeHooks}>
+              {hookState === 'writing' ? '…' : '換幾個'}
+            </button>
+          </div>
+          {suggested.length > 0 && (
+            <ul className="ghos-list small" style={{ marginBottom: 8 }}>
+              {suggested.map((h, i) => (
+                <li key={i}>
+                  <span>{h}</span>
+                  <span className="row" style={{ gap: 6, marginTop: 3 }}>
+                    <button className="ghos-link" onClick={() => setHooks([h, hooks[1]])}>設為 A</button>
+                    <button className="ghos-link" onClick={() => setHooks([hooks[0], h])}>設為 B</button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Field label="開場 A"><input value={hooks[0] ?? ''} onChange={(e) => setHooks([e.target.value, hooks[1]])} /></Field>
+          <Field label="開場 B"><input value={hooks[1] ?? ''} onChange={(e) => setHooks([hooks[0], e.target.value])} /></Field>
 
           <ErrorNote error={error} />
           <button className="primary" disabled={busy || !picked || !hooks[0] || !hooks[1]} onClick={() => run(async () => {

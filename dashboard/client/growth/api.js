@@ -46,6 +46,8 @@ export const growth = {
   draftOpportunity: (signalId, productId) => request(`/opportunities/draft${qs({ signalId, productId })}`),
   setOpportunityStatus: (id, status, reason) => patch(`/opportunities/${id}/status`, { status, reason }),
   route: (id) => request(`/opportunities/${id}/route`),
+  // 開場句由模型針對「這一則新聞」寫，不是套模板。
+  draftHooks: (id, payload) => post(`/opportunities/${id}/hooks`, payload),
 
   // 人設
   personas: (productId) => request(`/personas${qs({ productId })}`),

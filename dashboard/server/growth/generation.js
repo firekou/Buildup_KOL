@@ -70,7 +70,7 @@ const BUILTIN_TEMPLATES = [
       '- 不得對結果做保證。',
       '- 不得捏造來源、數據或見證。',
       '- 產品必須以「{{arm.productRole}}」的方式出現，不是最後硬貼的廣告。',
-      '- 依上面的「敘事結構」走。若是觀念框架型，讀者讀完要覺得「我學到一個以後也用得上的判斷方式」，而不是「他在說服我」——產品只是其中一個角度，不是結論。',
+      '- 依上面的「敘事結構」走。若是觀念框架型：先幫讀者整理這則新聞裡值得知道的東西，再給判準；產品只在最後 CTA 那一次出現，當作讀者自己驗算的工具，中途不要推銷。讀者讀完要覺得「我學到一個以後也用得上的判斷方式」，而不是「他在說服我」。',
       '',
       '依序寫出以下段落：',
       '{{beats}}',
@@ -291,6 +291,84 @@ export async function generate(armId, { adapterId = 'template', taskType = 'capt
   if (experiment.status === 'PLANNED') setExperimentStatus(experiment.id, 'GENERATED', { actor, reason: '至少一個 arm 已產出素材' })
 
   return { ok: true, asset, modelRun, cost: costRow, concept }
+}
+
+/* ------------------------------------------------------------- hooks */
+
+/**
+ * 針對「這一則新聞」寫開場句。
+ *
+ * The previous implementation filled hooks from string templates over the
+ * product's first objection and first differentiator, so every piece opened
+ * with the same sentence no matter what the event was — twenty posts, twenty
+ * identical first lines, which reads as a broken bot and gets treated as
+ * duplicate content. A hook has to come out of the event; that is what makes
+ * it a hook rather than a slogan.
+ *
+ * Deliberately its own model call rather than part of the body generation:
+ * hooks are the tested dimension, so the operator needs several to choose
+ * between *before* any body is written, and each arm's body is then generated
+ * against the hook that was chosen.
+ */
+export async function draftHooks({ opportunityId, personaId, narrative = null, count = 3, adapterId = 'aitokenking', model = null, actor = 'system' }) {
+  const opportunity = db.get('opportunities', opportunityId)
+  if (!opportunity) throw notFound(`Opportunity ${opportunityId}`)
+  const product = requireProduct(opportunity.productId)
+  const persona = getPersona(personaId, product.id)
+  if (!persona) throw notFound(`Persona ${personaId}`)
+  const signal = opportunity.signalId ? db.get('signals', opportunity.signalId) : null
+
+  const shape = NARRATIVE_SHAPES[narrative ?? DEFAULT_NARRATIVE] ?? NARRATIVE_SHAPES[DEFAULT_NARRATIVE]
+  const adapter = getAdapter(adapterId)
+  if (!adapter) throw badRequest(`未知的 generation adapter "${adapterId}"`)
+
+  const prompt = [
+    `為一則 ${persona.name} 的社群貼文，想 ${count} 個不同的開場句。`,
+    '',
+    '【這則新聞】',
+    `標題：${opportunity.topic}`,
+    signal?.summary ? `摘要：${signal.summary.slice(0, 400)}` : '',
+    '',
+    '【這則新聞跟產品的關聯】',
+    opportunity.productRelevance,
+    '',
+    '【這題的對立】',
+    opportunity.tension,
+    '',
+    '【人設】',
+    `${persona.name}，可信度來自${persona.source.credibilityMode === 'database' ? '整理可查證的公開資料，不是親身經歷' : persona.source.credibilityMode === 'hybrid' ? '可查證資料與部分個人觀察' : '親身經歷'}。`,
+    '',
+    '【這一輪的敘事結構】',
+    `${shape.label}：${shape.says}`,
+    '',
+    '【開場句的要求】',
+    `- 必須是「因為看到這一則新聞」才寫得出來的句子。換一則新聞就不成立。`,
+    `- ${count} 個要是${count} 個真的不同的進場角度，不是同一句話換句型。`,
+    '- 每一句都要讓人想繼續讀下去，但不要用「你知道嗎」「其實」這種空轉的起手式。',
+    '- 不得捏造任何數據、來源、研究或第三方報告。新聞裡有的數字可以引用。',
+    '- 不得宣稱親身經歷任何這個帳號無法背書的事。',
+    '- 不得用「最好」「保證」「一定」這類絕對化用語。',
+    '- 每句 50 字以內，繁體中文。',
+    '',
+    `只輸出 ${count} 行，每行一句，行首用「1. 」「2. 」編號。不要任何說明。`,
+  ].filter((l) => l !== '').join('\n')
+
+  const result = await adapter.generate({ prompt, model: model ?? undefined })
+  if (!result.ok) return { ok: false, error: result.error, errorMessage: result.errorMessage, hooks: [] }
+
+  const hooks = String(result.output.text ?? '')
+    .split('\n')
+    .map((l) => l.replace(/^\s*\d+[.、)]\s*/, '').trim())
+    .filter((l) => l.length >= 8 && l.length <= 120)
+    .slice(0, count)
+
+  audit.record({
+    actorType: 'system', actorId: `hook_writer:${adapterId}`, action: 'hooks.drafted',
+    entityType: 'opportunity', entityId: opportunityId,
+    after: { count: hooks.length, personaId, narrative: narrative ?? DEFAULT_NARRATIVE },
+  })
+
+  return { ok: true, hooks, model: result.model, usage: result.usage, narrative: narrative ?? DEFAULT_NARRATIVE }
 }
 
 /* -------------------------------------------------------- asset registry */

@@ -138,6 +138,17 @@ r.get('/growth/opportunities/:id', h((req, res) => {
 }))
 r.patch('/growth/opportunities/:id/status', h((req, res) =>
   res.json(opportunities.setOpportunityStatus(req.params.id, req.body.status, actor(req), req.body.reason))))
+r.post('/growth/opportunities/:id/hooks', h(async (req, res) =>
+  res.json(await generation.draftHooks({
+    opportunityId: req.params.id,
+    personaId: req.body?.personaId,
+    narrative: req.body?.narrative ?? null,
+    count: Number(req.body?.count) || 3,
+    adapterId: req.body?.adapterId ?? 'aitokenking',
+    model: req.body?.model ?? null,
+    actor: actor(req),
+  }))))
+
 r.get('/growth/opportunities/:id/route', h((req, res) =>
   res.json(router_.route(req.params.id, { limit: Number(req.query.limit) || 8 }))))
 
