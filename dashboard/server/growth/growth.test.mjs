@@ -255,6 +255,23 @@ await test('opportunity: 沒有 signal 也能建題目（FR-P0-03 人工建立�
   assert.equal(created.status, 'new')
 })
 
+await test('prompt template: 生成一定用最新版本，且指示裡真的帶著段落結構', async () => {
+  const { latestTemplate } = generation
+  const t = latestTemplate({ taskType: 'caption' })
+  assert.ok(t, '必須找得到 caption 模板')
+  assert.ok(t.template.includes('{{beats}}'), '模板必須把段落指示交給模型，否則敘事結構等於沒設定')
+  assert.ok(t.template.includes('敘事結構'), '模板必須說明這一輪的敘事結構')
+
+  // A stale row must not win. This is the failure that shipped: an edited
+  // template never reached a store that already held the old version, and the
+  // only symptom was output that did not change.
+  store.db.insert('promptTemplates', { name: t.name, version: '0.9.0', taskType: 'caption', template: '舊版模板', builtin: true })
+  assert.equal(latestTemplate({ taskType: 'caption' }).version, t.version, '舊版本不得蓋過新版本')
+
+  store.db.insert('promptTemplates', { name: t.name, version: '1.10.0', taskType: 'caption', template: '更新版', builtin: true })
+  assert.equal(latestTemplate({ taskType: 'caption' }).version, '1.10.0', '版本比較要照數字，1.10.0 應大於 1.9.0')
+})
+
 await test('draft: 有事件時，三欄由系統草擬且指出用哪一條產品事實去接', () => {
   const { signal } = signals.createManualSignal({
     title: 'DeepSeek 宣布 API 定價全面調漲，開發者social上炸鍋',

@@ -35,6 +35,23 @@ export { listAitokenkingModels } from './adapters/generation.js'
 
 export const TASK_TYPES = ['caption', 'script', 'image_prompt', 'video_prompt', 'hook_variants']
 
+/**
+ * Seed the built-in templates, one row per version.
+ *
+ * Keyed on (name, version) so an edit to the template text lands only when the
+ * version is bumped — and older rows survive, because `model_runs` records the
+ * `promptVersion` an asset was generated under and that reference has to stay
+ * resolvable (DATA_MODEL.md §2).
+ *
+ * The bug this shape has to avoid: keying on (name, version) *without*
+ * bumping the version means a changed template silently never reaches a
+ * store that already has the old row. That happened — a rewritten caption
+ * template sat in the code for a whole deploy while production kept
+ * generating against 1.0.0, and the only visible symptom was that the output
+ * did not change. Hence `latestTemplate()` below: new rows are additive, and
+ * lookup always resolves to the newest version rather than to whichever row
+ * happens to be first.
+ */
 export function ensureTemplatesSeeded() {
   for (const t of BUILTIN_TEMPLATES) {
     db.upsert('promptTemplates', (r) => r.name === t.name && r.version === t.version, { id: newId('promptTemplate'), ...t, builtin: true })
@@ -42,10 +59,27 @@ export function ensureTemplatesSeeded() {
   return db.list('promptTemplates')
 }
 
+/** Numeric-segment compare, so 1.10.0 sorts above 1.9.0. */
+const compareVersions = (a, b) => {
+  const pa = String(a ?? '0').split('.').map(Number)
+  const pb = String(b ?? '0').split('.').map(Number)
+  for (let i = 0; i < Math.max(pa.length, pb.length); i += 1) {
+    const d = (pa[i] ?? 0) - (pb[i] ?? 0)
+    if (d) return d
+  }
+  return 0
+}
+
+/** Newest version of the template for a task type, or by exact name. */
+export function latestTemplate({ taskType = null, name = null } = {}) {
+  const rows = db.filter('promptTemplates', (t) => (name ? t.name === name : t.taskType === taskType))
+  return rows.sort((a, b) => compareVersions(b.version, a.version))[0] ?? null
+}
+
 const BUILTIN_TEMPLATES = [
   {
     name: 'arm-caption-v1',
-    version: '1.0.0',
+    version: '1.1.0',
     taskType: 'caption',
     template: [
       '你要為一個 AI KOL 帳號寫一則貼文文案。',
@@ -79,7 +113,7 @@ const BUILTIN_TEMPLATES = [
   },
   {
     name: 'arm-script-v1',
-    version: '1.0.0',
+    version: '1.1.0',
     taskType: 'script',
     template: [
       '為 {{persona.name}} 寫一支 {{arm.duration}} 秒的短影音腳本，分段給出畫面與台詞。',
@@ -188,9 +222,7 @@ export async function generate(armId, { adapterId = 'template', taskType = 'capt
   const adapter = getAdapter(adapterId)
   if (!adapter) throw badRequest(`未知的 generation adapter "${adapterId}"`)
 
-  const template = templateName
-    ? db.find('promptTemplates', (t) => t.name === templateName)
-    : db.find('promptTemplates', (t) => t.taskType === taskType)
+  const template = templateName ? latestTemplate({ name: templateName }) : latestTemplate({ taskType })
   const prompt = template
     ? renderTemplate(template.template, {
         persona: { name: persona.name, credibilityMode: persona.source.credibilityMode, credibilityBasis: (persona.source.credibilityBasis ?? []).map((b) => b.desc) },
