@@ -91,7 +91,11 @@ register({
     // key rejected), and 404-vs-401 is how you tell a wrong path from a wrong
     // key. Overridable so a gateway move needs a variable, not a deploy.
     const base = process.env.AITOKENKING_BASE_URL || 'https://api.aitokenking.com.tw/api/v1'
-    const chosen = model || process.env.AITOKENKING_MODEL || 'claude-sonnet-5'
+    // gpt-5.5 rather than a Claude model: the gateway lists Claude models but its
+// Bedrock route denies them for this key ("explicit deny in a service control
+// policy"), so a Claude default fails on every call. Overridable per request
+// and per environment.
+const chosen = model || process.env.AITOKENKING_MODEL || 'gpt-5.5'
 
     const startedAt = Date.now()
     const controller = new AbortController()

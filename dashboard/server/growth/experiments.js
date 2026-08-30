@@ -7,6 +7,7 @@ import { requireProduct, primaryConversion, PRODUCT_ROLES } from './products.js'
 import { requireOpportunity, setOpportunityStatus } from './opportunities.js'
 import { getPersona } from './personas.js'
 import { PLATFORM_IDS, FORMATS, checkPlatformFit } from './platforms.js'
+import { NARRATIVE_SHAPES } from './narrative.js'
 
 /**
  * Experiment Planner — FR-P0-05, GHOS-002 / 025 / 026.
@@ -36,6 +37,7 @@ export const DIMENSIONS = {
   duration: { label: '長度', field: 'duration' },
   opening_frame: { label: '首幀', field: 'openingFrame' },
   caption: { label: '文案', field: 'caption' },
+  narrative: { label: '敘事結構', field: 'narrative' },
 }
 
 export const DIMENSION_KEYS = Object.keys(DIMENSIONS)
@@ -259,6 +261,7 @@ export function addArm(experimentId, input, actor = 'system') {
     .oneOf('platform', PLATFORM_IDS, { label: '平台' })
     .required('cta', { label: 'CTA' })
     .oneOf('productRole', Object.keys(PRODUCT_ROLES), { label: '產品角色', required: false, fallback: null })
+    .oneOf('narrative', Object.keys(NARRATIVE_SHAPES), { label: '敘事結構', required: false, fallback: null })
     .optional('visualSetting', null)
     .optional('tone', null)
     .optional('duration', null)

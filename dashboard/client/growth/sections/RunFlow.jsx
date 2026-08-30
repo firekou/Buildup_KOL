@@ -281,6 +281,7 @@ function StepMake({ opportunity, meta, onDone }) {
   const [picked, setPicked] = useState(null)
   const [hooks, setHooks] = useState(opportunity.hooks ?? ['', ''])
   const [platform, setPlatform] = useState('threads')
+  const [narrative, setNarrative] = useState(meta.defaultNarrative ?? 'framework')
   const [cta, setCta] = useState('到站上用同一組 key 直接比一次')
   const { busy, error, run } = useAsyncAction()
 
@@ -313,6 +314,11 @@ function StepMake({ opportunity, meta, onDone }) {
             ))}
           </div>
 
+          <Field label="敘事結構" hint={meta.narrativeShapes?.[narrative]?.says}>
+            <select value={narrative} onChange={(e) => setNarrative(e.target.value)}>
+              {Object.entries(meta.narrativeShapes ?? {}).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+            </select>
+          </Field>
           <div className="grid two">
             <Field label="平台">
               <select value={platform} onChange={(e) => setPlatform(e.target.value)}>
@@ -338,6 +344,7 @@ function StepMake({ opportunity, meta, onDone }) {
             const base = {
               personaId: picked, format: meta.platforms[platform].formats[0], platform, cta,
               productRole: opportunity.suggestedProductRole ?? null,
+              narrative,
             }
             await growth.addArm(exp.id, { ...base, hook: hooks[0] })
             await growth.addArm(exp.id, { ...base, hook: hooks[1] })

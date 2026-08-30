@@ -10,6 +10,7 @@ import { requireExperiment, requireArm, setStatus as setExperimentStatus, DIMENS
 import { getPersona } from './personas.js'
 import { requireProduct } from './products.js'
 import { estimateCost, tierForFormat } from './cost-model.js'
+import { NARRATIVE_SHAPES, DEFAULT_NARRATIVE, ROLE_FALLBACK } from './narrative.js'
 
 /**
  * Generation Orchestrator — FR-P0-06, GHOS-026 / 027 / 028 / 029.
@@ -27,6 +28,7 @@ import { estimateCost, tierForFormat } from './cost-model.js'
  */
 
 export { listAdapters }
+export { NARRATIVE_SHAPES, DEFAULT_NARRATIVE } from './narrative.js'
 export { listAitokenkingModels } from './adapters/generation.js'
 
 /* ------------------------------------------------------- prompt templates */
@@ -57,6 +59,7 @@ const BUILTIN_TEMPLATES = [
       '這題的對立：{{opportunity.tension}}',
       '',
       '本則要測的變因：{{experiment.comparisonDimension}}',
+      '敘事結構：{{narrative}} — {{narrativeSays}}',
       'Hook（必須照用，這是被測的變因）：{{arm.hook}}',
       '產品在內容裡的角色：{{arm.productRole}}',
       'CTA：{{arm.cta}}',
@@ -67,6 +70,10 @@ const BUILTIN_TEMPLATES = [
       '- 不得對結果做保證。',
       '- 不得捏造來源、數據或見證。',
       '- 產品必須以「{{arm.productRole}}」的方式出現，不是最後硬貼的廣告。',
+      '- 依上面的「敘事結構」走。若是觀念框架型，讀者讀完要覺得「我學到一個以後也用得上的判斷方式」，而不是「他在說服我」——產品只是其中一個角度，不是結論。',
+      '',
+      '依序寫出以下段落：',
+      '{{beats}}',
     ].join('\n'),
     policyNotes: '此模板的限制段落對應 .claude/skills/kol-redline-check 的 R-EMBODIMENT / R-FAKE-CERTAINTY / R-FABRICATED-SOURCE。修改模板時必須同步檢查那些規則仍被涵蓋。',
   },
@@ -130,6 +137,8 @@ export function buildBrief(armId, { actor = 'system', beats = null } = {}) {
     visualSetting: arm.visualSetting,
     duration: arm.duration,
     beats: beats ?? defaultBeats(arm, opportunity, product),
+    narrative: arm.narrative ?? ROLE_FALLBACK[arm.productRole ?? 'next_action'] ?? DEFAULT_NARRATIVE,
+    narrativeSays: (NARRATIVE_SHAPES[arm.narrative] ?? NARRATIVE_SHAPES[ROLE_FALLBACK[arm.productRole ?? 'next_action']] ?? NARRATIVE_SHAPES[DEFAULT_NARRATIVE]).says,
     blockedClaims,
     allowedClaims,
     // The brief carries the *reason* this arm exists, so a reviewer reading it
@@ -160,19 +169,11 @@ export function buildBrief(armId, { actor = 'system', beats = null } = {}) {
  * must accomplish, so the model (or a human) fills a defined slot.
  */
 function defaultBeats(arm, opportunity, product) {
-  const role = arm.productRole ?? 'next_action'
-  const beatsByRole = {
-    utility: ['示範產品實際被用來解決什麼', '指出沒有它的時候會卡在哪'],
-    answer_to_debate: ['把對立的兩邊各講一句，不偏袒', '指出唯一能分出勝負的證據在哪'],
-    destination: ['先讓人看到那個地方值得去', '說明現在進去會看到什麼'],
-    proof_source: ['把可查證的數據攤開', '說明這份數據怎麼查'],
-    challenge: ['提出一個可複製的做法', '說明怎麼判定自己做到了'],
-    next_action: ['把結論說完', '給出唯一合理的下一步'],
-  }
-  return [
-    opportunity ? `承接題目：${opportunity.topic}` : `承接產品主張：${product.valueProposition}`,
-    ...(beatsByRole[role] ?? beatsByRole.next_action),
-  ]
+  const topic = opportunity ? opportunity.topic : product.valueProposition
+  const shape = NARRATIVE_SHAPES[arm.narrative]
+    ?? NARRATIVE_SHAPES[ROLE_FALLBACK[arm.productRole ?? 'next_action']]
+    ?? NARRATIVE_SHAPES[DEFAULT_NARRATIVE]
+  return shape.beats(topic)
 }
 
 /* ------------------------------------------------------------ generation */
@@ -198,6 +199,9 @@ export async function generate(armId, { adapterId = 'template', taskType = 'capt
         arm,
         platform: { maxTextLength: 500 },
         blockedClaims: brief.blockedClaims,
+        narrative: brief.narrative,
+        narrativeSays: brief.narrativeSays,
+        beats: brief.beats.map((b, i) => `${i + 1}. ${b}`).join('\n'),
       })
     : null
 

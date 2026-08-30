@@ -7,6 +7,7 @@ import * as personas from '../growth/personas.js'
 import * as router_ from '../growth/router.js'
 import * as experiments from '../growth/experiments.js'
 import * as generation from '../growth/generation.js'
+import { NARRATIVE_SHAPES, DEFAULT_NARRATIVE } from '../growth/narrative.js'
 import * as review from '../growth/review.js'
 import * as publish from '../growth/publish.js'
 import * as telemetry from '../growth/telemetry.js'
@@ -47,6 +48,8 @@ r.get('/growth/meta', h(async (req, res) => {
     platformIds: PLATFORM_IDS,
     formats: FORMATS,
     productRoles: products.PRODUCT_ROLES,
+    narrativeShapes: Object.fromEntries(Object.entries(NARRATIVE_SHAPES).map(([k, v]) => [k, { label: v.label, says: v.says }])),
+    defaultNarrative: DEFAULT_NARRATIVE,
     businessModels: products.BUSINESS_MODELS,
     conversionEventTypes: products.CONVERSION_EVENT_TYPES,
     campaignObjectives: products.CAMPAIGN_OBJECTIVES,
