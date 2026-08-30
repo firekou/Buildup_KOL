@@ -207,3 +207,15 @@ claude                              # 啟動時會提示批准這個 MCP server
 可在本地端即時對話的 AI 伴侶（文字互動優先，語音/虛擬形象/直播為預留擴充）。詳見該資料夾的
 `README.md`，以及新增的三個專責 subagent：`local-ai-companion-architect`、
 `livestream-tech-specialist`、`local-llm-engineer`（定義於 `.claude/agents/`）。
+
+---
+
+## 延伸研究：新帳號如何從別人的討論串取得流量
+
+`research/thread-entry/` 研究一個合規、非殭屍的全新帳號，要如何參與 Threads / X 上的公眾時事討論
+並被看到。以 X 開源排序程式碼、X 平台操縱政策、Meta 推薦準則與 Threads API 文件為一手依據，回答四
+件事：用什麼素材、整體怎麼規劃、流量的流動路徑、以及這會如何改變素材的製作與發布方式。
+
+結論摘要：兩個平台都允許參與討論串，但都用白紙黑字禁掉了它最直覺的做法（貼不相關內容、回覆帶連結、
+堆熱門標籤）。可行路徑只有一條——**曝光在回覆，轉換在個人頁**。要接進 Growth OS 需要的六項改動列在
+`90-growth-os-changes.md`，尚未實作。
