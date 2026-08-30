@@ -17,13 +17,19 @@ import redlinesRouter from './routes/redlines.js'
 import guidedRouter from './routes/guided.js'
 import scanProbeRouter from './routes/scan-probe.js'
 import growthRouter from './routes/growth.js'
+import publicArchiveRouter from './routes/public-archive.js'
 import { bootstrapGrowthOs } from './growth/bootstrap.js'
 import { freshness as growthFreshness } from './growth/store.js'
 import * as growthPipeline from './growth/pipeline.js'
 import { startBootProbe } from './lib/scan/probe-on-boot.js'
+import { consoleGate } from './lib/gate-console.js'
 
 const app = express()
 app.use(express.json({ limit: '2mb' }))
+
+// Everything except the public archive and the tracking redirect sits behind
+// this. No-op unless DASHBOARD_PASSWORD is set — see lib/gate-console.js.
+app.use(consoleGate())
 
 app.get('/api/health', (req, res) => {
   res.json({
@@ -68,6 +74,10 @@ app.use('/api', redlinesRouter)
 app.use('/api', guidedRouter)
 app.use('/api', scanProbeRouter)
 app.use('/api', growthRouter)
+
+// The public archive. Mounted outside /api and before the SPA catch-all: it is
+// the only surface in this service written for people who are not operators.
+app.use(publicArchiveRouter)
 
 app.use('/api', (req, res) => res.status(404).json({ error: `no such endpoint: ${req.method} ${req.originalUrl}` }))
 

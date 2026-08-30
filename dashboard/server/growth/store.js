@@ -26,6 +26,7 @@ export const PLANE = {
   arms: 'control',
   concepts: 'control',
   opportunities: 'control',
+  articles: 'control',
 
   signals: 'data',
   assets: 'data',
@@ -59,6 +60,7 @@ const FILES = {
   arms: 'experiment-arms.json',
   concepts: 'creative-concepts.json',
   opportunities: 'opportunities.json',
+  articles: 'articles.json',
 
   // --- data plane --------------------------------------------------------
   signals: 'signals.json',

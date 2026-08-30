@@ -41,6 +41,7 @@ export const PREFIX = {
   event: 'evt',
   job: 'job',
   overlay: 'ovl',
+  article: 'art',
   policy: 'pol',
 }
 

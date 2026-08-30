@@ -20,6 +20,7 @@ import * as pipeline from '../growth/pipeline.js'
 import * as completeness from '../growth/completeness.js'
 import * as cost from '../growth/cost.js'
 import * as jobs from '../growth/jobs.js'
+import * as archive from '../growth/archive.js'
 import * as audit from '../growth/audit.js'
 import * as events from '../growth/events.js'
 import { db, freshness } from '../growth/store.js'
@@ -326,6 +327,43 @@ r.get('/growth/ops', h((req, res) => res.json({
   events: events.recent(40),
   audit: audit.recent(40),
 })))
+
+/* --------------------------------------------------------- public archive */
+
+/**
+ * The archive is the thing a reply advertises: a body of organised work that
+ * someone can search months later. Threads and X profiles cannot be that, so
+ * these routes manage the pages we serve ourselves at /notes.
+ *
+ * Note the asymmetry with everything else in this router: nothing here is
+ * public. These are the operator's controls; the reader's surface is the
+ * server-rendered router in routes/public-archive.js, which can only ever
+ * read `status === 'published'` rows.
+ */
+
+r.get('/growth/articles', h((req, res) =>
+  res.json({ articles: archive.listArticles(req.query.productId ? { productId: req.query.productId } : {}) })))
+
+r.post('/growth/articles', h((req, res) => res.status(201).json(archive.createArticle(req.body, actor(req)))))
+
+r.post('/growth/articles/from-asset', h((req, res) => {
+  const { assetId, ...rest } = req.body ?? {}
+  return res.status(201).json(archive.draftFromAsset(assetId, { ...rest, actor: actor(req) }))
+}))
+
+r.get('/growth/articles/:id', h((req, res) => {
+  const article = archive.getArticle(req.params.id)
+  if (!article) return res.status(404).json({ error: `no such article: ${req.params.id}` })
+  return res.json({ article, readiness: archive.publishReadiness(req.params.id) })
+}))
+
+r.patch('/growth/articles/:id', h((req, res) => res.json(archive.updateArticle(req.params.id, req.body, actor(req)))))
+
+r.post('/growth/articles/:id/publish', h((req, res) =>
+  res.json(archive.publishArticle(req.params.id, { actor: actor(req), force: Boolean(req.body?.force), forceReason: req.body?.forceReason ?? null }))))
+
+r.post('/growth/articles/:id/retire', h((req, res) =>
+  res.json(archive.retireArticle(req.params.id, { actor: actor(req), reason: req.body?.reason ?? null }))))
 
 /* ----------------------------------------------------- tracking redirect */
 

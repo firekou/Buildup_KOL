@@ -26,6 +26,7 @@ export const EVENT_NAMES = [
   'review.rejected',
   'review.revision_requested',
   'publication.published',
+  'article.published',
   'publication.failed',
   'publication.metric.updated',
   'product.conversion.occurred',

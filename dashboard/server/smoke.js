@@ -275,6 +275,31 @@ async function main() {
     return `${res.status} as expected`
   })
 
+  await check('公開檔案庫可以匿名讀取，而且不會洩漏草稿', async () => {
+    const res = await fetch(`${BASE}/notes`)
+    assert(res.status === 200, `/notes expected 200, got ${res.status}`)
+    const html = await res.text()
+    assert(html.includes('<!doctype html>'), '/notes 必須是伺服器端渲染的 HTML，不是 SPA 殼')
+    // Drafts are filtered in archive.listPublic, but the route is what the
+    // outside world touches — so the guarantee is checked here too.
+    const all = await json('/api/growth/articles')
+    const drafts = all.articles.filter((a) => a.status !== 'published')
+    for (const d of drafts) {
+      assert(!html.includes(d.title), `草稿「${d.title}」出現在公開索引頁`)
+    }
+    return `${all.articles.length - drafts.length} 篇公開／${drafts.length} 篇草稿未外洩`
+  })
+
+  await check('不存在的文章回 404，不會掉進 SPA 殼', async () => {
+    // Route-order bug class: `next()` on a miss reaches the client catch-all,
+    // which answers a bad public URL with the operator console's index.html.
+    const res = await fetch(`${BASE}/notes/definitely-not-a-real-slug`)
+    assert(res.status === 404, `expected 404, got ${res.status}`)
+    const html = await res.text()
+    assert(!html.includes('<div id="root"'), '404 不得回傳前端應用的殼')
+    return '404 as expected'
+  })
+
   console.log(`\nSmoke test against ${BASE}\n${results.join('\n')}\n`)
   if (failures) {
     console.error(`${failures} check(s) failed`)

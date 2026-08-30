@@ -25,7 +25,7 @@ function mintCode(seed) {
   return out
 }
 
-export function createTrackingLink({ productId, campaignId = null, experimentId = null, armId = null, publicationId = null, destinationUrl, medium = 'organic_social', platform = null }) {
+export function createTrackingLink({ productId, campaignId = null, experimentId = null, armId = null, publicationId = null, articleId = null, destinationUrl, medium = 'organic_social', platform = null }) {
   if (!destinationUrl) throw badRequest('destinationUrl 為必填——沒有目的地就沒有可追蹤的連結。')
 
   let url
@@ -35,7 +35,7 @@ export function createTrackingLink({ productId, campaignId = null, experimentId 
     throw badRequest(`destinationUrl "${destinationUrl}" 不是有效的網址`)
   }
 
-  const code = mintCode(`${experimentId}:${armId}`)
+  const code = mintCode(`${experimentId}:${armId}:${articleId}`)
   // Params are appended as well as the code stored, so the product's own
   // analytics can attribute independently of this service — two paths to the
   // same answer is what makes a discrepancy detectable.
@@ -52,6 +52,7 @@ export function createTrackingLink({ productId, campaignId = null, experimentId 
     experimentId,
     armId,
     publicationId,
+    articleId,
     destinationUrl,
     trackedUrl: url.toString(),
     trackingCode: code,

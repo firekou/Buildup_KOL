@@ -30,7 +30,7 @@ const test = async (name, fn) => {
 const [
   policy, products, personas, signals, opportunities, router, experiments,
   generation, review, publish, telemetry, conversions, evaluator, evolution,
-  completeness, cost, costModel, portfolio, pipeline, gates, store,
+  completeness, cost, costModel, portfolio, pipeline, gates, store, archive,
 ] = await Promise.all([
   import('./policy.js'), import('./products.js'), import('./personas.js'),
   import('./signals.js'), import('./opportunities.js'), import('./router.js'),
@@ -39,6 +39,7 @@ const [
   import('./evaluator.js'), import('./evolution.js'), import('./completeness.js'),
   import('./cost.js'), import('./cost-model.js'), import('./portfolio.js'),
   import('./pipeline.js'), import('./gates.js'), import('./store.js'),
+  import('./archive.js'),
 ])
 
 /* ------------------------------------------------------------ unit tests */
@@ -440,6 +441,77 @@ await test('overview: winner yield 以實驗計算，不以判定筆數計算', 
   evaluator.evaluate(fixture.experiment.id, { actor: 'test' })
   const o = pipeline.overview()
   assert.ok(o.winners.yield <= 1, `yield 不得超過 1，實得 ${o.winners.yield}`)
+})
+
+/* -------------------------------------------------------------- archive */
+
+await test('archive: 草稿不會出現在任何公開讀取路徑', () => {
+  assert.ok(fixture, '前一個測試未通過，無法繼續')
+  const draft = archive.createArticle({
+    productId: fixture.product.id,
+    personaId: fixture.personaId,
+    title: '這是一篇還沒發布的草稿',
+    summary: '草稿摘要',
+    body: '內文。',
+    topics: ['測試'],
+  }, 'test')
+
+  assert.equal(draft.status, 'draft', '新文章必須預設為草稿——公開必須是明確的動作')
+  assert.equal(archive.getPublicBySlug(draft.slug), null, '草稿不得能用 slug 讀到')
+  assert.equal(archive.listPublic().some((a) => a.id === draft.id), false, '草稿不得出現在公開清單')
+  assert.equal(archive.publicTopics().some((t) => t.topic === '測試' && t.count > 0), false, '草稿的分類不得出現在公開導覽')
+})
+
+await test('archive: AI 人設的揭露由人設推出，且明說不是真人', () => {
+  const aiPersona = personas.listPersonas().find((p) => (p.tags ?? []).includes('ai-digital-human'))
+  assert.ok(aiPersona, '測試資料裡必須有一個標記為 ai-digital-human 的人設')
+
+  const d = archive.disclosureFor(aiPersona.id, fixture.product.id)
+  assert.equal(d.kind, 'ai_persona')
+  assert.match(d.text, /不是真實存在的人/, '揭露必須直說不是真人——R-AI-DISCLOSURE')
+  assert.match(d.text, /不包含任何親身經歷的主張/, '揭露必須同時界定它不會做具身主張——R-EMBODIMENT')
+})
+
+await test('archive: 缺分類或摘要不得發布，而且要說得出缺什麼', () => {
+  const bare = archive.createArticle({
+    productId: fixture.product.id,
+    personaId: fixture.personaId,
+    title: '沒有摘要也沒有分類',
+    body: '內文。',
+  }, 'test')
+
+  const readiness = archive.publishReadiness(bare.id)
+  assert.equal(readiness.ok, false)
+  assert.equal(readiness.reasons.length >= 2, true, `應列出所有缺口，實得：${readiness.reasons}`)
+  assert.throws(() => archive.publishArticle(bare.id, { actor: 'test' }), /還不能發布/)
+  assert.throws(
+    () => archive.publishArticle(bare.id, { actor: 'test', force: true }),
+    /必須寫理由/,
+    '強制發布沒有理由時必須被擋——覆寫可以，隱形的覆寫不行',
+  )
+})
+
+await test('archive: 發布後鑄出 per-article 追蹤連結，這是整條路徑唯一的 direct 歸因點', () => {
+  const article = archive.createArticle({
+    productId: fixture.product.id,
+    personaId: fixture.personaId,
+    title: '可以發布的一篇',
+    summary: '摘要。',
+    body: '第一段。\n\n第二段。',
+    topics: ['成本'],
+  }, 'test')
+
+  const published = archive.publishArticle(article.id, { actor: 'test' })
+  assert.equal(published.status, 'published')
+  assert.equal(published.disclosure.kind, 'ai_persona')
+  assert.ok(published.trackingLinkId, '發布時必須鑄出這篇專屬的追蹤連結')
+
+  const link = store.db.get('trackingLinks', published.trackingLinkId)
+  assert.equal(link.articleId, article.id, '連結必須綁回文章，否則點擊無法歸因到單篇')
+  assert.equal(link.medium, 'archive')
+
+  assert.equal(archive.getPublicBySlug(published.slug)?.id, article.id, '發布後才讀得到')
+  assert.equal(archive.publicTopics().some((t) => t.topic === '成本'), true)
 })
 
 /* ---------------------------------------------------------------- report */
