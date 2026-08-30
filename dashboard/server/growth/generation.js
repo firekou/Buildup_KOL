@@ -79,7 +79,7 @@ export function latestTemplate({ taskType = null, name = null } = {}) {
 const BUILTIN_TEMPLATES = [
   {
     name: 'arm-caption-v1',
-    version: '1.1.0',
+    version: '1.2.0',
     taskType: 'caption',
     template: [
       '你要為一個 AI KOL 帳號寫一則貼文文案。',
@@ -103,6 +103,7 @@ const BUILTIN_TEMPLATES = [
       '- 不得宣稱親身經歷任何無法被此帳號背書的事。',
       '- 不得對結果做保證。',
       '- 不得捏造來源、數據或見證。',
+      '- 第一行就是上面那句 hook，一字不改。hook 之後直接進內容，不要再把新聞標題貼一次——讀者已經看過了。',
       '- 產品必須以「{{arm.productRole}}」的方式出現，不是最後硬貼的廣告。',
       '- 依上面的「敘事結構」走。若是觀念框架型：先幫讀者整理這則新聞裡值得知道的東西，再給判準；產品只在最後 CTA 那一次出現，當作讀者自己驗算的工具，中途不要推銷。讀者讀完要覺得「我學到一個以後也用得上的判斷方式」，而不是「他在說服我」。',
       '',
@@ -170,7 +171,7 @@ export function buildBrief(armId, { actor = 'system', beats = null } = {}) {
     tone: arm.tone,
     visualSetting: arm.visualSetting,
     duration: arm.duration,
-    beats: beats ?? defaultBeats(arm, opportunity, product),
+    beats: beats ?? defaultBeats(arm),
     narrative: arm.narrative ?? ROLE_FALLBACK[arm.productRole ?? 'next_action'] ?? DEFAULT_NARRATIVE,
     narrativeSays: (NARRATIVE_SHAPES[arm.narrative] ?? NARRATIVE_SHAPES[ROLE_FALLBACK[arm.productRole ?? 'next_action']] ?? NARRATIVE_SHAPES[DEFAULT_NARRATIVE]).says,
     blockedClaims,
@@ -202,12 +203,14 @@ export function buildBrief(armId, { actor = 'system', beats = null } = {}) {
  * declared role. Not creative writing — a scaffold that names what each beat
  * must accomplish, so the model (or a human) fills a defined slot.
  */
-function defaultBeats(arm, opportunity, product) {
-  const topic = opportunity ? opportunity.topic : product.valueProposition
+function defaultBeats(arm) {
+  // The topic is no longer threaded in: the hook already carries the event,
+  // and passing the headline into the beats made the model paste it back as
+  // the first line, so the post opened with the title and then the hook.
   const shape = NARRATIVE_SHAPES[arm.narrative]
     ?? NARRATIVE_SHAPES[ROLE_FALLBACK[arm.productRole ?? 'next_action']]
     ?? NARRATIVE_SHAPES[DEFAULT_NARRATIVE]
-  return shape.beats(topic)
+  return shape.beats()
 }
 
 /* ------------------------------------------------------------ generation */
