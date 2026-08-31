@@ -260,9 +260,22 @@ async function main() {
     const products = await json('/api/growth/products')
     if (!signals.signals.length || !products.products.length) return 'skipped — 尚無 signal 或 product'
     const b = await json(`/api/growth/opportunities/draft?signalId=${signals.signals[0].id}&productId=${products.products[0].id}`)
-    assert(b.prompts?.whyNow, 'draft 必須回傳待人工填寫的提示，而不是 opportunity not found')
-    assert(b.caveat?.includes('草稿'), 'draft 必須標明自己是草稿而非評分')
-    return `draft ok，${b.suggestedAnchors.length} 個產品錨點`
+    // Shadowing shows up as the signal never being read at all, so the field
+    // that proves the route ran is the one echoed back from the signal.
+    assert(b.signalId === signals.signals[0].id, 'draft 必須讀到那個 signal，而不是被 /:id 當成 id="draft"')
+    assert(b.topic && b.whyNow && b.tension, 'draft 必須草擬出三欄')
+    // The caveat is what stops a drafted field being read as a verdict. It is
+    // asserted on every deploy because it is a sentence, and sentences get
+    // tidied away by someone who does not know it is load-bearing.
+    assert(b.caveat?.includes('不是評分'), 'draft 必須標明自己是草擬而非評分')
+    // A per-field map, not a list: each drafted field carries its own "a human
+    // still has to look at this" flag, so the UI can mark them individually.
+    assert(
+      b.needsEdit && ['whyNow', 'tension', 'productRelevance'].every((k) => k in b.needsEdit),
+      'draft 必須逐欄標示哪些需要人工確認',
+    )
+    const pending = Object.values(b.needsEdit).filter(Boolean).length
+    return `draft ok，${b.allAnchors?.length ?? 0} 個產品錨點，${pending} 欄標為待人工確認`
   })
 
   await check('實驗契約缺欄位時不得建立', async () => {
