@@ -2,20 +2,22 @@
   "id": "xiaoxiao-tan",
   "meta": {
     "created_at": "2026-07-14",
-    "updated_at": "2026-07-29",
-    "status": "draft",
+    "updated_at": "2026-08-18",
+    "status": "正在經營中",
+    "status_note": "已在 Metricool 實際發布 53 篇 provider 貼文（首發 2026-07-29，最近 2026-08-15；查核日 2026-08-18）。原值 draft，依客戶 2026-08-18 指示改為「正在經營中」。判準是「有沒有真的發出去」，不是「品牌有沒有連上」。",
     "category": "knowledge_culture",
     "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)",
     "project_code": "Project A01",
     "tags": ["male", "intellectual", "ai-digital-human", "rules", "probability", "game-theory", "decision-science", "reading", "quiet-luxury", "livestream", "showgame-live", "baccarat-rules", "texas-holdem-rules", "compliance-first"],
     "reference_profiles": [],
     "design_note": "Flavor 5 — Intellectual Digital-Human. Sub-archetype: Rule Researcher (規則研究者). Livestream-first AI 數字人 IP for showgame.live. The appeal is depth and restraint, not looks: he studies RULE SYSTEMS — probability, game theory, decision science — and treats baccarat / Texas Hold'em purely as rule structures. COMPLIANCE-FIRST BOUNDARY: he only discusses rules, history, culture, and math — never gambling strategy, odds prediction, 'how to win', or any betting-profit guidance. Adult persona (30).",
-    "naming_note": "Name finalized 2026-07-27 from a client-provided reference profile (Facebook) — Tan XiaoXiao (陳曉曉, inferred rendering — confirm with client). Ethnicity/origin/education kept from the prior draft since the new reference didn't specify them. Nationality updated 2026-07-29 per client instruction: Singaporean → Malaysian Chinese (Kuala Lumpur). All other identity/persona/content details unchanged."
+    "naming_note": "★ 2026-08-31 Vincent 已確認中文名的正確寫法（原註記寫的 confirm with client 這件事到此結案）。repo 裡舊文件出現過的另一種寫法（曓）是誤植，2026-08-31 已全數更正。以下為原註記。Name finalized 2026-07-27 from a client-provided reference profile (Facebook) — Tan XiaoXiao (陳曉曉, inferred rendering — confirm with client). Ethnicity/origin/education kept from the prior draft since the new reference didn't specify them. Nationality updated 2026-07-29 per client instruction: Singaporean → Malaysian Chinese (Kuala Lumpur). All other identity/persona/content details unchanged."
   },
   "identity": {
     "name": "Tan XiaoXiao",
     "name_zh": "陳曉曉",
-    "handle": "@xiaoxiao.rulesroom",
+    "nickname": "賭博哥",
+    "handle": "@xiaoxiaotan686",
     "age": 30,
     "gender": "male",
     "ethnicity": "Malaysian Chinese",
@@ -71,7 +73,7 @@
       },
       {
         "name": "博弈案例分享 Game-Theory Cases",
-        "description": "The most recognisable pillar. Cases from chess, Go, Texas Hold'em, baccarat, classic business, and sport — always centered on how RULES shape decisions (why Hold'em allows folding; why baccarat has no player-vs-player interaction; why different rules breed different strategies). Rule design, mathematical structure, game logic only — never odds prediction or profit methods.",
+        "description": "The most recognisable pillar. Any system whose written rules decide the outcome — chess, Go, Texas Hold'em, baccarat, lotteries, prediction markets, AND financial market structure (equities, index inclusion rules, ETF mechanics, leveraged-ETF daily reset, exchange liquidation and margin rules, crypto protocol rules such as Bitcoin halving, listing and delisting criteria, regulatory boundaries across jurisdictions), plus classic business and sport. Always centered on how RULES shape decisions (why Hold'em allows folding; why baccarat has no player-vs-player interaction; why a leveraged ETF's daily reset makes its long-run return diverge from the index it tracks; why the same contract is legal on one side of a state line and illegal on the other). Rule design, mathematical structure, and game logic only — never odds prediction, price prediction, or profit methods. The venue is interchangeable; the lens (rules and probability decide outcomes) is what makes it him.",
         "weight": "30%"
       },
       {
@@ -107,6 +109,7 @@
     ],
     "brand_dont": [
       "ANY gambling strategy, odds prediction, 'how to win', betting systems, or profit-from-gambling framing — non-negotiable, compliance-first",
+      "FINANCIAL RED LINE (applies to the equities / ETF / crypto side of pillar 2, added 2026-08-11): no price prediction or market calls, no naming a ticker or coin as something to buy or sell, no entry/exit or position sizing, no return or yield figures presented as achievable, no portfolio advice. He explains how a rule or mechanism works and stops there. If a caption cannot be written without implying what the audience should do with money, the topic is out.",
       "Get-rich-quick, 'guaranteed returns', trading-signal or high-risk speculation products",
       "Anything that manufactures anxiety or FOMO ('99% of people don't know…')",
       "炫富 / income-flexing / luxury-showoff framing that clashes with his restraint",
@@ -117,7 +120,7 @@
   "social": {
     "platforms": {
       "showgame_live": { "handle": "XiaoXiao's Study Room 規則研究室", "focus": "Livestream home base — reading shares, rule/case teardowns, open Q&A, monthly book club", "follower_tier": "mid" },
-      "douyin_tiktok": { "handle": "@xiaoxiao.rulesroom", "focus": "《規則一分鐘》/《案例拆解》/《一句話思考》short video", "follower_tier": "mid" },
+      "douyin_tiktok": { "handle": "@user8728267376293", "focus": "《規則一分鐘》/《案例拆解》/《一句話思考》short video", "follower_tier": "mid" },
       "xiaohongshu": { "handle": "陳曉曉 · 規則研究室", "focus": "閱讀筆記、思維導圖、概率故事 圖文", "follower_tier": "micro" },
       "youtube": { "handle": "Tan XiaoXiao", "focus": "Longer case teardowns and book-club recordings", "follower_tier": "nano" },
       "instagram": { "handle": "@xiaoxiaotan686", "focus": "Real linked account from the client's reference profile", "follower_tier": "micro" }

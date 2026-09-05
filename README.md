@@ -25,13 +25,30 @@ Buildup_KOL/
 
 ## 現有 KOL
 
+### 自 showgame-kol 匯入／同步（A01–A03、B01–B07）
+
+人設與內容資料原樣複製自 `pennyhuang-oss/showgame-kol`（該 repo 是這批人設的生產現場，
+每天在排程發布）；`topic_affinity.json` 為本 repo 依 `kols/topic-axes.json` 的四軸分析後新增。
+**A01–B02 這 5 位於 2026-09-05 重新同步**（來源全部較新），**B03–B07 為同日新增**。
+匯入範圍、已知落差與四軸分數見
+[`docs/16-showgame-kol-import.md`](docs/16-showgame-kol-import.md)。
+
 | ID | 姓名 | 類型 | 族裔 | 狀態 |
 |----|------|------|------|------|
-| [xiaoxiao-tan](kols/xiaoxiao-tan/) | Tan XiaoXiao（陳曉曉） | 智性數字人 · 規則研究者（A01 / showgame.live） | 馬來西亞華人 | draft |
-| [faye-tan](kols/faye-tan/) | Faye Tan（陳曉菲） | 智性數字人 · 世界觀察者（A02 / showgame.live） | 新加坡華人 | draft |
-| [loima-cheung](kols/loima-cheung/) | Zhang Qinfeng（張秦峰） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | draft |
-| [rachel-ong](kols/rachel-ong/) | Rachel Ong（王瑞秋） | 邊界感型高海拔登山向導（B01） | 新加坡華裔 | draft |
-| [rafael-costa](kols/rafael-costa/) | Rafael Costa / Captain（拉斐爾·科斯塔） | 現役足球運動員 × 長期主義成長陪伴型 IP（B02） | 巴西人 | draft |
+| [xiaoxiao-tan](kols/xiaoxiao-tan/) | Tan XiaoXiao（陳曉曉） | 智性數字人 · 規則研究者（A01 / showgame.live） | 馬來西亞華人 | active |
+| [faye-tan](kols/faye-tan/) | Faye Tan（陳曉菲） | 智性數字人 · 世界觀察者（A02 / showgame.live） | 新加坡華人 | active |
+| [loima-cheung](kols/loima-cheung/) | Zhang Qinfeng（張秦峰） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | active |
+| [rachel-ong](kols/rachel-ong/) | Rachel Ong（王瑞秋） | 邊界感型高海拔登山向導（B01） | 新加坡華裔 | active |
+| [rafael-costa](kols/rafael-costa/) | Rafael Costa / Captain（拉斐爾·科斯塔） | 現役足球運動員 × 長期主義成長陪伴型 IP（B02） | 巴西人 | **retired**（來源 2026-08-19 停用） |
+| [nova-lin](kols/nova-lin/) | 林諾 / NOVA | 公開 AI 身分的數字生活觀察員（B03） | — AI 數字人，設定上無國籍 | draft ⚠ |
+| [kai-luo](kols/kai-luo/) | 羅凱西 / Cathy Luo | 神話沉浸型 · 走進古人記下來的那個世界（B04） | 台灣人 | active |
+| [leon-lim](kols/leon-lim/) | 林曜 / Leon Lim | 歷史沉浸型 · 站在歷史發生的那一刻（B05） | 馬來西亞華人 | active ⚠ |
+| [zane-chen](kols/zane-chen/) | 陳崢 / Zane Chen | 戒賭陪伴與家屬止損（B06） | 馬來西亞華人 | draft ⚠ |
+| [rhea-chou](kols/rhea-chou/) | 周嵐 / Rhea Chou | 沙巴海底影像紀錄者（B07） | 馬來西亞華人（沙巴） | draft ⚠ |
+
+⚠ **標記的四位沒有 `profile.json`**（來源 repo 就沒有）。Dashboard 的支柱維度會回 `0` 並標
+`needsBinding`——**那是「還沒有可讀的支柱定義」，不是「配適度低」**，兩者在畫面上長得一樣。
+`nova-lin` / `zane-chen` / `rhea-chou` 另外還沒有任何參考圖。細節見 `docs/16` §4。
 
 ### 自 Virtual KOL Studio 匯入（V01–V11）
 
@@ -73,6 +90,7 @@ Buildup_KOL/
 | [13-identity-anchor-and-site-account-audit](docs/13-identity-anchor-and-site-account-audit.md) | **身分錨點核對**：對照 Higgsfield soul_id／Reference Element 修正選錯的參考圖（含「換錨點＝換臉」案例），與 demo.sofa-partner.com 站上 10 個帳號的稽核 |
 | [14-outlier-scan-spec](docs/14-outlier-scan-spec.md) | **每週兩次離峰值掃描規格 v1.3**：人設方向層、影片離峰（頻道相對 × log-median/MAD × 序位證據）、主題身分層、地區時事（Google／Yahoo News，報導覆蓋度≠需求）、兩軌 2×2 檢視切面、scan-topic adapter 契約、durable runner、Railway 排程。§13 是 GPT-5.6 review 的逐條回應 |
 | [15-outlier-scan-rewrite-plan](docs/15-outlier-scan-rewrite-plan.md) | **上述規格的改寫計畫 v1.3**：R0/R1/R2 三階段（R0、R1 已完成）、批次 0 的十項實測結果、檔案清單、成本、風險表，以及六件需要裁示的事 |
+| [16-showgame-kol-import](docs/16-showgame-kol-import.md) | **showgame-kol 匯入紀錄**：5 位重新同步＋5 位新增的四軸分數總表、三個已知落差（四位沒有 `profile.json` → 支柱維度回 0、`meta.status` 值域不合、三位沒有參考圖）、唯一改過的一筆來源資料，以及紅線檢查的第二層語意判定 |
 | [reviews/2026-08-24-gpt56-on-outlier-scan-spec](docs/reviews/2026-08-24-gpt56-on-outlier-scan-spec.md) | 對 docs/14 v1.0 的外部 review：6 個 P0、6 個 P1、5 個 P2，判定 NEEDS REVISION |
 | [reviews/2026-08-25-scan-source-probe](docs/reviews/2026-08-25-scan-source-probe.md) ＋ [-part2](docs/reviews/2026-08-25-scan-source-probe-part2.md) | **Batch 0 來源探測實測紀錄**（十項）：半年窗只在 TikTok、profile actor 通過、新聞要走 `rss/search`、單次抽樣只有 48% 重疊 |
 

@@ -2,8 +2,9 @@
   "id": "faye-tan",
   "meta": {
     "created_at": "2026-07-14",
-    "updated_at": "2026-07-27",
-    "status": "draft",
+    "updated_at": "2026-08-18",
+    "status": "正在經營中",
+    "status_note": "已在 Metricool 實際發布 56 篇 provider 貼文（首發 2026-07-29，最近 2026-08-13；查核日 2026-08-18）。原值 draft，依客戶 2026-08-18 指示改為「正在經營中」。判準是「有沒有真的發出去」，不是「品牌有沒有連上」。",
     "category": "travel_culture",
     "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)",
     "project_code": "Project A02",
@@ -15,7 +16,8 @@
   "identity": {
     "name": "Faye Tan",
     "name_zh": "陳曉菲",
-    "handle": "@faye.worldnotes",
+    "nickname": "旅遊姊",
+    "handle": "@cxiaofei14",
     "age": 30,
     "gender": "female",
     "ethnicity": "Singaporean Chinese",
@@ -120,7 +122,7 @@
     "platforms": {
       "showgame_live": { "handle": "Faye's Travel Living Room 世界觀察", "focus": "Livestream home base — photo stories, hotel & architecture observation, city culture, monthly city book club", "follower_tier": "mid" },
       "instagram": { "handle": "@cxiaofei14", "focus": "Architecture details, city vistas, hotel & film-photography essays", "follower_tier": "mid" },
-      "douyin_tiktok": { "handle": "@faye.worldnotes", "focus": "《城市的一天》/《建築會說話》/《城市裡的小發現》cinematic short video", "follower_tier": "mid" },
+      "douyin_tiktok": { "handle": "@cxiaovpesw7", "focus": "《城市的一天》/《建築會說話》/《城市裡的小發現》cinematic short video", "follower_tier": "mid" },
       "xiaohongshu": { "handle": "陳曉菲 · 世界觀察筆記", "focus": "城市 / 酒店 / 建築 / 旅行 圖文筆記", "follower_tier": "micro" },
       "youtube": { "handle": "Faye Tan", "focus": "Longer city-observation documentaries and book-club recordings", "follower_tier": "nano" }
     },
@@ -130,7 +132,8 @@
   "ai_assets": {
     "consistency": "reference_element",
     "generation_model": "seedream_v4_5",
-    "primary_element_id": "94a1aa08-c337-4125-b85b-b3eaa7a02463",
+    "primary_element_id": "e96254fc-1175-4fbd-a4a4-0bfe83449c9d",
+    "primary_element_id_note": "2026-08-28 更正：舊的 94a1aa08-c337-4125-b85b-b3eaa7a02463（element_v1，見下）呼叫 show_reference_elements get 已回錯誤（不存在或已失效）。改用現存、狀態 completed 的 'Faye-Tan' element e96254fc-1175-4fbd-a4a4-0bfe83449c9d（identity reference set, 3 photos）。舊紀錄保留供追溯，不要再用 94a1aa08 那組。",
     "element_v1": {
       "element_id": "94a1aa08-c337-4125-b85b-b3eaa7a02463",
       "element_name": "faye-tan-a02",

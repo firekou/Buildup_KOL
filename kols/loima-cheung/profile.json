@@ -2,8 +2,9 @@
   "id": "loima-cheung",
   "meta": {
     "created_at": "2026-07-14",
-    "updated_at": "2026-07-29",
-    "status": "draft",
+    "updated_at": "2026-08-18",
+    "status": "正在經營中",
+    "status_note": "已在 Metricool 實際發布 61 篇 provider 貼文（首發 2026-07-29，最近 2026-08-17；查核日 2026-08-18）。原值 draft，依客戶 2026-08-18 指示改為「正在經營中」。判準是「有沒有真的發出去」，不是「品牌有沒有連上」。",
     "category": "digital_culture",
     "flavor": "Intellectual Digital-Human / Knowledge-Culture Observer (showgame.live)",
     "project_code": "Project A03",
@@ -15,6 +16,7 @@
   "identity": {
     "name": "Zhang Qinfeng",
     "name_zh": "张秦峰",
+    "nickname": "遊戲哥",
     "handle": "@zhangqinfeng61",
     "age": 30,
     "gender": "male",
@@ -119,7 +121,7 @@
   "social": {
     "platforms": {
       "showgame_live": { "handle": "Qinfeng's Future Lab 未來實驗室", "focus": "Livestream home base — live AI experiments, film & design teardowns, future chat, interactive Q&A", "follower_tier": "mid" },
-      "douyin_tiktok": { "handle": "秦峰", "focus": "《60秒體驗分析》/《一個AI實驗》/《遊戲設計觀察》/《電影裡的未來》", "follower_tier": "mid" },
+      "douyin_tiktok": { "handle": "@user6032042112618", "focus": "《60秒體驗分析》/《一個AI實驗》/《遊戲設計觀察》/《電影裡的未來》", "follower_tier": "mid" },
       "youtube": { "handle": "Zhang Qinfeng", "focus": "Longer 《體驗拆解》 and 《設計幕後》 teardowns, AI-experiment sessions", "follower_tier": "micro" },
       "instagram": { "handle": "@zhangqinfeng61", "focus": "UI / film-frame / generative-art screenshots and design-detail posts — real linked account from Metricool", "follower_tier": "micro" },
       "xiaohongshu": { "handle": "张秦峰 · 未來實驗室", "focus": "AI 工具、設計案例、體驗拆解 圖文", "follower_tier": "micro" },

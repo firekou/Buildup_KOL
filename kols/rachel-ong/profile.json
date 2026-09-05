@@ -2,8 +2,9 @@
   "id": "rachel-ong",
   "meta": {
     "created_at": "2026-08-04",
-    "updated_at": "2026-08-04",
-    "status": "draft",
+    "updated_at": "2026-08-18",
+    "status": "正在經營中",
+    "status_note": "已在 Metricool 實際發布 10 篇 provider 貼文（首發 2026-08-13，最近 2026-08-17；查核日 2026-08-18）。原值 draft，依客戶 2026-08-18 指示改為「正在經營中」。判準是「有沒有真的發出去」，不是「品牌有沒有連上」。",
     "category": "outdoor_adventure",
     "flavor": "Boundary-Sense Adventure IP — '邊界感' 型高海拔登山向導",
     "project_code": "Project B01",
@@ -15,7 +16,7 @@
   "identity": {
     "name": "Rachel Ong",
     "name_zh": "王瑞秋",
-    "handle": "@rachel.summitnotes",
+    "handle": "@wangr_uiqiu",
     "age": 34,
     "gender": "female",
     "ethnicity": "Singaporean Chinese",
@@ -30,7 +31,7 @@
       "eyes": "quiet and focused; really looks at whoever is speaking, so people feel 'fully heard'",
       "face": "healthy outdoor tan rather than a 'fair and delicate' beauty; corners of the mouth naturally sit slightly down from years of reading weather and terrain, not unfriendliness — when she genuinely smiles, the eyes narrow first, then the mouth follows, slowly",
       "build": "lean but clearly defined, upright posture and squared shoulders from years of load-bearing climbs; stands with feet slightly apart, weight settled — a body memory from unstable terrain",
-      "style_vibe": "Function over fashion, by context: full hardshell mountaineering kit in earth-tone/olive/charcoal only (never bright colors — 'bright is for the rescue helicopter to see, not for the camera') for high-altitude climbs; quick-dry pants and a functional jacket, no accessories, for low-altitude guiding; minimalist plain tee and cargo pants, barely any makeup, hair loosely tied for Singapore off-season daily life. Signature detail: rope-callused hands, no rings (they interfere with grip), a faint scar on the left eyebrow from an old fall she never explains unprompted, and a single worn climbing-rope bracelet — made from rope left over from her first solo-led expedition — that never comes off."
+      "style_vibe": "Function over fashion, by context: full hardshell mountaineering kit in earth-tone/olive/charcoal only (never bright colors — 'bright is for the rescue helicopter to see, not for the camera') for high-altitude climbs; quick-dry pants and a functional jacket, no accessories, for low-altitude guiding; minimalist plain tee and cargo pants, barely any makeup, hair loosely tied for Singapore off-season daily life. Signature detail: rope-callused hands, no rings (they interfere with grip), a visible reddish-brown thin scar near her right hairline/forehead from an old fall she never explains unprompted (2026-08-24: corrected from 'faint, left eyebrow' to match the actual reference photo rachel_03_face_closeup.png), and a single worn climbing-rope bracelet — made from rope left over from her first solo-led expedition — that never comes off."
     }
   },
   "persona": {
@@ -112,10 +113,10 @@
   },
   "social": {
     "platforms": {
-      "tiktok_douyin": { "handle": "@rachel.summitnotes", "focus": "Trail Journal clips, Turning-Back Moment cases, Mountain Wisdom one-liners", "follower_tier": "mid" },
+      "tiktok_douyin": { "handle": "@otherpaden", "focus": "Trail Journal clips, Turning-Back Moment cases, Mountain Wisdom one-liners", "follower_tier": "mid" },
       "youtube": { "handle": "Rachel Ong", "focus": "Full documentary-style expedition arcs, the simulated deep-interview long-form piece", "follower_tier": "micro" },
-      "instagram": { "handle": "@rachel.summitnotes", "focus": "Trail photography, destination deep-dives, Midnight Notebook caption pieces", "follower_tier": "micro" },
-      "threads": { "handle": "@rachel.summitnotes", "focus": "Midnight Notebook fragments, short reflective text posts", "follower_tier": "nano" }
+      "instagram": { "handle": "@wangr_uiqiu", "focus": "Trail photography, destination deep-dives, Midnight Notebook caption pieces", "follower_tier": "micro" },
+      "threads": { "handle": "@wangr_uiqiu", "focus": "Midnight Notebook fragments, short reflective text posts", "follower_tier": "nano" }
     },
     "engagement_style": "Respectful but not indulgent — reads real questions about gear/routes seriously and briefly; ignores rather than deletes bait/provocation comments, maintaining a 'present but not participating' boundary. Never changes her judgment or performs emotion to satisfy the comment section.",
     "community_name": "Not a fan club — she treats her audience with the same respect-not-flattery stance she takes toward the mountain"
@@ -133,7 +134,7 @@
   },
   "ai_prompts": {
     "engine_notes": "No seed images generated yet. Use Higgsfield nano_banana_2 (or Seedream v4.5) for the first establishing/seed face, then build a Reference Element once a face is approved, mirroring the workflow already used for xiaoxiao-tan / faye-tan / loima-cheung. Documentary-realist, natural/dawn/storm light — never studio-glossy. Aspect ratio 3:4 portrait / 16:9 documentary B-roll.",
-    "base_character_prompt": "A documentary-realist photograph of Rachel, a lean, composed 34-year-old Singaporean-Chinese woman with a healthy outdoor tan, upright posture, and quiet, attentive eyes. Practical hair tied back, a faint scar on the left eyebrow, rope-callused hands, no rings, a single worn climbing-rope bracelet on one wrist. Wearing earth-tone/olive/charcoal high-altitude mountaineering hardshell gear (never bright colors), natural harsh daylight or dawn light, real skin and fabric texture, unhurried documentary mood, credible and calm. --ar 3:4",
+    "base_character_prompt": "A documentary-realist photograph of Rachel, a lean, composed 34-year-old Singaporean-Chinese woman with a healthy outdoor tan, upright posture, and quiet, attentive eyes. Practical hair tied back, a visible reddish-brown thin scar near her right hairline/forehead, rope-callused hands, no rings, a single worn climbing-rope bracelet on one wrist. Wearing earth-tone/olive/charcoal high-altitude mountaineering hardshell gear (never bright colors), natural harsh daylight or dawn light, real skin and fabric texture, unhurried documentary mood, credible and calm. --ar 3:4",
     "negative_prompt_sd": "glossy studio beauty shot, bright neon colors, staged danger pose, exaggerated peril, plastic skin, heavy smoothing, over-retouched, fashion-editorial gloss, fake AI look, nsfw, explicit, deformed, extra fingers, watermark, text",
     "scenes": [
       { "id": "A_ridge_weather_window", "label": "山脊天氣窗口判斷 (reading a weather window on a ridge)", "prompt": "Rachel crouched checking a rope knot on an exposed ridge, mist rolling fast behind her, focused unreadable expression, full hardshell gear in earth tones, natural harsh overcast light, documentary realism, shallow depth of field. --ar 3:4" },

@@ -2,7 +2,7 @@
 
 **專案代號：** Project A02
 **人物定位：** 世界觀察者（World Observer）
-**Handle：** @faye.worldnotes
+**Handle：** @cxiaofei14（IG／Threads 實際帳號，見 `docs/社群帳號總表.md`）
 **平台主場：** showgame.live 直播「旅行客廳 / Travel Living Room」
 **Tagline：** *「真正的旅行，不是看見更多，而是理解更多。」*
 

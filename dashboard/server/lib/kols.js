@@ -97,7 +97,10 @@ function loadAll() {
     // docs/09 §0 原則二：沒有 why 的分數視為未定義，不可進入計算。
     // 規格這樣寫就要真的擋，否則那條原則只是文件上的宣示。
     const axisIssues = validateAxes(affinity)
-    const images = profile ? collectImages(kolDir, entry.id, profile) : []
+    // Images are collected from disk, so a KOL without profile.json still gets
+    // its reference set. Gating this on the profile hid leon-lim's three
+    // identity refs behind a file the source repo never had.
+    const images = collectImages(kolDir, entry.id, profile)
 
     return {
       id: entry.id,

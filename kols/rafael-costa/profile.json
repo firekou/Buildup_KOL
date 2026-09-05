@@ -2,12 +2,24 @@
   "id": "rafael-costa",
   "meta": {
     "created_at": "2026-08-04",
-    "updated_at": "2026-08-04",
-    "status": "draft",
+    "updated_at": "2026-08-18",
+    "status": "正在經營中",
+    "status_note": "已在 Metricool 實際發布 8 篇 provider 貼文（首發 2026-08-13，最近 2026-08-17；查核日 2026-08-18）。原值 draft，依客戶 2026-08-18 指示改為「正在經營中」。判準是「有沒有真的發出去」，不是「品牌有沒有連上」。",
     "category": "sports_growth",
     "flavor": "Captain — 現役足球運動員 × 長期主義成長陪伴型 IP",
     "project_code": "Project B02",
-    "tags": ["male", "professional-athlete", "football", "soccer", "long-termism", "personal-growth", "financial-literacy", "brazilian", "china-based", "documentary"],
+    "tags": [
+      "male",
+      "professional-athlete",
+      "football",
+      "soccer",
+      "long-termism",
+      "personal-growth",
+      "financial-literacy",
+      "brazilian",
+      "china-based",
+      "documentary"
+    ],
     "reference_profiles": [],
     "design_note": "Sourced verbatim from a client-provided Google Doc ('Captain Personality Architecture v1.0', dev codename 'Project Captain'). The source marked several minor facts (birthday, blood type, star sign, origin town, family members' first/last names) as '暫定/provisional' — per client instruction (2026-08-04, 'those provisional details aren't important, use your own judgment to finalize them'), these are now treated as settled canon rather than open questions. Not a showgame.live persona — no gambling-compliance boundary applies; his non-negotiable boundary is instead financial/growth-content integrity (never sell anxiety, never guarantee results, never recommend unproven methods). The source document for [[rachel-ong]] explicitly names 'Captain' as the '稳' (steady) pillar of a three-persona matrix alongside her ('慢', slow) and an unbuilt '戰術梗王' ('快', fast) — treat this matrix relationship as real continuity context. No AI visual assets generated yet — ai_prompts below are ready for first seed-image generation once the client confirms a generation order.",
     "naming_note": "Name finalized as Rafael Costa / 拉斐尔·科斯塔 (dev codename remains 'Project Captain'). Minor biographical facts the source left as '暂定' (birthday, blood type, star sign, hometown, family names) were finalized by Claude on 2026-08-04 per client instruction rather than left open."
@@ -15,7 +27,7 @@
   "identity": {
     "name": "Rafael Costa",
     "name_zh": "拉斐爾·科斯塔",
-    "handle": "@rafa.longgame",
+    "handle": "@rafael.costarafael",
     "age": 30,
     "gender": "male",
     "ethnicity": "Brazilian",
@@ -26,7 +38,12 @@
     "blood_type": "O",
     "education": "Basic education in Brazil; after arriving in China at 17, Chinese-language and cultural schooling through a Brazil-China football exchange academy, later sports management / rehabilitation / basic business coursework via club-partnered programs — no prestige-school framing, continuous self-education (reading, online courses) instead",
     "relationship_status": "Not publicly disclosed by policy — never used as a content hook",
-    "languages": ["Portuguese (native)", "Chinese / Mandarin (fluent)", "English (working / daily use)", "Spanish (basic conversational)"],
+    "languages": [
+      "Portuguese (native)",
+      "Chinese / Mandarin (fluent)",
+      "English (working / daily use)",
+      "Spanish (basic conversational)"
+    ],
     "appearance": {
       "height": "183cm",
       "hair": "Short, clean, low-maintenance — training-ready",
@@ -106,7 +123,13 @@
     ],
     "posting_frequency": "Tied to his real match/training calendar rather than a flat quota — lighter, shorter posting on match days and heavy training blocks; fuller 'Off the Pitch' and 'What I Learned Today' pieces on rest days and off-season stretches.",
     "aesthetic": {
-      "color_palette": ["deep green (pitch)", "charcoal", "warm off-white", "leather brown", "training-kit navy"],
+      "color_palette": [
+        "deep green (pitch)",
+        "charcoal",
+        "warm off-white",
+        "leather brown",
+        "training-kit navy"
+      ],
       "mood": "Grounded, warm, credible — training grounds, locker-room exteriors, quiet cafés, community pitches, modest bookshelves. Never mansion / nightclub / luxury-flex visuals.",
       "editing_style": "Documentary-realist, natural light, real texture (turf, leather ball, worn notebook pages), minimal graphic overlay — let his own calm delivery carry the pacing rather than aggressive cuts or hype music."
     },
@@ -123,14 +146,36 @@
       "Fabricated honors/achievements, riding disaster/tragedy news cycles for engagement, or gender-war / generational-war bait",
       "Overly solemn corporate scripts or jargon-stacking that break his calm, plain-spoken voice",
       "Any deal that would fail his own test question: 'If there were no camera, no traffic, no revenue today, would Captain still say or do this?'"
-    ]
+    ],
+    "posting_language": {
+      "locked": true,
+      "value": "Chinese / Simplified (简体中文)",
+      "decided_on": "2026-08-11",
+      "note": "客戶 2026-08-11 確認定案。與現有三位主力人設（xiaoxiao-tan / faye-tan / loima-cheung）一致。他本人的口語能力見 identity.languages（葡語母語、中文流利、英文工作級、西語基礎），那些是角色會說的語言,與發文語言是兩件事。註:docs/BENCHMARK_ACCOUNTS.md 第 5 節仍寫「發文語言尚未鎖定」——那是 2026-08-07 做對標研究當下的狀態,用來說明為何中／英／葡語帳號都納入,屬歷史紀錄,不改。"
+    }
   },
   "social": {
     "platforms": {
-      "tiktok_douyin": { "handle": "@rafa.longgame", "focus": "《訓練結束以後》/《冠軍思維》short clips", "follower_tier": "mid" },
-      "instagram": { "handle": "@rafa.longgame", "focus": "Training-ground and off-pitch photography, Champion Mindset caption posts", "follower_tier": "micro" },
-      "youtube": { "handle": "Rafael Costa", "focus": "Longer 《球場之外》 narrative pieces and 《如果我是20歲的你》 Q&A segments", "follower_tier": "nano" },
-      "threads": { "handle": "@rafa.longgame", "focus": "Short reflective text posts, 《今天我學到了什麼》", "follower_tier": "nano" }
+      "tiktok_douyin": {
+        "handle": "（TikTok 帳號代號待確認：Metricool 只回顯示名稱「Rafael Costa」，要從 App 抄）",
+        "focus": "《訓練結束以後》/《冠軍思維》short clips",
+        "follower_tier": "mid"
+      },
+      "instagram": {
+        "handle": "@rafael.costarafael",
+        "focus": "Training-ground and off-pitch photography, Champion Mindset caption posts",
+        "follower_tier": "micro"
+      },
+      "youtube": {
+        "handle": "Rafael Costa",
+        "focus": "Longer 《球場之外》 narrative pieces and 《如果我是20歲的你》 Q&A segments",
+        "follower_tier": "nano"
+      },
+      "threads": {
+        "handle": "@rafael.costarafael",
+        "focus": "Short reflective text posts, 《今天我學到了什麼》",
+        "follower_tier": "nano"
+      }
     },
     "engagement_style": "Calls his audience 'teammates', not students or fans — because life isn't a solo match. Ignores pure insults, calmly corrects factual falsehoods, engages seriously with genuine questions but redirects users toward their own judgment rather than reinforcing dependency.",
     "community_name": "隊友 Teammates — not a fan base; a shared-journey framing"
@@ -140,24 +185,73 @@
     "generation_model": "seedream_v4_5",
     "note": "2026-08-04/05: full 3-photo identity reference set generated (fullbody front, knee-up side, face closeup), matching the convention used for xiaoxiao-tan/faye-tan/loima-cheung. No Reference Element or Soul used, per client decision (2026-08-04) — future generations attach these 3 photos directly as image_references each time. A separate lifestyle/avatar photo was also generated for profile-picture use.",
     "seed_images": [
-      { "file": "images/ref/rafael_01_fullbody_front.png", "job_id": "49f9bd81-3bac-43ba-8b9e-e3971ae3a89e", "seed": 400640, "ar": "3:4" },
-      { "file": "images/ref/rafael_02_kneeup_side.png", "job_id": "d47442a7-ad8b-4129-8bdc-4e9e9aefab89", "seed": 735104, "ar": "3:4" },
-      { "file": "images/ref/rafael_03_face_closeup.png", "job_id": "024cf991-312e-46ec-bfdb-70cf14be013f", "seed": 572893, "ar": "3:4" }
+      {
+        "file": "images/ref/rafael_01_fullbody_front.png",
+        "job_id": "49f9bd81-3bac-43ba-8b9e-e3971ae3a89e",
+        "seed": 400640,
+        "ar": "3:4"
+      },
+      {
+        "file": "images/ref/rafael_02_kneeup_side.png",
+        "job_id": "d47442a7-ad8b-4129-8bdc-4e9e9aefab89",
+        "seed": 735104,
+        "ar": "3:4"
+      },
+      {
+        "file": "images/ref/rafael_03_face_closeup.png",
+        "job_id": "024cf991-312e-46ec-bfdb-70cf14be013f",
+        "seed": 572893,
+        "ar": "3:4"
+      }
     ],
-    "avatar_image": { "file": "images/rafael-avatar.png", "job_id": "a5edafd2-01ea-4462-90d5-1138b606f285", "seed": 324880, "ar": "1:1", "note": "Lifestyle/profile-picture photo — community training pitch, golden hour, warm genuine smile" }
+    "avatar_image": {
+      "file": "images/rafael-avatar.png",
+      "job_id": "a5edafd2-01ea-4462-90d5-1138b606f285",
+      "seed": 324880,
+      "ar": "1:1",
+      "note": "Lifestyle/profile-picture photo — community training pitch, golden hour, warm genuine smile"
+    }
   },
   "ai_prompts": {
     "engine_notes": "No seed images generated yet. Use Higgsfield nano_banana_2 (or Seedream v4.5) for the first establishing/seed face, then build a Reference Element once a face is approved, mirroring the workflow already used for xiaoxiao-tan / faye-tan / loima-cheung. Documentary-realist, natural light, grounded pitch/training-ground palette — never luxury-flex or nightclub visuals. Aspect ratio 3:4 portrait / 16:9 documentary B-roll.",
     "base_character_prompt": "A documentary-realist photograph of Rafael, a healthy tan-skinned, athletic 30-year-old Brazilian man with short clean hair and steady, warm eyes. Standard professional-footballer build, visible leg strength, coordinated upper body, a faint surgical scar on the left knee. Wearing minimalist off-duty clothing — a solid tee or knit sweater, clean and understated, or club training kit in a pitch-side setting. A single quality mechanical watch. Natural daylight, real skin and fabric texture, warm grounded color grade, calm and credible mood, never luxury-flex or glossy-studio. --ar 3:4",
     "negative_prompt_sd": "luxury flex, mansion interior, sports car, gold chain, oversaturated, staged charity pose, bodybuilder exaggeration, plastic skin, heavy smoothing, over-retouched, studio glossy, fake AI look, nsfw, explicit, deformed, extra fingers, watermark, text",
     "scenes": [
-      { "id": "A_training_ground_edge", "label": "訓練場邊 (pitch-side after training)", "prompt": "Rafael sitting on the edge of a training pitch after practice, ball resting beside him, sweat-damp training kit, warm late-afternoon sunlight, calm reflective expression, documentary realism, shallow depth of field. --ar 3:4" },
-      { "id": "B_locker_room_exterior", "label": "更衣室外 (outside the locker room)", "prompt": "Rafael leaning against a corridor wall just outside a locker room, gym bag over one shoulder, quiet unguarded expression mid-thought, practical fluorescent-and-daylight mixed lighting, documentary candid realism. --ar 3:4" },
-      { "id": "C_community_pitch_childhood_echo", "label": "社區球場 (echo of his childhood pitch)", "prompt": "Rafael standing on an ordinary community football pitch with kids playing blurred in the background, a worn taped-up ball in his hands, warm nostalgic late-day light, understated humble mood, documentary realism. --ar 3:4" },
-      { "id": "D_quiet_cafe_reading", "label": "安靜咖啡館讀書 (quiet café, reading)", "prompt": "Rafael seated at a corner table in a quiet café with a view of the street, a biography and a plain notebook in front of him, coffee cup mid-sip, soft window daylight, calm unhurried mood, documentary realism, shallow depth of field. --ar 3:4" },
-      { "id": "E_home_bookshelf", "label": "家中書架 (modest home bookshelf)", "prompt": "Rafael standing by a modest, uncluttered bookshelf at home with a few worn jerseys and family photos visible, warm domestic lamp light, grounded unshowy interior, documentary realism, quiet pride. --ar 3:4" },
-      { "id": "F_rehab_room", "label": "康復訓練室 (rehab / recovery room)", "prompt": "Rafael mid-stretch or rehab exercise in a modest recovery room, focused determined expression, visible faint knee scar, clinical but warm daylight, real texture, documentary sports-medicine realism. --ar 3:4" },
-      { "id": "G_matchday_tunnel", "label": "比賽日通道 (matchday tunnel, understated)", "prompt": "Rafael standing in a stadium tunnel before a match, focused calm expression, kit clean and ready, cool stadium light mixing with warm tunnel light, documentary sports photography, restrained not triumphant mood, 16:9 composition. --ar 16:9" }
+      {
+        "id": "A_training_ground_edge",
+        "label": "訓練場邊 (pitch-side after training)",
+        "prompt": "Rafael sitting on the edge of a training pitch after practice, ball resting beside him, sweat-damp training kit, warm late-afternoon sunlight, calm reflective expression, documentary realism, shallow depth of field. --ar 3:4"
+      },
+      {
+        "id": "B_locker_room_exterior",
+        "label": "更衣室外 (outside the locker room)",
+        "prompt": "Rafael leaning against a corridor wall just outside a locker room, gym bag over one shoulder, quiet unguarded expression mid-thought, practical fluorescent-and-daylight mixed lighting, documentary candid realism. --ar 3:4"
+      },
+      {
+        "id": "C_community_pitch_childhood_echo",
+        "label": "社區球場 (echo of his childhood pitch)",
+        "prompt": "Rafael standing on an ordinary community football pitch with kids playing blurred in the background, a worn taped-up ball in his hands, warm nostalgic late-day light, understated humble mood, documentary realism. --ar 3:4"
+      },
+      {
+        "id": "D_quiet_cafe_reading",
+        "label": "安靜咖啡館讀書 (quiet café, reading)",
+        "prompt": "Rafael seated at a corner table in a quiet café with a view of the street, a biography and a plain notebook in front of him, coffee cup mid-sip, soft window daylight, calm unhurried mood, documentary realism, shallow depth of field. --ar 3:4"
+      },
+      {
+        "id": "E_home_bookshelf",
+        "label": "家中書架 (modest home bookshelf)",
+        "prompt": "Rafael standing by a modest, uncluttered bookshelf at home with a few worn jerseys and family photos visible, warm domestic lamp light, grounded unshowy interior, documentary realism, quiet pride. --ar 3:4"
+      },
+      {
+        "id": "F_rehab_room",
+        "label": "康復訓練室 (rehab / recovery room)",
+        "prompt": "Rafael mid-stretch or rehab exercise in a modest recovery room, focused determined expression, visible faint knee scar, clinical but warm daylight, real texture, documentary sports-medicine realism. --ar 3:4"
+      },
+      {
+        "id": "G_matchday_tunnel",
+        "label": "比賽日通道 (matchday tunnel, understated)",
+        "prompt": "Rafael standing in a stadium tunnel before a match, focused calm expression, kit clean and ready, cool stadium light mixing with warm tunnel light, documentary sports photography, restrained not triumphant mood, 16:9 composition. --ar 16:9"
+      }
     ]
   }
 }
