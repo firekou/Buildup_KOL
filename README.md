@@ -40,15 +40,17 @@ Buildup_KOL/
 | [loima-cheung](kols/loima-cheung/) | Zhang Qinfeng（張秦峰） | 智性數字人 · 數字體驗觀察者（A03 / showgame.live） | 馬來西亞華人 | active |
 | [rachel-ong](kols/rachel-ong/) | Rachel Ong（王瑞秋） | 邊界感型高海拔登山向導（B01） | 新加坡華裔 | active |
 | [rafael-costa](kols/rafael-costa/) | Rafael Costa / Captain（拉斐爾·科斯塔） | 現役足球運動員 × 長期主義成長陪伴型 IP（B02） | 巴西人 | **retired**（來源 2026-08-19 停用） |
-| [nova-lin](kols/nova-lin/) | 林諾 / NOVA | 公開 AI 身分的數字生活觀察員（B03） | — AI 數字人，設定上無國籍 | draft ⚠ |
+| [nova-lin](kols/nova-lin/) | 林諾 / NOVA | 公開 AI 身分的數字生活觀察員（B03） | — AI 數字人，設定上無國籍 | draft ◐ |
 | [kai-luo](kols/kai-luo/) | 羅凱西 / Cathy Luo | 神話沉浸型 · 走進古人記下來的那個世界（B04） | 台灣人 | active |
-| [leon-lim](kols/leon-lim/) | 林曜 / Leon Lim | 歷史沉浸型 · 站在歷史發生的那一刻（B05） | 馬來西亞華人 | active ⚠ |
-| [zane-chen](kols/zane-chen/) | 陳崢 / Zane Chen | 戒賭陪伴與家屬止損（B06） | 馬來西亞華人 | draft ⚠ |
-| [rhea-chou](kols/rhea-chou/) | 周嵐 / Rhea Chou | 沙巴海底影像紀錄者（B07） | 馬來西亞華人（沙巴） | draft ⚠ |
+| [leon-lim](kols/leon-lim/) | 林曜 / Leon Lim | 歷史沉浸型 · 站在歷史發生的那一刻（B05） | 馬來西亞華人 | active ◐ |
+| [zane-chen](kols/zane-chen/) | 陳崢 / Zane Chen | 戒賭陪伴與家屬止損（B06） | 馬來西亞華人 | draft ◐ |
+| [rhea-chou](kols/rhea-chou/) | 周嵐 / Rhea Chou | 沙巴海底影像紀錄者（B07） | 馬來西亞華人（沙巴） | draft ◐ |
 
-⚠ **標記的四位沒有 `profile.json`**（來源 repo 就沒有）。Dashboard 的支柱維度會回 `0` 並標
-`needsBinding`——**那是「還沒有可讀的支柱定義」，不是「配適度低」**，兩者在畫面上長得一樣。
-`nova-lin` / `zane-chen` / `rhea-chou` 另外還沒有任何參考圖。細節見 `docs/16` §4。
+◐ **這四位的 `profile.json` 是本 repo 依各自 `character.md` 補寫的，不是從來源 repo 複製的**
+（2026-09-06；來源 repo 至今沒有這個檔案）。每份檔案的 `meta.derived_note` 都標了這件事，
+來源沒寫的欄位一律留空或標 `UNASSIGNED`，沒有補值。**與來源文件衝突時以來源文件為準。**
+補上之後 21 位全部都有 `profile.json`，Dashboard 的支柱維度不再回 `0`。
+⚠ `nova-lin` / `zane-chen` / `rhea-chou` 仍然沒有任何參考圖，所以沒有頭像。細節見 `docs/16` §4、§11。
 
 ### 自 Virtual KOL Studio 匯入（V01–V11）
 

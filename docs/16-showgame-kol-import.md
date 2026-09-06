@@ -88,7 +88,7 @@ git 追蹤檔案合計約 1.5 GB，其中絕大多數是影片與逐日素材。
 
 ## §4 三個已知落差（不修，但要知道）
 
-### 4.1 四位沒有 `profile.json`，Dashboard 的支柱維度會回 0
+### 4.1 四位沒有 `profile.json` → **已於 2026-09-06 補寫，見 §11**
 
 `leon-lim`、`nova-lin`、`zane-chen`、`rhea-chou` 在來源 repo 就沒有 `profile.json`。
 Match 引擎的 `pillarFit()` 讀的是 `profile.content.pillars`，讀不到就回
@@ -97,9 +97,12 @@ Match 引擎的 `pillarFit()` 讀的是 `profile.content.pillars`，讀不到就
 **那個 0 的意思是「還沒有可讀的支柱定義」，不是「這個人設跟這個題目不合」——
 兩者在畫面上長得一模一樣。** 這是這次匯入最容易被誤讀的一個數字。
 
-沒有代寫是刻意的：`profile.json` 是來源端的資產，本 repo 憑空生一份出來，
+匯入當下沒有代寫是刻意的：`profile.json` 是來源端的資產，本 repo 憑空生一份出來，
 下次比對就不再是一次直接複製，而且會有人拿它當真相。四軸分析可以由本 repo 做
 （它本來就是本 repo 的分析層），支柱定義不行。
+
+**⚠ 這個判斷在 2026-09-06 被操作者推翻，四份 `profile.json` 已補寫完成。**
+原判斷刻意保留在上面可見——它指出的風險並沒有因為決定改了就消失，處置方式見 **§11**。
 
 ### 4.2 `meta.status` 的值不在本 repo 的 schema 值域內
 
@@ -197,11 +200,11 @@ kols/index.json  version 1.2.0 · 21 位
 
 | 人設 | profile | affinity | 鎖臉照 | 總圖數 | topic hooks |
 |---|---|---|---|---|---|
-| kai-luo | ✅ | ✅ | 3 | 8 | 5 |
-| leon-lim | ❌ | ✅ | 3 | 8 | 6 |
-| nova-lin | ❌ | ✅ | 0 | 0 | 5 |
-| rhea-chou | ❌ | ✅ | 0 | 0 | 5 |
-| zane-chen | ❌ | ✅ | 0 | 0 | 5 |
+| kai-luo | ✅ 來源複製 | ✅ | 3 | 8 | 5 |
+| leon-lim | ◐ 本 repo 補寫（§11） | ✅ | 3 | 8 | 6 |
+| nova-lin | ◐ 本 repo 補寫（§11） | ✅ | 0 | 0 | 5 |
+| rhea-chou | ◐ 本 repo 補寫（§11） | ✅ | 0 | 0 | 5 |
+| zane-chen | ◐ 本 repo 補寫（§11） | ✅ | 0 | 0 | 5 |
 
 **驗證：** `npm run test:redlines` 與 `npm run test:probe` 全過；21 位透過
 `dashboard/server/lib/kols.js` 實際載入成功，`axisIssues` 全部為 0。
@@ -213,10 +216,47 @@ kols/index.json  version 1.2.0 · 21 位
 
 ## §10 下一步（不做就會慢慢失真）
 
-1. **`leon-lim` 的 `profile.json`** ——他是 `active`、六平台都在發，卻是這批裡唯一
-   有完整內容規則但沒有結構化資料的。**應該由來源 repo 補，本 repo 再同步**，
-   不要在這邊生。
+1. ~~`leon-lim` 的 `profile.json`~~ **已於 2026-09-06 補寫（§11）。** 隨之而來的新工作是
+   **把這四份帶回來源 repo 對一次**——現在同一份人設在兩個 repo 各有一個版本，只有一邊會長。
 2. **`nova-lin` / `zane-chen` / `rhea-chou` 的參考圖與 `content_style.md`** ——
-   來源那三位還停在客戶原始版，本 repo 只能跟著停。
+   來源那三位還停在客戶原始版，本 repo 只能跟著停。**參考圖不能靠補寫解決**，
+   那是要花錢生成的東西。
 3. **下次同步先跑一次逐檔 md5 比對**——這次 5 位的落差全部集中在 4 個檔名，
-   比對成本很低，沒有必要靠記憶判斷誰比較新。
+   比對成本很低，沒有必要靠記憶判斷誰比較新。**⚠ 現在多一條：比對時要把這四份
+   `profile.json` 排除在「原樣複製」之外，否則會被誤判成來源刪了檔案。**
+
+---
+
+## §11 補寫那四份 `profile.json`（2026-09-06）
+
+**這是操作者的決定，不是本 repo 自己改的判斷。** §4.1 原本主張不要在這邊生，理由是
+「憑空生一份出來，下次比對就不再是一次直接複製，而且會有人拿它當真相」。
+操作者看過那段之後仍要求補上，所以補了——**但 §4.1 指出的兩個風險沒有消失，只能靠下面的做法壓住。**
+
+### 11.1 怎麼寫的
+
+| 原則 | 具體做法 |
+|---|---|
+| **只搬不編** | 每個欄位都對得回 `character.md`（`leon-lim` 另含 `content_style.md`）的某一段。沒有一個值是推測來的 |
+| **來源沒寫的就留空** | 用 `UNASSIGNED` 標，不填看起來合理的值。實際留空的有：四位的 `posting_frequency`、三位的 `editing_style`、三位的全部社群帳號、`nova-lin`／`rhea-chou`／`zane-chen` 的 `generation_model` |
+| **沒有的數字不編** | `rhea-chou`（6 根）與 `zane-chen`（8 根）的支柱在來源文件裡**沒有百分比**，所以 `weight` 一律不填——跟 §5 對 `kai-luo` 的處理同一條理由。`rhea-chou` 文件只給了形式層的 50/30/20，記在另一個欄位 `content.format_mix`，不假裝那是支柱權重 |
+| **每份檔案自己講出身世** | 四份的 `meta.derived_note` 都寫明：這不是從來源複製的、是哪一天依哪份文件整理的、**與來源文件衝突時以來源文件為準** |
+| **世界觀不可被讀成履歷** | `nova-lin` 的數字家庭、`rhea-chou` 的父親與失蹤叔叔、`zane-chen` 的許文杰，各自在 `meta.worldview_note` 標明屬角色設定，不是真人關係 |
+
+### 11.2 兩個沒有被解決的風險
+
+1. **同一份人設現在在兩個 repo 各有一個版本，而只有來源那邊會長。** 來源 repo 之後若自己
+   補了 `profile.json`，就會出現兩份不一樣的真相。→ §10 第 1 點是為此新增的。
+2. **「本 repo 補寫」這件事只寫在檔案裡，機器不會擋。** 目前靠 `meta.derived_note` 與
+   index 的 `source.note` 兩處文字。**寫成文件會被忽略，這一點沒有變**——如果之後真的
+   出過一次「拿補寫版當來源真相」的事故，那就該把它做成檢核。
+
+### 11.3 補完之後的實測
+
+| 檢查 | 結果 |
+|---|---|
+| schema 必填欄位（`id`／`meta`／`identity`／`persona`／`content`／`social`） | 四份全過 |
+| `pillar_keywords` 的鍵 vs `content.pillars[].name` | **四份逐字相同**——這是 `pillarFit()` 實際查表的鍵，對不上等於白補 |
+| 載入 | 21 位全部 `hasProfile: true`，四軸問題 0 |
+| 紅線 lint | 四份各 1 個 warn，**全部是「支柱超過 3 根」那一種**，與既有 16 位的基線一模一樣（`rachel-ong` 4 根也是同一個 warn）。⚠ `zane-chen` 8 根是全 repo 最多——那是他來源文件本來就有 8 個欄目，不是這次寫壞的 |
+| Match 引擎端到端 | ⬜ **這台機器跑不了**——`match.js` 依賴 `opencc-js`，而 registry 被出站政策擋掉（403）裝不了。**已驗證的是 `pillarFit()` 那個早退條件（`pillars.length === 0`）不再成立**，實際分數要等部署後在畫面上看 |

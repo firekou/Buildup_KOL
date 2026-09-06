@@ -1,6 +1,6 @@
 {
-  "version": "1.2.0",
-  "description": "Master index of all KOL profiles in this database（含自 Virtual KOL Studio 匯入的 11 位，以及 2026-09-05 自 pennyhuang-oss/showgame-kol 匯入／重新同步的 10 位）。匯入範圍、已知落差與四軸分析方法見 docs/16-showgame-kol-import.md。",
+  "version": "1.3.0",
+  "description": "Master index of all KOL profiles in this database（含自 Virtual KOL Studio 匯入的 11 位，以及 2026-09-05 自 pennyhuang-oss/showgame-kol 匯入／重新同步的 10 位）。★ 2026-09-06：B03／B05／B06／B07 的 profile.json 由本 repo 依各自 character.md 補寫，不是來源複製——21 位現在全部都有 profile.json。匯入範圍、已知落差與四軸分析方法見 docs/16-showgame-kol-import.md。",
   "kols": [
     {
       "id": "xiaoxiao-tan",
@@ -114,12 +114,12 @@
       "path": "kols/nova-lin/",
       "project_code": "Project B03",
       "flavor": "showgame-kol 匯入 — 公開 AI 身分的數字生活觀察員／都市情緒陪伴者",
-      "note": "全 repo 唯一公開自己是 AI 的人設。她的文件要求永不宣稱是真人、不編造真實學歷與血緣家庭。",
+      "note": "全 repo 唯一公開自己是 AI 的人設。她的文件要求永不宣稱是真人、不編造真實學歷與血緣家庭。profile.json 由本 repo 依 character.md 整理（2026-09-06），不是來源複製。⚠ 仍無任何參考圖。",
       "source": {
         "repo": "pennyhuang-oss/showgame-kol",
         "path": "kols/nova-lin/",
         "imported_at": "2026-09-05",
-        "note": "來源 repo 目前只有客戶原始版 character.md，沒有 profile.json / content_style.md / 參考圖，本 repo 原樣複製、不代寫。topic_affinity.json 為本 repo 依 character.md 與 kols/topic-axes.json 四軸新增。⚠ 沒有 profile.json 代表 Dashboard 的支柱維度（pillarFit）會回 0 並標 needsBinding，不是配適度低，是還沒有可讀的支柱定義。"
+        "note": "人設與內容資料原樣複製自來源 repo。topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸新增。 ★ 2026-09-06 補上 profile.json：來源 repo 沒有這個檔案，這一份是本 repo 依 character.md（leon-lim 另含 content_style.md）整理出的結構化版本，**不是複製來的**，檔內 meta.derived_note 有標。來源沒寫的欄位一律留空或標 UNASSIGNED，沒有補值。與來源文件衝突時以來源文件為準。 ⚠ 來源 repo 沒有任何參考圖，本 repo 也沒有。 影片、social media 日期資料夾、prompt list 未隨附。"
       }
     },
     {
@@ -156,12 +156,12 @@
       "path": "kols/leon-lim/",
       "project_code": "Project B05",
       "flavor": "showgame-kol 匯入 — 歷史沉浸型：帶你站在歷史發生的那一刻，離開之前告訴你為什麼",
-      "note": "2026-08-11 全面改版（客戶授權），只保留名字與國籍；原始委託版保留為 character-v0-客戶原始版-已作廢.md，不可作為寫作依據。⚠ 來源 repo 沒有他的 profile.json，所以 Dashboard 的支柱維度會回 0 並標 needsBinding。",
+      "note": "B05。2026-08-11 全面改版（客戶授權），只保留名字與國籍；原始委託版保留為 character-v0-客戶原始版-已作廢.md，不可作為寫作依據。profile.json 由本 repo 依 character.md 與 content_style.md 整理（2026-09-06），不是來源複製。",
       "source": {
         "repo": "pennyhuang-oss/showgame-kol",
         "path": "kols/leon-lim/",
         "imported_at": "2026-09-05",
-        "note": "人設與內容資料原樣複製自來源 repo（kai-luo 的 content.pillars 由字串陣列正規化為 {name, description}，以對上本 repo 既有 profile 形狀與 Match 引擎；weight 未虛構，留空）。topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸新增。帶入 images/ref 三張鎖臉照與 images/生活照；影片、social media 日期資料夾、prompt list 與標示未採用的圖未隨附。 ⚠ 來源 repo 本身就沒有 profile.json。"
+        "note": "人設與內容資料原樣複製自來源 repo。topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸新增。 ★ 2026-09-06 補上 profile.json：來源 repo 沒有這個檔案，這一份是本 repo 依 character.md（leon-lim 另含 content_style.md）整理出的結構化版本，**不是複製來的**，檔內 meta.derived_note 有標。來源沒寫的欄位一律留空或標 UNASSIGNED，沒有補值。與來源文件衝突時以來源文件為準。 帶入 images/ref 三張鎖臉照與 images/生活照。 影片、social media 日期資料夾、prompt list 未隨附。"
       }
     },
     {
@@ -175,12 +175,12 @@
       "path": "kols/zane-chen/",
       "project_code": "Project B06",
       "flavor": "showgame-kol 匯入 — 前地下賭場從業者，現做戒賭陪伴與家屬止損",
-      "note": "⚠ 紅線密度全 repo 最高：他的文件禁止講解投注技巧、賠率漏洞與規避監管的方法，也禁止把地下經歷包裝成能力或身份資本。動筆前先讀 character.md 第十一章。",
+      "note": "⚠ 紅線密度全 repo 最高：他的文件禁止講解投注技巧、賠率漏洞與規避監管的方法，也禁止把地下經歷包裝成能力或身份資本。動筆前先讀 character.md 第十一章。profile.json 由本 repo 依 character.md 整理（2026-09-06），不是來源複製。⚠ 仍無任何參考圖。",
       "source": {
         "repo": "pennyhuang-oss/showgame-kol",
         "path": "kols/zane-chen/",
         "imported_at": "2026-09-05",
-        "note": "來源 repo 目前只有客戶原始版 character.md，沒有 profile.json / content_style.md / 參考圖，本 repo 原樣複製、不代寫。topic_affinity.json 為本 repo 依 character.md 與 kols/topic-axes.json 四軸新增。⚠ 沒有 profile.json 代表 Dashboard 的支柱維度（pillarFit）會回 0 並標 needsBinding，不是配適度低，是還沒有可讀的支柱定義。"
+        "note": "人設與內容資料原樣複製自來源 repo。topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸新增。 ★ 2026-09-06 補上 profile.json：來源 repo 沒有這個檔案，這一份是本 repo 依 character.md（leon-lim 另含 content_style.md）整理出的結構化版本，**不是複製來的**，檔內 meta.derived_note 有標。來源沒寫的欄位一律留空或標 UNASSIGNED，沒有補值。與來源文件衝突時以來源文件為準。 ⚠ 來源 repo 沒有任何參考圖，本 repo 也沒有。 影片、social media 日期資料夾、prompt list 未隨附。"
       }
     },
     {
@@ -194,12 +194,12 @@
       "path": "kols/rhea-chou/",
       "project_code": "Project B07",
       "flavor": "showgame-kol 匯入 — 沙巴海底影像紀錄者：這一鏡能證明什麼",
-      "note": "她的文件要求每則平台內容都標注 AI 生成，並且觀察、推測、結論必須在畫面上分開。⚠ 具身風險結構上高於 rachel-ong：她的素材本體（自己下潛拍到的影像）不可能存在。",
+      "note": "她的文件要求每則平台內容都標注 AI 生成，並且觀察、推測、結論必須在畫面上分開。⚠ 具身風險結構上高於 rachel-ong：她的素材本體（自己下潛拍到的影像）不可能存在。profile.json 由本 repo 依 character.md 整理（2026-09-06），不是來源複製。⚠ 仍無任何參考圖。",
       "source": {
         "repo": "pennyhuang-oss/showgame-kol",
         "path": "kols/rhea-chou/",
         "imported_at": "2026-09-05",
-        "note": "來源 repo 目前只有客戶原始版 character.md，沒有 profile.json / content_style.md / 參考圖，本 repo 原樣複製、不代寫。topic_affinity.json 為本 repo 依 character.md 與 kols/topic-axes.json 四軸新增。⚠ 沒有 profile.json 代表 Dashboard 的支柱維度（pillarFit）會回 0 並標 needsBinding，不是配適度低，是還沒有可讀的支柱定義。"
+        "note": "人設與內容資料原樣複製自來源 repo。topic_affinity.json 為本 repo 依 kols/topic-axes.json 四軸新增。 ★ 2026-09-06 補上 profile.json：來源 repo 沒有這個檔案，這一份是本 repo 依 character.md（leon-lim 另含 content_style.md）整理出的結構化版本，**不是複製來的**，檔內 meta.derived_note 有標。來源沒寫的欄位一律留空或標 UNASSIGNED，沒有補值。與來源文件衝突時以來源文件為準。 ⚠ 來源 repo 沒有任何參考圖，本 repo 也沒有。 影片、social media 日期資料夾、prompt list 未隨附。"
       }
     },
     {
